@@ -1,4 +1,4 @@
-const CACHE='turnos4x4-3.6.0';
+const CACHE='turnos4x4-3.6.1';
 const ASSETS=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
 
 self.addEventListener('install', event => {
