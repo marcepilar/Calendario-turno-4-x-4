@@ -174,7 +174,7 @@ body.light .cycle-chip.current{outline-color:#202a37}
 .day.morning,.day.daytime{background:var(--morning);color:var(--morning-text)}
 .day.night{background:var(--night);color:var(--night-text)}
 .day.off{background:var(--off);color:var(--off-text)}
-.day .date{position:absolute;right:5px;top:4px;font-size:10px;font-weight:900;opacity:.72}
+.day .date{position:absolute;right:5px;top:4px;font-size:var(--day-number-size,10px);font-weight:900;opacity:.72}
 .day .code{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);font-size:var(--code-size);font-weight:950}
 .day .label{position:absolute;left:50%;top:67%;transform:translateX(-50%);white-space:nowrap;font-size:8px;font-weight:850;opacity:.66}
 .day.selected-day{box-shadow:inset 0 0 0 3px rgba(255,255,255,.72);z-index:2}
@@ -924,12 +924,13 @@ body.light .day.today .event-count{
     </div>
 
     <div class="setting-row"><div><b>Tamaño M / N / F</b><small>Rango 14 a 24 px</small></div><div class="range-wrap"><input id="codeSize" type="range" min="14" max="24" value="18"><span id="codeSizeValue" class="range-value">18 px</span></div></div>
+    <div class="setting-row"><div><b>Tamaño número del día</b><small>Rango 10 a 18 px</small></div><div class="range-wrap"><input id="dayNumberSize" type="range" min="10" max="18" value="10"><span id="dayNumberSizeValue" class="range-value">10 px</span></div></div>
     <div class="setting-row"><div><b>Mostrar descripción</b><small>Mañana / Noche / Franco</small></div><label class="switch"><input id="showLabels" type="checkbox" checked><span class="slider"></span></label></div>
     <div class="setting-row"><div><b>Vibración háptica</b><small>Android y equipos compatibles</small></div><label class="switch"><input id="hapticsToggle" type="checkbox" checked><span class="slider"></span></label></div>
   </div>
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.3.6</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.3.7</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -1049,7 +1050,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.3.6';
+const CURRENT_VERSION='4.3.7';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -1110,7 +1111,7 @@ function vibrate(ms){if(hapticsToggle.checked&&navigator.vibrate)navigator.vibra
 function cap(s){return s?s.charAt(0).toUpperCase()+s.slice(1):s}
 function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[ch]))}
 
-const defaults={morning:'#ffd84d',night:'#27aee4',off:'#3fbe62',codeSize:18,showLabels:true,haptics:true};
+const defaults={morning:'#ffd84d',night:'#27aee4',off:'#3fbe62',codeSize:18,dayNumberSize:10,showLabels:true,haptics:true};
 function isTurn5Profile(){return turnSelect.value==='T5'}
 function activeColorStorageKey(kind){return isTurn5Profile()?`turno4x4.color.t5.${kind}`:`turno4x4.color.${kind}`}
 function loadActiveColorProfile(){
@@ -1149,8 +1150,10 @@ function loadSettings(){
  updateTurn5Visibility();
  if(localStorage.getItem('turno4x4.theme')==='light')document.body.classList.add('light');
  let size=Number(localStorage.getItem('turno4x4.codeSize')||defaults.codeSize);if(!Number.isFinite(size)||size<14||size>24)size=18;
+ let daySize=Number(localStorage.getItem('turno4x4.dayNumberSize')||defaults.dayNumberSize);if(!Number.isFinite(daySize)||daySize<10||daySize>18)daySize=10;
  loadActiveColorProfile();
  codeSize.value=size;codeSizeValue.textContent=`${size} px`;
+ dayNumberSize.value=daySize;dayNumberSizeValue.textContent=`${daySize} px`;
  showLabels.checked=localStorage.getItem('turno4x4.showLabels')!=='false';
  hapticsToggle.checked=localStorage.getItem('turno4x4.haptics')!=='false';
  applySettings();
@@ -1160,12 +1163,13 @@ function applySettings(){
  document.documentElement.style.setProperty('--night',nightColor.value);
  document.documentElement.style.setProperty('--off',offColor.value);
  document.documentElement.style.setProperty('--code-size',`${codeSize.value}px`);
+ document.documentElement.style.setProperty('--day-number-size',`${dayNumberSize.value}px`);
 }
 function saveSettings(){
  localStorage.setItem(activeColorStorageKey('morning'),morningColor.value);
  localStorage.setItem(activeColorStorageKey('off'),offColor.value);
  if(!isTurn5Profile())localStorage.setItem(activeColorStorageKey('night'),nightColor.value);
- localStorage.setItem('turno4x4.codeSize',codeSize.value);localStorage.setItem('turno4x4.showLabels',showLabels.checked?'true':'false');localStorage.setItem('turno4x4.haptics',hapticsToggle.checked?'true':'false');
+ localStorage.setItem('turno4x4.codeSize',codeSize.value);localStorage.setItem('turno4x4.dayNumberSize',dayNumberSize.value);localStorage.setItem('turno4x4.showLabels',showLabels.checked?'true':'false');localStorage.setItem('turno4x4.haptics',hapticsToggle.checked?'true':'false');
  applySettings();renderAll();
 }
 function switchActiveColorProfile(){
@@ -1833,8 +1837,9 @@ themeBtn.onclick=()=>{document.body.classList.toggle('light');localStorage.setIt
 settingsBtn.onclick=()=>{updateColorSettingsUI();renderQuickPalette();openModal('settingsModal')};
 [morningColor,nightColor,offColor].forEach(x=>x.oninput=()=>{saveSettings();renderQuickPalette()});
 codeSize.oninput=()=>{codeSizeValue.textContent=`${codeSize.value} px`;saveSettings()};
+dayNumberSize.oninput=()=>{dayNumberSizeValue.textContent=`${dayNumberSize.value} px`;saveSettings()};
 showLabels.onchange=saveSettings;hapticsToggle.onchange=saveSettings;
-$('#resetSettingsBtn').onclick=()=>{morningColor.value=defaults.morning;offColor.value=defaults.off;if(!isTurn5Profile())nightColor.value=defaults.night;codeSize.value=18;codeSizeValue.textContent='18 px';showLabels.checked=true;hapticsToggle.checked=true;saveSettings();updateColorSettingsUI();renderQuickPalette()};
+$('#resetSettingsBtn').onclick=()=>{morningColor.value=defaults.morning;offColor.value=defaults.off;if(!isTurn5Profile())nightColor.value=defaults.night;codeSize.value=18;codeSizeValue.textContent='18 px';dayNumberSize.value=10;dayNumberSizeValue.textContent='10 px';showLabels.checked=true;hapticsToggle.checked=true;saveSettings();updateColorSettingsUI();renderQuickPalette()};
 $('#agendaSaveBtn').onclick=saveAgenda;$('#agendaClearBtn').onclick=clearAgendaForm;$('#agendaNotifyBtn').onclick=requestNotificationPermission;$('#agendaExportBtn').onclick=exportBackup;$('#agendaImportInput').onchange=()=>importBackup($('#agendaImportInput').files[0]);agendaSearchInput.oninput=renderAllAgendaEvents;agendaFilterInput.onchange=renderAllAgendaEvents;
 $('#yearBtn').onclick=()=>{yearViewYear=viewYear;renderYear();openModal('yearModal')};
 $('#settingsAgendaBtn').onclick=()=>{closeModal('settingsModal');setTimeout(()=>openAgenda(selectedDate),80)};
