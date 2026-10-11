@@ -270,7 +270,7 @@ body.light .event-count{
 
 .sheet-backdrop{position:fixed;inset:0;background:rgba(3,7,12,.62);backdrop-filter:blur(3px);z-index:11000;display:none;align-items:flex-end;justify-content:center}
 .sheet-backdrop.open{display:flex}
-.sheet{width:min(760px,100%);max-height:91vh;overflow:auto;border-radius:26px 26px 0 0;padding:10px 14px 96px;animation:sheetUp .25s cubic-bezier(.2,.75,.2,1)}
+.sheet{width:min(760px,100%);max-height:91vh;overflow-y:auto;overflow-x:hidden;border-radius:26px 26px 0 0;padding:10px 14px 96px;animation:sheetUp .25s cubic-bezier(.2,.75,.2,1);touch-action:pan-y;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;scrollbar-gutter:stable}
 @keyframes sheetUp{from{transform:translateY(35px);opacity:.4}to{transform:translateY(0);opacity:1}}
 .sheet-handle{width:46px;height:5px;border-radius:5px;background:var(--line);margin:2px auto 10px}
 .sheet-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:8px}.sheet-head h2{margin:0;font-size:18px}.sheet-head small{display:block;font-size:10px;color:var(--muted);margin-top:3px}
@@ -288,6 +288,23 @@ body.light .event-count{
 .form-field textarea{min-height:64px;resize:vertical}.full{grid-column:1/-1}
 .search-row{display:grid;grid-template-columns:1fr 135px;gap:7px}.search-row input,.search-row select{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:11px;padding:9px;font-size:10px}
 .upcoming-list{display:grid;gap:6px}.upcoming-item{width:100%;text-align:left;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:11px;padding:8px 9px}.upcoming-item b{display:block;font-size:10px}.upcoming-item span{display:block;color:var(--muted);font-size:8px;margin-top:2px}
+.agenda-all-title{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.agenda-total-count{display:inline-grid;place-items:center;min-width:30px;height:22px;padding:0 8px;border-radius:999px;background:var(--panel2);border:1px solid var(--line);color:var(--text);font-size:9px;font-weight:950}
+.agenda-all-box{margin-top:8px;max-height:min(320px,36vh);overflow-y:auto;overflow-x:hidden;border:1px solid var(--line);border-radius:15px;background:color-mix(in srgb,var(--panel2) 88%,transparent);padding:7px;touch-action:pan-y;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.agenda-all-list{display:grid;gap:7px}
+.agenda-all-item{position:relative;border:1px solid var(--line);border-left:4px solid var(--cat-color,#8b5cf6);border-radius:12px;background:var(--panel);padding:9px 9px 8px}
+.agenda-all-top{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:start}
+.agenda-all-date{font-size:9px;font-weight:950;color:var(--accent)}
+.agenda-all-event-title{font-size:11px;font-weight:950;margin-top:2px;line-height:1.25}
+.agenda-all-time{font-size:9px;font-weight:900;color:var(--text);white-space:nowrap}
+.agenda-all-meta{font-size:8px;color:var(--muted);margin-top:5px;line-height:1.35}
+.agenda-all-notes{font-size:8px;color:var(--muted);margin-top:4px;white-space:pre-wrap;line-height:1.35}
+.agenda-all-actions{display:flex;justify-content:flex-end;margin-top:7px}
+.agenda-all-delete{min-height:32px;padding:0 12px;border-radius:9px;border:1px solid rgba(255,95,114,.35);background:rgba(255,95,114,.08);color:#ff7c8d;font-size:9px;font-weight:950}
+.agenda-all-delete:active{transform:scale(.97)}
+@media(max-width:620px){
+  .agenda-all-box{max-height:34vh}
+}
 .backup-status{font-size:9px;color:var(--muted);margin-top:7px}
 
 .year-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.mini-month{border:1px solid var(--line);background:var(--panel2);border-radius:14px;padding:7px;cursor:pointer}.mini-month h3{text-align:center;margin:0 0 5px;font-size:10px;text-transform:uppercase}.mini-days{display:grid;grid-template-columns:repeat(7,1fr);gap:1px}.mini-day{aspect-ratio:1;border-radius:3px;display:grid;place-items:center;font-size:6px;font-weight:800}.mini-day.blank{background:transparent}.mini-day.M,.mini-day.D{background:var(--morning);color:var(--morning-text)}.mini-day.N{background:var(--night);color:var(--night-text)}.mini-day.F{background:var(--off);color:var(--off-text)}.mini-day.has-event{outline:1px solid #a78bfa}
@@ -898,7 +915,7 @@ body.light .day.today .event-count{
   </div>
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.3.4</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.3.5</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -922,9 +939,14 @@ body.light .day.today .event-count{
     </div>
   </div>
 
-  <div class="section-title">Agenda completa</div>
+  <div class="section-title agenda-all-title">
+    <span>Todos los eventos guardados</span>
+    <span id="agendaAllCount" class="agenda-total-count">0</span>
+  </div>
   <div class="search-row"><input id="agendaSearchInput" placeholder="Buscar eventos..."><select id="agendaFilterInput"><option value="all">Todas</option><option value="personal">Personal</option><option value="trabajo">Trabajo</option><option value="salud">Salud</option><option value="cumple">Cumpleaños</option><option value="tramite">Trámite</option></select></div>
-  <div id="agendaUpcoming" class="upcoming-list"></div>
+  <div class="agenda-all-box">
+    <div id="agendaAllList" class="agenda-all-list"></div>
+  </div>
 
   <div class="action-row"><button id="agendaNotifyBtn" class="btn-secondary">🔔 Activar avisos</button><button id="agendaExportBtn" class="btn-secondary">⬇️ Copia de seguridad</button></div>
   <div class="action-row"><label class="btn-secondary" style="min-height:42px;border:1px solid var(--line);border-radius:12px;display:grid;place-items:center;font-weight:900;cursor:pointer" for="agendaImportInput">⬆️ Restaurar copia</label><button class="btn-primary" data-close="agendaSheet">LISTO</button></div>
@@ -993,7 +1015,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.3.4';
+const CURRENT_VERSION='4.3.5';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -1015,7 +1037,7 @@ const $$=s=>[...document.querySelectorAll(s)];
 const cal=$('#calendar'),calendarCard=$('#calendarCard'),monthName=$('#monthName'),selectedInfo=$('#selectedInfo');
 const turnSelect=$('#turnSelect'),turn5Select=$('#turn5Select'),turn5SubRow=$('#turn5SubRow'),themeBtn=$('#themeBtn');
 const detailTitle=$('#detailTitle'),detailGrid=$('#detailGrid'),cycleStrip=$('#cycleStrip'),cyclePosition=$('#cyclePosition'),cycleTitle=$('#cycleTitle'),shiftLegend=$('#shiftLegend');
-const agendaSheet=$('#agendaSheet'),agendaDateText=$('#agendaDateText'),agendaShift=$('#agendaShift'),agendaDayList=$('#agendaDayList'),agendaUpcoming=$('#agendaUpcoming');
+const agendaSheet=$('#agendaSheet'),agendaDateText=$('#agendaDateText'),agendaShift=$('#agendaShift'),agendaDayList=$('#agendaDayList'),agendaAllList=$('#agendaAllList'),agendaAllCount=$('#agendaAllCount');
 const agendaTitleInput=$('#agendaTitleInput'),agendaTimeInput=$('#agendaTimeInput'),agendaCategoryInput=$('#agendaCategoryInput'),agendaReminderInput=$('#agendaReminderInput'),agendaRepeatInput=$('#agendaRepeatInput'),agendaNotesInput=$('#agendaNotesInput');
 const agendaSearchInput=$('#agendaSearchInput'),agendaFilterInput=$('#agendaFilterInput'),backupStatus=$('#backupStatus');
 const settingsBtn=$('#settingsBtn'),morningColor=$('#morningColor'),nightColor=$('#nightColor'),offColor=$('#offColor'),codeSize=$('#codeSize'),codeSizeValue=$('#codeSizeValue'),showLabels=$('#showLabels'),hapticsToggle=$('#hapticsToggle');
@@ -1547,7 +1569,7 @@ function renderAgenda(){
  agendaDayList.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>editAgenda(b.dataset.edit));
  agendaDayList.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>deleteAgenda(b.dataset.del));
  agendaDayList.querySelectorAll('[data-ics]').forEach(b=>b.onclick=()=>downloadICS(b.dataset.ics,b.dataset.occ));
- renderUpcoming();renderBackupStatus();
+ renderAllAgendaEvents();renderBackupStatus();
 }
 function saveAgenda(){
  const title=agendaTitleInput.value.trim();if(!title){agendaTitleInput.focus();return}
@@ -1559,15 +1581,37 @@ function saveAgenda(){
 }
 function editAgenda(id){const item=loadAgendaData().find(x=>x.id===id);if(!item)return;const n=normalizedItem(item);agendaEditingId=id;agendaTitleInput.value=n.title||'';agendaTimeInput.value=n.time||'';agendaCategoryInput.value=n.category;agendaReminderInput.value=String(n.reminder||'none');agendaRepeatInput.value=n.repeat;agendaNotesInput.value=n.notes||'';$('#agendaSaveBtn').textContent='GUARDAR CAMBIOS';agendaTitleInput.focus()}
 function deleteAgenda(id){const item=loadAgendaData().find(x=>x.id===id);if(!item||!confirm(`¿Borrar "${item.title}"${item.repeat&&item.repeat!=='none'?' y toda su repetición':''}?`))return;saveAgendaData(loadAgendaData().filter(x=>x.id!==id));renderAgenda();renderCalendar()}
-function upcomingOccurrences(days=365){
- const search=agendaSearchInput.value.trim().toLowerCase(),filter=agendaFilterInput.value,res=[],start=new Date();
- for(let i=0;i<=days&&res.length<60;i++){const d=addDays(start,i);for(const item of agendaForDate(d)){const hay=`${item.title} ${item.notes||''}`.toLowerCase();if(search&&!hay.includes(search))continue;if(filter!=='all'&&item.category!==filter)continue;res.push({...item,_date:new Date(d)});if(res.length>=60)break}}
- return res
+function allStoredAgendaItems(){
+ const search=agendaSearchInput.value.trim().toLowerCase(),filter=agendaFilterInput.value;
+ return loadAgendaData().map(normalizedItem).filter(item=>{
+  const hay=`${item.title||''} ${item.notes||''} ${item.date||''} ${scheduleName(item.turn||'')}`.toLowerCase();
+  if(search&&!hay.includes(search))return false;
+  if(filter!=='all'&&item.category!==filter)return false;
+  return true
+ }).sort((a,b)=>{
+  const da=String(a.date||'9999-12-31'),db=String(b.date||'9999-12-31');
+  if(da!==db)return da.localeCompare(db);
+  return String(a.time||'99:99').localeCompare(String(b.time||'99:99'));
+ })
 }
-function renderUpcoming(){
- const list=upcomingOccurrences();agendaUpcoming.innerHTML='';
- if(!list.length){agendaUpcoming.innerHTML='<div class="agenda-empty">No encontré próximos eventos.</div>';return}
- list.slice(0,14).forEach(item=>{const [catName,catColor]=categoryInfo[item.category]||categoryInfo.personal,b=document.createElement('button');b.className='upcoming-item';b.style.borderLeft=`4px solid ${catColor}`;b.innerHTML=`<b>${shortDateFmt.format(item._date)}${item.time?' · '+item.time:''} — ${escapeHtml(item.title)}</b><span>${catName} · ${repeatLabel(item.repeat)}</span>`;b.onclick=()=>{agendaSelectedDate=item._date;clearAgendaForm();renderAgenda()};agendaUpcoming.appendChild(b)})
+function renderAllAgendaEvents(){
+ const total=loadAgendaData().length,list=allStoredAgendaItems();
+ agendaAllCount.textContent=agendaSearchInput.value.trim()||agendaFilterInput.value!=='all'?`${list.length}/${total}`:String(total);
+ agendaAllList.innerHTML='';
+ if(!list.length){
+  agendaAllList.innerHTML=`<div class="agenda-empty">${total?'No hay eventos que coincidan con el filtro.':'Todavía no hay eventos guardados.'}</div>`;
+  return
+ }
+ list.forEach(item=>{
+  const [catName,catColor]=categoryInfo[item.category]||categoryInfo.personal;
+  const d=parseDateKey(item.date),card=document.createElement('div');
+  card.className='agenda-all-item';
+  card.style.setProperty('--cat-color',catColor);
+  const turnName=item.turn?scheduleName(item.turn):'';
+  card.innerHTML=`<div class="agenda-all-top"><div><div class="agenda-all-date">${shortDateFmt.format(d)}</div><div class="agenda-all-event-title">${escapeHtml(item.title||'Sin título')}</div></div><div class="agenda-all-time">${item.time||'Todo el día'}</div></div>${item.notes?`<div class="agenda-all-notes">${escapeHtml(item.notes)}</div>`:''}<div class="agenda-all-meta">${catName} · ${repeatLabel(item.repeat)}${turnName?' · '+escapeHtml(turnName):''} · 🔔 ${reminderLabel(item.reminder)}</div><div class="agenda-all-actions"><button class="agenda-all-delete" data-all-del="${item.id}">🗑 ELIMINAR</button></div>`;
+  agendaAllList.appendChild(card);
+ });
+ agendaAllList.querySelectorAll('[data-all-del]').forEach(b=>b.onclick=()=>deleteAgenda(b.dataset.allDel));
 }
 async function requestNotificationPermission(){if(!('Notification'in window)){alert('Este dispositivo no ofrece notificaciones web.');return false}try{const p=Notification.permission==='granted'?'granted':await Notification.requestPermission();$('#agendaNotifyBtn').textContent=p==='granted'?'🔔 Avisos activados':'🔕 Avisos bloqueados';return p==='granted'}catch{return false}}
 function loadNotified(){try{return JSON.parse(localStorage.getItem(NOTIFIED_KEY)||'{}')}catch{return{}}}
@@ -1749,7 +1793,7 @@ settingsBtn.onclick=()=>{updateColorSettingsUI();renderQuickPalette();openModal(
 codeSize.oninput=()=>{codeSizeValue.textContent=`${codeSize.value} px`;saveSettings()};
 showLabels.onchange=saveSettings;hapticsToggle.onchange=saveSettings;
 $('#resetSettingsBtn').onclick=()=>{morningColor.value=defaults.morning;offColor.value=defaults.off;if(!isTurn5Profile())nightColor.value=defaults.night;codeSize.value=18;codeSizeValue.textContent='18 px';showLabels.checked=true;hapticsToggle.checked=true;saveSettings();updateColorSettingsUI();renderQuickPalette()};
-$('#agendaSaveBtn').onclick=saveAgenda;$('#agendaClearBtn').onclick=clearAgendaForm;$('#agendaNotifyBtn').onclick=requestNotificationPermission;$('#agendaExportBtn').onclick=exportBackup;$('#agendaImportInput').onchange=()=>importBackup($('#agendaImportInput').files[0]);agendaSearchInput.oninput=renderUpcoming;agendaFilterInput.onchange=renderUpcoming;
+$('#agendaSaveBtn').onclick=saveAgenda;$('#agendaClearBtn').onclick=clearAgendaForm;$('#agendaNotifyBtn').onclick=requestNotificationPermission;$('#agendaExportBtn').onclick=exportBackup;$('#agendaImportInput').onchange=()=>importBackup($('#agendaImportInput').files[0]);agendaSearchInput.oninput=renderAllAgendaEvents;agendaFilterInput.onchange=renderAllAgendaEvents;
 $('#yearBtn').onclick=()=>{yearViewYear=viewYear;renderYear();openModal('yearModal')};
 $('#settingsAgendaBtn').onclick=()=>{closeModal('settingsModal');setTimeout(()=>openAgenda(selectedDate),80)};
 $('#settingsStatsBtn').onclick=()=>{closeModal('settingsModal');renderStats();setTimeout(()=>openModal('statsModal'),80)};
