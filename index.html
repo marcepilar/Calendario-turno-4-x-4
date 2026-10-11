@@ -299,13 +299,27 @@ body.light .event-count{
 .agenda-all-time{font-size:9px;font-weight:900;color:var(--text);white-space:nowrap}
 .agenda-all-meta{font-size:8px;color:var(--muted);margin-top:5px;line-height:1.35}
 .agenda-all-notes{font-size:8px;color:var(--muted);margin-top:4px;white-space:pre-wrap;line-height:1.35}
-.agenda-all-actions{display:flex;justify-content:flex-end;margin-top:7px}
+.agenda-all-actions{display:flex;justify-content:flex-end;gap:6px;flex-wrap:wrap;margin-top:7px}
+.agenda-all-calendar{min-height:32px;padding:0 10px;border-radius:9px;border:1px solid var(--line);background:var(--panel2);color:var(--text);font-size:8px;font-weight:950}
 .agenda-all-delete{min-height:32px;padding:0 12px;border-radius:9px;border:1px solid rgba(255,95,114,.35);background:rgba(255,95,114,.08);color:#ff7c8d;font-size:9px;font-weight:950}
-.agenda-all-delete:active{transform:scale(.97)}
+.agenda-all-calendar:active,.agenda-all-delete:active{transform:scale(.97)}
 @media(max-width:620px){
   .agenda-all-box{max-height:34vh}
 }
 .backup-status{font-size:9px;color:var(--muted);margin-top:7px}
+.reminder-guide{display:grid;gap:8px}
+.reminder-guide-card{display:grid;grid-template-columns:36px 1fr auto;gap:9px;align-items:center;border:1px solid var(--line);background:var(--panel2);border-radius:14px;padding:10px}
+.reminder-guide-card.calendar-guide{grid-template-columns:36px 1fr}
+.reminder-guide-icon{width:36px;height:36px;display:grid;place-items:center;border-radius:11px;background:var(--panel);border:1px solid var(--line);font-size:18px}
+.reminder-guide-text b{display:block;font-size:11px}
+.reminder-guide-text span{display:block;color:var(--muted);font-size:9px;line-height:1.35;margin-top:3px}
+.reminder-guide-text strong{color:var(--text);font-weight:950}
+.reminder-guide-btn{min-height:34px;padding:0 10px;border-radius:9px;border:1px solid var(--line);background:var(--panel);color:var(--text);font-size:8px;font-weight:950;white-space:nowrap}
+.reminder-guide-btn:active{transform:scale(.97)}
+@media(max-width:480px){
+  .reminder-guide-card{grid-template-columns:34px 1fr}
+  .reminder-guide-card .reminder-guide-btn{grid-column:1/-1;width:100%}
+}
 
 .year-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.mini-month{border:1px solid var(--line);background:var(--panel2);border-radius:14px;padding:7px;cursor:pointer}.mini-month h3{text-align:center;margin:0 0 5px;font-size:10px;text-transform:uppercase}.mini-days{display:grid;grid-template-columns:repeat(7,1fr);gap:1px}.mini-day{aspect-ratio:1;border-radius:3px;display:grid;place-items:center;font-size:6px;font-weight:800}.mini-day.blank{background:transparent}.mini-day.M,.mini-day.D{background:var(--morning);color:var(--morning-text)}.mini-day.N{background:var(--night);color:var(--night-text)}.mini-day.F{background:var(--off);color:var(--off-text)}.mini-day.has-event{outline:1px solid #a78bfa}
 .year-nav{display:grid;grid-template-columns:44px 1fr 44px;gap:8px;align-items:center;margin-bottom:10px}.year-nav b{text-align:center;font-size:18px}
@@ -915,7 +929,7 @@ body.light .day.today .event-count{
   </div>
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.3.5</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.3.6</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -948,11 +962,31 @@ body.light .day.today .event-count{
     <div id="agendaAllList" class="agenda-all-list"></div>
   </div>
 
-  <div class="action-row"><button id="agendaNotifyBtn" class="btn-secondary">🔔 Activar avisos</button><button id="agendaExportBtn" class="btn-secondary">⬇️ Copia de seguridad</button></div>
-  <div class="action-row"><label class="btn-secondary" style="min-height:42px;border:1px solid var(--line);border-radius:12px;display:grid;place-items:center;font-weight:900;cursor:pointer" for="agendaImportInput">⬆️ Restaurar copia</label><button class="btn-primary" data-close="agendaSheet">LISTO</button></div>
+  <div class="section-title">Cómo recibir los recordatorios</div>
+  <div class="reminder-guide">
+    <div class="reminder-guide-card">
+      <div class="reminder-guide-icon">🔔</div>
+      <div class="reminder-guide-text">
+        <b>Aviso de Turnos 4×4</b>
+        <span>La app te avisa mientras Turnos 4×4 esté abierta o activa.</span>
+      </div>
+      <button id="agendaNotifyBtn" class="reminder-guide-btn">ACTIVAR AVISOS</button>
+    </div>
+
+    <div class="reminder-guide-card calendar-guide">
+      <div class="reminder-guide-icon">📅</div>
+      <div class="reminder-guide-text">
+        <b>Calendario del teléfono</b>
+        <span>Para recibir el aviso aunque Turnos 4×4 esté cerrada: guardá el evento y después tocá <strong>AGREGAR AL CALENDARIO</strong> en ese evento.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">Copia de seguridad</div>
+  <div class="action-row"><button id="agendaExportBtn" class="btn-secondary">⬇️ Copia de seguridad</button><label class="btn-secondary" style="min-height:42px;border:1px solid var(--line);border-radius:12px;display:grid;place-items:center;font-weight:900;cursor:pointer" for="agendaImportInput">⬆️ Restaurar copia</label></div>
+  <div class="action-row"><button class="btn-primary" data-close="agendaSheet" style="grid-column:1/-1">LISTO</button></div>
   <input id="agendaImportInput" type="file" accept=".json,application/json" hidden>
   <div id="backupStatus" class="backup-status"></div>
-  <div class="backup-status">Los avisos internos requieren que la PWA esté activa. Para alarmas fiables con la app cerrada, usá “Calendario” en cada evento.</div>
 </div>
 
 <div class="agenda-fixed-actions">
@@ -1015,7 +1049,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.3.5';
+const CURRENT_VERSION='4.3.6';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -1563,7 +1597,7 @@ function renderAgenda(){
  if(!items.length)agendaDayList.innerHTML='<div class="agenda-empty">Todavía no hay nada agendado para este día.</div>';
  items.forEach(item=>{
   const [catName,catColor]=categoryInfo[item.category]||categoryInfo.personal,card=document.createElement('div');card.className='agenda-item';card.style.setProperty('--cat-color',catColor);
-  card.innerHTML=`<div class="agenda-item-top"><div class="agenda-item-title">${escapeHtml(item.title)}</div><div class="agenda-item-time">${item.time||'Todo el día'}</div></div>${item.notes?`<div class="agenda-item-notes">${escapeHtml(item.notes)}</div>`:''}<div class="agenda-item-meta">${catName} · ${repeatLabel(item.repeat)} · 🔔 ${reminderLabel(item.reminder)}</div><div class="agenda-actions"><button data-edit="${item.id}">✏️ Editar</button><button data-ics="${item.id}" data-occ="${item._occurrenceDate}">📅 Calendario</button><button class="danger" data-del="${item.id}">🗑 Borrar</button></div>`;
+  card.innerHTML=`<div class="agenda-item-top"><div class="agenda-item-title">${escapeHtml(item.title)}</div><div class="agenda-item-time">${item.time||'Todo el día'}</div></div>${item.notes?`<div class="agenda-item-notes">${escapeHtml(item.notes)}</div>`:''}<div class="agenda-item-meta">${catName} · ${repeatLabel(item.repeat)} · 🔔 ${reminderLabel(item.reminder)}</div><div class="agenda-actions"><button data-edit="${item.id}">✏️ Editar</button><button data-ics="${item.id}" data-occ="${item._occurrenceDate}">📅 Agregar al calendario</button><button class="danger" data-del="${item.id}">🗑 Borrar</button></div>`;
   agendaDayList.appendChild(card);
  });
  agendaDayList.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>editAgenda(b.dataset.edit));
@@ -1608,12 +1642,20 @@ function renderAllAgendaEvents(){
   card.className='agenda-all-item';
   card.style.setProperty('--cat-color',catColor);
   const turnName=item.turn?scheduleName(item.turn):'';
-  card.innerHTML=`<div class="agenda-all-top"><div><div class="agenda-all-date">${shortDateFmt.format(d)}</div><div class="agenda-all-event-title">${escapeHtml(item.title||'Sin título')}</div></div><div class="agenda-all-time">${item.time||'Todo el día'}</div></div>${item.notes?`<div class="agenda-all-notes">${escapeHtml(item.notes)}</div>`:''}<div class="agenda-all-meta">${catName} · ${repeatLabel(item.repeat)}${turnName?' · '+escapeHtml(turnName):''} · 🔔 ${reminderLabel(item.reminder)}</div><div class="agenda-all-actions"><button class="agenda-all-delete" data-all-del="${item.id}">🗑 ELIMINAR</button></div>`;
+  card.innerHTML=`<div class="agenda-all-top"><div><div class="agenda-all-date">${shortDateFmt.format(d)}</div><div class="agenda-all-event-title">${escapeHtml(item.title||'Sin título')}</div></div><div class="agenda-all-time">${item.time||'Todo el día'}</div></div>${item.notes?`<div class="agenda-all-notes">${escapeHtml(item.notes)}</div>`:''}<div class="agenda-all-meta">${catName} · ${repeatLabel(item.repeat)}${turnName?' · '+escapeHtml(turnName):''} · 🔔 ${reminderLabel(item.reminder)}</div><div class="agenda-all-actions"><button class="agenda-all-calendar" data-all-ics="${item.id}" data-all-occ="${item.date}">📅 AGREGAR AL CALENDARIO</button><button class="agenda-all-delete" data-all-del="${item.id}">🗑 ELIMINAR</button></div>`;
   agendaAllList.appendChild(card);
  });
+ agendaAllList.querySelectorAll('[data-all-ics]').forEach(b=>b.onclick=()=>downloadICS(b.dataset.allIcs,b.dataset.allOcc));
  agendaAllList.querySelectorAll('[data-all-del]').forEach(b=>b.onclick=()=>deleteAgenda(b.dataset.allDel));
 }
-async function requestNotificationPermission(){if(!('Notification'in window)){alert('Este dispositivo no ofrece notificaciones web.');return false}try{const p=Notification.permission==='granted'?'granted':await Notification.requestPermission();$('#agendaNotifyBtn').textContent=p==='granted'?'🔔 Avisos activados':'🔕 Avisos bloqueados';return p==='granted'}catch{return false}}
+async function requestNotificationPermission(){
+ if(!('Notification'in window)){alert('Este dispositivo no ofrece notificaciones web. Para recibir avisos con la app cerrada, agregá el evento al calendario del teléfono.');return false}
+ try{
+  const p=Notification.permission==='granted'?'granted':await Notification.requestPermission();
+  $('#agendaNotifyBtn').textContent=p==='granted'?'🔔 AVISOS ACTIVADOS':'🔕 AVISOS BLOQUEADOS';
+  return p==='granted'
+ }catch{return false}
+}
 function loadNotified(){try{return JSON.parse(localStorage.getItem(NOTIFIED_KEY)||'{}')}catch{return{}}}
 function reminderTrigger(item,d){if(!item.time||item.reminder==='none')return null;const x=new Date(d),[h,m]=item.time.split(':').map(Number);x.setHours(h,m,0,0);return new Date(x.getTime()-Number(item.reminder||0)*60000)}
 async function checkReminders(){
