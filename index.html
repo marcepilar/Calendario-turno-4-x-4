@@ -624,15 +624,15 @@ body.light .event-count{
   overflow:hidden !important;
   display:grid;
   grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-  grid-template-rows:auto auto auto minmax(0,1fr) auto;
+  grid-template-rows:auto auto auto auto auto;
   grid-template-areas:
     "head head"
     "cards cards"
     "turn turn"
     "month year"
     "off salary";
-  gap:7px 8px;
-  align-content:stretch;
+  gap:6px 8px;
+  align-content:start;
   padding:7px 10px 9px;
 }
 #statsModal .modal-head{
@@ -726,9 +726,11 @@ body.light .event-count{
 #statsModal .stats-year{
   border:1px solid var(--line);
   border-radius:13px;
-  padding:7px 8px;
+  padding:7px 8px 8px;
   background:color-mix(in srgb,var(--panel2) 88%,transparent);
   overflow:hidden;
+  align-self:start;
+  min-height:0;
 }
 #statsModal .bar-row{
   grid-template-columns:48px minmax(0,1fr) 24px;
@@ -891,6 +893,30 @@ body.light .event-count{
  .form-grid{grid-template-columns:1fr}.full{grid-column:auto}.search-row{grid-template-columns:1fr}.top-actions{gap:5px}
 }
 @media(max-width:380px){.day{min-height:61px}.detail-grid{grid-template-columns:1fr}.year-grid{grid-template-columns:1fr 1fr}}
+
+/* ===== V4.3.15 · PROTECCIÓN DE SELECCIÓN/COPIA ===== */
+html,body,
+body *:not(input):not(textarea):not([contenteditable="true"]):not([contenteditable=""]){
+  -webkit-user-select:none !important;
+  user-select:none !important;
+  -webkit-touch-callout:none !important;
+}
+input,
+textarea,
+[contenteditable="true"],
+[contenteditable=""]{
+  -webkit-user-select:text !important;
+  user-select:text !important;
+  -webkit-touch-callout:default !important;
+}
+input::selection,
+textarea::selection,
+[contenteditable="true"]::selection,
+[contenteditable=""]::selection{
+  background:Highlight;
+  color:HighlightText;
+}
+
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
 
   .agenda-fixed-actions{
@@ -1480,7 +1506,7 @@ body.light .day.today .event-count{
   </div>
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.3.14</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.3.15</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -1627,7 +1653,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.3.14';
+const CURRENT_VERSION='4.3.15';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -1660,6 +1686,18 @@ let now=new Date(),viewYear=now.getFullYear(),viewMonth=now.getMonth(),selectedD
 let agendaSelectedDate=new Date(selectedDate),agendaEditingId=null,agendaHoldTimer=null,agendaHoldOpened=false,agendaAllExpanded=false;
 let swipeStartX=0,swipeStartY=0,swipeStartedAt=0,calendarSwipeMoved=false,calendarSwipeActive=false,monthAnimating=false,yearViewYear=viewYear;
 const AGENDA_HOLD_MS=450;
+
+function isEditableTarget(target){
+ if(!target || !(target instanceof Element))return false;
+ return Boolean(target.closest('input, textarea, [contenteditable="true"], [contenteditable=""]'));
+}
+['copy','cut','paste','selectstart','contextmenu','dragstart'].forEach(type=>{
+ document.addEventListener(type,e=>{
+  if(isEditableTarget(e.target))return;
+  e.preventDefault();
+ },{capture:true});
+});
+
 
 const monthFmt=new Intl.DateTimeFormat('es-AR',{month:'long',year:'numeric'});
 const longFmt=new Intl.DateTimeFormat('es-AR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
