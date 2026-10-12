@@ -300,8 +300,8 @@ body.light .event-count{
 .agenda-all-time{font-size:9px;font-weight:950;color:var(--text);white-space:nowrap}
 .agenda-all-meta{font-size:8px;color:var(--muted);margin-top:5px;line-height:1.35}
 .agenda-all-notes{font-size:8px;color:var(--muted);margin-top:4px;white-space:pre-wrap;line-height:1.35}
-.agenda-all-actions{display:flex;justify-content:stretch;gap:6px;flex-wrap:wrap;margin-top:8px}
-.agenda-all-edit,.agenda-all-calendar,.agenda-all-delete{flex:1;min-height:34px;padding:0 10px;border-radius:10px;font-weight:950}
+.agenda-all-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:8px}
+.agenda-all-edit,.agenda-all-calendar,.agenda-all-delete{width:100%;min-width:0;min-height:34px;padding:0 7px;border-radius:10px;font-weight:950;white-space:nowrap}
 .agenda-all-edit{border:1px solid var(--line);background:var(--panel2);color:var(--text);font-size:8px}
 .agenda-all-calendar{border:1px solid var(--line);background:var(--panel2);color:var(--text);font-size:8px}
 .agenda-all-delete{border:1px solid rgba(255,95,114,.35);background:rgba(255,95,114,.08);color:#ff7c8d;font-size:8px}
@@ -491,8 +491,22 @@ body.light .event-count{
   .agenda-overview{grid-template-columns:1fr 1fr}
   .agenda-search-shell{grid-template-columns:1fr}
   .agenda-panel{padding:9px;border-radius:16px}
-  .agenda-all-actions{grid-template-columns:1fr 1fr}
-  .agenda-all-calendar{grid-column:1/-1}
+  .agenda-all-actions{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:5px;
+  }
+  .agenda-all-edit,
+  .agenda-all-calendar,
+  .agenda-all-delete{
+    grid-column:auto !important;
+    width:100%;
+    min-width:0;
+    min-height:34px;
+    padding:0 5px;
+    font-size:7px;
+    white-space:nowrap;
+  }
 }
 
 .year-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.mini-month{border:1px solid var(--line);background:var(--panel2);border-radius:14px;padding:7px;cursor:pointer}.mini-month h3{text-align:center;margin:0 0 5px;font-size:10px;text-transform:uppercase}.mini-days{display:grid;grid-template-columns:repeat(7,1fr);gap:1px}.mini-day{aspect-ratio:1;border-radius:3px;display:grid;place-items:center;font-size:6px;font-weight:800}.mini-day.blank{background:transparent}.mini-day.M,.mini-day.D{background:var(--morning);color:var(--morning-text)}.mini-day.N{background:var(--night);color:var(--night-text)}.mini-day.F{background:var(--off);color:var(--off-text)}.mini-day.has-event{outline:1px solid #a78bfa}
@@ -1104,7 +1118,7 @@ body.light .day.today .event-count{
   </div>
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.3.9</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.3.10</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -1249,7 +1263,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.3.9';
+const CURRENT_VERSION='4.3.10';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
