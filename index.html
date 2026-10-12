@@ -1362,6 +1362,202 @@ body.light .event-count{
   #statsModal .next-off{font-size:7.5px}
 }
 
+
+/* ===== ESTADÍSTICAS V4.4.5 · PREMIUM REFINEMENT ===== */
+#statsModal .stats-modal-window{
+  position:relative;
+  background:
+    radial-gradient(circle at 82% 4%,rgba(67,168,255,.10),transparent 26%),
+    radial-gradient(circle at 12% 84%,rgba(66,214,176,.05),transparent 28%),
+    color-mix(in srgb,var(--panel) 98%,#0d1624 2%);
+  border-color:rgba(132,160,196,.22);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025),0 22px 60px rgba(0,0,0,.42);
+}
+#statsModal .stats-head{
+  border-bottom:1px solid rgba(145,168,198,.12);
+}
+#statsModal .stats-head-copy h2{
+  display:flex;align-items:center;gap:8px;
+  font-size:20px;letter-spacing:-.025em;
+}
+#statsModal .stats-head-icon{
+  width:27px;height:27px;display:grid;place-items:center;border-radius:9px;
+  font-size:13px;color:#dff4ff;
+  background:linear-gradient(145deg,rgba(67,168,255,.26),rgba(94,83,255,.14));
+  border:1px solid rgba(92,162,255,.30);
+  box-shadow:0 5px 15px rgba(42,115,255,.13);
+}
+#statsModal .stats-head small{font-size:10px;font-weight:700;color:#91a2b8}
+#statsModal .close-btn{
+  background:linear-gradient(180deg,rgba(38,50,67,.94),rgba(25,35,49,.94));
+  border:1px solid rgba(153,176,207,.20);
+  box-shadow:0 8px 20px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.025);
+}
+
+/* tarjetas superiores */
+#statsModal .stats-grid{gap:7px}
+#statsModal .stat-card{
+  --stat-accent:var(--accent2);
+  --stat-glow:rgba(67,168,255,.12);
+  position:relative;overflow:hidden;justify-content:flex-end;
+  min-height:78px;border-radius:15px;padding:9px 9px 10px;
+  background:
+    radial-gradient(circle at 86% 5%,var(--stat-glow),transparent 48%),
+    linear-gradient(180deg,rgba(35,47,64,.96),rgba(27,38,53,.98));
+  border:1px solid rgba(145,169,199,.18);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 7px 18px rgba(0,0,0,.13);
+}
+#statsModal .stat-card::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:3px;
+  background:var(--stat-accent);opacity:.82;
+}
+#statsModal .stat-card i{
+  position:absolute;right:8px;top:7px;width:23px;height:23px;display:grid;place-items:center;
+  border-radius:8px;color:var(--stat-accent);
+  background:color-mix(in srgb,var(--stat-accent) 12%,transparent);
+  border:1px solid color-mix(in srgb,var(--stat-accent) 22%,transparent);
+  font-size:11px;font-style:normal;font-weight:950;
+}
+#statsModal .stat-card small{font-size:7.4px;letter-spacing:.055em;color:#9dabc0}
+#statsModal .stat-card b{font-size:22px;letter-spacing:-.025em}
+#statsModal .stat-morning{--stat-accent:var(--morning);--stat-glow:rgba(255,216,77,.11)}
+#statsModal .stat-night{--stat-accent:var(--night);--stat-glow:rgba(39,174,228,.11)}
+#statsModal .stat-off{--stat-accent:var(--off);--stat-glow:rgba(63,190,98,.11)}
+#statsModal .stat-hours{--stat-accent:#8ea4ff;--stat-glow:rgba(105,109,255,.12)}
+#statsModal .stat-cycle{--stat-accent:#b38cff;--stat-glow:rgba(179,140,255,.11)}
+
+/* títulos de sección */
+#statsModal .stats-section h3{
+  display:flex;align-items:center;gap:6px;
+  color:#f3f6fb;font-size:11.2px;font-weight:950;letter-spacing:-.012em;
+}
+#statsModal .stats-title-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--accent2);
+  box-shadow:0 0 0 4px rgba(67,168,255,.08);
+}
+#statsModal .stats-title-mark{
+  width:21px;height:21px;display:grid;place-items:center;border-radius:7px;
+  background:rgba(67,168,255,.09);border:1px solid rgba(67,168,255,.14);
+  color:#80c4ff;font-size:10px;
+}
+
+/* hero del turno */
+#statsModal .turn-end-card{
+  border-radius:19px;padding:14px 15px;
+  background:
+    radial-gradient(circle at 88% 18%,rgba(64,126,255,.20),transparent 35%),
+    radial-gradient(circle at 97% 92%,rgba(66,214,176,.07),transparent 26%),
+    linear-gradient(135deg,rgba(31,43,60,.98),rgba(24,35,51,.98));
+  border:1px solid rgba(92,143,218,.28);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 10px 26px rgba(0,0,0,.17);
+}
+#statsModal .turn-end-card::before{
+  content:"";position:absolute;left:0;top:16px;bottom:16px;width:3px;border-radius:999px;
+  background:linear-gradient(var(--accent2),var(--accent));
+  box-shadow:0 0 15px rgba(67,168,255,.30);
+}
+#statsModal .turn-end-copy small{color:#8ea6c4;font-size:7.8px;letter-spacing:.085em}
+#statsModal .turn-end-copy b{
+  font-size:clamp(28px,5vw,38px);font-variant-numeric:tabular-nums;
+  letter-spacing:.035em;color:#f8fbff;text-shadow:0 0 18px rgba(71,156,255,.10);
+}
+#statsModal .turn-end-copy span{font-size:9.5px;color:#9dadc2}
+#statsModal .turn-end-badge{
+  min-width:82px;min-height:76px;border-radius:18px;font-size:27px;
+  background:radial-gradient(circle at 70% 20%,rgba(79,141,255,.22),transparent 45%),rgba(45,66,95,.66);
+  border:1px solid rgba(96,158,255,.30);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 8px 20px rgba(0,0,0,.16);
+}
+
+/* mes y año */
+#statsModal .stats-month,
+#statsModal .stats-year{
+  border-radius:17px;padding:9px 10px;
+  background:radial-gradient(circle at 88% 4%,rgba(67,168,255,.065),transparent 40%),
+             linear-gradient(180deg,rgba(31,43,59,.94),rgba(26,37,52,.96));
+  border-color:rgba(140,165,195,.17);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
+}
+#statsModal .bar-row{
+  position:relative;
+  grid-template-columns:58px minmax(0,1fr) 27px;
+  gap:7px;padding:6px 6px;margin:3px 0;border-radius:10px;
+  background:rgba(255,255,255,.018);
+}
+#statsModal .bar-row span{
+  position:relative;padding-left:9px;font-size:8.5px;font-weight:700;color:#d6dee9;
+}
+#statsModal .bar-row span::before{
+  content:"";position:absolute;left:0;top:50%;width:4px;height:4px;border-radius:50%;
+  transform:translateY(-50%);background:#91a1b6;
+}
+#statsModal .bar-row.code-M span::before,
+#statsModal .bar-row.code-D span::before{background:var(--morning)}
+#statsModal .bar-row.code-N span::before{background:var(--night)}
+#statsModal .bar-row.code-F span::before{background:var(--off)}
+#statsModal .bar-track{
+  height:8px;background:rgba(111,132,160,.17);
+  box-shadow:inset 0 1px 2px rgba(0,0,0,.20);
+}
+#statsModal .bar-row b{font-size:9px;color:#f3f6fb}
+
+/* bloques inferiores */
+#statsModal .stats-off,
+#statsModal .stats-salary{
+  border-radius:17px;padding:9px 10px;
+  background:radial-gradient(circle at 92% 8%,rgba(66,214,176,.06),transparent 42%),
+             linear-gradient(180deg,rgba(31,43,59,.94),rgba(26,37,52,.96));
+  border-color:rgba(140,165,195,.17);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
+}
+#statsModal .next-off{width:100%}
+#statsModal .off-premium{
+  width:100%;min-height:68px;
+  display:grid;grid-template-columns:auto 1fr;
+  grid-template-areas:"label date" "days days" "until until";
+  align-content:center;column-gap:6px;row-gap:2px;
+  padding:7px 8px;border-radius:12px;background:rgba(255,255,255,.018);
+}
+#statsModal .off-premium small{grid-area:label;color:#8999ad;font-size:7.5px}
+#statsModal .off-premium b{grid-area:date;font-size:10px;color:#eff4fa}
+#statsModal .off-premium strong{grid-area:days;font-size:16px;line-height:1;color:#fff}
+#statsModal .off-premium span{grid-area:until;color:#92a1b4;font-size:7.8px}
+#statsModal .salary-top{width:100%;gap:8px}
+#statsModal .salary-copy small{color:#8999ad;font-size:7.4px}
+#statsModal .salary-copy b{font-size:13px;color:#f5f8fc}
+#statsModal .salary-copy span{font-size:7.5px;color:#93a2b6}
+#statsModal .salary-days{
+  min-width:72px;min-height:70px;border-radius:16px;
+  background:radial-gradient(circle at 75% 18%,rgba(66,214,176,.14),transparent 42%),rgba(66,214,176,.07);
+  border:1px solid rgba(66,214,176,.24);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+}
+#statsModal .salary-days strong{font-size:26px}
+#statsModal .salary-days span{font-size:8px;color:#c9d4df}
+
+@media(max-width:620px){
+  #statsModal .stats-modal-window{
+    grid-template-rows:auto auto minmax(130px,.95fr) minmax(155px,1fr) minmax(122px,.82fr);
+    gap:7px;
+  }
+  #statsModal .stat-card{min-height:72px;padding:8px 7px 9px}
+  #statsModal .stat-card i{width:20px;height:20px;font-size:9px;right:6px;top:6px}
+  #statsModal .stat-card small{font-size:6.7px}
+  #statsModal .stat-card b{font-size:20px}
+  #statsModal .turn-end-card{padding:12px 13px}
+  #statsModal .turn-end-copy b{font-size:30px}
+  #statsModal .turn-end-badge{min-width:70px;min-height:66px;font-size:24px}
+  #statsModal .stats-section h3{font-size:10.2px}
+  #statsModal .bar-row{
+    grid-template-columns:52px minmax(0,1fr) 23px;
+    gap:5px;padding:5px;
+  }
+  #statsModal .bar-row span{font-size:7.5px}
+  #statsModal .off-premium{min-height:62px}
+  #statsModal .salary-days{min-width:66px;min-height:64px}
+}
+
+
 @media(max-height:700px){
   #statsModal .stats-modal-window{
     grid-template-rows:auto auto minmax(88px,.8fr) minmax(110px,1fr) minmax(88px,.75fr);
@@ -1373,12 +1569,12 @@ body.light .event-count{
   #statsModal .modal-head h2{font-size:16px}
   #statsModal .modal-head .close-btn{width:36px;height:36px}
   #statsModal .stat-card{padding:5px 6px}
-  #statsModal .stat-card b{font-size:15px}
+  #statsModal .stat-card b{font-size:17px}
   #statsModal .stats-section h3{font-size:8px;margin-bottom:3px}
   #statsModal .turn-end-card{padding:6px 8px}
-  #statsModal .turn-end-copy b{font-size:17px}
+  #statsModal .turn-end-copy b{font-size:22px}
   #statsModal .turn-end-copy span{font-size:7px}
-  #statsModal .turn-end-badge{padding:6px;min-width:52px;font-size:16px}
+  #statsModal .turn-end-badge{padding:6px;min-width:58px;min-height:52px;font-size:19px}
   #statsModal .stats-month,
   #statsModal .stats-year,
   #statsModal .stats-off,
@@ -2071,7 +2267,7 @@ body.light .day.today .event-count{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.4.4</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.4.5</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -2173,10 +2369,10 @@ body.light .day.today .event-count{
 
 <!-- Stats -->
 <div id="statsModal" class="backdrop"><div class="modal glass stats-modal-window">
-  <div class="modal-head"><div><h2>◔ Estadísticas</h2><small id="statsSubtitle"></small></div><button class="close-btn" data-close="statsModal">×</button></div>
+  <div class="modal-head stats-head"><div class="stats-head-copy"><h2><span class="stats-head-icon">▥</span>Estadísticas</h2><small id="statsSubtitle"></small></div><button class="close-btn" data-close="statsModal" aria-label="Cerrar estadísticas">×</button></div>
   <div id="statsCards" class="stats-grid"></div>
   <div class="stats-section stats-turn-end">
-    <h3>Tu turno termina en</h3>
+    <h3><span class="stats-title-dot"></span>Tu turno termina en</h3>
     <div class="turn-end-card">
       <div class="turn-end-top">
         <div class="turn-end-copy">
@@ -2188,11 +2384,11 @@ body.light .day.today .event-count{
       </div>
     </div>
   </div>
-  <div class="stats-section stats-month"><h3>Distribución del mes</h3><div id="monthBars"></div></div>
-  <div class="stats-section stats-year"><h3>Resumen anual</h3><div id="yearBars"></div></div>
-  <div class="stats-section stats-off"><h3>Próximo descanso</h3><div id="nextOffBox" class="next-off"></div></div>
+  <div class="stats-section stats-month"><h3><span class="stats-title-mark">▥</span>Distribución del mes</h3><div id="monthBars"></div></div>
+  <div class="stats-section stats-year"><h3><span class="stats-title-mark">◔</span>Resumen anual</h3><div id="yearBars"></div></div>
+  <div class="stats-section stats-off"><h3><span class="stats-title-mark">▰</span>Próximo descanso</h3><div id="nextOffBox" class="next-off"></div></div>
   <div class="stats-section stats-salary">
-    <h3>Próximo sueldo</h3>
+    <h3><span class="stats-title-mark">▣</span>Próximo sueldo</h3>
     <div class="salary-card">
       <div class="salary-top">
         <div class="salary-copy">
@@ -2218,7 +2414,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.4.4';
+const CURRENT_VERSION='4.4.5';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -3085,17 +3281,17 @@ function barsHtml(c,turn){
  else if(turn==='T5A'||turn==='T5B')rows=[['M','Mañanas'],['F','Francos']];
  else rows=[['M','Mañanas'],['N','Noches'],['F','Francos']];
  const total=rows.reduce((s,[k])=>s+(c[k]||0),0)||1;
- return rows.map(([k,n])=>`<div class="bar-row"><span>${n}</span><div class="bar-track"><div class="bar-fill ${k}" style="width:${((c[k]||0)/total*100).toFixed(1)}%"></div></div><b>${c[k]||0}</b></div>`).join('')
+ return rows.map(([k,n])=>`<div class="bar-row code-${k}"><span>${n}</span><div class="bar-track"><div class="bar-fill ${k}" style="width:${((c[k]||0)/total*100).toFixed(1)}%"></div></div><b>${c[k]||0}</b></div>`).join('')
 }
 function renderStats(){
  const t=activeTurnKey(),m=countsForPeriod(t,viewYear,viewMonth),y=countsForPeriod(t,viewYear),hours=t==='T5LV'?m.D*9:(m.M+m.N)*12,off=nextOffBlock(t,new Date());
  $('#statsSubtitle').textContent=`${scheduleName(t)} · ${monthFmt.format(new Date(viewYear,viewMonth,1))}`;
- if(t==='T5LV')$('#statsCards').innerHTML=`<div class="stat-card"><small>Días T5</small><b>${m.D}</b></div><div class="stat-card"><small>Francos</small><b>${m.F}</b></div><div class="stat-card"><small>Horas mes</small><b>${hours}</b></div><div class="stat-card"><small>Jornada</small><b>9 h</b></div>`;
- else if(t==='T5A'||t==='T5B')$('#statsCards').innerHTML=`<div class="stat-card"><small>Mañanas</small><b>${m.M}</b></div><div class="stat-card"><small>Francos</small><b>${m.F}</b></div><div class="stat-card"><small>Horas mes</small><b>${hours}</b></div><div class="stat-card"><small>Ciclo</small><b>4×4</b></div>`;
- else $('#statsCards').innerHTML=`<div class="stat-card"><small>Mañanas</small><b>${m.M}</b></div><div class="stat-card"><small>Noches</small><b>${m.N}</b></div><div class="stat-card"><small>Francos</small><b>${m.F}</b></div><div class="stat-card"><small>Horas mes</small><b>${hours}</b></div>`;
+ if(t==='T5LV')$('#statsCards').innerHTML=`<div class="stat-card stat-morning"><i>☀</i><small>Días T5</small><b>${m.D}</b></div><div class="stat-card stat-off"><i>▦</i><small>Francos</small><b>${m.F}</b></div><div class="stat-card stat-hours"><i>◷</i><small>Horas mes</small><b>${hours}</b></div><div class="stat-card stat-cycle"><i>↻</i><small>Jornada</small><b>9 h</b></div>`;
+ else if(t==='T5A'||t==='T5B')$('#statsCards').innerHTML=`<div class="stat-card stat-morning"><i>☀</i><small>Mañanas</small><b>${m.M}</b></div><div class="stat-card stat-off"><i>▦</i><small>Francos</small><b>${m.F}</b></div><div class="stat-card stat-hours"><i>◷</i><small>Horas mes</small><b>${hours}</b></div><div class="stat-card stat-cycle"><i>↻</i><small>Ciclo</small><b>4×4</b></div>`;
+ else $('#statsCards').innerHTML=`<div class="stat-card stat-morning"><i>☀</i><small>Mañanas</small><b>${m.M}</b></div><div class="stat-card stat-night"><i>◒</i><small>Noches</small><b>${m.N}</b></div><div class="stat-card stat-off"><i>▦</i><small>Francos</small><b>${m.F}</b></div><div class="stat-card stat-hours"><i>◷</i><small>Horas mes</small><b>${hours}</b></div>`;
  renderTurnEndCard(t);
  $('#monthBars').innerHTML=barsHtml(m,t);$('#yearBars').innerHTML=barsHtml(y,t);
- $('#nextOffBox').innerHTML=off?`Comienza <b>${cap(shortFmt.format(off.start))}</b> · <b>${off.len} días</b> · hasta ${shortDateFmt.format(off.end)}.`:'No pude calcular el próximo franco.';
+ $('#nextOffBox').innerHTML=off?`<div class="off-premium"><small>Comienza</small><b>${cap(shortFmt.format(off.start))}</b><strong>${off.len} días</strong><span>Hasta ${shortDateFmt.format(off.end)}</span></div>`:'<div class="off-premium"><span>No pude calcular el próximo franco.</span></div>';
 
  const salary=salaryCountdown(new Date());
  $('#salaryDate').textContent=cap(shortDateFmt.format(salary.payday));
