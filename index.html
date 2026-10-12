@@ -739,8 +739,8 @@ body.light .event-count{
 @media(max-width:620px){
   #settingsModal .settings-modal-window{
     width:calc(100vw - 2px);
-    height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 2px);
-    padding:5px 7px 7px;
+    height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 10px);
+    padding:5px 7px 12px;
   }
   #settingsModal .modal-head{
     min-height:44px;
@@ -779,15 +779,15 @@ body.light .event-count{
     grid-template-columns:repeat(10,minmax(0,1fr));
   }
   #settingsModal .settings-preview{
-    min-height:96px;
-    margin-top:6px;
-    padding:8px 8px 10px;
+    min-height:90px;
+    margin-top:5px;
+    padding:7px 8px 9px;
   }
   #settingsModal .settings-preview-grid{gap:6px}
   #settingsModal .settings-preview-day{min-height:0;height:100%;padding:7px 5px 8px;border-radius:16px}
-  #settingsModal .action-row{margin-top:6px}
+  #settingsModal .action-row{margin-top:5px}
   #settingsModal .action-row button{min-height:44px !important}
-  #settingsModal .version-box{margin-top:5px;padding:5px 7px}
+  #settingsModal .version-box{margin-top:5px;margin-bottom:2px;padding:5px 7px}
   #settingsModal .action-row button{
     font-weight:950;
     letter-spacing:.01em;
@@ -804,7 +804,7 @@ body.light .event-count{
   .palette-dropdown .quick-palette{gap:4px}
 }
 @media(max-height:700px){
-  #settingsModal .settings-modal-window{padding-top:3px;padding-bottom:4px}
+  #settingsModal .settings-modal-window{padding-top:3px;padding-bottom:9px}
   #settingsModal .modal-head{min-height:40px;margin-bottom:4px}
   #settingsModal .modal-head h2{font-size:18px}
   #settingsModal .modal-head .close-btn{width:35px;height:35px}
@@ -830,16 +830,16 @@ body.light .event-count{
   }
   #settingsModal .palette-setting{min-height:40px}
   #settingsModal .settings-preview{
-    min-height:72px;
-    margin-top:4px;
-    padding:6px 7px 8px;
+    min-height:66px;
+    margin-top:3px;
+    padding:5px 7px 7px;
   }
   #settingsModal .settings-preview-head{margin-bottom:4px}
   #settingsModal .settings-preview-day{min-height:0;height:100%;padding:5px 4px 6px;border-radius:14px}
   #settingsModal .settings-preview-day small{font-size:7px}
   #settingsModal .action-row{margin-top:5px}
   #settingsModal .action-row button{min-height:40px !important}
-  #settingsModal .version-box{margin-top:4px;padding:4px 6px}
+  #settingsModal .version-box{margin-top:3px;margin-bottom:1px;padding:4px 6px}
 }
 
 
@@ -2297,7 +2297,7 @@ body.light .day.today .event-count{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.4.6</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.4.7</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -2444,7 +2444,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.4.6';
+const CURRENT_VERSION='4.4.7';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
