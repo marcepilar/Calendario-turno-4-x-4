@@ -1973,9 +1973,9 @@ body.light .day.today .event-count{
     <div id="turn5SubRow" class="turn5-subrow">
       <div class="turn5-select-wrap"><label for="turn5Select">Modalidad Turno 5</label>
         <select id="turn5Select">
-          <option value="T5LV">T5 L a V</option>
-          <option value="T5A">T5 A</option>
-          <option value="T5B">T5 B</option>
+          <option value="T5LV">T5 FIJO</option>
+          <option value="T5A">T5 UNO</option>
+          <option value="T5B">T5 DOS</option>
         </select>
         <span id="turn5PulseText" class="turn5-selected-pulse" aria-hidden="true"></span>
       </div>
@@ -2069,7 +2069,7 @@ body.light .day.today .event-count{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.4.0</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.4.1</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -2123,7 +2123,7 @@ body.light .day.today .event-count{
         <div class="form-field"><label>Hora</label><input id="agendaTimeInput" type="time"></div>
         <div class="form-field"><label>Categoría</label><select id="agendaCategoryInput"><option value="personal">Personal</option><option value="trabajo">Trabajo</option><option value="salud">Salud</option><option value="cumple">Cumpleaños</option><option value="tramite">Trámite</option></select></div>
         <div class="form-field"><label>Recordatorio</label><select id="agendaReminderInput"><option value="none">Sin recordatorio</option><option value="0">A la hora</option><option value="15">15 min antes</option><option value="60">1 hora antes</option><option value="1440">1 día antes</option></select></div>
-        <div class="form-field"><label>Repetir</label><select id="agendaRepeatInput"><option value="none">No repetir</option><option value="daily">Todos los días</option><option value="weekly">Cada semana</option><option value="yearly">Cada año</option><option value="shiftM">Todos mis días M</option><option value="shiftN">Todos mis días N</option><option value="shiftD">Todos mis días T5 L a V</option><option value="shiftF">Todos mis francos</option></select></div>
+        <div class="form-field"><label>Repetir</label><select id="agendaRepeatInput"><option value="none">No repetir</option><option value="daily">Todos los días</option><option value="weekly">Cada semana</option><option value="yearly">Cada año</option><option value="shiftM">Todos mis días M</option><option value="shiftN">Todos mis días N</option><option value="shiftD">Todos mis días T5 FIJO</option><option value="shiftF">Todos mis francos</option></select></div>
         <div class="form-field full"><label>Notas</label><textarea id="agendaNotesInput" maxlength="500" placeholder="Detalle opcional"></textarea></div>
       </div>
     </div>
@@ -2216,7 +2216,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.4.0';
+const CURRENT_VERSION='4.4.1';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -2228,7 +2228,7 @@ const T5A_ANCHOR=new Date(2026,9,8);
 const T5B_ANCHOR=new Date(2026,9,12);
 const T5_4X4_CYCLE=['M','M','M','M','F','F','F','F'];
 const shiftNames={M:['Mañana','06:00–18:00'],N:['Noche','18:00–06:00'],D:['Diurno','07:30–16:30'],F:['Franco','Libre']};
-const scheduleNames={T1:'T1',T2:'T2',T3:'T3',T4:'T4',T5LV:'T5 L a V',T5A:'T5 A',T5B:'T5 B'};
+const scheduleNames={T1:'T1',T2:'T2',T3:'T3',T4:'T4',T5LV:'T5 FIJO',T5A:'T5 UNO',T5B:'T5 DOS'};
 const categoryInfo={
  personal:['Personal','#9b7cff'],trabajo:['Trabajo','#ff9b45'],salud:['Salud','#ff6379'],
  cumple:['Cumpleaños','#36cfe0'],tramite:['Trámite','#4e8cff']
@@ -2508,7 +2508,7 @@ function renderCycle(){
   // columna que el día correspondiente del calendario de abajo.
   seq=['F','D','D','D','D','D','F'];
   idx=today.getDay();
-  title='Semana laboral · T5 L a V';
+  title='Semana laboral · T5 FIJO';
   cycleStrip.classList.add('weekly-calendar-align');
  }else if(turn==='T5A'||turn==='T5B'){
   seq=T5_4X4_CYCLE;
@@ -2831,7 +2831,7 @@ function eventOccurs(item,d){
 function agendaForDate(d){
  return loadAgendaData().map(normalizedItem).filter(x=>eventOccurs(x,d)).map(x=>({...x,_occurrenceDate:dateKey(d)})).sort((a,b)=>(a.time||'99:99').localeCompare(b.time||'99:99'))
 }
-function repeatLabel(r){return({none:'Una vez',daily:'Todos los días',weekly:'Semanal',yearly:'Anual',shiftM:'Todos mis días M',shiftN:'Todos mis días N',shiftD:'Todos mis días T5 L a V',shiftF:'Todos mis francos'})[r]||'Una vez'}
+function repeatLabel(r){return({none:'Una vez',daily:'Todos los días',weekly:'Semanal',yearly:'Anual',shiftM:'Todos mis días M',shiftN:'Todos mis días N',shiftD:'Todos mis días T5 FIJO',shiftF:'Todos mis francos'})[r]||'Una vez'}
 function reminderLabel(r){return({none:'Sin recordatorio','0':'A la hora','15':'15 min antes','60':'1 hora antes','1440':'1 día antes'})[String(r)]||'Sin recordatorio'}
 function clearAgendaForm(){
  agendaEditingId=null;
