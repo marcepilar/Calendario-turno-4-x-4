@@ -142,9 +142,28 @@ select,.field{width:100%;border:1px solid var(--line);background:var(--panel2);c
 .turn5-subrow.show{display:block}
 .turn5-select-wrap{position:relative}
 .turn5-select-wrap label{position:absolute;left:12px;top:5px;z-index:2;font-size:8px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;pointer-events:none}
-#turn5Select{width:100%;min-height:49px;-webkit-appearance:none;appearance:none;padding:18px 42px 7px 12px;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:13px;font-weight:900;outline:none}
-#turn5Select option{background:var(--panel2);color:var(--text)}
+#turn5Select{width:100%;min-height:49px;-webkit-appearance:none;appearance:none;padding:18px 42px 7px 12px;border:1px solid var(--line);background:var(--panel2);color:transparent;-webkit-text-fill-color:transparent;border-radius:13px;font-weight:900;outline:none}
+#turn5Select option{background:var(--panel2);color:var(--text);-webkit-text-fill-color:var(--text)}
+.turn5-selected-pulse{
+  position:absolute;
+  left:12px;
+  top:25px;
+  z-index:2;
+  pointer-events:none;
+  color:var(--text);
+  font-weight:900;
+  line-height:1;
+  transform-origin:left center;
+  animation:turn5SelectedPulse 2.4s ease-in-out infinite;
+}
+@keyframes turn5SelectedPulse{
+  0%,100%{transform:scale(.96)}
+  50%{transform:scale(1.10)}
+}
 .turn5-select-wrap::after{content:"";position:absolute;right:16px;top:50%;width:9px;height:9px;border-right:2px solid var(--text);border-bottom:2px solid var(--text);transform:translateY(-64%) rotate(45deg);opacity:.82;pointer-events:none}
+@media (prefers-reduced-motion:reduce){
+  .turn5-selected-pulse{animation:none !important}
+}
 .today-btn,.nav-btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:13px;min-height:43px;font-weight:900}
 .today-btn{padding:0 15px}
 .month-nav{display:grid;grid-template-columns:48px 1fr 48px;gap:8px;align-items:center}
@@ -1081,6 +1100,7 @@ body.light .day.today .event-count{
           <option value="T5A">T5 A</option>
           <option value="T5B">T5 B</option>
         </select>
+        <span id="turn5PulseText" class="turn5-selected-pulse" aria-hidden="true"></span>
       </div>
     </div>
     <div class="month-nav">
@@ -1142,7 +1162,7 @@ body.light .day.today .event-count{
   </div>
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.3.11</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.3.12</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -1289,7 +1309,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.3.11';
+const CURRENT_VERSION='4.3.12';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -1309,7 +1329,7 @@ const categoryInfo={
 const $=s=>document.querySelector(s);
 const $$=s=>[...document.querySelectorAll(s)];
 const cal=$('#calendar'),calendarCard=$('#calendarCard'),monthName=$('#monthName'),selectedInfo=$('#selectedInfo');
-const turnSelect=$('#turnSelect'),turn5Select=$('#turn5Select'),turn5SubRow=$('#turn5SubRow'),themeBtn=$('#themeBtn');
+const turnSelect=$('#turnSelect'),turn5Select=$('#turn5Select'),turn5PulseText=$('#turn5PulseText'),turn5SubRow=$('#turn5SubRow'),themeBtn=$('#themeBtn');
 const detailTitle=$('#detailTitle'),detailGrid=$('#detailGrid'),cycleStrip=$('#cycleStrip'),cyclePosition=$('#cyclePosition'),cycleTitle=$('#cycleTitle'),shiftLegend=$('#shiftLegend');
 const agendaSheet=$('#agendaSheet'),agendaDateText=$('#agendaDateText'),agendaShift=$('#agendaShift'),agendaDayList=$('#agendaDayList'),agendaAllList=$('#agendaAllList'),agendaAllCount=$('#agendaAllCount'),agendaAllToggle=$('#agendaAllToggle'),agendaTodayCount=$('#agendaTodayCount'),agendaStoredCount=$('#agendaStoredCount'),agendaDayCount=$('#agendaDayCount'),agendaTodaySummary=$('#agendaTodaySummary'),agendaFormMode=$('#agendaFormMode'),agendaEditorPanel=$('#agendaEditorPanel');
 const agendaTitleInput=$('#agendaTitleInput'),agendaTimeInput=$('#agendaTimeInput'),agendaCategoryInput=$('#agendaCategoryInput'),agendaReminderInput=$('#agendaReminderInput'),agendaRepeatInput=$('#agendaRepeatInput'),agendaNotesInput=$('#agendaNotesInput');
@@ -1422,6 +1442,11 @@ function syncTurnPulseText(){
  if(!el)return;
  const opt=turnSelect.options[turnSelect.selectedIndex];
  el.textContent=opt?opt.textContent:`TURNO ${String(turnSelect.value||'').replace('T','')}`;
+}
+function syncTurn5PulseText(){
+ if(!turn5PulseText)return;
+ const opt=turn5Select.options[turn5Select.selectedIndex];
+ turn5PulseText.textContent=opt?opt.textContent:'T5';
 }
 
 
@@ -2110,7 +2135,7 @@ $$('.backdrop').forEach(b=>b.addEventListener('click',e=>{if(e.target===b)closeM
 $('#prevBtn').onclick=()=>animateMonthButton(-1);$('#nextBtn').onclick=()=>animateMonthButton(1);
 $('#todayBtn').onclick=()=>{const d=new Date();viewYear=d.getFullYear();viewMonth=d.getMonth();selectedDate=new Date(d.getFullYear(),d.getMonth(),d.getDate());renderAll()};
 turnSelect.onchange=()=>{updateTurn5Visibility();syncTurnPulseText();localStorage.setItem('turno4x4.turno',turnSelect.value);switchActiveColorProfile();renderAll();renderYear();renderStats()};
-turn5Select.onchange=()=>{localStorage.setItem('turno4x4.turno5',turn5Select.value);updateColorSettingsUI();renderQuickPalette();renderAll();renderYear();renderStats()};
+turn5Select.onchange=()=>{syncTurn5PulseText();localStorage.setItem('turno4x4.turno5',turn5Select.value);updateColorSettingsUI();renderQuickPalette();renderAll();renderYear();renderStats()};
 themeBtn.onclick=()=>{document.body.classList.toggle('light');localStorage.setItem('turno4x4.theme',document.body.classList.contains('light')?'light':'dark');themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️'};
 settingsBtn.onclick=()=>{updateColorSettingsUI();renderQuickPalette();openModal('settingsModal')};
 [morningColor,nightColor,offColor].forEach(x=>x.oninput=()=>{saveSettings();renderQuickPalette()});
@@ -2305,7 +2330,7 @@ document.addEventListener('dragstart',ev=>{
  if(ev.target.closest?.('button,[role="button"]'))ev.preventDefault();
 });
 
-loadSettings();syncTurnPulseText();renderQuickPalette();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();keepDetailBelowInitialFold();initSplash();checkUpdate();checkReminders();
+loadSettings();syncTurnPulseText();syncTurn5PulseText();renderQuickPalette();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();keepDetailBelowInitialFold();initSplash();checkUpdate();checkReminders();
 window.addEventListener('resize',scheduleBelowFoldLayout);
 window.addEventListener('orientationchange',scheduleBelowFoldLayout);
 if(window.visualViewport)window.visualViewport.addEventListener('resize',scheduleBelowFoldLayout);
