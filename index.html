@@ -630,11 +630,16 @@ body.light .event-count{
 }
 #settingsModal .version-box{
   flex:0 0 auto;
-  margin-top:6px;
+  min-height:46px;
+  margin-top:5px;
+  margin-bottom:4px;
   padding:6px 8px;
-  border-radius:10px;
+  border-radius:11px;
   font-size:10px;
   line-height:1.2;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
 }
 
 /* La paleta aparece por encima del resto, sin alargar la ventana */
@@ -739,26 +744,26 @@ body.light .event-count{
 @media(max-width:620px){
   #settingsModal .settings-modal-window{
     width:calc(100vw - 2px);
-    height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 10px);
-    padding:5px 7px 12px;
+    height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 2px);
+    padding:4px 7px 16px;
   }
   #settingsModal .modal-head{
-    min-height:44px;
-    padding:2px 0 5px;
-    margin-bottom:5px;
+    min-height:42px;
+    padding:2px 0 4px;
+    margin-bottom:4px;
   }
   #settingsModal .settings-list{
     grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:5px;
+    gap:4px;
   }
   #settingsModal .setting-row{
-    min-height:51px;
-    padding:6px 7px;
+    min-height:47px;
+    padding:5px 7px;
   }
   #settingsModal .setting-range-row{
     grid-column:1/-1;
-    min-height:66px;
-    padding:7px 9px;
+    min-height:60px;
+    padding:6px 9px;
   }
   #settingsModal .setting-range-row .range-wrap{
     grid-template-columns:minmax(0,1fr) 62px;
@@ -773,21 +778,29 @@ body.light .event-count{
     font-size:10.5px;
   }
   #settingsModal .palette-setting{
-    min-height:44px;
+    min-height:41px;
   }
   .palette-dropdown .quick-palette{
     grid-template-columns:repeat(10,minmax(0,1fr));
   }
   #settingsModal .settings-preview{
-    min-height:90px;
-    margin-top:5px;
-    padding:7px 8px 9px;
+    min-height:72px;
+    margin-top:4px;
+    padding:6px 8px 7px;
   }
   #settingsModal .settings-preview-grid{gap:6px}
   #settingsModal .settings-preview-day{min-height:0;height:100%;padding:7px 5px 8px;border-radius:16px}
-  #settingsModal .action-row{margin-top:5px}
-  #settingsModal .action-row button{min-height:44px !important}
-  #settingsModal .version-box{margin-top:5px;margin-bottom:2px;padding:5px 7px}
+  #settingsModal .action-row{margin-top:4px}
+  #settingsModal .action-row button{min-height:43px !important}
+  #settingsModal .version-box{
+    min-height:44px;
+    margin-top:4px;
+    margin-bottom:6px;
+    padding:5px 8px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
   #settingsModal .action-row button{
     font-weight:950;
     letter-spacing:.01em;
@@ -803,43 +816,54 @@ body.light .event-count{
   .palette-dropdown{padding:7px}
   .palette-dropdown .quick-palette{gap:4px}
 }
-@media(max-height:700px){
-  #settingsModal .settings-modal-window{padding-top:3px;padding-bottom:9px}
-  #settingsModal .modal-head{min-height:40px;margin-bottom:4px}
+@media(max-height:760px){
+  #settingsModal .settings-modal-window{
+    padding-top:2px;
+    padding-bottom:14px;
+  }
+  #settingsModal .modal-head{min-height:38px;margin-bottom:3px;padding-bottom:3px}
   #settingsModal .modal-head h2{font-size:18px}
-  #settingsModal .modal-head .close-btn{width:35px;height:35px}
-  #settingsModal .color-profile-note{min-height:28px;margin-bottom:4px;padding:4px 7px}
-  #settingsModal .settings-list{gap:4px}
-  #settingsModal .setting-row{min-height:45px;padding:5px 6px}
+  #settingsModal .modal-head small{font-size:8.5px}
+  #settingsModal .modal-head .close-btn{width:34px;height:34px}
+  #settingsModal .color-profile-note{min-height:26px;margin-bottom:3px;padding:3px 7px}
+  #settingsModal .settings-list{gap:3px}
+  #settingsModal .setting-row{min-height:43px;padding:4px 6px}
+  #settingsModal .setting-row b{font-size:11px}
+  #settingsModal .setting-row small{font-size:7.5px}
   #settingsModal .setting-range-row{
-    min-height:58px;
-    padding:5px 8px;
-    gap:4px;
+    min-height:54px;
+    padding:4px 8px;
+    gap:3px;
   }
   #settingsModal .setting-range-row .range-wrap input[type="range"]{
-    height:26px;
+    height:25px;
   }
   #settingsModal .setting-range-row .range-wrap input[type="range"]::-webkit-slider-thumb{
-    width:23px;
-    height:23px;
+    width:22px;
+    height:22px;
     margin-top:-8px;
   }
   #settingsModal .range-value{
-    height:34px;
+    height:33px;
     font-size:10px;
   }
-  #settingsModal .palette-setting{min-height:40px}
+  #settingsModal .palette-setting{min-height:38px}
   #settingsModal .settings-preview{
-    min-height:66px;
+    min-height:58px;
     margin-top:3px;
-    padding:5px 7px 7px;
+    padding:4px 7px 6px;
   }
-  #settingsModal .settings-preview-head{margin-bottom:4px}
-  #settingsModal .settings-preview-day{min-height:0;height:100%;padding:5px 4px 6px;border-radius:14px}
+  #settingsModal .settings-preview-head{margin-bottom:3px}
+  #settingsModal .settings-preview-day{min-height:0;height:100%;padding:4px 4px 5px;border-radius:13px}
   #settingsModal .settings-preview-day small{font-size:7px}
-  #settingsModal .action-row{margin-top:5px}
-  #settingsModal .action-row button{min-height:40px !important}
-  #settingsModal .version-box{margin-top:3px;margin-bottom:1px;padding:4px 6px}
+  #settingsModal .action-row{margin-top:3px}
+  #settingsModal .action-row button{min-height:39px !important}
+  #settingsModal .version-box{
+    min-height:42px;
+    margin-top:3px;
+    margin-bottom:5px;
+    padding:4px 7px;
+  }
 }
 
 
@@ -2297,7 +2321,7 @@ body.light .day.today .event-count{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.4.7</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.4.8</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -2444,7 +2468,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.4.7';
+const CURRENT_VERSION='4.4.8';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
