@@ -1608,7 +1608,9 @@ textarea::selection,
 /* Evita que la tarjeta inferior asome cortada en la primera pantalla */
 .below-fold-spacer{
   height:0;
+  min-height:0;
   pointer-events:none;
+  flex:none;
 }
 
 
@@ -1949,7 +1951,7 @@ body.light .day.today .event-count{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.3.19</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.3.20</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -2096,7 +2098,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.3.19';
+const CURRENT_VERSION='4.3.20';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -2963,9 +2965,9 @@ $$('[data-close]').forEach(b=>b.onclick=()=>{const id=b.dataset.close;if(id==='a
 $$('.backdrop').forEach(b=>b.addEventListener('click',e=>{if(e.target===b)closeModal(b.id)}));agendaSheet.addEventListener('click',e=>{if(e.target===agendaSheet)closeAgenda()});
 
 $('#prevBtn').onclick=()=>animateMonthButton(-1);$('#nextBtn').onclick=()=>animateMonthButton(1);
-$('#todayBtn').onclick=()=>{const d=new Date();viewYear=d.getFullYear();viewMonth=d.getMonth();selectedDate=new Date(d.getFullYear(),d.getMonth(),d.getDate());renderAll()};
-turnSelect.onchange=()=>{updateTurn5Visibility();syncTurnPulseText();localStorage.setItem('turno4x4.turno',turnSelect.value);switchActiveColorProfile();renderAll();renderYear();renderStats()};
-turn5Select.onchange=()=>{syncTurn5PulseText();localStorage.setItem('turno4x4.turno5',turn5Select.value);updateColorSettingsUI();renderQuickPalette();renderAll();renderYear();renderStats()};
+$('#todayBtn').onclick=()=>{const d=new Date();viewYear=d.getFullYear();viewMonth=d.getMonth();selectedDate=new Date(d.getFullYear(),d.getMonth(),d.getDate());renderAll();scheduleBelowFoldLayout()};
+turnSelect.onchange=()=>{updateTurn5Visibility();syncTurnPulseText();localStorage.setItem('turno4x4.turno',turnSelect.value);switchActiveColorProfile();renderAll();renderYear();renderStats();scheduleBelowFoldLayout()};
+turn5Select.onchange=()=>{syncTurn5PulseText();localStorage.setItem('turno4x4.turno5',turn5Select.value);updateColorSettingsUI();renderQuickPalette();renderAll();renderYear();renderStats();scheduleBelowFoldLayout()};
 themeBtn.onclick=()=>{document.body.classList.toggle('light');localStorage.setItem('turno4x4.theme',document.body.classList.contains('light')?'light':'dark');themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️'};
 settingsBtn.onclick=()=>{setPaletteDropdown(false);updateColorSettingsUI();renderQuickPalette();openModal('settingsModal')};
 [morningColor,nightColor,offColor].forEach(x=>x.oninput=()=>{saveSettings();renderQuickPalette()});
@@ -3097,16 +3099,19 @@ function keepDetailBelowInitialFold(){
  const detail=document.querySelector('.detail');
  if(!spacer||!detail)return;
 
- // Reinicia para medir la posición natural real.
+ // El detalle no debe "asomar" cortado detrás de la barra inferior del teléfono.
+ // Se calcula el borde inferior realmente visible y se agrega una zona segura.
  spacer.style.height='0px';
 
  requestAnimationFrame(()=>{
-  const viewportH=(window.visualViewport&&window.visualViewport.height)
-    ? window.visualViewport.height
-    : window.innerHeight;
+  const vv=window.visualViewport;
+  const visibleBottom=window.scrollY+(vv?(vv.offsetTop+vv.height):window.innerHeight);
 
-  const naturalTop=detail.getBoundingClientRect().top + window.scrollY;
-  const desiredTop=viewportH + 10;
+  // Margen extra pensado para barras de navegación Android / PWA.
+  // Así la siguiente tarjeta recién aparece cuando el usuario comienza a desplazarse.
+  const bottomSafety=72;
+  const naturalTop=detail.getBoundingClientRect().top+window.scrollY;
+  const desiredTop=visibleBottom+bottomSafety;
   const needed=Math.max(0,Math.ceil(desiredTop-naturalTop));
 
   spacer.style.height=needed+'px';
@@ -3160,7 +3165,7 @@ document.addEventListener('dragstart',ev=>{
  if(ev.target.closest?.('button,[role="button"]'))ev.preventDefault();
 });
 
-loadSettings();syncTurnPulseText();syncTurn5PulseText();renderQuickPalette();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();keepDetailBelowInitialFold();initSplash();checkUpdate();checkReminders();
+loadSettings();syncTurnPulseText();syncTurn5PulseText();renderQuickPalette();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();keepDetailBelowInitialFold();setTimeout(keepDetailBelowInitialFold,260);setTimeout(keepDetailBelowInitialFold,700);initSplash();checkUpdate();checkReminders();
 window.addEventListener('resize',scheduleBelowFoldLayout);
 window.addEventListener('orientationchange',scheduleBelowFoldLayout);
 if(window.visualViewport)window.visualViewport.addEventListener('resize',scheduleBelowFoldLayout);
