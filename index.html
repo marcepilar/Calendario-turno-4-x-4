@@ -616,9 +616,9 @@ body.light .event-count{
 
 #settingsModal .settings-preview{
   flex:1 1 auto;
-  min-height:92px;
+  min-height:104px;
   margin-top:7px;
-  padding:9px 10px 10px;
+  padding:10px 10px 12px;
   border:1px solid var(--line);
   border-radius:14px;
   background:
@@ -647,14 +647,16 @@ body.light .event-count{
   flex:1;
   min-height:0;
   display:flex;
+  align-items:stretch;
   gap:7px;
 }
 #settingsModal .settings-preview-day{
   position:relative;
   flex:1 1 0;
   min-width:0;
-  min-height:72px;
-  border-radius:13px;
+  min-height:82px;
+  padding:8px 6px 10px;
+  border-radius:16px;
   overflow:hidden;
   display:flex;
   flex-direction:column;
@@ -744,12 +746,12 @@ body.light .event-count{
     grid-template-columns:repeat(10,minmax(0,1fr));
   }
   #settingsModal .settings-preview{
-    min-height:88px;
+    min-height:96px;
     margin-top:6px;
-    padding:8px;
+    padding:8px 8px 10px;
   }
   #settingsModal .settings-preview-grid{gap:6px}
-  #settingsModal .settings-preview-day{min-height:78px}
+  #settingsModal .settings-preview-day{min-height:80px;padding:7px 5px 9px;border-radius:15px}
   #settingsModal .action-row{margin-top:5px}
   #settingsModal .action-row button{min-height:34px !important}
   #settingsModal .version-box{margin-top:5px;padding:5px 7px}
@@ -793,12 +795,12 @@ body.light .event-count{
   }
   #settingsModal .palette-setting{min-height:40px}
   #settingsModal .settings-preview{
-    min-height:62px;
+    min-height:72px;
     margin-top:4px;
-    padding:6px 7px;
+    padding:6px 7px 8px;
   }
   #settingsModal .settings-preview-head{margin-bottom:4px}
-  #settingsModal .settings-preview-day{min-height:54px}
+  #settingsModal .settings-preview-day{min-height:60px;padding:5px 4px 7px;border-radius:13px}
   #settingsModal .settings-preview-day small{font-size:7px}
   #settingsModal .action-row{margin-top:4px}
   #settingsModal .action-row button{min-height:31px !important}
@@ -2064,7 +2066,7 @@ body.light .day.today .event-count{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.3.22</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.3.23</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -2211,7 +2213,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.3.22';
+const CURRENT_VERSION='4.3.23';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
