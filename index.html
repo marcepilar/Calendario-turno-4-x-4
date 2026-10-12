@@ -1974,8 +1974,8 @@ body.light .day.today .event-count{
       <div class="turn5-select-wrap"><label for="turn5Select">Modalidad Turno 5</label>
         <select id="turn5Select">
           <option value="T5LV">T5 FIJO</option>
-          <option value="T5A">T5 UNO</option>
-          <option value="T5B">T5 DOS</option>
+          <option value="T5A">T5 DOS</option>
+          <option value="T5B">T5 UNO</option>
         </select>
         <span id="turn5PulseText" class="turn5-selected-pulse" aria-hidden="true"></span>
       </div>
@@ -2069,7 +2069,7 @@ body.light .day.today .event-count{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.4.1</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.4.2</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -2216,7 +2216,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.4.1';
+const CURRENT_VERSION='4.4.2';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -2228,7 +2228,7 @@ const T5A_ANCHOR=new Date(2026,9,8);
 const T5B_ANCHOR=new Date(2026,9,12);
 const T5_4X4_CYCLE=['M','M','M','M','F','F','F','F'];
 const shiftNames={M:['Mañana','06:00–18:00'],N:['Noche','18:00–06:00'],D:['Diurno','07:30–16:30'],F:['Franco','Libre']};
-const scheduleNames={T1:'T1',T2:'T2',T3:'T3',T4:'T4',T5LV:'T5 FIJO',T5A:'T5 UNO',T5B:'T5 DOS'};
+const scheduleNames={T1:'T1',T2:'T2',T3:'T3',T4:'T4',T5LV:'T5 FIJO',T5A:'T5 DOS',T5B:'T5 UNO'};
 const categoryInfo={
  personal:['Personal','#9b7cff'],trabajo:['Trabajo','#ff9b45'],salud:['Salud','#ff6379'],
  cumple:['Cumpleaños','#36cfe0'],tramite:['Trámite','#4e8cff']
