@@ -355,8 +355,8 @@ body.light .event-count{
   padding:3px 0 7px;
   min-height:48px;
 }
-#settingsModal .modal-head h2{font-size:18px}
-#settingsModal .modal-head small{font-size:8px;margin-top:2px}
+#settingsModal .modal-head h2{font-size:20px}
+#settingsModal .modal-head small{font-size:9px;margin-top:2px}
 #settingsModal .modal-head .close-btn{
   width:40px;
   height:40px;
@@ -370,7 +370,7 @@ body.light .event-count{
   border-radius:11px;
   font-size:8px;
 }
-#settingsModal .color-profile-note b{font-size:9px}
+#settingsModal .color-profile-note b{font-size:10px}
 
 #settingsModal .settings-list{
   flex:0 0 auto;
@@ -389,11 +389,11 @@ body.light .event-count{
   border-radius:12px;
 }
 #settingsModal .setting-row b{
-  font-size:10px;
+  font-size:11.5px;
   line-height:1.12;
 }
 #settingsModal .setting-row small{
-  font-size:7px;
+  font-size:8.2px;
   line-height:1.18;
   margin-top:2px;
 }
@@ -428,8 +428,8 @@ body.light .event-count{
   min-width:0;
 }
 #settingsModal .range-value{
-  min-width:37px;
-  font-size:8px;
+  min-width:40px;
+  font-size:9px;
 }
 
 /* Paleta compacta: no aumenta la altura de Configuración */
@@ -452,7 +452,7 @@ body.light .event-count{
   border-radius:10px;
   background:linear-gradient(180deg,var(--panel3),var(--panel2));
   color:var(--text);
-  font-size:8px;
+  font-size:9px;
   font-weight:950;
   white-space:nowrap;
 }
@@ -489,9 +489,9 @@ body.light .event-count{
   margin-bottom:7px;
 }
 .palette-dropdown .palette-tab{
-  min-height:30px;
+  min-height:31px;
   border-radius:9px;
-  font-size:10px;
+  font-size:11px;
 }
 .palette-dropdown .quick-palette{
   grid-template-columns:repeat(10,minmax(0,1fr));
@@ -503,7 +503,7 @@ body.light .event-count{
 }
 .palette-dropdown .palette-note{
   margin-top:7px;
-  font-size:7px;
+  font-size:8px;
   line-height:1.25;
 }
 
@@ -515,16 +515,16 @@ body.light .event-count{
 }
 #settingsModal .action-row button,
 #settingsModal .action-row label{
-  min-height:36px !important;
+  min-height:37px !important;
   border-radius:10px;
-  font-size:9px;
+  font-size:10.5px;
 }
 #settingsModal .version-box{
   flex:0 0 auto;
   margin-top:6px;
   padding:6px 8px;
   border-radius:10px;
-  font-size:8px;
+  font-size:9px;
   line-height:1.2;
 }
 
@@ -558,10 +558,10 @@ body.light .event-count{
   margin-bottom:7px;
 }
 #settingsModal .settings-preview-head b{
-  font-size:10px;
+  font-size:11.5px;
 }
 #settingsModal .settings-preview-head span{
-  font-size:7px;
+  font-size:8px;
   color:var(--muted);
 }
 #settingsModal .settings-preview-grid{
@@ -605,7 +605,7 @@ body.light .event-count{
   font-weight:1000;
 }
 #settingsModal .settings-preview-day small{
-  font-size:7px;
+  font-size:8px;
   font-weight:900;
   opacity:.72;
 }
@@ -657,18 +657,23 @@ body.light .event-count{
   #settingsModal .action-row{margin-top:5px}
   #settingsModal .action-row button{min-height:34px !important}
   #settingsModal .version-box{margin-top:5px;padding:5px 7px}
+  #settingsModal .action-row button{
+    font-weight:950;
+    letter-spacing:.01em;
+  }
+
 }
 @media(max-width:390px){
-  #settingsModal .setting-row b{font-size:9px}
-  #settingsModal .setting-row small{font-size:6.5px}
-  .palette-toggle-btn{padding:0 8px;font-size:7px}
+  #settingsModal .setting-row b{font-size:10.5px}
+  #settingsModal .setting-row small{font-size:7.5px}
+  .palette-toggle-btn{padding:0 8px;font-size:8.5px}
   .palette-dropdown{padding:7px}
   .palette-dropdown .quick-palette{gap:4px}
 }
 @media(max-height:700px){
   #settingsModal .settings-modal-window{padding-top:3px;padding-bottom:4px}
   #settingsModal .modal-head{min-height:40px;margin-bottom:4px}
-  #settingsModal .modal-head h2{font-size:16px}
+  #settingsModal .modal-head h2{font-size:18px}
   #settingsModal .modal-head .close-btn{width:35px;height:35px}
   #settingsModal .color-profile-note{min-height:28px;margin-bottom:4px;padding:4px 7px}
   #settingsModal .settings-list{gap:4px}
@@ -681,7 +686,7 @@ body.light .event-count{
   }
   #settingsModal .settings-preview-head{margin-bottom:4px}
   #settingsModal .settings-preview-day{min-height:54px}
-  #settingsModal .settings-preview-day small{font-size:6px}
+  #settingsModal .settings-preview-day small{font-size:7px}
   #settingsModal .action-row{margin-top:4px}
   #settingsModal .action-row button{min-height:31px !important}
   #settingsModal .version-box{margin-top:4px;padding:4px 6px}
@@ -1944,7 +1949,7 @@ body.light .day.today .event-count{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.3.18</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.3.19</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -2091,7 +2096,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.3.18';
+const CURRENT_VERSION='4.3.19';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
