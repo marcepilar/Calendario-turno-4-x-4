@@ -616,6 +616,248 @@ body.light .event-count{
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.stat-card{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:10px}.stat-card small{display:block;color:var(--muted);font-size:8px;text-transform:uppercase;font-weight:900}.stat-card b{display:block;font-size:20px;margin-top:3px}.stats-section{margin-top:11px}.stats-section h3{font-size:11px;margin:0 0 7px}.bar-row{display:grid;grid-template-columns:62px 1fr 35px;gap:7px;align-items:center;margin:6px 0;font-size:9px}.bar-track{height:8px;border-radius:8px;background:var(--panel3);overflow:hidden}.bar-fill{height:100%;border-radius:8px}.bar-fill.M,.bar-fill.D{background:var(--morning)}.bar-fill.N{background:var(--night)}.bar-fill.F{background:var(--off)}
 .next-off{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:10px;font-size:10px;line-height:1.45}
 
+/* ===== ESTADÍSTICAS V4.3.14 · TODO EN UNA SOLA PANTALLA ===== */
+#statsModal{
+  overflow:hidden;
+}
+#statsModal .stats-modal-window{
+  overflow:hidden !important;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  grid-template-rows:auto auto auto minmax(0,1fr) auto;
+  grid-template-areas:
+    "head head"
+    "cards cards"
+    "turn turn"
+    "month year"
+    "off salary";
+  gap:7px 8px;
+  align-content:stretch;
+  padding:7px 10px 9px;
+}
+#statsModal .modal-head{
+  grid-area:head;
+  position:relative;
+  top:auto;
+  margin:0;
+  padding:3px 0 7px;
+  min-height:50px;
+}
+#statsModal .modal-head h2{font-size:18px}
+#statsModal .modal-head small{font-size:9px;margin-top:2px}
+#statsModal .modal-head .close-btn{
+  width:40px;
+  height:40px;
+  border-radius:13px;
+}
+
+#statsModal .stats-grid{
+  grid-area:cards;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+  gap:6px;
+}
+#statsModal .stat-card{
+  min-width:0;
+  border-radius:12px;
+  padding:7px 8px;
+}
+#statsModal .stat-card small{
+  font-size:7px;
+  line-height:1.15;
+}
+#statsModal .stat-card b{
+  font-size:18px;
+  line-height:1;
+  margin-top:3px;
+}
+
+#statsModal .stats-section{
+  margin:0;
+  min-width:0;
+}
+#statsModal .stats-section h3{
+  font-size:10px;
+  line-height:1.1;
+  margin:0 0 5px;
+}
+
+#statsModal .stats-turn-end{grid-area:turn}
+#statsModal .stats-month{grid-area:month}
+#statsModal .stats-year{grid-area:year}
+#statsModal .stats-off{grid-area:off}
+#statsModal .stats-salary{grid-area:salary}
+
+#statsModal .turn-end-card{
+  margin:0;
+  padding:9px 10px;
+  border-radius:14px;
+}
+#statsModal .turn-end-top{
+  align-items:center;
+  gap:8px;
+}
+#statsModal .turn-end-copy{
+  min-width:0;
+}
+#statsModal .turn-end-copy small{
+  font-size:7px;
+  margin:0;
+}
+#statsModal .turn-end-copy b{
+  font-size:clamp(19px,3.2vw,24px);
+  line-height:1.02;
+  margin-top:3px;
+  letter-spacing:.01em;
+}
+#statsModal .turn-end-copy span{
+  font-size:8px;
+  margin-top:4px;
+  line-height:1.2;
+}
+#statsModal .turn-end-badge{
+  min-width:64px;
+  padding:8px 9px;
+  border-radius:12px;
+  font-size:19px;
+}
+
+#statsModal .stats-month,
+#statsModal .stats-year{
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:7px 8px;
+  background:color-mix(in srgb,var(--panel2) 88%,transparent);
+  overflow:hidden;
+}
+#statsModal .bar-row{
+  grid-template-columns:48px minmax(0,1fr) 24px;
+  gap:5px;
+  margin:4px 0;
+  font-size:8px;
+  line-height:1;
+}
+#statsModal .bar-track{
+  height:6px;
+}
+#statsModal .bar-row b{
+  font-size:8px;
+}
+
+#statsModal .stats-off,
+#statsModal .stats-salary{
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:7px 8px;
+  background:color-mix(in srgb,var(--panel2) 88%,transparent);
+  overflow:hidden;
+}
+#statsModal .next-off{
+  border:0;
+  background:transparent;
+  padding:0;
+  border-radius:0;
+  font-size:8px;
+  line-height:1.28;
+}
+
+#statsModal .salary-card{
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  overflow:visible;
+}
+#statsModal .salary-card::after{display:none}
+#statsModal .salary-top{
+  align-items:center;
+  gap:6px;
+}
+#statsModal .salary-copy{
+  min-width:0;
+}
+#statsModal .salary-copy small{
+  font-size:7px;
+}
+#statsModal .salary-copy b{
+  font-size:10px;
+  line-height:1.16;
+  margin-top:2px;
+}
+#statsModal .salary-copy span{
+  font-size:7px;
+  line-height:1.15;
+  margin-top:2px;
+}
+#statsModal .salary-days{
+  min-width:54px;
+  padding:6px 7px;
+  border-radius:11px;
+}
+#statsModal .salary-days strong{
+  font-size:18px;
+}
+#statsModal .salary-days span{
+  font-size:8px;
+}
+
+@media(max-width:620px){
+  #statsModal .stats-modal-window{
+    width:calc(100vw - 2px);
+    height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 2px);
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:6px;
+    padding:6px 8px 8px;
+  }
+  #statsModal .stats-grid{
+    grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+  }
+  #statsModal .stat-card{padding:6px 6px}
+  #statsModal .stat-card small{font-size:6.5px}
+  #statsModal .stat-card b{font-size:17px}
+  #statsModal .turn-end-copy b{font-size:20px}
+  #statsModal .turn-end-badge{min-width:58px;font-size:18px}
+  #statsModal .stats-section h3{font-size:9px}
+  #statsModal .stats-month,
+  #statsModal .stats-year,
+  #statsModal .stats-off,
+  #statsModal .stats-salary{padding:6px 7px}
+  #statsModal .bar-row{
+    grid-template-columns:44px minmax(0,1fr) 22px;
+    font-size:7px;
+    gap:4px;
+    margin:3px 0;
+  }
+  #statsModal .next-off{font-size:7.5px}
+}
+
+@media(max-height:700px){
+  #statsModal .stats-modal-window{gap:4px;padding-top:4px;padding-bottom:5px}
+  #statsModal .modal-head{min-height:43px;padding-bottom:4px}
+  #statsModal .modal-head h2{font-size:16px}
+  #statsModal .modal-head .close-btn{width:36px;height:36px}
+  #statsModal .stat-card{padding:5px 6px}
+  #statsModal .stat-card b{font-size:15px}
+  #statsModal .stats-section h3{font-size:8px;margin-bottom:3px}
+  #statsModal .turn-end-card{padding:6px 8px}
+  #statsModal .turn-end-copy b{font-size:17px}
+  #statsModal .turn-end-copy span{font-size:7px}
+  #statsModal .turn-end-badge{padding:6px;min-width:52px;font-size:16px}
+  #statsModal .stats-month,
+  #statsModal .stats-year,
+  #statsModal .stats-off,
+  #statsModal .stats-salary{padding:5px 6px}
+  #statsModal .bar-row{margin:2px 0;font-size:6.5px}
+  #statsModal .bar-track{height:5px}
+  #statsModal .next-off{font-size:7px}
+  #statsModal .salary-copy b{font-size:9px}
+  #statsModal .salary-copy span{font-size:6.5px}
+  #statsModal .salary-days{min-width:48px;padding:5px}
+  #statsModal .salary-days strong{font-size:16px}
+}
+
+
 .update-banner{position:fixed;left:10px;right:10px;bottom:14px;z-index:20000;display:none;max-width:700px;margin:0 auto;border-radius:22px;padding:14px 15px;box-shadow:0 18px 50px rgba(0,0,0,.42)}
 .update-banner.show{display:block}.update-inner{display:flex;align-items:center;gap:13px}.update-copy{flex:1}.update-copy b{display:block;font-size:13px}.update-copy span{display:block;color:var(--muted);font-size:10px;margin-top:3px;line-height:1.35}.update-inner button{border:1px solid var(--line);border-radius:11px;min-height:40px;padding:0 12px;font-size:10px;font-weight:900}.update-now{background:var(--accent);color:white}.update-later{background:var(--panel2);color:var(--text)}
 @media(max-width:620px){.update-banner{left:8px;right:8px;bottom:10px;padding:13px}.update-inner{gap:9px;flex-wrap:wrap}.update-copy{min-width:calc(100% - 42px)}.update-inner button{flex:1;min-height:42px}}
@@ -1238,7 +1480,7 @@ body.light .day.today .event-count{
   </div>
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.3.13</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.3.14</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -1339,10 +1581,10 @@ body.light .day.today .event-count{
 </div></div>
 
 <!-- Stats -->
-<div id="statsModal" class="backdrop"><div class="modal glass">
+<div id="statsModal" class="backdrop"><div class="modal glass stats-modal-window">
   <div class="modal-head"><div><h2>◔ Estadísticas</h2><small id="statsSubtitle"></small></div><button class="close-btn" data-close="statsModal">×</button></div>
   <div id="statsCards" class="stats-grid"></div>
-  <div class="stats-section">
+  <div class="stats-section stats-turn-end">
     <h3>Tu turno termina en</h3>
     <div class="turn-end-card">
       <div class="turn-end-top">
@@ -1355,10 +1597,10 @@ body.light .day.today .event-count{
       </div>
     </div>
   </div>
-  <div class="stats-section"><h3>Distribución del mes</h3><div id="monthBars"></div></div>
-  <div class="stats-section"><h3>Resumen anual</h3><div id="yearBars"></div></div>
-  <div class="stats-section"><h3>Próximo descanso</h3><div id="nextOffBox" class="next-off"></div></div>
-  <div class="stats-section">
+  <div class="stats-section stats-month"><h3>Distribución del mes</h3><div id="monthBars"></div></div>
+  <div class="stats-section stats-year"><h3>Resumen anual</h3><div id="yearBars"></div></div>
+  <div class="stats-section stats-off"><h3>Próximo descanso</h3><div id="nextOffBox" class="next-off"></div></div>
+  <div class="stats-section stats-salary">
     <h3>Próximo sueldo</h3>
     <div class="salary-card">
       <div class="salary-top">
@@ -1385,7 +1627,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.3.13';
+const CURRENT_VERSION='4.3.14';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -2192,10 +2434,10 @@ function renderStats(){
  else $('#statsCards').innerHTML=`<div class="stat-card"><small>Mañanas</small><b>${m.M}</b></div><div class="stat-card"><small>Noches</small><b>${m.N}</b></div><div class="stat-card"><small>Francos</small><b>${m.F}</b></div><div class="stat-card"><small>Horas mes</small><b>${hours}</b></div>`;
  renderTurnEndCard(t);
  $('#monthBars').innerHTML=barsHtml(m,t);$('#yearBars').innerHTML=barsHtml(y,t);
- $('#nextOffBox').innerHTML=off?`Tu próximo bloque de franco comienza <b>${cap(longFmt.format(off.start))}</b> y dura <b>${off.len} días</b>, hasta ${shortDateFmt.format(off.end)}.`:'No pude calcular el próximo franco.';
+ $('#nextOffBox').innerHTML=off?`Comienza <b>${cap(shortFmt.format(off.start))}</b> · <b>${off.len} días</b> · hasta ${shortDateFmt.format(off.end)}.`:'No pude calcular el próximo franco.';
 
  const salary=salaryCountdown(new Date());
- $('#salaryDate').textContent=cap(longFmt.format(salary.payday));
+ $('#salaryDate').textContent=cap(shortDateFmt.format(salary.payday));
  $('#salaryDays').textContent=salary.days;
  $('#salaryDaysLabel').textContent=salary.days===1?'día':'días';
  $('#salaryNote').textContent=salary.days===0
