@@ -270,11 +270,11 @@ body.light .event-count{
 
 .sheet-backdrop{position:fixed;inset:0;background:rgba(3,7,12,.62);backdrop-filter:blur(5px);z-index:11000;display:none;align-items:flex-end;justify-content:center;padding:calc(env(safe-area-inset-top) + 6px) 0 0}
 .sheet-backdrop.open{display:flex}
-.sheet{width:min(780px,100%);max-height:calc(100svh - env(safe-area-inset-top) - 6px);overflow-y:auto;overflow-x:hidden;border-radius:28px 28px 0 0;padding:6px 14px 108px;animation:sheetUp .22s cubic-bezier(.2,.75,.2,1);touch-action:pan-y;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;scrollbar-gutter:stable;position:relative;box-shadow:0 -22px 48px rgba(0,0,0,.38)}
+.sheet{width:min(800px,100%);height:calc(100dvh - env(safe-area-inset-top) - 2px);max-height:none;overflow-y:auto;overflow-x:hidden;border-radius:26px 26px 0 0;padding:4px 13px 112px;animation:sheetUp .20s cubic-bezier(.2,.78,.2,1);touch-action:pan-y;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;scrollbar-gutter:stable;position:relative;box-shadow:0 -24px 60px rgba(0,0,0,.48)}
 .sheet::before{content:'';position:absolute;left:0;right:0;top:0;height:84px;background:radial-gradient(circle at 85% 12%,rgba(66,214,176,.10),transparent 34%),radial-gradient(circle at 18% 0%,rgba(63,132,255,.10),transparent 28%);pointer-events:none}
 @keyframes sheetUp{from{transform:translateY(35px);opacity:.4}to{transform:translateY(0);opacity:1}}
 .sheet-handle{width:54px;height:5px;border-radius:999px;background:linear-gradient(90deg,rgba(255,255,255,.08),rgba(255,255,255,.28),rgba(255,255,255,.08));margin:2px auto 8px;position:relative;z-index:2}
-.sheet-head{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin:0 -2px 10px;padding:4px 2px 10px;background:linear-gradient(180deg,color-mix(in srgb,var(--panel) 96%,transparent) 0%, color-mix(in srgb,var(--panel) 93%,transparent) 78%, transparent 100%);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.06)}.sheet-head h2{margin:0;font-size:21px;letter-spacing:-.01em}.sheet-head small{display:block;font-size:11px;color:var(--muted);margin-top:4px}
+.sheet-head{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;gap:10px;align-items:center;margin:0 -3px 10px;padding:5px 3px 11px;background:linear-gradient(180deg,color-mix(in srgb,var(--panel) 98%,transparent) 0%,color-mix(in srgb,var(--panel) 94%,transparent) 76%,transparent 100%);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);border-bottom:1px solid rgba(255,255,255,.07)}.sheet-head h2{margin:0;font-size:22px;letter-spacing:-.02em}.sheet-head small{display:block;font-size:11px;color:var(--muted);margin-top:3px;line-height:1.25}.sheet-head .close-btn{width:46px;height:46px;border-radius:15px;background:linear-gradient(180deg,var(--panel2),var(--panel));box-shadow:0 8px 22px rgba(0,0,0,.20)}
 .agenda-shift{display:inline-flex;align-items:center;gap:6px;padding:8px 11px;border-radius:12px;background:linear-gradient(180deg,color-mix(in srgb,var(--panel2) 93%,transparent),color-mix(in srgb,var(--panel) 88%,transparent));border:1px solid var(--line);font-size:10px;font-weight:950;margin-bottom:10px;box-shadow:0 8px 20px rgba(0,0,0,.14)}
 .section-title{font-size:11px;font-weight:950;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin:14px 0 8px;padding-left:2px}
 .agenda-list{display:grid;gap:8px}.agenda-empty{padding:13px;border-radius:15px;border:1px dashed var(--line);color:var(--muted);font-size:10px;text-align:center;background:color-mix(in srgb,var(--panel2) 86%,transparent)}
@@ -308,7 +308,7 @@ body.light .event-count{
 .agenda-all-edit:active,.agenda-all-calendar:active,.agenda-all-delete:active{transform:scale(.97)}
 @media(max-width:620px){
   .sheet-backdrop{padding-top:calc(env(safe-area-inset-top) + 4px)}
-  .sheet{max-height:calc(100svh - env(safe-area-inset-top) - 4px);padding:4px 12px 104px;border-radius:24px 24px 0 0}
+  .sheet{height:calc(100dvh - env(safe-area-inset-top) - 1px);max-height:none;padding:3px 10px 108px;border-radius:22px 22px 0 0}
   .sheet-head{margin:0 -1px 9px;padding:2px 1px 9px}
   .agenda-all-box{max-height:32svh}
   .agenda-all-actions{display:grid;grid-template-columns:1fr 1fr 1fr}
@@ -331,6 +331,168 @@ body.light .event-count{
 @media(max-width:480px){
   .reminder-guide-card{grid-template-columns:34px 1fr}
   .reminder-guide-card .reminder-guide-btn{grid-column:1/-1;width:100%}
+}
+
+
+/* ===== AGENDA V4.3.9 · SEGUNDA PASADA PREMIUM ===== */
+.agenda-overview{
+  display:grid;
+  grid-template-columns:1.25fr .75fr;
+  gap:8px;
+  margin:3px 0 8px;
+}
+.agenda-overview-card{
+  position:relative;
+  overflow:hidden;
+  min-height:66px;
+  border:1px solid var(--line);
+  border-radius:17px;
+  padding:10px 12px;
+  background:
+    radial-gradient(circle at 95% 10%,rgba(66,214,176,.16),transparent 42%),
+    linear-gradient(180deg,color-mix(in srgb,var(--panel2) 96%,transparent),color-mix(in srgb,var(--panel) 92%,transparent));
+  box-shadow:0 12px 28px rgba(0,0,0,.18);
+}
+.agenda-overview-card.secondary{
+  background:
+    radial-gradient(circle at 90% 10%,rgba(67,168,255,.15),transparent 42%),
+    linear-gradient(180deg,color-mix(in srgb,var(--panel2) 96%,transparent),color-mix(in srgb,var(--panel) 92%,transparent));
+}
+.agenda-overview-card small{
+  display:block;
+  color:var(--muted);
+  font-size:8px;
+  font-weight:950;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.agenda-overview-card strong{
+  display:block;
+  margin-top:4px;
+  font-size:22px;
+  line-height:1;
+}
+.agenda-overview-card span{
+  display:block;
+  margin-top:4px;
+  color:var(--muted);
+  font-size:8px;
+}
+.agenda-panel{
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:10px;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--panel2) 94%,transparent),color-mix(in srgb,var(--panel) 92%,transparent));
+  box-shadow:0 12px 28px rgba(0,0,0,.15);
+}
+.agenda-panel + .agenda-panel{margin-top:10px}
+.agenda-panel-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:8px;
+}
+.agenda-panel-head h3{
+  margin:0;
+  font-size:11px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.agenda-form-mode{
+  display:inline-grid;
+  place-items:center;
+  min-height:24px;
+  padding:0 9px;
+  border-radius:999px;
+  border:1px solid rgba(66,214,176,.25);
+  background:rgba(66,214,176,.10);
+  color:var(--accent);
+  font-size:8px;
+  font-weight:950;
+  letter-spacing:.05em;
+}
+.agenda-form-mode.editing{
+  border-color:rgba(67,168,255,.30);
+  background:rgba(67,168,255,.10);
+  color:var(--accent2);
+}
+.agenda-search-shell{
+  display:grid;
+  grid-template-columns:1fr 138px;
+  gap:7px;
+  margin-bottom:8px;
+}
+.agenda-search-shell input,
+.agenda-search-shell select{
+  min-height:40px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--panel);
+  color:var(--text);
+  padding:0 11px;
+  outline:none;
+  font-size:10px;
+}
+.agenda-search-shell input:focus,
+.agenda-search-shell select:focus,
+.agenda-form input:focus,
+.agenda-form textarea:focus,
+.agenda-form select:focus{
+  border-color:rgba(66,214,176,.55);
+  box-shadow:0 0 0 3px rgba(66,214,176,.08);
+}
+.agenda-all-item{
+  transition:transform .14s ease,border-color .14s ease,background .14s ease;
+}
+.agenda-all-item:active{transform:scale(.992)}
+.agenda-all-date{
+  display:inline-flex;
+  align-items:center;
+  min-height:22px;
+  padding:0 7px;
+  border-radius:999px;
+  border:1px solid rgba(66,214,176,.20);
+  background:rgba(66,214,176,.08);
+}
+.agenda-all-meta{
+  padding-top:5px;
+  border-top:1px solid rgba(255,255,255,.05);
+}
+.agenda-all-edit,.agenda-all-calendar,.agenda-all-delete{
+  min-height:36px;
+}
+.agenda-all-edit{
+  background:linear-gradient(180deg,color-mix(in srgb,var(--panel2) 96%,transparent),color-mix(in srgb,var(--panel) 92%,transparent));
+}
+.agenda-all-calendar{
+  border-color:rgba(67,168,255,.22);
+  background:rgba(67,168,255,.08);
+}
+.agenda-fixed-actions{
+  box-shadow:0 18px 50px rgba(0,0,0,.46),0 0 0 1px rgba(255,255,255,.03);
+}
+.agenda-fixed-actions .save{
+  background:linear-gradient(135deg,#43d7b5,#29bfa4);
+  box-shadow:0 10px 28px rgba(66,214,176,.28);
+}
+.agenda-fixed-actions .clear{
+  background:linear-gradient(180deg,var(--panel2),var(--panel));
+}
+.agenda-footer-note{
+  margin:10px 2px 0;
+  color:var(--muted);
+  font-size:8px;
+  text-align:center;
+  line-height:1.4;
+}
+@media(max-width:620px){
+  .agenda-overview{grid-template-columns:1fr 1fr}
+  .agenda-search-shell{grid-template-columns:1fr}
+  .agenda-panel{padding:9px;border-radius:16px}
+  .agenda-all-actions{grid-template-columns:1fr 1fr}
+  .agenda-all-calendar{grid-column:1/-1}
 }
 
 .year-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.mini-month{border:1px solid var(--line);background:var(--panel2);border-radius:14px;padding:7px;cursor:pointer}.mini-month h3{text-align:center;margin:0 0 5px;font-size:10px;text-transform:uppercase}.mini-days{display:grid;grid-template-columns:repeat(7,1fr);gap:1px}.mini-day{aspect-ratio:1;border-radius:3px;display:grid;place-items:center;font-size:6px;font-weight:800}.mini-day.blank{background:transparent}.mini-day.M,.mini-day.D{background:var(--morning);color:var(--morning-text)}.mini-day.N{background:var(--night);color:var(--night-text)}.mini-day.F{background:var(--off);color:var(--off-text)}.mini-day.has-event{outline:1px solid #a78bfa}
@@ -942,7 +1104,7 @@ body.light .day.today .event-count{
   </div>
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.3.8</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.3.9</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -951,28 +1113,53 @@ body.light .day.today .event-count{
   <div class="sheet-head"><div><h2>📅 Agenda</h2><small id="agendaDateText"></small></div><button class="close-btn" data-close="agendaSheet" aria-label="Cerrar agenda">×</button></div>
   <div id="agendaShift" class="agenda-shift"></div>
 
-  <div class="section-title">Este día</div>
-  <div id="agendaDayList" class="agenda-list"></div>
-
-  <div class="section-title">Agregar / editar</div>
-  <div class="agenda-form">
-    <div class="form-grid">
-      <div class="form-field full"><label>Título</label><input id="agendaTitleInput" maxlength="80" placeholder="Ej: Médico, cumpleaños, trámite..."></div>
-      <div class="form-field"><label>Hora</label><input id="agendaTimeInput" type="time"></div>
-      <div class="form-field"><label>Categoría</label><select id="agendaCategoryInput"><option value="personal">Personal</option><option value="trabajo">Trabajo</option><option value="salud">Salud</option><option value="cumple">Cumpleaños</option><option value="tramite">Trámite</option></select></div>
-      <div class="form-field"><label>Recordatorio</label><select id="agendaReminderInput"><option value="none">Sin recordatorio</option><option value="0">A la hora</option><option value="15">15 min antes</option><option value="60">1 hora antes</option><option value="1440">1 día antes</option></select></div>
-      <div class="form-field"><label>Repetir</label><select id="agendaRepeatInput"><option value="none">No repetir</option><option value="daily">Todos los días</option><option value="weekly">Cada semana</option><option value="yearly">Cada año</option><option value="shiftM">Todos mis días M</option><option value="shiftN">Todos mis días N</option><option value="shiftD">Todos mis días T5 L a V</option><option value="shiftF">Todos mis francos</option></select></div>
-      <div class="form-field full"><label>Notas</label><textarea id="agendaNotesInput" maxlength="500" placeholder="Detalle opcional"></textarea></div>
+  <div class="agenda-overview">
+    <div class="agenda-overview-card">
+      <small>Eventos del día</small>
+      <strong id="agendaTodayCount">0</strong>
+      <span id="agendaTodaySummary">Nada agendado para esta fecha</span>
+    </div>
+    <div class="agenda-overview-card secondary">
+      <small>Total guardados</small>
+      <strong id="agendaStoredCount">0</strong>
+      <span>En toda tu agenda</span>
     </div>
   </div>
 
-  <div class="section-title agenda-all-title">
-    <span>Todos los eventos guardados</span>
-    <span id="agendaAllCount" class="agenda-total-count">0</span>
+  <div class="agenda-panel">
+    <div class="agenda-panel-head">
+      <h3>Este día</h3>
+      <span class="agenda-total-count" id="agendaDayCount">0</span>
+    </div>
+    <div id="agendaDayList" class="agenda-list"></div>
   </div>
-  <div class="search-row"><input id="agendaSearchInput" placeholder="Buscar eventos..."><select id="agendaFilterInput"><option value="all">Todas</option><option value="personal">Personal</option><option value="trabajo">Trabajo</option><option value="salud">Salud</option><option value="cumple">Cumpleaños</option><option value="tramite">Trámite</option></select></div>
-  <div class="agenda-all-box">
-    <div id="agendaAllList" class="agenda-all-list"></div>
+
+  <div class="agenda-panel">
+    <div class="agenda-panel-head">
+      <h3>Todos los eventos guardados</h3>
+      <span id="agendaAllCount" class="agenda-total-count">0</span>
+    </div>
+    <div class="agenda-search-shell"><input id="agendaSearchInput" placeholder="Buscar por título, nota o fecha..."><select id="agendaFilterInput"><option value="all">Todas las categorías</option><option value="personal">Personal</option><option value="trabajo">Trabajo</option><option value="salud">Salud</option><option value="cumple">Cumpleaños</option><option value="tramite">Trámite</option></select></div>
+    <div class="agenda-all-box">
+      <div id="agendaAllList" class="agenda-all-list"></div>
+    </div>
+  </div>
+
+  <div class="agenda-panel" id="agendaEditorPanel">
+    <div class="agenda-panel-head">
+      <h3>Nuevo / editar evento</h3>
+      <span id="agendaFormMode" class="agenda-form-mode">NUEVO EVENTO</span>
+    </div>
+    <div class="agenda-form">
+      <div class="form-grid">
+        <div class="form-field full"><label>Título</label><input id="agendaTitleInput" maxlength="80" placeholder="Ej: Médico, cumpleaños, trámite..."></div>
+        <div class="form-field"><label>Hora</label><input id="agendaTimeInput" type="time"></div>
+        <div class="form-field"><label>Categoría</label><select id="agendaCategoryInput"><option value="personal">Personal</option><option value="trabajo">Trabajo</option><option value="salud">Salud</option><option value="cumple">Cumpleaños</option><option value="tramite">Trámite</option></select></div>
+        <div class="form-field"><label>Recordatorio</label><select id="agendaReminderInput"><option value="none">Sin recordatorio</option><option value="0">A la hora</option><option value="15">15 min antes</option><option value="60">1 hora antes</option><option value="1440">1 día antes</option></select></div>
+        <div class="form-field"><label>Repetir</label><select id="agendaRepeatInput"><option value="none">No repetir</option><option value="daily">Todos los días</option><option value="weekly">Cada semana</option><option value="yearly">Cada año</option><option value="shiftM">Todos mis días M</option><option value="shiftN">Todos mis días N</option><option value="shiftD">Todos mis días T5 L a V</option><option value="shiftF">Todos mis francos</option></select></div>
+        <div class="form-field full"><label>Notas</label><textarea id="agendaNotesInput" maxlength="500" placeholder="Detalle opcional"></textarea></div>
+      </div>
+    </div>
   </div>
 
   <div class="section-title">Cómo recibir los recordatorios</div>
@@ -999,7 +1186,7 @@ body.light .day.today .event-count{
   <div class="action-row"><button id="agendaExportBtn" class="btn-secondary">⬇️ Copia de seguridad</button><label class="btn-secondary" style="min-height:42px;border:1px solid var(--line);border-radius:12px;display:grid;place-items:center;font-weight:900;cursor:pointer" for="agendaImportInput">⬆️ Restaurar copia</label></div>
   <div class="action-row"><button class="btn-primary" data-close="agendaSheet" style="grid-column:1/-1">LISTO</button></div>
   <input id="agendaImportInput" type="file" accept=".json,application/json" hidden>
-  <div id="backupStatus" class="backup-status"></div>
+  <div id="backupStatus" class="backup-status"></div><div class="agenda-footer-note">Tus eventos quedan guardados en este dispositivo. Hacé una copia de seguridad de vez en cuando.</div>
 </div>
 
 <div class="agenda-fixed-actions">
@@ -1062,7 +1249,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.3.8';
+const CURRENT_VERSION='4.3.9';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -1084,7 +1271,7 @@ const $$=s=>[...document.querySelectorAll(s)];
 const cal=$('#calendar'),calendarCard=$('#calendarCard'),monthName=$('#monthName'),selectedInfo=$('#selectedInfo');
 const turnSelect=$('#turnSelect'),turn5Select=$('#turn5Select'),turn5SubRow=$('#turn5SubRow'),themeBtn=$('#themeBtn');
 const detailTitle=$('#detailTitle'),detailGrid=$('#detailGrid'),cycleStrip=$('#cycleStrip'),cyclePosition=$('#cyclePosition'),cycleTitle=$('#cycleTitle'),shiftLegend=$('#shiftLegend');
-const agendaSheet=$('#agendaSheet'),agendaDateText=$('#agendaDateText'),agendaShift=$('#agendaShift'),agendaDayList=$('#agendaDayList'),agendaAllList=$('#agendaAllList'),agendaAllCount=$('#agendaAllCount');
+const agendaSheet=$('#agendaSheet'),agendaDateText=$('#agendaDateText'),agendaShift=$('#agendaShift'),agendaDayList=$('#agendaDayList'),agendaAllList=$('#agendaAllList'),agendaAllCount=$('#agendaAllCount'),agendaTodayCount=$('#agendaTodayCount'),agendaStoredCount=$('#agendaStoredCount'),agendaDayCount=$('#agendaDayCount'),agendaTodaySummary=$('#agendaTodaySummary'),agendaFormMode=$('#agendaFormMode'),agendaEditorPanel=$('#agendaEditorPanel');
 const agendaTitleInput=$('#agendaTitleInput'),agendaTimeInput=$('#agendaTimeInput'),agendaCategoryInput=$('#agendaCategoryInput'),agendaReminderInput=$('#agendaReminderInput'),agendaRepeatInput=$('#agendaRepeatInput'),agendaNotesInput=$('#agendaNotesInput');
 const agendaSearchInput=$('#agendaSearchInput'),agendaFilterInput=$('#agendaFilterInput'),backupStatus=$('#backupStatus');
 const settingsBtn=$('#settingsBtn'),morningColor=$('#morningColor'),nightColor=$('#nightColor'),offColor=$('#offColor'),codeSize=$('#codeSize'),codeSizeValue=$('#codeSizeValue'),showLabels=$('#showLabels'),hapticsToggle=$('#hapticsToggle');
@@ -1604,12 +1791,21 @@ function agendaForDate(d){
 }
 function repeatLabel(r){return({none:'Una vez',daily:'Todos los días',weekly:'Semanal',yearly:'Anual',shiftM:'Todos mis días M',shiftN:'Todos mis días N',shiftD:'Todos mis días T5 L a V',shiftF:'Todos mis francos'})[r]||'Una vez'}
 function reminderLabel(r){return({none:'Sin recordatorio','0':'A la hora','15':'15 min antes','60':'1 hora antes','1440':'1 día antes'})[String(r)]||'Sin recordatorio'}
-function clearAgendaForm(){agendaEditingId=null;agendaTitleInput.value='';agendaTimeInput.value='';agendaCategoryInput.value='personal';agendaReminderInput.value='none';agendaRepeatInput.value='none';agendaNotesInput.value='';$('#agendaSaveBtn').textContent='GUARDAR'}
+function clearAgendaForm(){
+ agendaEditingId=null;
+ agendaTitleInput.value='';agendaTimeInput.value='';agendaCategoryInput.value='personal';agendaReminderInput.value='none';agendaRepeatInput.value='none';agendaNotesInput.value='';
+ $('#agendaSaveBtn').textContent='GUARDAR';
+ if(agendaFormMode){agendaFormMode.textContent='NUEVO EVENTO';agendaFormMode.classList.remove('editing')}
+}
 function openAgenda(d){agendaSelectedDate=new Date(d.getFullYear(),d.getMonth(),d.getDate());clearAgendaForm();renderAgenda();agendaSheet.classList.add('open');document.body.style.overflow='hidden'}
 function closeAgenda(){agendaSheet.classList.remove('open');document.body.style.overflow=''}
 function renderAgenda(){
  const turn=activeTurnKey(),c=codeFor(turn,agendaSelectedDate);agendaDateText.textContent=cap(longFmt.format(agendaSelectedDate));agendaShift.textContent=`${scheduleName(turn)} · ${codeText(turn,c)} — ${shiftNames[c][0]} · ${shiftNames[c][1]}`;
- const items=agendaForDate(agendaSelectedDate);agendaDayList.innerHTML='';
+ const items=agendaForDate(agendaSelectedDate),storedTotal=loadAgendaData().length;agendaDayList.innerHTML='';
+ if(agendaTodayCount)agendaTodayCount.textContent=String(items.length);
+ if(agendaDayCount)agendaDayCount.textContent=String(items.length);
+ if(agendaStoredCount)agendaStoredCount.textContent=String(storedTotal);
+ if(agendaTodaySummary)agendaTodaySummary.textContent=items.length?`${items.length} evento${items.length===1?'':'s'} en esta fecha`:'Nada agendado para esta fecha';
  if(!items.length)agendaDayList.innerHTML='<div class="agenda-empty">Todavía no hay nada agendado para este día.</div>';
  items.forEach(item=>{
   const [catName,catColor]=categoryInfo[item.category]||categoryInfo.personal,card=document.createElement('div');card.className='agenda-item';card.style.setProperty('--cat-color',catColor);
@@ -1629,7 +1825,15 @@ function saveAgenda(){
  else items.push({id:'a'+Date.now().toString(36)+Math.random().toString(36).slice(2,7),createdAt:Date.now(),...data});
  saveAgendaData(items);clearAgendaForm();vibrate(15);renderAgenda();renderCalendar();if(data.reminder!=='none')requestNotificationPermission()
 }
-function editAgenda(id){const item=loadAgendaData().find(x=>x.id===id);if(!item)return;const n=normalizedItem(item);agendaEditingId=id;agendaTitleInput.value=n.title||'';agendaTimeInput.value=n.time||'';agendaCategoryInput.value=n.category;agendaReminderInput.value=String(n.reminder||'none');agendaRepeatInput.value=n.repeat;agendaNotesInput.value=n.notes||'';$('#agendaSaveBtn').textContent='GUARDAR CAMBIOS';agendaTitleInput.focus()}
+function editAgenda(id){
+ const item=loadAgendaData().find(x=>x.id===id);if(!item)return;
+ const n=normalizedItem(item);agendaEditingId=id;
+ agendaTitleInput.value=n.title||'';agendaTimeInput.value=n.time||'';agendaCategoryInput.value=n.category;agendaReminderInput.value=String(n.reminder||'none');agendaRepeatInput.value=n.repeat;agendaNotesInput.value=n.notes||'';
+ $('#agendaSaveBtn').textContent='GUARDAR CAMBIOS';
+ if(agendaFormMode){agendaFormMode.textContent='EDITANDO';agendaFormMode.classList.add('editing')}
+ requestAnimationFrame(()=>agendaEditorPanel?.scrollIntoView({behavior:'smooth',block:'start'}));
+ setTimeout(()=>agendaTitleInput.focus({preventScroll:true}),260)
+}
 function deleteAgenda(id){const item=loadAgendaData().find(x=>x.id===id);if(!item||!confirm(`¿Borrar "${item.title}"${item.repeat&&item.repeat!=='none'?' y toda su repetición':''}?`))return;saveAgendaData(loadAgendaData().filter(x=>x.id!==id));renderAgenda();renderCalendar()}
 function allStoredAgendaItems(){
  const search=agendaSearchInput.value.trim().toLowerCase(),filter=agendaFilterInput.value;
@@ -1646,6 +1850,7 @@ function allStoredAgendaItems(){
 }
 function renderAllAgendaEvents(){
  const total=loadAgendaData().length,list=allStoredAgendaItems();
+ if(agendaStoredCount)agendaStoredCount.textContent=String(total);
  agendaAllCount.textContent=agendaSearchInput.value.trim()||agendaFilterInput.value!=='all'?`${list.length}/${total}`:String(total);
  agendaAllList.innerHTML='';
  if(!list.length){
@@ -1658,7 +1863,7 @@ function renderAllAgendaEvents(){
   card.className='agenda-all-item';
   card.style.setProperty('--cat-color',catColor);
   const turnName=item.turn?scheduleName(item.turn):'';
-  card.innerHTML=`<div class="agenda-all-top"><div><div class="agenda-all-date">${shortDateFmt.format(d)}</div><div class="agenda-all-event-title">${escapeHtml(item.title||'Sin título')}</div></div><div class="agenda-all-time">${item.time||'Todo el día'}</div></div>${item.notes?`<div class="agenda-all-notes">${escapeHtml(item.notes)}</div>`:''}<div class="agenda-all-meta">${catName} · ${repeatLabel(item.repeat)}${turnName?' · '+escapeHtml(turnName):''} · 🔔 ${reminderLabel(item.reminder)}</div><div class="agenda-all-actions"><button class="agenda-all-edit" data-all-edit="${item.id}">✏️ EDITAR</button><button class="agenda-all-calendar" data-all-ics="${item.id}" data-all-occ="${item.date}">📅 CALENDARIO</button><button class="agenda-all-delete" data-all-del="${item.id}">🗑 ELIMINAR</button></div>`;
+  card.innerHTML=`<div class="agenda-all-top"><div><div class="agenda-all-date">${shortDateFmt.format(d)}</div><div class="agenda-all-event-title">${escapeHtml(item.title||'Sin título')}</div></div><div class="agenda-all-time">${item.time||'Todo el día'}</div></div>${item.notes?`<div class="agenda-all-notes">${escapeHtml(item.notes)}</div>`:''}<div class="agenda-all-meta"><b style="color:${catColor}">${catName}</b> · ${repeatLabel(item.repeat)}${turnName?' · '+escapeHtml(turnName):''} · 🔔 ${reminderLabel(item.reminder)}</div><div class="agenda-all-actions"><button class="agenda-all-edit" data-all-edit="${item.id}">✏️ EDITAR</button><button class="agenda-all-calendar" data-all-ics="${item.id}" data-all-occ="${item.date}">📅 CALENDARIO</button><button class="agenda-all-delete" data-all-del="${item.id}">🗑 ELIMINAR</button></div>`;
   agendaAllList.appendChild(card);
  });
  agendaAllList.querySelectorAll('[data-all-edit]').forEach(b=>b.onclick=()=>{const item=loadAgendaData().find(x=>x.id===b.dataset.allEdit);if(!item)return;agendaSelectedDate=parseDateKey(item.date);renderAgenda();editAgenda(item.id)});
