@@ -434,9 +434,9 @@ body.light .event-count{
 #settingsModal .setting-range-row .range-wrap{
   width:100%;
   display:grid;
-  grid-template-columns:minmax(0,1fr) 64px;
+  grid-template-columns:minmax(0,1fr) 88px;
   align-items:center;
-  gap:11px;
+  gap:13px;
 }
 #settingsModal .setting-range-row .range-wrap input[type="range"]{
   --range-progress:50%;
@@ -497,18 +497,20 @@ body.light .event-count{
   box-shadow:0 4px 12px rgba(0,0,0,.34),0 0 0 1px rgba(255,255,255,.16);
 }
 #settingsModal .range-value{
-  min-width:64px;
-  height:38px;
+  min-width:88px;
+  height:52px;
+  padding:0 10px;
   display:grid;
   place-items:center;
   text-align:center;
   border:1px solid var(--line);
-  border-radius:11px;
+  border-radius:17px;
   background:linear-gradient(180deg,var(--panel3),var(--panel2));
   color:var(--text);
-  font-size:11px;
+  font-size:15px;
   font-weight:950;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+  letter-spacing:.01em;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 8px 18px rgba(0,0,0,.12);
 }
 
 /* Paleta compacta: no aumenta la altura de Configuración */
@@ -2069,7 +2071,7 @@ body.light .day.today .event-count{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.4.2</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.4.3</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -2216,7 +2218,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.4.2';
+const CURRENT_VERSION='4.4.3';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
