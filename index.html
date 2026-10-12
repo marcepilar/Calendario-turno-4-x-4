@@ -182,6 +182,15 @@ select,.field{width:100%;border:1px solid var(--line);background:var(--panel2);c
 .cycle-chip.F{background:var(--off);color:var(--off-text)}
 .cycle-chip.current{opacity:1;transform:translateY(-2px);box-shadow:0 4px 11px rgba(0,0,0,.25);outline:2px solid #fff}
 body.light .cycle-chip.current{outline-color:#202a37}
+.cycle-strip.weekly-calendar-align{
+  margin-left:-11px;
+  margin-right:-11px;
+  gap:0;
+}
+.cycle-strip.weekly-calendar-align .cycle-chip{
+  margin:0 2px;
+}
+
 
 .calendar-card{border-radius:22px;overflow:hidden;transform:translate3d(0,0,0);touch-action:pan-y;user-select:none;will-change:transform}
 .weekdays,.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr)}
@@ -1951,7 +1960,7 @@ body.light .day.today .event-count{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.3.20</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.3.21</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -2098,7 +2107,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.3.20';
+const CURRENT_VERSION='4.3.21';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -2363,14 +2372,24 @@ function statusRelief(turn,d){
  for(let i=1;i<=16;i++){const x=addDays(d,i),cc=codeFor(turn,x);if(cc!=='F')return`Próximo ingreso: ${shiftNames[cc][0]} · ${shortFmt.format(x)} · ${cc==='M'?'06:00':cc==='N'?'18:00':'07:30'}`}
  return'—'
 }
+
+// V4.3.21 T5LV visual week:
+// index 0 DOM=F, 1 LUN=T5, 2 MAR=T5, 3 MIE=T5, 4 JUE=T5, 5 VIE=T5, 6 SAB=F
+
 function renderCycle(){
  const turn=activeTurnKey();
  const today=new Date();
  let seq=[],idx=0,title='Ciclo de 16 días';
+ cycleStrip.classList.remove('weekly-calendar-align');
+
  if(turn==='T5LV'){
-  seq=['D','D','D','D','D','F','F'];
-  idx=(today.getDay()+6)%7;
+  // Mismo orden visual que el calendario: DOM, LUN, MAR, MIÉ, JUE, VIE, SÁB.
+  // Así el cuadro resaltado del día actual queda exactamente en la misma
+  // columna que el día correspondiente del calendario de abajo.
+  seq=['F','D','D','D','D','D','F'];
+  idx=today.getDay();
   title='Semana laboral · T5 L a V';
+  cycleStrip.classList.add('weekly-calendar-align');
  }else if(turn==='T5A'||turn==='T5B'){
   seq=T5_4X4_CYCLE;
   const anchor=turn==='T5A'?T5A_ANCHOR:T5B_ANCHOR;
@@ -2380,9 +2399,15 @@ function renderCycle(){
   seq=cycles[turn];
   idx=mod(diffDays(today,ANCHOR),16);
  }
+
  cycleStrip.innerHTML='';
  cycleStrip.style.gridTemplateColumns=`repeat(${seq.length},1fr)`;
- seq.forEach((c,i)=>{const el=document.createElement('div');el.className=`cycle-chip ${c}${i===idx?' current':''}`;el.textContent=codeText(turn,c);cycleStrip.appendChild(el)});
+ seq.forEach((c,i)=>{
+  const el=document.createElement('div');
+  el.className=`cycle-chip ${c}${i===idx?' current':''}`;
+  el.textContent=codeText(turn,c);
+  cycleStrip.appendChild(el)
+ });
  cycleTitle.textContent=title;
  cyclePosition.textContent=turn==='T5LV'?`Hoy: día ${idx+1} de 7`:`Hoy: día ${idx+1} de ${seq.length}`;
 }
