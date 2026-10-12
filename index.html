@@ -291,8 +291,33 @@ body.light .event-count{
 .upcoming-list{display:grid;gap:6px}.upcoming-item{width:100%;text-align:left;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:11px;padding:8px 9px}.upcoming-item b{display:block;font-size:10px}.upcoming-item span{display:block;color:var(--muted);font-size:8px;margin-top:2px}
 .agenda-all-title{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .agenda-total-count{display:inline-grid;place-items:center;min-width:30px;height:22px;padding:0 8px;border-radius:999px;background:var(--panel2);border:1px solid var(--line);color:var(--text);font-size:9px;font-weight:950}
-.agenda-all-box{margin-top:8px;max-height:min(340px,36svh);overflow-y:auto;overflow-x:hidden;border:1px solid var(--line);border-radius:17px;background:linear-gradient(180deg,color-mix(in srgb,var(--panel2) 92%,transparent),color-mix(in srgb,var(--panel) 90%,transparent));padding:8px;touch-action:pan-y;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}
+.agenda-all-box{margin-top:8px;max-height:none;overflow:visible;border:1px solid var(--line);border-radius:17px;background:linear-gradient(180deg,color-mix(in srgb,var(--panel2) 92%,transparent),color-mix(in srgb,var(--panel) 90%,transparent));padding:8px;touch-action:auto;overscroll-behavior:auto;box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}
 .agenda-all-list{display:grid;gap:7px}
+.agenda-all-toggle{
+  display:none;
+  width:100%;
+  min-height:39px;
+  margin-top:8px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:linear-gradient(180deg,var(--panel2),var(--panel));
+  color:var(--text);
+  font-size:9px;
+  font-weight:950;
+  letter-spacing:.05em;
+}
+.agenda-all-toggle.show{display:block}
+.agenda-all-toggle:active{transform:scale(.985)}
+.agenda-single-scroll-note{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  margin:7px 0 0;
+  color:var(--muted);
+  font-size:8px;
+  text-align:center;
+}
 .agenda-all-item{position:relative;border:1px solid var(--line);border-left:4px solid var(--cat-color,#8b5cf6);border-radius:14px;background:linear-gradient(180deg,color-mix(in srgb,var(--panel) 95%,transparent),color-mix(in srgb,var(--panel2) 92%,transparent));padding:10px 10px 9px;box-shadow:0 8px 22px rgba(0,0,0,.12)}
 .agenda-all-top{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:start}
 .agenda-all-date{font-size:9px;font-weight:950;color:var(--accent)}
@@ -310,7 +335,6 @@ body.light .event-count{
   .sheet-backdrop{padding-top:calc(env(safe-area-inset-top) + 4px)}
   .sheet{height:calc(100dvh - env(safe-area-inset-top) - 1px);max-height:none;padding:3px 10px 108px;border-radius:22px 22px 0 0}
   .sheet-head{margin:0 -1px 9px;padding:2px 1px 9px}
-  .agenda-all-box{max-height:32svh}
   .agenda-all-actions{display:grid;grid-template-columns:1fr 1fr 1fr}
 }
 @media(max-width:480px){
@@ -1118,7 +1142,7 @@ body.light .day.today .event-count{
   </div>
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.3.10</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.3.11</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -1156,7 +1180,9 @@ body.light .day.today .event-count{
     <div class="agenda-search-shell"><input id="agendaSearchInput" placeholder="Buscar por título, nota o fecha..."><select id="agendaFilterInput"><option value="all">Todas las categorías</option><option value="personal">Personal</option><option value="trabajo">Trabajo</option><option value="salud">Salud</option><option value="cumple">Cumpleaños</option><option value="tramite">Trámite</option></select></div>
     <div class="agenda-all-box">
       <div id="agendaAllList" class="agenda-all-list"></div>
+      <button id="agendaAllToggle" class="agenda-all-toggle" type="button">VER TODOS</button>
     </div>
+    <div class="agenda-single-scroll-note">↕ Deslizá la Agenda completa para seguir bajando</div>
   </div>
 
   <div class="agenda-panel" id="agendaEditorPanel">
@@ -1263,7 +1289,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.3.10';
+const CURRENT_VERSION='4.3.11';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -1285,7 +1311,7 @@ const $$=s=>[...document.querySelectorAll(s)];
 const cal=$('#calendar'),calendarCard=$('#calendarCard'),monthName=$('#monthName'),selectedInfo=$('#selectedInfo');
 const turnSelect=$('#turnSelect'),turn5Select=$('#turn5Select'),turn5SubRow=$('#turn5SubRow'),themeBtn=$('#themeBtn');
 const detailTitle=$('#detailTitle'),detailGrid=$('#detailGrid'),cycleStrip=$('#cycleStrip'),cyclePosition=$('#cyclePosition'),cycleTitle=$('#cycleTitle'),shiftLegend=$('#shiftLegend');
-const agendaSheet=$('#agendaSheet'),agendaDateText=$('#agendaDateText'),agendaShift=$('#agendaShift'),agendaDayList=$('#agendaDayList'),agendaAllList=$('#agendaAllList'),agendaAllCount=$('#agendaAllCount'),agendaTodayCount=$('#agendaTodayCount'),agendaStoredCount=$('#agendaStoredCount'),agendaDayCount=$('#agendaDayCount'),agendaTodaySummary=$('#agendaTodaySummary'),agendaFormMode=$('#agendaFormMode'),agendaEditorPanel=$('#agendaEditorPanel');
+const agendaSheet=$('#agendaSheet'),agendaDateText=$('#agendaDateText'),agendaShift=$('#agendaShift'),agendaDayList=$('#agendaDayList'),agendaAllList=$('#agendaAllList'),agendaAllCount=$('#agendaAllCount'),agendaAllToggle=$('#agendaAllToggle'),agendaTodayCount=$('#agendaTodayCount'),agendaStoredCount=$('#agendaStoredCount'),agendaDayCount=$('#agendaDayCount'),agendaTodaySummary=$('#agendaTodaySummary'),agendaFormMode=$('#agendaFormMode'),agendaEditorPanel=$('#agendaEditorPanel');
 const agendaTitleInput=$('#agendaTitleInput'),agendaTimeInput=$('#agendaTimeInput'),agendaCategoryInput=$('#agendaCategoryInput'),agendaReminderInput=$('#agendaReminderInput'),agendaRepeatInput=$('#agendaRepeatInput'),agendaNotesInput=$('#agendaNotesInput');
 const agendaSearchInput=$('#agendaSearchInput'),agendaFilterInput=$('#agendaFilterInput'),backupStatus=$('#backupStatus');
 const settingsBtn=$('#settingsBtn'),morningColor=$('#morningColor'),nightColor=$('#nightColor'),offColor=$('#offColor'),codeSize=$('#codeSize'),codeSizeValue=$('#codeSizeValue'),showLabels=$('#showLabels'),hapticsToggle=$('#hapticsToggle');
@@ -1293,7 +1319,7 @@ const morningColorRow=$('#morningColorRow'),nightColorRow=$('#nightColorRow'),of
 const AGENDA_KEY='turno4x4.agenda.v1', NOTIFIED_KEY='turno4x4.agenda.notified.v1', BACKUP_KEY='turno4x4.agenda.lastBackup';
 
 let now=new Date(),viewYear=now.getFullYear(),viewMonth=now.getMonth(),selectedDate=new Date(now.getFullYear(),now.getMonth(),now.getDate());
-let agendaSelectedDate=new Date(selectedDate),agendaEditingId=null,agendaHoldTimer=null,agendaHoldOpened=false;
+let agendaSelectedDate=new Date(selectedDate),agendaEditingId=null,agendaHoldTimer=null,agendaHoldOpened=false,agendaAllExpanded=false;
 let swipeStartX=0,swipeStartY=0,swipeStartedAt=0,calendarSwipeMoved=false,calendarSwipeActive=false,monthAnimating=false,yearViewYear=viewYear;
 const AGENDA_HOLD_MS=450;
 
@@ -1811,7 +1837,7 @@ function clearAgendaForm(){
  $('#agendaSaveBtn').textContent='GUARDAR';
  if(agendaFormMode){agendaFormMode.textContent='NUEVO EVENTO';agendaFormMode.classList.remove('editing')}
 }
-function openAgenda(d){agendaSelectedDate=new Date(d.getFullYear(),d.getMonth(),d.getDate());clearAgendaForm();renderAgenda();agendaSheet.classList.add('open');document.body.style.overflow='hidden'}
+function openAgenda(d){agendaSelectedDate=new Date(d.getFullYear(),d.getMonth(),d.getDate());agendaAllExpanded=false;clearAgendaForm();renderAgenda();agendaSheet.classList.add('open');document.body.style.overflow='hidden';agendaSheet.querySelector('.sheet')?.scrollTo({top:0,behavior:'instant'})}
 function closeAgenda(){agendaSheet.classList.remove('open');document.body.style.overflow=''}
 function renderAgenda(){
  const turn=activeTurnKey(),c=codeFor(turn,agendaSelectedDate);agendaDateText.textContent=cap(longFmt.format(agendaSelectedDate));agendaShift.textContent=`${scheduleName(turn)} · ${codeText(turn,c)} — ${shiftNames[c][0]} · ${shiftNames[c][1]}`;
@@ -1864,14 +1890,20 @@ function allStoredAgendaItems(){
 }
 function renderAllAgendaEvents(){
  const total=loadAgendaData().length,list=allStoredAgendaItems();
+ const filtering=Boolean(agendaSearchInput.value.trim())||agendaFilterInput.value!=='all';
+ const shown=(agendaAllExpanded||filtering)?list:list.slice(0,4);
+
  if(agendaStoredCount)agendaStoredCount.textContent=String(total);
- agendaAllCount.textContent=agendaSearchInput.value.trim()||agendaFilterInput.value!=='all'?`${list.length}/${total}`:String(total);
+ agendaAllCount.textContent=filtering?`${list.length}/${total}`:String(total);
  agendaAllList.innerHTML='';
+
  if(!list.length){
   agendaAllList.innerHTML=`<div class="agenda-empty">${total?'No hay eventos que coincidan con el filtro.':'Todavía no hay eventos guardados.'}</div>`;
+  agendaAllToggle.classList.remove('show');
   return
  }
- list.forEach(item=>{
+
+ shown.forEach(item=>{
   const [catName,catColor]=categoryInfo[item.category]||categoryInfo.personal;
   const d=parseDateKey(item.date),card=document.createElement('div');
   card.className='agenda-all-item';
@@ -1880,7 +1912,21 @@ function renderAllAgendaEvents(){
   card.innerHTML=`<div class="agenda-all-top"><div><div class="agenda-all-date">${shortDateFmt.format(d)}</div><div class="agenda-all-event-title">${escapeHtml(item.title||'Sin título')}</div></div><div class="agenda-all-time">${item.time||'Todo el día'}</div></div>${item.notes?`<div class="agenda-all-notes">${escapeHtml(item.notes)}</div>`:''}<div class="agenda-all-meta"><b style="color:${catColor}">${catName}</b> · ${repeatLabel(item.repeat)}${turnName?' · '+escapeHtml(turnName):''} · 🔔 ${reminderLabel(item.reminder)}</div><div class="agenda-all-actions"><button class="agenda-all-edit" data-all-edit="${item.id}">✏️ EDITAR</button><button class="agenda-all-calendar" data-all-ics="${item.id}" data-all-occ="${item.date}">📅 CALENDARIO</button><button class="agenda-all-delete" data-all-del="${item.id}">🗑 ELIMINAR</button></div>`;
   agendaAllList.appendChild(card);
  });
- agendaAllList.querySelectorAll('[data-all-edit]').forEach(b=>b.onclick=()=>{const item=loadAgendaData().find(x=>x.id===b.dataset.allEdit);if(!item)return;agendaSelectedDate=parseDateKey(item.date);renderAgenda();editAgenda(item.id)});
+
+ if(!filtering&&list.length>4){
+  agendaAllToggle.classList.add('show');
+  agendaAllToggle.textContent=agendaAllExpanded?`MOSTRAR MENOS`:`VER TODOS (${list.length})`;
+ }else{
+  agendaAllToggle.classList.remove('show');
+ }
+
+ agendaAllList.querySelectorAll('[data-all-edit]').forEach(b=>b.onclick=()=>{
+  const item=loadAgendaData().find(x=>x.id===b.dataset.allEdit);
+  if(!item)return;
+  agendaSelectedDate=parseDateKey(item.date);
+  renderAgenda();
+  editAgenda(item.id)
+ });
  agendaAllList.querySelectorAll('[data-all-ics]').forEach(b=>b.onclick=()=>downloadICS(b.dataset.allIcs,b.dataset.allOcc));
  agendaAllList.querySelectorAll('[data-all-del]').forEach(b=>b.onclick=()=>deleteAgenda(b.dataset.allDel));
 }
@@ -2072,7 +2118,15 @@ codeSize.oninput=()=>{codeSizeValue.textContent=`${codeSize.value} px`;saveSetti
 dayNumberSize.oninput=()=>{dayNumberSizeValue.textContent=`${dayNumberSize.value} px`;saveSettings()};
 showLabels.onchange=saveSettings;hapticsToggle.onchange=saveSettings;
 $('#resetSettingsBtn').onclick=()=>{morningColor.value=defaults.morning;offColor.value=defaults.off;if(!isTurn5Profile())nightColor.value=defaults.night;codeSize.value=18;codeSizeValue.textContent='18 px';dayNumberSize.value=10;dayNumberSizeValue.textContent='10 px';showLabels.checked=true;hapticsToggle.checked=true;saveSettings();updateColorSettingsUI();renderQuickPalette()};
-$('#agendaSaveBtn').onclick=saveAgenda;$('#agendaClearBtn').onclick=clearAgendaForm;$('#agendaNotifyBtn').onclick=requestNotificationPermission;$('#agendaExportBtn').onclick=exportBackup;$('#agendaImportInput').onchange=()=>importBackup($('#agendaImportInput').files[0]);agendaSearchInput.oninput=renderAllAgendaEvents;agendaFilterInput.onchange=renderAllAgendaEvents;
+$('#agendaSaveBtn').onclick=saveAgenda;$('#agendaClearBtn').onclick=clearAgendaForm;$('#agendaNotifyBtn').onclick=requestNotificationPermission;$('#agendaExportBtn').onclick=exportBackup;$('#agendaImportInput').onchange=()=>importBackup($('#agendaImportInput').files[0]);agendaSearchInput.oninput=renderAllAgendaEvents;
+agendaFilterInput.onchange=renderAllAgendaEvents;
+agendaAllToggle.onclick=()=>{
+ agendaAllExpanded=!agendaAllExpanded;
+ renderAllAgendaEvents();
+ if(!agendaAllExpanded){
+  agendaAllToggle.closest('.agenda-panel')?.scrollIntoView({behavior:'smooth',block:'start'})
+ }
+};
 $('#yearBtn').onclick=()=>{yearViewYear=viewYear;renderYear();openModal('yearModal')};
 $('#settingsAgendaBtn').onclick=()=>{closeModal('settingsModal');setTimeout(()=>openAgenda(selectedDate),80)};
 $('#settingsStatsBtn').onclick=()=>{closeModal('settingsModal');renderStats();setTimeout(()=>openModal('statsModal'),80)};
