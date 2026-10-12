@@ -334,6 +334,257 @@ body.light .event-count{
 .action-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.action-row button{min-height:42px;border-radius:12px;border:1px solid var(--line);font-weight:900}.btn-secondary{background:var(--panel2);color:var(--text)}.btn-primary{background:var(--accent);color:#fff}
 .version-box{margin-top:10px;padding:10px;border:1px solid var(--line);background:var(--panel2);border-radius:13px;font-size:10px;color:var(--muted)}.version-box b{color:var(--text)}
 
+
+/* ===== CONFIGURACIÓN V4.3.17 · UNA SOLA PANTALLA ===== */
+#settingsModal{
+  overflow:hidden;
+}
+#settingsModal .settings-modal-window{
+  overflow:hidden !important;
+  display:flex;
+  flex-direction:column;
+  width:min(900px,calc(100vw - 8px));
+  height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 8px);
+  padding:7px 10px 9px;
+}
+#settingsModal .modal-head{
+  position:relative;
+  top:auto;
+  flex:0 0 auto;
+  margin:0 0 6px;
+  padding:3px 0 7px;
+  min-height:48px;
+}
+#settingsModal .modal-head h2{font-size:18px}
+#settingsModal .modal-head small{font-size:8px;margin-top:2px}
+#settingsModal .modal-head .close-btn{
+  width:40px;
+  height:40px;
+  border-radius:13px;
+}
+#settingsModal .color-profile-note{
+  flex:0 0 auto;
+  min-height:32px;
+  margin:0 0 6px;
+  padding:6px 9px;
+  border-radius:11px;
+  font-size:8px;
+}
+#settingsModal .color-profile-note b{font-size:9px}
+
+#settingsModal .settings-list{
+  flex:1 1 auto;
+  min-height:0;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:6px;
+  align-content:start;
+}
+#settingsModal .setting-row{
+  min-width:0;
+  min-height:56px;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:7px;
+  padding:7px 8px;
+  border-radius:12px;
+}
+#settingsModal .setting-row b{
+  font-size:10px;
+  line-height:1.12;
+}
+#settingsModal .setting-row small{
+  font-size:7px;
+  line-height:1.18;
+  margin-top:2px;
+}
+#settingsModal .color-input{
+  width:42px;
+  height:32px;
+  border-radius:9px;
+}
+#settingsModal .switch{
+  width:42px;
+  height:24px;
+}
+#settingsModal .slider::before{
+  width:18px;
+  height:18px;
+}
+#settingsModal .switch input:checked+.slider::before{
+  transform:translateX(18px);
+}
+
+#settingsModal .setting-range-row{
+  grid-template-columns:1fr !important;
+  align-content:center;
+  gap:3px;
+}
+#settingsModal .setting-range-row .range-wrap{
+  width:100%;
+  gap:6px;
+}
+#settingsModal .setting-range-row .range-wrap input{
+  width:100%;
+  min-width:0;
+}
+#settingsModal .range-value{
+  min-width:37px;
+  font-size:8px;
+}
+
+/* Paleta compacta: no aumenta la altura de Configuración */
+#settingsModal .palette-setting{
+  position:relative;
+  grid-column:1/-1;
+  grid-template-columns:minmax(0,1fr) auto !important;
+  min-height:48px;
+  gap:8px !important;
+  overflow:visible;
+  z-index:60;
+}
+.palette-toggle-btn{
+  min-height:32px;
+  padding:0 10px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:linear-gradient(180deg,var(--panel3),var(--panel2));
+  color:var(--text);
+  font-size:8px;
+  font-weight:950;
+  white-space:nowrap;
+}
+.palette-toggle-btn i{
+  width:7px;
+  height:7px;
+  border-right:2px solid currentColor;
+  border-bottom:2px solid currentColor;
+  transform:rotate(45deg) translateY(-2px);
+  transition:transform .16s ease;
+}
+.palette-toggle-btn[aria-expanded="true"] i{
+  transform:rotate(225deg) translate(-1px,-1px);
+}
+.palette-dropdown{
+  position:absolute;
+  left:0;
+  right:0;
+  top:calc(100% + 5px);
+  z-index:100;
+  display:none;
+  padding:9px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:color-mix(in srgb,var(--panel) 98%,transparent);
+  backdrop-filter:blur(20px) saturate(1.15);
+  -webkit-backdrop-filter:blur(20px) saturate(1.15);
+  box-shadow:0 18px 48px rgba(0,0,0,.48);
+}
+.palette-dropdown.open{display:block}
+.palette-dropdown .palette-tabs{
+  grid-template-columns:repeat(3,1fr);
+  gap:5px;
+  margin-bottom:7px;
+}
+.palette-dropdown .palette-tab{
+  min-height:30px;
+  border-radius:9px;
+  font-size:10px;
+}
+.palette-dropdown .quick-palette{
+  grid-template-columns:repeat(10,minmax(0,1fr));
+  gap:5px;
+}
+.palette-dropdown .palette-swatch{
+  border-radius:8px;
+  border-width:1px;
+}
+.palette-dropdown .palette-note{
+  margin-top:7px;
+  font-size:7px;
+  line-height:1.25;
+}
+
+/* Acciones inferiores compactas */
+#settingsModal .action-row{
+  flex:0 0 auto;
+  gap:6px;
+  margin-top:6px;
+}
+#settingsModal .action-row button,
+#settingsModal .action-row label{
+  min-height:36px !important;
+  border-radius:10px;
+  font-size:9px;
+}
+#settingsModal .version-box{
+  flex:0 0 auto;
+  margin-top:6px;
+  padding:6px 8px;
+  border-radius:10px;
+  font-size:8px;
+  line-height:1.2;
+}
+
+/* La paleta aparece por encima del resto, sin alargar la ventana */
+#settingsModal .settings-list,
+#settingsModal .settings-modal-window{
+  overflow:visible;
+}
+
+@media(max-width:620px){
+  #settingsModal .settings-modal-window{
+    width:calc(100vw - 2px);
+    height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 2px);
+    padding:5px 7px 7px;
+  }
+  #settingsModal .modal-head{
+    min-height:44px;
+    padding:2px 0 5px;
+    margin-bottom:5px;
+  }
+  #settingsModal .settings-list{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:5px;
+  }
+  #settingsModal .setting-row{
+    min-height:51px;
+    padding:6px 7px;
+  }
+  #settingsModal .palette-setting{
+    min-height:44px;
+  }
+  .palette-dropdown .quick-palette{
+    grid-template-columns:repeat(10,minmax(0,1fr));
+  }
+  #settingsModal .action-row{margin-top:5px}
+  #settingsModal .action-row button{min-height:34px !important}
+  #settingsModal .version-box{margin-top:5px;padding:5px 7px}
+}
+@media(max-width:390px){
+  #settingsModal .setting-row b{font-size:9px}
+  #settingsModal .setting-row small{font-size:6.5px}
+  .palette-toggle-btn{padding:0 8px;font-size:7px}
+  .palette-dropdown{padding:7px}
+  .palette-dropdown .quick-palette{gap:4px}
+}
+@media(max-height:700px){
+  #settingsModal .settings-modal-window{padding-top:3px;padding-bottom:4px}
+  #settingsModal .modal-head{min-height:40px;margin-bottom:4px}
+  #settingsModal .modal-head h2{font-size:16px}
+  #settingsModal .modal-head .close-btn{width:35px;height:35px}
+  #settingsModal .color-profile-note{min-height:28px;margin-bottom:4px;padding:4px 7px}
+  #settingsModal .settings-list{gap:4px}
+  #settingsModal .setting-row{min-height:45px;padding:5px 6px}
+  #settingsModal .palette-setting{min-height:40px}
+  #settingsModal .action-row{margin-top:4px}
+  #settingsModal .action-row button{min-height:31px !important}
+  #settingsModal .version-box{margin-top:4px;padding:4px 6px}
+}
+
+
 .sheet-backdrop{
   position:fixed;
   inset:0;
@@ -1531,7 +1782,7 @@ body.light .day.today .event-count{
 
 
 <!-- Settings -->
-<div id="settingsModal" class="backdrop"><div class="modal glass">
+<div id="settingsModal" class="backdrop"><div class="modal glass settings-modal-window">
   <div class="modal-head"><div><h2>⚙️ Configuración</h2><small>Personalizá la aplicación</small></div><button class="close-btn" data-close="settingsModal">×</button></div>
   <div id="colorProfileNote" class="color-profile-note"><b id="colorProfileTitle">Colores · Turnos 1–4</b><span id="colorProfileText">M / N / F</span></div>
   <div class="settings-list">
@@ -1544,23 +1795,28 @@ body.light .day.today .event-count{
         <b>Paleta rápida</b>
         <small id="paletteHelp">Elegí M, N o F y después tocá un color</small>
       </div>
-      <div class="palette-tabs" aria-label="Seleccionar turno para cambiar color">
-        <button type="button" class="palette-tab active" data-palette-target="morning">M</button>
-        <button id="paletteNightTab" type="button" class="palette-tab" data-palette-target="night">N</button>
-        <button type="button" class="palette-tab" data-palette-target="off">F</button>
+      <button id="paletteToggleBtn" type="button" class="palette-toggle-btn" aria-expanded="false">
+        <span>🎨 COLORES</span><i aria-hidden="true"></i>
+      </button>
+      <div id="paletteDropdown" class="palette-dropdown" aria-hidden="true">
+        <div class="palette-tabs" aria-label="Seleccionar turno para cambiar color">
+          <button type="button" class="palette-tab active" data-palette-target="morning">M</button>
+          <button id="paletteNightTab" type="button" class="palette-tab" data-palette-target="night">N</button>
+          <button type="button" class="palette-tab" data-palette-target="off">F</button>
+        </div>
+        <div id="quickPalette" class="quick-palette" aria-label="Paleta de colores"></div>
+        <div id="paletteNote" class="palette-note">Incluye los colores originales: Mañana, Noche y Franco.</div>
       </div>
-      <div id="quickPalette" class="quick-palette" aria-label="Paleta de colores"></div>
-      <div id="paletteNote" class="palette-note">Incluye los colores originales: Mañana, Noche y Franco.</div>
     </div>
 
-    <div class="setting-row"><div><b>Tamaño M / N / F</b><small>Rango 14 a 24 px</small></div><div class="range-wrap"><input id="codeSize" type="range" min="14" max="24" value="18"><span id="codeSizeValue" class="range-value">18 px</span></div></div>
-    <div class="setting-row"><div><b>Tamaño número del día</b><small>Rango 10 a 18 px</small></div><div class="range-wrap"><input id="dayNumberSize" type="range" min="10" max="18" value="10"><span id="dayNumberSizeValue" class="range-value">10 px</span></div></div>
+    <div class="setting-row setting-range-row"><div><b>Tamaño M / N / F</b><small>Rango 14 a 24 px</small></div><div class="range-wrap"><input id="codeSize" type="range" min="14" max="24" value="18"><span id="codeSizeValue" class="range-value">18 px</span></div></div>
+    <div class="setting-row setting-range-row"><div><b>Tamaño número del día</b><small>Rango 10 a 18 px</small></div><div class="range-wrap"><input id="dayNumberSize" type="range" min="10" max="18" value="10"><span id="dayNumberSizeValue" class="range-value">10 px</span></div></div>
     <div class="setting-row"><div><b>Mostrar descripción</b><small>Mañana / Noche / Franco</small></div><label class="switch"><input id="showLabels" type="checkbox" checked><span class="slider"></span></label></div>
     <div class="setting-row"><div><b>Vibración háptica</b><small>Android y equipos compatibles</small></div><label class="switch"><input id="hapticsToggle" type="checkbox" checked><span class="slider"></span></label></div>
   </div>
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.3.16</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.3.17</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -1707,7 +1963,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.3.16';
+const CURRENT_VERSION='4.3.17';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -1878,6 +2134,32 @@ let paletteTarget='morning';
 function paletteInput(){
  return paletteTarget==='morning'?morningColor:(paletteTarget==='night'?nightColor:offColor);
 }
+const paletteToggleBtn=$('#paletteToggleBtn');
+const paletteDropdown=$('#paletteDropdown');
+
+function setPaletteDropdown(open){
+ if(!paletteToggleBtn||!paletteDropdown)return;
+ paletteDropdown.classList.toggle('open',open);
+ paletteDropdown.setAttribute('aria-hidden',open?'false':'true');
+ paletteToggleBtn.setAttribute('aria-expanded',open?'true':'false');
+ paletteToggleBtn.querySelector('span').textContent=open?'🎨 CERRAR':'🎨 COLORES';
+}
+
+paletteToggleBtn?.addEventListener('click',e=>{
+ e.stopPropagation();
+ setPaletteDropdown(!paletteDropdown.classList.contains('open'));
+ if(!paletteDropdown.classList.contains('open'))return;
+ renderQuickPalette();
+});
+
+paletteDropdown?.addEventListener('click',e=>e.stopPropagation());
+
+document.addEventListener('pointerdown',e=>{
+ if(!paletteDropdown?.classList.contains('open'))return;
+ if(paletteDropdown.contains(e.target)||paletteToggleBtn.contains(e.target))return;
+ setPaletteDropdown(false);
+},{capture:true});
+
 
 function renderQuickPalette(){
  const box=$('#quickPalette');
@@ -2539,7 +2821,7 @@ function renderStats(){
 
 function openModal(id){$('#'+id).classList.add('open');document.body.style.overflow='hidden'}
 function closeModal(id){$('#'+id).classList.remove('open');document.body.style.overflow=''}
-$$('[data-close]').forEach(b=>b.onclick=()=>{const id=b.dataset.close;if(id==='agendaSheet')closeAgenda();else closeModal(id)});
+$$('[data-close]').forEach(b=>b.onclick=()=>{const id=b.dataset.close;if(id==='agendaSheet')closeAgenda();else{if(id==='settingsModal')setPaletteDropdown(false);closeModal(id)}});
 $$('.backdrop').forEach(b=>b.addEventListener('click',e=>{if(e.target===b)closeModal(b.id)}));agendaSheet.addEventListener('click',e=>{if(e.target===agendaSheet)closeAgenda()});
 
 $('#prevBtn').onclick=()=>animateMonthButton(-1);$('#nextBtn').onclick=()=>animateMonthButton(1);
@@ -2547,7 +2829,7 @@ $('#todayBtn').onclick=()=>{const d=new Date();viewYear=d.getFullYear();viewMont
 turnSelect.onchange=()=>{updateTurn5Visibility();syncTurnPulseText();localStorage.setItem('turno4x4.turno',turnSelect.value);switchActiveColorProfile();renderAll();renderYear();renderStats()};
 turn5Select.onchange=()=>{syncTurn5PulseText();localStorage.setItem('turno4x4.turno5',turn5Select.value);updateColorSettingsUI();renderQuickPalette();renderAll();renderYear();renderStats()};
 themeBtn.onclick=()=>{document.body.classList.toggle('light');localStorage.setItem('turno4x4.theme',document.body.classList.contains('light')?'light':'dark');themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️'};
-settingsBtn.onclick=()=>{updateColorSettingsUI();renderQuickPalette();openModal('settingsModal')};
+settingsBtn.onclick=()=>{setPaletteDropdown(false);updateColorSettingsUI();renderQuickPalette();openModal('settingsModal')};
 [morningColor,nightColor,offColor].forEach(x=>x.oninput=()=>{saveSettings();renderQuickPalette()});
 codeSize.oninput=()=>{codeSizeValue.textContent=`${codeSize.value} px`;saveSettings()};
 dayNumberSize.oninput=()=>{dayNumberSizeValue.textContent=`${dayNumberSize.value} px`;saveSettings()};
@@ -2563,8 +2845,8 @@ agendaAllToggle.onclick=()=>{
  }
 };
 $('#yearBtn').onclick=()=>{yearViewYear=viewYear;renderYear();openModal('yearModal')};
-$('#settingsAgendaBtn').onclick=()=>{closeModal('settingsModal');setTimeout(()=>openAgenda(selectedDate),80)};
-$('#settingsStatsBtn').onclick=()=>{closeModal('settingsModal');renderStats();setTimeout(()=>openModal('statsModal'),80)};
+$('#settingsAgendaBtn').onclick=()=>{setPaletteDropdown(false);closeModal('settingsModal');setTimeout(()=>openAgenda(selectedDate),80)};
+$('#settingsStatsBtn').onclick=()=>{setPaletteDropdown(false);closeModal('settingsModal');renderStats();setTimeout(()=>openModal('statsModal'),80)};
 
 let yearHoldDelayTimer=null;
 let yearHoldRepeatTimer=null;
