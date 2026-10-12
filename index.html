@@ -192,7 +192,42 @@ body.light .cycle-chip.current{outline-color:#202a37}
 }
 
 
-.calendar-card{border-radius:22px;overflow:hidden;transform:translate3d(0,0,0);touch-action:pan-y;user-select:none;will-change:transform}
+.calendar-card{position:relative;border-radius:22px;overflow:hidden;transform:translate3d(0,0,0);touch-action:pan-y;user-select:none;will-change:transform}
+.calendar-zoom-surface{
+  width:100%;
+  transform-origin:top left;
+  will-change:transform,width;
+  touch-action:pan-y;
+}
+.calendar-zoom-badge{
+  position:absolute;
+  right:9px;
+  top:8px;
+  z-index:30;
+  min-width:48px;
+  height:29px;
+  padding:0 8px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:10px;
+  background:rgba(10,15,22,.76);
+  color:#fff;
+  font-size:10px;
+  font-weight:950;
+  letter-spacing:.02em;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  box-shadow:0 6px 18px rgba(0,0,0,.24);
+  pointer-events:none;
+  opacity:0;
+  transform:translateY(-4px) scale(.96);
+  transition:opacity .14s ease,transform .14s ease;
+}
+.calendar-zoom-badge.show{
+  opacity:1;
+  transform:translateY(0) scale(1);
+}
 .weekdays,.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr)}
 .weekdays{background:var(--panel2);border-bottom:1px solid var(--line)}
 .weekday{text-align:center;padding:9px 2px;font-size:10px;font-weight:950;letter-spacing:.05em;color:var(--muted)}
@@ -1995,8 +2030,11 @@ body.light .day.today .event-count{
   </section>
 
   <section id="calendarCard" class="calendar-card glass">
-    <div class="weekdays"><div class="weekday">DOM</div><div class="weekday">LUN</div><div class="weekday">MAR</div><div class="weekday">MIÉ</div><div class="weekday">JUE</div><div class="weekday">VIE</div><div class="weekday">SÁB</div></div>
-    <div id="calendar" class="calendar-grid"></div>
+    <div id="calendarZoomSurface" class="calendar-zoom-surface">
+      <div class="weekdays"><div class="weekday">DOM</div><div class="weekday">LUN</div><div class="weekday">MAR</div><div class="weekday">MIÉ</div><div class="weekday">JUE</div><div class="weekday">VIE</div><div class="weekday">SÁB</div></div>
+      <div id="calendar" class="calendar-grid"></div>
+    </div>
+    <div id="calendarZoomBadge" class="calendar-zoom-badge" aria-hidden="true">100%</div>
   </section>
 
   <div id="shiftLegend" class="legend"><div class="pill"><span class="dot m"></span>M · 06:00–18:00</div><div class="pill"><span class="dot n"></span>N · 18:00–06:00</div><div class="pill"><span class="dot f"></span>F · Franco</div></div>
@@ -2071,7 +2109,7 @@ body.light .day.today .event-count{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.4.4</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.4.5</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -2218,7 +2256,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.4.4';
+const CURRENT_VERSION='4.4.5';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -2237,7 +2275,7 @@ const categoryInfo={
 };
 const $=s=>document.querySelector(s);
 const $$=s=>[...document.querySelectorAll(s)];
-const cal=$('#calendar'),calendarCard=$('#calendarCard'),monthName=$('#monthName'),selectedInfo=$('#selectedInfo');
+const cal=$('#calendar'),calendarCard=$('#calendarCard'),calendarZoomSurface=$('#calendarZoomSurface'),calendarZoomBadge=$('#calendarZoomBadge'),monthName=$('#monthName'),selectedInfo=$('#selectedInfo');
 const turnSelect=$('#turnSelect'),turn5Select=$('#turn5Select'),turn5PulseText=$('#turn5PulseText'),turn5SubRow=$('#turn5SubRow'),themeBtn=$('#themeBtn');
 const detailTitle=$('#detailTitle'),detailGrid=$('#detailGrid'),cycleStrip=$('#cycleStrip'),cyclePosition=$('#cyclePosition'),cycleTitle=$('#cycleTitle'),shiftLegend=$('#shiftLegend');
 const agendaSheet=$('#agendaSheet'),agendaDateText=$('#agendaDateText'),agendaShift=$('#agendaShift'),agendaDayList=$('#agendaDayList'),agendaAllList=$('#agendaAllList'),agendaAllCount=$('#agendaAllCount'),agendaAllToggle=$('#agendaAllToggle'),agendaTodayCount=$('#agendaTodayCount'),agendaStoredCount=$('#agendaStoredCount'),agendaDayCount=$('#agendaDayCount'),agendaTodaySummary=$('#agendaTodaySummary'),agendaFormMode=$('#agendaFormMode'),agendaEditorPanel=$('#agendaEditorPanel');
@@ -2250,12 +2288,59 @@ const AGENDA_KEY='turno4x4.agenda.v1', NOTIFIED_KEY='turno4x4.agenda.notified.v1
 let now=new Date(),viewYear=now.getFullYear(),viewMonth=now.getMonth(),selectedDate=new Date(now.getFullYear(),now.getMonth(),now.getDate());
 let agendaSelectedDate=new Date(selectedDate),agendaEditingId=null,agendaHoldTimer=null,agendaHoldOpened=false,agendaAllExpanded=false;
 let swipeStartX=0,swipeStartY=0,swipeStartedAt=0,calendarSwipeMoved=false,calendarSwipeActive=false,monthAnimating=false,yearViewYear=viewYear;
+let calendarZoom=Math.max(.90,Math.min(1.40,Number(localStorage.getItem('turno4x4.calendarZoom')||1)));
+let calendarPinchActive=false,calendarPinchStartDistance=0,calendarPinchStartZoom=calendarZoom,calendarPinchJustEnded=false,calendarZoomBadgeTimer=null;
+const calendarPointers=new Map();
 const AGENDA_HOLD_MS=450;
 
 function isEditableTarget(target){
  if(!target || !(target instanceof Element))return false;
  return Boolean(target.closest('input, textarea, [contenteditable="true"], [contenteditable=""]'));
 }
+
+function clampCalendarZoom(value){
+ return Math.max(.90,Math.min(1.40,value));
+}
+function calendarPointerDistance(){
+ const pts=[...calendarPointers.values()];
+ if(pts.length<2)return 0;
+ return Math.hypot(pts[1].x-pts[0].x,pts[1].y-pts[0].y);
+}
+function showCalendarZoomBadge(){
+ if(!calendarZoomBadge)return;
+ calendarZoomBadge.textContent=`${Math.round(calendarZoom*100)}%`;
+ calendarZoomBadge.classList.add('show');
+ clearTimeout(calendarZoomBadgeTimer);
+ calendarZoomBadgeTimer=setTimeout(()=>calendarZoomBadge.classList.remove('show'),650);
+}
+function applyCalendarZoom({persist=false,showBadge=false,reflow=true}={}){
+ if(!calendarZoomSurface||!calendarCard)return;
+ calendarZoom=clampCalendarZoom(calendarZoom);
+
+ // Se reduce el ancho lógico antes de escalar. De esta manera el calendario
+ // sigue ocupando exactamente el mismo ancho de pantalla y SOLO él hace zoom.
+ calendarZoomSurface.style.width=`${100/calendarZoom}%`;
+ calendarZoomSurface.style.transform=`scale(${calendarZoom})`;
+
+ const updateHeight=()=>{
+  const naturalHeight=calendarZoomSurface.offsetHeight;
+  if(naturalHeight)calendarCard.style.height=`${Math.ceil(naturalHeight*calendarZoom)}px`;
+  if(reflow)scheduleBelowFoldLayout();
+ };
+ requestAnimationFrame(updateHeight);
+
+ if(persist)localStorage.setItem('turno4x4.calendarZoom',calendarZoom.toFixed(3));
+ if(showBadge)showCalendarZoomBadge();
+}
+function cancelCalendarHoldForPinch(){
+ if(agendaHoldTimer){
+  clearTimeout(agendaHoldTimer);
+  agendaHoldTimer=null;
+ }
+ $$('.day.pending-open').forEach(x=>x.classList.remove('pending-open'));
+ agendaHoldOpened=false;
+}
+
 ['copy','cut','paste','selectstart','contextmenu','dragstart'].forEach(type=>{
  document.addEventListener(type,e=>{
   if(isEditableTarget(e.target))return;
@@ -2580,6 +2665,7 @@ function attachDayGestures(cell,d){
 
  cell.addEventListener('pointerdown',ev=>{
   if(ev.pointerType==='mouse'&&ev.button!==0)return;
+  if(calendarPinchActive||calendarPointers.size>1)return;
 
   pressStartedAt=performance.now();
   pressMoved=false;
@@ -2591,7 +2677,7 @@ function attachDayGestures(cell,d){
   agendaHoldTimer=setTimeout(()=>{
    // Only open Agenda if the finger/pointer is still essentially stationary
    // and the gesture has not become a horizontal swipe.
-   if(pressMoved||calendarSwipeMoved)return;
+   if(pressMoved||calendarSwipeMoved||calendarPinchActive||calendarPointers.size>1)return;
 
    agendaHoldTimer=null;
    agendaHoldOpened=true;
@@ -2603,6 +2689,11 @@ function attachDayGestures(cell,d){
 
  cell.addEventListener('pointermove',ev=>{
   // Small movements are normal finger jitter. Larger movement cancels long press.
+  if(calendarPinchActive){
+   pressMoved=true;
+   cancelHold();
+   return;
+  }
   if(!pressStartedAt)return;
   if(Math.abs(ev.clientX-swipeStartX)>12||Math.abs(ev.clientY-swipeStartY)>12){
    pressMoved=true;
@@ -2613,6 +2704,12 @@ function attachDayGestures(cell,d){
  cell.addEventListener('pointerup',()=>{
   const elapsed=performance.now()-pressStartedAt;
   pressStartedAt=0;
+
+  if(calendarPinchActive||calendarPinchJustEnded){
+   cancelHold();
+   agendaHoldOpened=false;
+   return;
+  }
 
   // A horizontal swipe owns this gesture; do not select/open a day.
   if(calendarSwipeMoved){
@@ -2717,8 +2814,67 @@ function finishInteractiveSwipe(dx,elapsed){
  },100);
 }
 
+
+calendarCard.addEventListener('pointerdown',ev=>{
+ if(ev.pointerType!=='touch')return;
+
+ calendarPointers.set(ev.pointerId,{x:ev.clientX,y:ev.clientY});
+
+ if(calendarPointers.size===2){
+  calendarPinchActive=true;
+  calendarPinchJustEnded=false;
+  calendarPinchStartDistance=calendarPointerDistance();
+  calendarPinchStartZoom=calendarZoom;
+
+  calendarSwipeActive=false;
+  calendarSwipeMoved=false;
+  cancelCalendarHoldForPinch();
+
+  for(const id of calendarPointers.keys()){
+   try{calendarCard.setPointerCapture(id)}catch{}
+  }
+
+  ev.preventDefault();
+ }
+},{capture:true,passive:false});
+
+calendarCard.addEventListener('pointermove',ev=>{
+ if(ev.pointerType!=='touch'||!calendarPointers.has(ev.pointerId))return;
+
+ calendarPointers.set(ev.pointerId,{x:ev.clientX,y:ev.clientY});
+
+ if(calendarPinchActive&&calendarPointers.size>=2){
+  const distance=calendarPointerDistance();
+  if(calendarPinchStartDistance>0){
+   calendarZoom=clampCalendarZoom(
+    calendarPinchStartZoom*(distance/calendarPinchStartDistance)
+   );
+   applyCalendarZoom({showBadge:true,reflow:false});
+  }
+  ev.preventDefault();
+ }
+},{capture:true,passive:false});
+
+function finishCalendarPinchPointer(ev){
+ if(ev.pointerType!=='touch')return;
+ if(calendarPointers.has(ev.pointerId))calendarPointers.delete(ev.pointerId);
+
+ if(calendarPinchActive&&calendarPointers.size<2){
+  calendarPinchActive=false;
+  calendarPinchJustEnded=true;
+  cancelCalendarHoldForPinch();
+  applyCalendarZoom({persist:true,showBadge:true,reflow:true});
+
+  setTimeout(()=>{calendarPinchJustEnded=false},320);
+ }
+}
+
+calendarCard.addEventListener('pointerup',finishCalendarPinchPointer,{capture:true});
+calendarCard.addEventListener('pointercancel',finishCalendarPinchPointer,{capture:true});
+
 cal.addEventListener('pointerdown',ev=>{
  if(ev.pointerType==='mouse')return;
+ if(calendarPinchActive||calendarPointers.size>1)return;
  calendarSwipeActive=true;
  calendarSwipeMoved=false;
  swipeStartX=ev.clientX;
@@ -2729,6 +2885,7 @@ cal.addEventListener('pointerdown',ev=>{
 });
 
 cal.addEventListener('pointermove',ev=>{
+ if(calendarPinchActive)return;
  if(!calendarSwipeActive||ev.pointerType==='mouse'||monthAnimating)return;
 
  const dx=ev.clientX-swipeStartX;
@@ -2763,6 +2920,7 @@ cal.addEventListener('pointermove',ev=>{
 });
 
 cal.addEventListener('pointerup',ev=>{
+ if(calendarPinchActive||calendarPinchJustEnded)return;
  if(!calendarSwipeActive||ev.pointerType==='mouse')return;
 
  const dx=ev.clientX-swipeStartX;
@@ -2780,6 +2938,7 @@ cal.addEventListener('pointerup',ev=>{
 });
 
 cal.addEventListener('pointercancel',ev=>{
+ if(calendarPinchActive)return;
  calendarSwipeActive=false;
 
  if(agendaHoldTimer){
@@ -2813,7 +2972,7 @@ function showDetail(d){
  ['T1','T2','T3','T4','T5LV','T5A','T5B'].forEach(t=>{const c=codeFor(t,d),el=document.createElement('div');el.className=`shift${t===active?' active':''}`;el.innerHTML=`<b>${scheduleName(t)} · ${codeText(t,c)} — ${shiftNames[c][0]}</b><span>${shiftNames[c][1]}</span>`;detailGrid.appendChild(el)});
 }
 
-function renderAll(){renderCycle();renderCalendar();renderLegend();showDetail(selectedDate)}
+function renderAll(){renderCycle();renderCalendar();renderLegend();showDetail(selectedDate);requestAnimationFrame(()=>applyCalendarZoom({reflow:false}))}
 
 function loadAgendaData(){try{const a=JSON.parse(localStorage.getItem(AGENDA_KEY)||'[]');return Array.isArray(a)?a:[]}catch{return[]}}
 function saveAgendaData(a){localStorage.setItem(AGENDA_KEY,JSON.stringify(a))}
@@ -3312,8 +3471,8 @@ document.addEventListener('dragstart',ev=>{
  if(ev.target.closest?.('button,[role="button"]'))ev.preventDefault();
 });
 
-loadSettings();syncTurnPulseText();syncTurn5PulseText();renderQuickPalette();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();keepDetailBelowInitialFold();setTimeout(keepDetailBelowInitialFold,260);setTimeout(keepDetailBelowInitialFold,700);initSplash();checkUpdate();checkReminders();
-window.addEventListener('resize',scheduleBelowFoldLayout);
+loadSettings();syncTurnPulseText();syncTurn5PulseText();renderQuickPalette();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;renderAll();applyCalendarZoom({reflow:false});renderBackupStatus();keepDetailBelowInitialFold();setTimeout(()=>{applyCalendarZoom({reflow:false});keepDetailBelowInitialFold()},260);setTimeout(()=>{applyCalendarZoom({reflow:false});keepDetailBelowInitialFold()},700);initSplash();checkUpdate();checkReminders();
+window.addEventListener('resize',()=>{applyCalendarZoom({reflow:false});scheduleBelowFoldLayout()});
 window.addEventListener('orientationchange',scheduleBelowFoldLayout);
 if(window.visualViewport)window.visualViewport.addEventListener('resize',scheduleBelowFoldLayout);
 setInterval(checkUpdate,5*60*1000);
