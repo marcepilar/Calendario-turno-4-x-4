@@ -428,44 +428,44 @@ body.light .event-count{
   grid-column:1/-1;
 }
 #settingsModal .color-setting-row{
-  min-height:52px;
+  min-height:58px;
   grid-template-columns:minmax(0,1fr) auto;
 }
 #settingsModal .color-edit-control{
-  width:132px;
-  height:44px;
-  padding:5px 9px;
+  width:154px;
+  height:50px;
+  padding:6px 11px;
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:8px;
+  gap:10px;
   flex:none;
-  border:1px solid rgba(145,169,199,.30);
-  border-radius:13px;
+  border:1px solid rgba(145,169,199,.32);
+  border-radius:15px;
   background:
-    radial-gradient(circle at 88% 0%,rgba(67,168,255,.085),transparent 44%),
-    linear-gradient(180deg,color-mix(in srgb,var(--panel3) 96%,white 4%),var(--panel2));
+    radial-gradient(circle at 88% 0%,rgba(67,168,255,.10),transparent 46%),
+    linear-gradient(180deg,color-mix(in srgb,var(--panel3) 95%,white 5%),var(--panel2));
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.055),
-    0 6px 14px rgba(0,0,0,.14);
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 7px 16px rgba(0,0,0,.15);
 }
 #settingsModal .color-input{
-  width:39px;
-  height:32px;
+  width:44px;
+  height:36px;
   padding:2px;
   flex:none;
-  border:1px solid rgba(145,169,199,.38);
-  border-radius:8px;
+  border:1px solid rgba(145,169,199,.40);
+  border-radius:9px;
   background:transparent;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
   cursor:pointer;
 }
 #settingsModal .color-edit-text{
-  color:#eef4fb;
-  font-size:10px;
+  color:#f3f7fb;
+  font-size:10.8px;
   line-height:1;
   font-weight:950;
-  letter-spacing:.025em;
+  letter-spacing:.022em;
   white-space:nowrap;
 }
 #settingsModal .color-setting-row:hover .color-edit-text{
@@ -707,10 +707,10 @@ body.light .event-count{
 }
 #settingsModal .version-box{
   flex:0 0 auto;
-  min-height:40px;
-  margin-top:5px;
-  margin-bottom:7px;
-  padding:5px 8px;
+  min-height:36px;
+  margin-top:4px;
+  margin-bottom:6px;
+  padding:4px 8px;
   border-radius:11px;
   font-size:10px;
   line-height:1.2;
@@ -727,7 +727,7 @@ body.light .event-count{
 
 
 #settingsModal .settings-preview{
-  flex:0 0 clamp(94px,14.8vh,112px);
+  flex:0 0 clamp(86px,13.3vh,102px);
   min-height:0;
   margin-top:6px;
   padding:8px 9px 9px;
@@ -838,21 +838,21 @@ body.light .event-count{
     padding:5px 7px;
   }
   #settingsModal .color-setting-row{
-    min-height:50px;
+    min-height:56px;
   }
   #settingsModal .color-edit-control{
-    width:122px;
-    height:42px;
-    padding:4px 8px;
-    gap:7px;
+    width:145px;
+    height:48px;
+    padding:5px 10px;
+    gap:9px;
   }
   #settingsModal .color-input{
-    width:36px;
-    height:30px;
+    width:41px;
+    height:34px;
     padding:2px;
   }
   #settingsModal .color-edit-text{
-    font-size:9.4px;
+    font-size:10.2px;
   }
   #settingsModal .setting-range-row{
     grid-column:1/-1;
@@ -878,7 +878,7 @@ body.light .event-count{
     grid-template-columns:repeat(10,minmax(0,1fr));
   }
   #settingsModal .settings-preview{
-    flex:0 0 clamp(92px,14.5vh,108px);
+    flex:0 0 clamp(84px,13vh,100px);
     min-height:0;
     margin-top:4px;
     padding:6px 8px 7px;
@@ -911,9 +911,9 @@ body.light .event-count{
   #settingsModal .toggle-setting small{font-size:7.6px}
   #settingsModal .color-setting-row b{font-size:11.3px}
   #settingsModal .color-setting-row small{font-size:7.8px}
-  #settingsModal .color-edit-control{width:116px;padding-left:7px;padding-right:7px}
-  #settingsModal .color-input{width:34px;height:29px}
-  #settingsModal .color-edit-text{font-size:9px}
+  #settingsModal .color-edit-control{width:136px;height:45px;padding-left:8px;padding-right:8px}
+  #settingsModal .color-input{width:39px;height:32px}
+  #settingsModal .color-edit-text{font-size:9.8px}
   .palette-toggle-btn{padding:0 8px;font-size:9.5px}
   .palette-dropdown{padding:7px}
   .palette-dropdown .quick-palette{gap:4px}
@@ -951,7 +951,7 @@ body.light .event-count{
   }
   #settingsModal .palette-setting{min-height:38px}
   #settingsModal .settings-preview{
-    flex:0 0 82px;
+    flex:0 0 74px;
     min-height:0;
     margin-top:3px;
     padding:4px 7px 6px;
@@ -976,7 +976,7 @@ body.light .event-count{
   min-height:34px;
 }
 #settingsModal.t5-profile .color-setting-row{
-  min-height:58px;
+  min-height:62px;
 }
 #settingsModal.t5-profile .settings-preview{
   flex:1 1 auto;
@@ -1007,7 +1007,7 @@ body.light .event-count{
 
 @media(max-width:620px){
   #settingsModal.t5-profile .color-setting-row{
-    min-height:55px;
+    min-height:59px;
   }
   #settingsModal.t5-profile .settings-preview{
     flex:1 1 auto;
@@ -2506,7 +2506,7 @@ body.light .day.today .event-count{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.5.2</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.5.3</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -2653,7 +2653,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.5.2';
+const CURRENT_VERSION='4.5.3';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
