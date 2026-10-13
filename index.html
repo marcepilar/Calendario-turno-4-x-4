@@ -2807,6 +2807,134 @@ body.light .day.today .event-count{
   }
 }
 
+
+/* ===== DEMO VISUAL · FERIADOS ===== */
+.day.holiday{
+  isolation:isolate;
+}
+.holiday-badge{
+  position:absolute;
+  right:4px;
+  bottom:4px;
+  z-index:3;
+  min-width:25px;
+  height:16px;
+  padding:0 5px;
+  display:grid;
+  place-items:center;
+  border-radius:999px;
+  background:linear-gradient(180deg,#ff6676,#dc3047);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.58);
+  box-shadow:
+    0 2px 7px rgba(0,0,0,.22),
+    inset 0 1px 0 rgba(255,255,255,.20);
+  font-size:7px;
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:.045em;
+  text-shadow:0 1px 2px rgba(0,0,0,.28);
+}
+.day.holiday.today .holiday-badge{
+  right:6px;
+  bottom:6px;
+}
+.day.other .holiday-badge{
+  opacity:.78;
+}
+body.light .holiday-badge{
+  background:linear-gradient(180deg,#f35b6c,#cf2f43);
+  border-color:rgba(255,255,255,.80);
+}
+
+.holiday-detail-banner{
+  display:none;
+  align-items:center;
+  gap:8px;
+  margin:-1px 0 9px;
+  padding:8px 10px;
+  border:1px solid rgba(255,95,114,.30);
+  border-radius:12px;
+  background:
+    radial-gradient(circle at 90% 0%,rgba(255,95,114,.11),transparent 42%),
+    linear-gradient(180deg,rgba(255,95,114,.07),rgba(255,95,114,.035));
+  color:var(--text);
+}
+.holiday-detail-banner.show{
+  display:flex;
+}
+.holiday-detail-icon{
+  flex:0 0 auto;
+  min-width:36px;
+  height:25px;
+  padding:0 7px;
+  display:grid;
+  place-items:center;
+  border-radius:999px;
+  background:linear-gradient(180deg,#ff6676,#dc3047);
+  color:white;
+  font-size:8px;
+  font-weight:1000;
+  letter-spacing:.04em;
+  box-shadow:0 4px 10px rgba(0,0,0,.16);
+}
+.holiday-detail-copy{
+  min-width:0;
+}
+.holiday-detail-copy b{
+  display:block;
+  font-size:10px;
+  line-height:1.15;
+}
+.holiday-detail-copy span{
+  display:block;
+  margin-top:2px;
+  font-size:8px;
+  line-height:1.25;
+  color:var(--muted);
+}
+
+@media(max-width:620px){
+  .holiday-badge{
+    min-width:23px;
+    height:15px;
+    padding:0 4px;
+    font-size:6.6px;
+  }
+}
+
+
+.holiday-badge em{
+  display:block;
+  font-style:normal;
+  line-height:1;
+  -webkit-transform-origin:center center;
+  transform-origin:center center;
+  will-change:transform;
+  -webkit-backface-visibility:hidden;
+  backface-visibility:hidden;
+  -webkit-animation:holidayFerPulse 2.15s ease-in-out infinite;
+  animation:holidayFerPulse 2.15s ease-in-out infinite;
+}
+@-webkit-keyframes holidayFerPulse{
+  0%,100%{-webkit-transform:scale(.84);transform:scale(.84)}
+  50%{-webkit-transform:scale(1.18);transform:scale(1.18)}
+}
+@keyframes holidayFerPulse{
+  0%,100%{-webkit-transform:scale(.84);transform:scale(.84)}
+  50%{-webkit-transform:scale(1.18);transform:scale(1.18)}
+}
+@media (prefers-reduced-motion:reduce){
+  .holiday-badge em{
+    -webkit-animation:holidayFerPulse 2.15s ease-in-out infinite !important;
+    animation:holidayFerPulse 2.15s ease-in-out infinite !important;
+    -webkit-animation-duration:2.15s !important;
+    animation-duration:2.15s !important;
+    -webkit-animation-iteration-count:infinite !important;
+    animation-iteration-count:infinite !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2865,6 +2993,10 @@ body.light .day.today .event-count{
 
   <section class="detail glass">
     <div class="detail-head"><div id="detailTitle" class="detail-title"></div><div class="hold-hint">Mantener 450 ms → Agenda</div></div>
+    <div id="holidayDetailBanner" class="holiday-detail-banner">
+      <div class="holiday-detail-icon">FER</div>
+      <div class="holiday-detail-copy"><b id="holidayDetailName"></b><span>Feriado nacional · Argentina</span></div>
+    </div>
     <div id="detailGrid" class="detail-grid"></div>
   </section>
 
@@ -2931,7 +3063,7 @@ body.light .day.today .event-count{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.5.9</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.6.0</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -3078,7 +3210,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.5.9';
+const CURRENT_VERSION='4.6.0';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -3498,6 +3630,165 @@ function renderCycle(){
 }
 
 
+
+
+/* ===== FERIADOS ARGENTINA · ONLINE + OFFLINE ===== */
+const HOLIDAY_API_BASE='https://api.argentinadatos.com/v1/feriados';
+const HOLIDAY_CACHE_PREFIX='turno4x4.holidays.v1.';
+const HOLIDAY_CHECK_PREFIX='turno4x4.holidays.checked.v1.';
+const HOLIDAY_REFRESH_MS=24*60*60*1000;
+
+const HOLIDAY_FALLBACK_2026=[
+ {fecha:'2026-01-01',tipo:'inamovible',nombre:'Año nuevo'},
+ {fecha:'2026-02-16',tipo:'inamovible',nombre:'Carnaval'},
+ {fecha:'2026-02-17',tipo:'inamovible',nombre:'Carnaval'},
+ {fecha:'2026-03-23',tipo:'puente',nombre:'Puente turístico no laborable'},
+ {fecha:'2026-03-24',tipo:'inamovible',nombre:'Día Nacional de la Memoria por la Verdad y la Justicia'},
+ {fecha:'2026-04-02',tipo:'inamovible',nombre:'Día del Veterano y de los Caídos en la Guerra de Malvinas'},
+ {fecha:'2026-04-03',tipo:'inamovible',nombre:'Viernes Santo'},
+ {fecha:'2026-05-01',tipo:'inamovible',nombre:'Día del Trabajador'},
+ {fecha:'2026-05-25',tipo:'inamovible',nombre:'Día de la Revolución de Mayo'},
+ {fecha:'2026-06-15',tipo:'trasladable',nombre:'Paso a la Inmortalidad del General Martín Güemes (17/6)'},
+ {fecha:'2026-06-20',tipo:'inamovible',nombre:'Paso a la Inmortalidad del General Manuel Belgrano'},
+ {fecha:'2026-07-09',tipo:'inamovible',nombre:'Día de la Independencia'},
+ {fecha:'2026-07-10',tipo:'puente',nombre:'Puente turístico no laborable'},
+ {fecha:'2026-08-17',tipo:'trasladable',nombre:'Paso a la Inmortalidad del Gral. José de San Martín'},
+ {fecha:'2026-10-12',tipo:'trasladable',nombre:'Día del Respeto a la Diversidad Cultural'},
+ {fecha:'2026-11-09',tipo:'inamovible',nombre:'Visita del papa León XIV'},
+ {fecha:'2026-11-23',tipo:'trasladable',nombre:'Día de la Soberanía Nacional (20/11)'},
+ {fecha:'2026-12-07',tipo:'puente',nombre:'Puente turístico no laborable'},
+ {fecha:'2026-12-08',tipo:'inamovible',nombre:'Día de la Inmaculada Concepción de María'},
+ {fecha:'2026-12-25',tipo:'inamovible',nombre:'Navidad'}
+];
+
+const holidayMemory={};
+const holidayPending=new Map();
+
+function normalizeHolidayItems(items){
+ if(!Array.isArray(items))return [];
+ return items
+  .filter(x=>x&&/^\d{4}-\d{2}-\d{2}$/.test(String(x.fecha||''))&&String(x.nombre||'').trim())
+  .map(x=>({fecha:String(x.fecha),tipo:String(x.tipo||'feriado'),nombre:String(x.nombre).trim()}));
+}
+
+function holidayItemsToMap(items){
+ const map={};
+ normalizeHolidayItems(items).forEach(x=>{map[x.fecha]=x});
+ return map;
+}
+
+function loadHolidayYear(year){
+ if(holidayMemory[year])return holidayMemory[year];
+ let items=[];
+ try{
+  const saved=localStorage.getItem(HOLIDAY_CACHE_PREFIX+year);
+  if(saved)items=normalizeHolidayItems(JSON.parse(saved));
+ }catch{}
+ if(!items.length&&year===2026)items=HOLIDAY_FALLBACK_2026.slice();
+ holidayMemory[year]=holidayItemsToMap(items);
+ return holidayMemory[year];
+}
+
+function holidayInfo(d){
+ return loadHolidayYear(d.getFullYear())[dateKey(d)]||null;
+}
+
+function holidayYearIsRelevantForMonth(year){
+ return year===viewYear ||
+        (viewMonth===0&&year===viewYear-1) ||
+        (viewMonth===11&&year===viewYear+1);
+}
+
+async function ensureHolidayYear(year){
+ year=Number(year);
+ if(!Number.isInteger(year))return;
+ loadHolidayYear(year);
+
+ const currentYear=new Date().getFullYear();
+ if(year<2016||year>currentYear+2)return;
+
+ let lastCheck=0;
+ try{lastCheck=Number(localStorage.getItem(HOLIDAY_CHECK_PREFIX+year)||0)}catch{}
+ if(lastCheck&&Date.now()-lastCheck<HOLIDAY_REFRESH_MS)return;
+ if(!navigator.onLine)return;
+ if(holidayPending.has(year))return holidayPending.get(year);
+
+ const job=(async()=>{
+  try{
+   const response=await fetch(`${HOLIDAY_API_BASE}/${year}?t=${Date.now()}`,{
+    cache:'no-store',
+    headers:{'Accept':'application/json'}
+   });
+   if(!response.ok)throw new Error(`HTTP ${response.status}`);
+
+   const items=normalizeHolidayItems(await response.json());
+   if(!items.length)throw new Error('Lista de feriados vacía');
+
+   holidayMemory[year]=holidayItemsToMap(items);
+   try{
+    localStorage.setItem(HOLIDAY_CACHE_PREFIX+year,JSON.stringify(items));
+    localStorage.setItem(HOLIDAY_CHECK_PREFIX+year,String(Date.now()));
+   }catch{}
+
+   if(holidayYearIsRelevantForMonth(year)){
+    renderCalendar();
+    showDetail(selectedDate);
+   }
+   const yearModal=$('#yearModal');
+   if(yearViewYear===year&&yearModal?.classList.contains('open'))renderYear();
+   return items;
+  }catch{
+   return null;
+  }finally{
+   holidayPending.delete(year);
+  }
+ })();
+
+ holidayPending.set(year,job);
+ return job;
+}
+
+function ensureHolidaysForCurrentView(){
+ ensureHolidayYear(viewYear);
+ if(viewMonth===0)ensureHolidayYear(viewYear-1);
+ if(viewMonth===11)ensureHolidayYear(viewYear+1);
+}
+
+function startHolidayBadgePulses(){
+ document.querySelectorAll('.holiday-badge em').forEach(el=>{
+  try{
+   if(el._holidayPulse){
+    el._holidayPulse.cancel();
+    el._holidayPulse=null;
+   }
+  }catch{}
+
+  if(typeof el.animate==='function'){
+   el.style.setProperty('animation','none','important');
+   el.style.setProperty('-webkit-animation','none','important');
+   try{
+    el._holidayPulse=el.animate(
+     [
+      {transform:'scale(.84)',offset:0},
+      {transform:'scale(1.18)',offset:.5},
+      {transform:'scale(.84)',offset:1}
+     ],
+     {duration:2150,iterations:Infinity,easing:'ease-in-out',fill:'both'}
+    );
+    return;
+   }catch{}
+  }
+
+  el.style.setProperty('animation','holidayFerPulse 2.15s ease-in-out infinite','important');
+  el.style.setProperty('-webkit-animation','holidayFerPulse 2.15s ease-in-out infinite','important');
+ });
+}
+
+window.addEventListener('online',()=>{
+ ensureHolidaysForCurrentView();
+ if($('#yearModal')?.classList.contains('open'))ensureHolidayYear(yearViewYear);
+});
+
 function eventDotBackground(events){
  const cats=[...new Set(events.map(e=>e.category||'personal'))];
  const colors=cats.map(cat=>categoryInfo[cat]?.[1]||categoryInfo.personal[1]);
@@ -3519,14 +3810,24 @@ function renderCalendar(){
   const d=addDays(start,i),c=codeFor(turn,d),cell=document.createElement('div');
   cell.className=`day ${cls(c)}${d.getMonth()!==viewMonth?' other':''}${sameDate(d,new Date())?' today':''}${sameDate(d,selectedDate)?' selected-day':''}`;
   const events=agendaForDate(d);
+  const holiday=holidayInfo(d);
+  if(holiday)cell.classList.add('holiday');
+
   let dots='';
   if(events.length){
    const dotBg=eventDotBackground(events);
    dots=`<div class="event-dots" title="${events.length} evento${events.length===1?'':'s'}"><i class="event-dot" style="background:${dotBg}"></i><span class="event-count">${events.length}</span></div>`;
   }
-  cell.innerHTML=`<span class="date">${d.getDate()}</span><span class="code">${codeText(turn,c)}</span>${showLabels.checked?`<span class="label">${shiftNames[c][0]}</span>`:''}${dots}`;
+
+  const holidayBadge=holiday
+   ? `<span class="holiday-badge" title="${escapeHtml(holiday.name)}"><em>FER</em></span>`
+   : '';
+
+  cell.innerHTML=`<span class="date">${d.getDate()}</span><span class="code">${codeText(turn,c)}</span>${showLabels.checked?`<span class="label">${shiftNames[c][0]}</span>`:''}${dots}${holidayBadge}`;
   attachDayGestures(cell,d);cal.appendChild(cell);
  }
+ startHolidayBadgePulses();
+ ensureHolidaysForCurrentView();
 }
 
 function attachDayGestures(cell,d){
@@ -3772,6 +4073,15 @@ function renderLegend(){
 }
 function showDetail(d){
  detailTitle.textContent=cap(longFmt.format(d));detailGrid.innerHTML='';
+
+ const holiday=holidayInfo(d);
+ const holidayBanner=$('#holidayDetailBanner');
+ const holidayName=$('#holidayDetailName');
+ if(holidayBanner&&holidayName){
+  holidayBanner.classList.toggle('show',Boolean(holiday));
+  holidayName.textContent=holiday?holiday.name:'';
+ }
+
  const active=activeTurnKey();
  ['T1','T2','T3','T4','T5LV','T5A','T5B'].forEach(t=>{const c=codeFor(t,d),el=document.createElement('div');el.className=`shift${t===active?' active':''}`;el.innerHTML=`<b>${scheduleName(t)} · ${codeText(t,c)} — ${shiftNames[c][0]}</b><span>${shiftNames[c][1]}</span>`;detailGrid.appendChild(el)});
 }
@@ -3930,6 +4240,7 @@ async function importBackup(file){if(!file)return;try{const data=JSON.parse(awai
 function renderBackupStatus(){const x=localStorage.getItem(BACKUP_KEY);backupStatus.textContent=x?`Última copia: ${new Intl.DateTimeFormat('es-AR',{dateStyle:'medium',timeStyle:'short'}).format(new Date(x))}`:'Todavía no hiciste una copia de seguridad.'}
 
 function renderYear(){
+ ensureHolidayYear(yearViewYear);
  $('#yearTitle').textContent=yearViewYear;const grid=$('#yearGrid');grid.innerHTML='';
  for(let m=0;m<12;m++){const box=document.createElement('div');box.className='mini-month';box.innerHTML=`<h3>${new Intl.DateTimeFormat('es-AR',{month:'short'}).format(new Date(yearViewYear,m,1))}</h3>`;const days=document.createElement('div');days.className='mini-days';for(let b=0;b<new Date(yearViewYear,m,1).getDay();b++){const blank=document.createElement('i');blank.className='mini-day blank';days.appendChild(blank)}const last=new Date(yearViewYear,m+1,0).getDate();for(let d=1;d<=last;d++){const dt=new Date(yearViewYear,m,d),c=codeFor(activeTurnKey(),dt),el=document.createElement('i');el.className=`mini-day ${c}${agendaForDate(dt).length?' has-event':''}`;el.textContent=d;days.appendChild(el)}box.appendChild(days);box.onclick=()=>{viewYear=yearViewYear;viewMonth=m;closeModal('yearModal');renderCalendar()};grid.appendChild(box)}
 }
@@ -4284,8 +4595,18 @@ document.addEventListener('dragstart',ev=>{
 loadSettings();syncTurnPulseText();syncTurn5PulseText();ensurePersistentTurnPulses();renderQuickPalette();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();fitMainCalendarViewport();keepDetailBelowInitialFold();setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},260);setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},700);initSplash();checkUpdate();checkReminders();
 window.addEventListener('resize',()=>{scheduleMainViewportFit();scheduleBelowFoldLayout()});
 window.addEventListener('orientationchange',()=>{scheduleMainViewportFit();scheduleBelowFoldLayout()});
-window.addEventListener('focus',ensurePersistentTurnPulses);
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)ensurePersistentTurnPulses()});
+window.addEventListener('focus',()=>{
+ ensurePersistentTurnPulses();
+ startHolidayBadgePulses();
+ ensureHolidaysForCurrentView();
+});
+document.addEventListener('visibilitychange',()=>{
+ if(!document.hidden){
+  ensurePersistentTurnPulses();
+  startHolidayBadgePulses();
+  ensureHolidaysForCurrentView();
+ }
+});
 if(window.visualViewport)window.visualViewport.addEventListener('resize',()=>{scheduleMainViewportFit();scheduleBelowFoldLayout()});
 setInterval(checkUpdate,5*60*1000);
 setInterval(checkReminders,30000);
