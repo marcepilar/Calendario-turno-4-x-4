@@ -3051,6 +3051,21 @@ body.light .holiday-badge.holiday-bridge{
   border-color:rgba(255,255,255,.86);
 }
 
+
+/* ===== V4.6.3 · ICONO DE DETALLE PUENTE EN AZUL ===== */
+.holiday-detail-icon.holiday-bridge{
+  background:linear-gradient(180deg,#44b9f0,#2589d8);
+  border:1px solid rgba(210,240,255,.78);
+  box-shadow:
+    0 4px 10px rgba(0,0,0,.16),
+    0 0 9px rgba(39,174,228,.18),
+    inset 0 1px 0 rgba(255,255,255,.22);
+}
+body.light .holiday-detail-icon.holiday-bridge{
+  background:linear-gradient(180deg,#38aee8,#247fc9);
+  border-color:rgba(255,255,255,.86);
+}
+
 </style>
 </head>
 <body>
@@ -3194,7 +3209,7 @@ body.light .holiday-badge.holiday-bridge{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.6.2</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.6.3</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -3341,7 +3356,7 @@ body.light .holiday-badge.holiday-bridge{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.6.2';
+const CURRENT_VERSION='4.6.3';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -4247,10 +4262,16 @@ function showDetail(d){
 
  const holiday=holidayInfo(d);
  const holidayBanner=$('#holidayDetailBanner');
+ const holidayIcon=holidayBanner?.querySelector('.holiday-detail-icon');
  const holidayType=$('#holidayDetailType');
  const holidayName=$('#holidayDetailName');
  if(holidayBanner&&holidayType&&holidayName){
   holidayBanner.classList.toggle('show',Boolean(holiday));
+
+  if(holidayIcon){
+   holidayIcon.classList.toggle('holiday-bridge',Boolean(holiday&&isBridgeHoliday(holiday)));
+  }
+
   if(holiday){
    holidayType.textContent=holiday.custom
     ? 'Feriado gremial · Turnos T1–T4'
