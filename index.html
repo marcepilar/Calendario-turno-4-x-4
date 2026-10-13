@@ -2814,8 +2814,8 @@ body.light .day.today .event-count{
 }
 .holiday-badge{
   position:absolute;
-  right:4px;
-  bottom:4px;
+  left:4px;
+  top:4px;
   z-index:3;
   min-width:25px;
   height:16px;
@@ -2836,8 +2836,8 @@ body.light .day.today .event-count{
   text-shadow:0 1px 2px rgba(0,0,0,.28);
 }
 .day.holiday.today .holiday-badge{
-  right:6px;
-  bottom:6px;
+  left:6px;
+  top:6px;
 }
 .day.other .holiday-badge{
   opacity:.78;
@@ -3066,6 +3066,21 @@ body.light .holiday-detail-icon.holiday-bridge{
   border-color:rgba(255,255,255,.86);
 }
 
+
+/* ===== V4.6.4 · FER ARRIBA A LA IZQUIERDA ===== */
+.day.holiday .holiday-badge{
+  left:4px;
+  top:4px;
+  right:auto;
+  bottom:auto;
+}
+.day.holiday.today .holiday-badge{
+  left:6px;
+  top:6px;
+  right:auto;
+  bottom:auto;
+}
+
 </style>
 </head>
 <body>
@@ -3209,7 +3224,7 @@ body.light .holiday-detail-icon.holiday-bridge{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.6.3</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.6.4</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -3356,7 +3371,7 @@ body.light .holiday-detail-icon.holiday-bridge{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.6.3';
+const CURRENT_VERSION='4.6.4';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
