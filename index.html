@@ -2935,6 +2935,107 @@ body.light .holiday-badge{
   }
 }
 
+
+/* ===== V4.6.1 · SELECTORES COMPACTOS DE CONFIGURACIÓN ===== */
+#settingsModal .settings-toggle-trio{
+  grid-column:1/-1;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:6px;
+}
+#settingsModal .settings-toggle-trio .toggle-mini{
+  min-height:58px;
+  grid-template-columns:1fr;
+  grid-template-rows:auto auto;
+  justify-items:center;
+  align-content:center;
+  gap:5px;
+  padding:6px 5px;
+  text-align:center;
+}
+#settingsModal .settings-toggle-trio .toggle-mini > div{
+  min-width:0;
+}
+#settingsModal .settings-toggle-trio .toggle-mini b{
+  font-size:10.8px;
+  line-height:1.05;
+  white-space:nowrap;
+}
+#settingsModal .settings-toggle-trio .toggle-mini small{
+  font-size:7.4px;
+  line-height:1.05;
+  white-space:nowrap;
+  margin-top:2px;
+}
+#settingsModal .settings-toggle-trio .switch{
+  width:38px;
+  height:22px;
+}
+#settingsModal .settings-toggle-trio .slider::before{
+  width:16px;
+  height:16px;
+}
+#settingsModal .settings-toggle-trio .switch input:checked+.slider::before{
+  transform:translateX(16px);
+}
+
+@media(max-width:620px){
+  #settingsModal .settings-toggle-trio{
+    gap:4px;
+  }
+  #settingsModal .settings-toggle-trio .toggle-mini{
+    min-height:52px;
+    gap:4px;
+    padding:5px 3px;
+  }
+  #settingsModal .settings-toggle-trio .toggle-mini b{
+    font-size:10px;
+  }
+  #settingsModal .settings-toggle-trio .toggle-mini small{
+    font-size:6.9px;
+  }
+  #settingsModal .settings-toggle-trio .switch{
+    width:36px;
+    height:20px;
+  }
+  #settingsModal .settings-toggle-trio .slider::before{
+    width:14px;
+    height:14px;
+  }
+  #settingsModal .settings-toggle-trio .switch input:checked+.slider::before{
+    transform:translateX(16px);
+  }
+}
+
+@media(max-width:390px){
+  #settingsModal .settings-toggle-trio .toggle-mini{
+    min-height:49px;
+    padding-left:2px;
+    padding-right:2px;
+  }
+  #settingsModal .settings-toggle-trio .toggle-mini b{
+    font-size:9.3px;
+  }
+  #settingsModal .settings-toggle-trio .toggle-mini small{
+    font-size:6.4px;
+  }
+}
+
+@media(max-height:760px){
+  #settingsModal .settings-toggle-trio .toggle-mini{
+    min-height:46px;
+    gap:3px;
+    padding-top:3px;
+    padding-bottom:3px;
+  }
+  #settingsModal .settings-toggle-trio .toggle-mini b{
+    font-size:9.5px;
+  }
+  #settingsModal .settings-toggle-trio .toggle-mini small{
+    font-size:6.4px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2995,7 +3096,10 @@ body.light .holiday-badge{
     <div class="detail-head"><div id="detailTitle" class="detail-title"></div><div class="hold-hint">Mantener 450 ms → Agenda</div></div>
     <div id="holidayDetailBanner" class="holiday-detail-banner">
       <div class="holiday-detail-icon">FER</div>
-      <div class="holiday-detail-copy"><b id="holidayDetailName"></b><span>Feriado nacional · Argentina</span></div>
+      <div class="holiday-detail-copy">
+        <b id="holidayDetailType">Feriado nacional · Argentina</b>
+        <span id="holidayDetailName"></span>
+      </div>
     </div>
     <div id="detailGrid" class="detail-grid"></div>
   </section>
@@ -3033,8 +3137,20 @@ body.light .holiday-badge{
 
     <div class="setting-row setting-range-row"><div><b>Tamaño M / N / F</b><small>Rango 14 a 24 px</small></div><div class="range-wrap"><input id="codeSize" type="range" min="14" max="24" value="18"><span id="codeSizeValue" class="range-value">18 px</span></div></div>
     <div class="setting-row setting-range-row"><div><b>Tamaño número del día</b><small>Rango 10 a 18 px</small></div><div class="range-wrap"><input id="dayNumberSize" type="range" min="10" max="18" value="10"><span id="dayNumberSizeValue" class="range-value">10 px</span></div></div>
-    <div class="setting-row toggle-setting"><div><b>Mostrar descripción</b><small>Mañana / Noche / Franco</small></div><label class="switch"><input id="showLabels" type="checkbox" checked><span class="slider"></span></label></div>
-    <div class="setting-row toggle-setting"><div><b>Vibración háptica</b><small>Android y equipos compatibles</small></div><label class="switch"><input id="hapticsToggle" type="checkbox" checked><span class="slider"></span></label></div>
+    <div class="settings-toggle-trio">
+      <div class="setting-row toggle-setting toggle-mini">
+        <div><b>Descripción</b><small>M / N / F</small></div>
+        <label class="switch"><input id="showLabels" type="checkbox" checked><span class="slider"></span></label>
+      </div>
+      <div class="setting-row toggle-setting toggle-mini">
+        <div><b>Feriados</b><small>Mostrar FER</small></div>
+        <label class="switch"><input id="showHolidays" type="checkbox" checked><span class="slider"></span></label>
+      </div>
+      <div class="setting-row toggle-setting toggle-mini">
+        <div><b>Vibración</b><small>Háptica</small></div>
+        <label class="switch"><input id="hapticsToggle" type="checkbox" checked><span class="slider"></span></label>
+      </div>
+    </div>
   </div>
 
   <div class="settings-preview">
@@ -3063,7 +3179,7 @@ body.light .holiday-badge{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.6.0</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.6.1</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -3210,7 +3326,7 @@ body.light .holiday-badge{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.6.0';
+const CURRENT_VERSION='4.6.1';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -3235,7 +3351,7 @@ const detailTitle=$('#detailTitle'),detailGrid=$('#detailGrid'),cycleStrip=$('#c
 const agendaSheet=$('#agendaSheet'),agendaDateText=$('#agendaDateText'),agendaShift=$('#agendaShift'),agendaDayList=$('#agendaDayList'),agendaAllList=$('#agendaAllList'),agendaAllCount=$('#agendaAllCount'),agendaAllToggle=$('#agendaAllToggle'),agendaTodayCount=$('#agendaTodayCount'),agendaStoredCount=$('#agendaStoredCount'),agendaDayCount=$('#agendaDayCount'),agendaTodaySummary=$('#agendaTodaySummary'),agendaFormMode=$('#agendaFormMode'),agendaEditorPanel=$('#agendaEditorPanel');
 const agendaTitleInput=$('#agendaTitleInput'),agendaTimeInput=$('#agendaTimeInput'),agendaCategoryInput=$('#agendaCategoryInput'),agendaReminderInput=$('#agendaReminderInput'),agendaRepeatInput=$('#agendaRepeatInput'),agendaNotesInput=$('#agendaNotesInput');
 const agendaSearchInput=$('#agendaSearchInput'),agendaFilterInput=$('#agendaFilterInput'),backupStatus=$('#backupStatus');
-const settingsBtn=$('#settingsBtn'),morningColor=$('#morningColor'),nightColor=$('#nightColor'),offColor=$('#offColor'),codeSize=$('#codeSize'),codeSizeValue=$('#codeSizeValue'),showLabels=$('#showLabels'),hapticsToggle=$('#hapticsToggle');
+const settingsBtn=$('#settingsBtn'),morningColor=$('#morningColor'),nightColor=$('#nightColor'),offColor=$('#offColor'),codeSize=$('#codeSize'),codeSizeValue=$('#codeSizeValue'),showLabels=$('#showLabels'),showHolidays=$('#showHolidays'),hapticsToggle=$('#hapticsToggle');
 const morningColorRow=$('#morningColorRow'),nightColorRow=$('#nightColorRow'),offColorRow=$('#offColorRow'),paletteNightTab=$('#paletteNightTab'),colorProfileTitle=$('#colorProfileTitle'),colorProfileText=$('#colorProfileText'),morningColorTitle=$('#morningColorTitle'),morningColorNote=$('#morningColorNote'),paletteHelp=$('#paletteHelp'),paletteNote=$('#paletteNote');
 const AGENDA_KEY='turno4x4.agenda.v1', NOTIFIED_KEY='turno4x4.agenda.notified.v1', BACKUP_KEY='turno4x4.agenda.lastBackup';
 
@@ -3332,7 +3448,7 @@ function vibrate(ms){if(hapticsToggle.checked&&navigator.vibrate)navigator.vibra
 function cap(s){return s?s.charAt(0).toUpperCase()+s.slice(1):s}
 function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[ch]))}
 
-const defaults={morning:'#ffd84d',night:'#27aee4',off:'#3fbe62',codeSize:18,dayNumberSize:10,showLabels:true,haptics:true};
+const defaults={morning:'#ffd84d',night:'#27aee4',off:'#3fbe62',codeSize:18,dayNumberSize:10,showLabels:true,showHolidays:true,haptics:true};
 function isTurn5Profile(){return turnSelect.value==='T5'}
 function activeColorStorageKey(kind){return isTurn5Profile()?`turno4x4.color.t5.${kind}`:`turno4x4.color.${kind}`}
 function loadActiveColorProfile(){
@@ -3382,6 +3498,7 @@ function loadSettings(){
  codeSize.value=size;codeSizeValue.textContent=`${size} px`;
  dayNumberSize.value=daySize;dayNumberSizeValue.textContent=`${daySize} px`;
  showLabels.checked=localStorage.getItem('turno4x4.showLabels')!=='false';
+ showHolidays.checked=localStorage.getItem('turno4x4.showHolidays')!=='false';
  hapticsToggle.checked=localStorage.getItem('turno4x4.haptics')!=='false';
  applySettings();
 }
@@ -3407,7 +3524,7 @@ function saveSettings(){
  localStorage.setItem(activeColorStorageKey('morning'),morningColor.value);
  localStorage.setItem(activeColorStorageKey('off'),offColor.value);
  if(!isTurn5Profile())localStorage.setItem(activeColorStorageKey('night'),nightColor.value);
- localStorage.setItem('turno4x4.codeSize',codeSize.value);localStorage.setItem('turno4x4.dayNumberSize',dayNumberSize.value);localStorage.setItem('turno4x4.showLabels',showLabels.checked?'true':'false');localStorage.setItem('turno4x4.haptics',hapticsToggle.checked?'true':'false');
+ localStorage.setItem('turno4x4.codeSize',codeSize.value);localStorage.setItem('turno4x4.dayNumberSize',dayNumberSize.value);localStorage.setItem('turno4x4.showLabels',showLabels.checked?'true':'false');localStorage.setItem('turno4x4.showHolidays',showHolidays.checked?'true':'false');localStorage.setItem('turno4x4.haptics',hapticsToggle.checked?'true':'false');
  applySettings();renderAll();
 }
 function switchActiveColorProfile(){
@@ -3690,6 +3807,26 @@ function loadHolidayYear(year){
 }
 
 function holidayInfo(d){
+ if(showHolidays&&!showHolidays.checked)return null;
+
+ const turn=activeTurnKey();
+
+ // Feriado especial del Día del Metalúrgico:
+ // todos los 7 de septiembre, exclusivamente visible en T1–T4.
+ if(
+  d.getMonth()===8 &&
+  d.getDate()===7 &&
+  ['T1','T2','T3','T4'].includes(turn)
+ ){
+  return {
+   fecha:dateKey(d),
+   tipo:'metalurgico',
+   nombre:'Día del Metalúrgico',
+   alcance:'T1–T4',
+   custom:true
+  };
+ }
+
  return loadHolidayYear(d.getFullYear())[dateKey(d)]||null;
 }
 
@@ -3749,6 +3886,7 @@ async function ensureHolidayYear(year){
 }
 
 function ensureHolidaysForCurrentView(){
+ if(showHolidays&&!showHolidays.checked)return;
  ensureHolidayYear(viewYear);
  if(viewMonth===0)ensureHolidayYear(viewYear-1);
  if(viewMonth===11)ensureHolidayYear(viewYear+1);
@@ -3820,7 +3958,7 @@ function renderCalendar(){
   }
 
   const holidayBadge=holiday
-   ? `<span class="holiday-badge" title="${escapeHtml(holiday.name)}"><em>FER</em></span>`
+   ? `<span class="holiday-badge" title="${escapeHtml(holiday.custom?'Día del Metalúrgico · T1–T4':holiday.nombre)}"><em>FER</em></span>`
    : '';
 
   cell.innerHTML=`<span class="date">${d.getDate()}</span><span class="code">${codeText(turn,c)}</span>${showLabels.checked?`<span class="label">${shiftNames[c][0]}</span>`:''}${dots}${holidayBadge}`;
@@ -4076,10 +4214,19 @@ function showDetail(d){
 
  const holiday=holidayInfo(d);
  const holidayBanner=$('#holidayDetailBanner');
+ const holidayType=$('#holidayDetailType');
  const holidayName=$('#holidayDetailName');
- if(holidayBanner&&holidayName){
+ if(holidayBanner&&holidayType&&holidayName){
   holidayBanner.classList.toggle('show',Boolean(holiday));
-  holidayName.textContent=holiday?holiday.name:'';
+  if(holiday){
+   holidayType.textContent=holiday.custom
+    ? 'Feriado gremial · Turnos T1–T4'
+    : 'Feriado nacional · Argentina';
+   holidayName.textContent=`(${holiday.nombre})`;
+  }else{
+   holidayType.textContent='Feriado nacional · Argentina';
+   holidayName.textContent='';
+  }
  }
 
  const active=activeTurnKey();
@@ -4240,7 +4387,7 @@ async function importBackup(file){if(!file)return;try{const data=JSON.parse(awai
 function renderBackupStatus(){const x=localStorage.getItem(BACKUP_KEY);backupStatus.textContent=x?`Última copia: ${new Intl.DateTimeFormat('es-AR',{dateStyle:'medium',timeStyle:'short'}).format(new Date(x))}`:'Todavía no hiciste una copia de seguridad.'}
 
 function renderYear(){
- ensureHolidayYear(yearViewYear);
+ if(!showHolidays||showHolidays.checked)ensureHolidayYear(yearViewYear);
  $('#yearTitle').textContent=yearViewYear;const grid=$('#yearGrid');grid.innerHTML='';
  for(let m=0;m<12;m++){const box=document.createElement('div');box.className='mini-month';box.innerHTML=`<h3>${new Intl.DateTimeFormat('es-AR',{month:'short'}).format(new Date(yearViewYear,m,1))}</h3>`;const days=document.createElement('div');days.className='mini-days';for(let b=0;b<new Date(yearViewYear,m,1).getDay();b++){const blank=document.createElement('i');blank.className='mini-day blank';days.appendChild(blank)}const last=new Date(yearViewYear,m+1,0).getDate();for(let d=1;d<=last;d++){const dt=new Date(yearViewYear,m,d),c=codeFor(activeTurnKey(),dt),el=document.createElement('i');el.className=`mini-day ${c}${agendaForDate(dt).length?' has-event':''}`;el.textContent=d;days.appendChild(el)}box.appendChild(days);box.onclick=()=>{viewYear=yearViewYear;viewMonth=m;closeModal('yearModal');renderCalendar()};grid.appendChild(box)}
 }
@@ -4400,8 +4547,8 @@ settingsBtn.onclick=()=>{setPaletteDropdown(false);updateColorSettingsUI();rende
 [morningColor,nightColor,offColor].forEach(x=>x.oninput=()=>{saveSettings();renderQuickPalette()});
 codeSize.oninput=()=>{codeSizeValue.textContent=`${codeSize.value} px`;saveSettings()};
 dayNumberSize.oninput=()=>{dayNumberSizeValue.textContent=`${dayNumberSize.value} px`;saveSettings()};
-showLabels.onchange=saveSettings;hapticsToggle.onchange=saveSettings;
-$('#resetSettingsBtn').onclick=()=>{morningColor.value=defaults.morning;offColor.value=defaults.off;if(!isTurn5Profile())nightColor.value=defaults.night;codeSize.value=18;codeSizeValue.textContent='18 px';dayNumberSize.value=10;dayNumberSizeValue.textContent='10 px';showLabels.checked=true;hapticsToggle.checked=true;saveSettings();updateColorSettingsUI();renderQuickPalette()};
+showLabels.onchange=saveSettings;showHolidays.onchange=saveSettings;hapticsToggle.onchange=saveSettings;
+$('#resetSettingsBtn').onclick=()=>{morningColor.value=defaults.morning;offColor.value=defaults.off;if(!isTurn5Profile())nightColor.value=defaults.night;codeSize.value=18;codeSizeValue.textContent='18 px';dayNumberSize.value=10;dayNumberSizeValue.textContent='10 px';showLabels.checked=true;showHolidays.checked=true;hapticsToggle.checked=true;saveSettings();updateColorSettingsUI();renderQuickPalette()};
 $('#agendaSaveBtn').onclick=saveAgenda;$('#agendaClearBtn').onclick=clearAgendaForm;$('#agendaNotifyBtn').onclick=requestNotificationPermission;$('#agendaExportBtn').onclick=exportBackup;$('#agendaImportInput').onchange=()=>importBackup($('#agendaImportInput').files[0]);agendaSearchInput.oninput=renderAllAgendaEvents;
 agendaFilterInput.onchange=renderAllAgendaEvents;
 agendaAllToggle.onclick=()=>{
