@@ -1141,6 +1141,119 @@ body.light .event-count{
   }
 }
 
+
+/* ===== CONFIGURACIÓN V4.5.6 · T5 FULL HEIGHT ===== */
+#settingsModal.t5-profile .settings-modal-window{
+  padding-bottom:7px;
+}
+#settingsModal.t5-profile .color-setting-row{
+  min-height:90px;
+  padding-top:8px;
+  padding-bottom:8px;
+}
+#settingsModal.t5-profile .color-edit-control{
+  width:162px;
+  height:77px;
+  padding:9px 12px;
+  gap:10px;
+  border-radius:18px;
+}
+#settingsModal.t5-profile .color-input{
+  width:48px;
+  height:54px;
+  border-radius:11px;
+}
+#settingsModal.t5-profile .color-edit-text{
+  font-size:11.2px;
+}
+#settingsModal.t5-profile .settings-preview{
+  flex:1 1 0;
+  min-height:96px;
+  max-height:none;
+  margin-top:5px;
+  padding:7px 9px 8px;
+}
+#settingsModal.t5-profile .settings-preview-day{
+  height:100%;
+}
+#settingsModal.t5-profile .action-row{
+  margin-top:5px;
+}
+#settingsModal.t5-profile .version-box{
+  margin-top:3px;
+  margin-bottom:2px;
+}
+
+@media(max-width:620px){
+  #settingsModal.t5-profile .settings-modal-window{
+    padding-bottom:6px;
+  }
+  #settingsModal.t5-profile .color-setting-row{
+    min-height:86px;
+    padding-top:7px;
+    padding-bottom:7px;
+  }
+  #settingsModal.t5-profile .color-edit-control{
+    width:154px;
+    height:73px;
+    padding:8px 11px;
+  }
+  #settingsModal.t5-profile .color-input{
+    width:45px;
+    height:50px;
+  }
+  #settingsModal.t5-profile .color-edit-text{
+    font-size:10.8px;
+  }
+  #settingsModal.t5-profile .settings-preview{
+    flex:1 1 0;
+    min-height:90px;
+    max-height:none;
+    margin-top:4px;
+    padding:6px 8px 7px;
+  }
+  #settingsModal.t5-profile .version-box{
+    margin-bottom:2px;
+  }
+}
+
+@media(max-height:760px){
+  #settingsModal.t5-profile .settings-modal-window{
+    padding-bottom:5px;
+  }
+  #settingsModal.t5-profile .color-setting-row{
+    min-height:80px;
+    padding-top:6px;
+    padding-bottom:6px;
+  }
+  #settingsModal.t5-profile .color-edit-control{
+    width:150px;
+    height:68px;
+    padding:7px 10px;
+  }
+  #settingsModal.t5-profile .color-input{
+    width:43px;
+    height:46px;
+  }
+  #settingsModal.t5-profile .color-edit-text{
+    font-size:10.5px;
+  }
+  #settingsModal.t5-profile .settings-preview{
+    flex:1 1 0;
+    min-height:78px;
+    max-height:none;
+    margin-top:3px;
+    padding:5px 7px 6px;
+  }
+  #settingsModal.t5-profile .action-row{
+    margin-top:3px;
+  }
+  #settingsModal.t5-profile .version-box{
+    margin-top:2px;
+    margin-bottom:1px;
+  }
+}
+
 .sheet-backdrop{
   position:fixed;
   inset:0;
@@ -2595,7 +2708,7 @@ body.light .day.today .event-count{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.5.5</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.5.6</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -2742,7 +2855,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.5.5';
+const CURRENT_VERSION='4.5.6';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
