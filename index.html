@@ -409,6 +409,10 @@ body.light .event-count{
 #settingsModal .color-setting-row{
   cursor:pointer;
   transition:transform .10s ease,filter .10s ease,border-color .10s ease,box-shadow .10s ease;
+  border-color:rgba(145,169,199,.20);
+}
+#settingsModal .color-setting-row:hover{
+  border-color:rgba(67,168,255,.28);
 }
 #settingsModal .color-setting-row:active{
   transform:translateY(1px) scale(.988);
@@ -418,47 +422,50 @@ body.light .event-count{
   transform:scale(.97);
   box-shadow:inset 0 2px 4px rgba(0,0,0,.18);
 }
-#settingsModal:not(.t5-profile) #offColorRow{
+#settingsModal #morningColorRow,
+#settingsModal #nightColorRow,
+#settingsModal #offColorRow{
   grid-column:1/-1;
 }
-#settingsModal.t5-profile #offColorRow{
-  grid-column:auto;
+#settingsModal .color-setting-row{
+  min-height:52px;
+  grid-template-columns:minmax(0,1fr) auto;
 }
 #settingsModal .color-edit-control{
-  width:80px;
-  height:38px;
-  padding:4px 6px;
+  width:132px;
+  height:44px;
+  padding:5px 9px;
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:5px;
+  gap:8px;
   flex:none;
-  border:1px solid rgba(145,169,199,.26);
-  border-radius:11px;
+  border:1px solid rgba(145,169,199,.30);
+  border-radius:13px;
   background:
-    radial-gradient(circle at 90% 0%,rgba(67,168,255,.07),transparent 42%),
-    linear-gradient(180deg,var(--panel3),var(--panel2));
+    radial-gradient(circle at 88% 0%,rgba(67,168,255,.085),transparent 44%),
+    linear-gradient(180deg,color-mix(in srgb,var(--panel3) 96%,white 4%),var(--panel2));
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.045),
-    0 5px 12px rgba(0,0,0,.12);
+    inset 0 1px 0 rgba(255,255,255,.055),
+    0 6px 14px rgba(0,0,0,.14);
 }
 #settingsModal .color-input{
-  width:31px;
-  height:27px;
+  width:39px;
+  height:32px;
   padding:2px;
   flex:none;
-  border:1px solid rgba(145,169,199,.34);
-  border-radius:7px;
+  border:1px solid rgba(145,169,199,.38);
+  border-radius:8px;
   background:transparent;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
   cursor:pointer;
 }
 #settingsModal .color-edit-text{
-  color:#dce6f2;
-  font-size:8.5px;
+  color:#eef4fb;
+  font-size:10px;
   line-height:1;
   font-weight:950;
-  letter-spacing:.035em;
+  letter-spacing:.025em;
   white-space:nowrap;
 }
 #settingsModal .color-setting-row:hover .color-edit-text{
@@ -720,7 +727,7 @@ body.light .event-count{
 
 
 #settingsModal .settings-preview{
-  flex:0 0 clamp(104px,16.5vh,126px);
+  flex:0 0 clamp(94px,14.8vh,112px);
   min-height:0;
   margin-top:6px;
   padding:8px 9px 9px;
@@ -830,19 +837,22 @@ body.light .event-count{
     min-height:47px;
     padding:5px 7px;
   }
+  #settingsModal .color-setting-row{
+    min-height:50px;
+  }
   #settingsModal .color-edit-control{
-    width:74px;
-    height:36px;
-    padding:4px 5px;
-    gap:4px;
+    width:122px;
+    height:42px;
+    padding:4px 8px;
+    gap:7px;
   }
   #settingsModal .color-input{
-    width:28px;
-    height:25px;
+    width:36px;
+    height:30px;
     padding:2px;
   }
   #settingsModal .color-edit-text{
-    font-size:8px;
+    font-size:9.4px;
   }
   #settingsModal .setting-range-row{
     grid-column:1/-1;
@@ -868,7 +878,7 @@ body.light .event-count{
     grid-template-columns:repeat(10,minmax(0,1fr));
   }
   #settingsModal .settings-preview{
-    flex:0 0 clamp(102px,16vh,120px);
+    flex:0 0 clamp(92px,14.5vh,108px);
     min-height:0;
     margin-top:4px;
     padding:6px 8px 7px;
@@ -899,10 +909,11 @@ body.light .event-count{
   #settingsModal .setting-row small{font-size:8.2px}
   #settingsModal .toggle-setting b{font-size:10.8px}
   #settingsModal .toggle-setting small{font-size:7.6px}
-  #settingsModal .color-setting-row b{font-size:10.7px}
-  #settingsModal .color-setting-row small{font-size:7.6px}
-  #settingsModal .color-edit-control{width:70px;padding-left:4px;padding-right:4px}
-  #settingsModal .color-edit-text{font-size:7.6px}
+  #settingsModal .color-setting-row b{font-size:11.3px}
+  #settingsModal .color-setting-row small{font-size:7.8px}
+  #settingsModal .color-edit-control{width:116px;padding-left:7px;padding-right:7px}
+  #settingsModal .color-input{width:34px;height:29px}
+  #settingsModal .color-edit-text{font-size:9px}
   .palette-toggle-btn{padding:0 8px;font-size:9.5px}
   .palette-dropdown{padding:7px}
   .palette-dropdown .quick-palette{gap:4px}
@@ -940,7 +951,7 @@ body.light .event-count{
   }
   #settingsModal .palette-setting{min-height:38px}
   #settingsModal .settings-preview{
-    flex:0 0 92px;
+    flex:0 0 82px;
     min-height:0;
     margin-top:3px;
     padding:4px 7px 6px;
@@ -2358,9 +2369,9 @@ body.light .day.today .event-count{
   <div class="modal-head"><div><h2>⚙️ Configuración</h2><small>Personalizá la aplicación</small></div><button class="close-btn" data-close="settingsModal">×</button></div>
   <div id="colorProfileNote" class="color-profile-note"><b id="colorProfileTitle">Colores · Turnos 1–4</b><span id="colorProfileText">M / N / F</span></div>
   <div class="settings-list">
-    <label id="morningColorRow" class="setting-row color-setting-row"><div><b id="morningColorTitle">Color M — Mañana</b><small id="morningColorNote">06:00 a 18:00</small></div><span class="color-edit-control"><input id="morningColor" class="color-input" type="color" value="#ffd84d" aria-label="Editar color de Mañana"><span class="color-edit-text">EDITAR ›</span></span></label>
-    <label id="nightColorRow" class="setting-row color-setting-row"><div><b>Color N — Noche</b><small>18:00 a 06:00</small></div><span class="color-edit-control"><input id="nightColor" class="color-input" type="color" value="#27aee4" aria-label="Editar color de Noche"><span class="color-edit-text">EDITAR ›</span></span></label>
-    <label id="offColorRow" class="setting-row color-setting-row"><div><b>Color F — Franco</b><small>Día libre</small></div><span class="color-edit-control"><input id="offColor" class="color-input" type="color" value="#3fbe62" aria-label="Editar color de Franco"><span class="color-edit-text">EDITAR ›</span></span></label>
+    <label id="morningColorRow" class="setting-row color-setting-row"><div><b id="morningColorTitle">Color M — Mañana</b><small id="morningColorNote">06:00 a 18:00</small></div><span class="color-edit-control"><input id="morningColor" class="color-input" type="color" value="#ffd84d" aria-label="Editar color de Mañana"><span class="color-edit-text">EDITAR COLOR ›</span></span></label>
+    <label id="nightColorRow" class="setting-row color-setting-row"><div><b>Color N — Noche</b><small>18:00 a 06:00</small></div><span class="color-edit-control"><input id="nightColor" class="color-input" type="color" value="#27aee4" aria-label="Editar color de Noche"><span class="color-edit-text">EDITAR COLOR ›</span></span></label>
+    <label id="offColorRow" class="setting-row color-setting-row"><div><b>Color F — Franco</b><small>Día libre</small></div><span class="color-edit-control"><input id="offColor" class="color-input" type="color" value="#3fbe62" aria-label="Editar color de Franco"><span class="color-edit-text">EDITAR COLOR ›</span></span></label>
 
     <div class="setting-row palette-setting">
       <div>
@@ -2413,7 +2424,7 @@ body.light .day.today .event-count{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.5.0</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.5.1</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -2560,7 +2571,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.5.0';
+const CURRENT_VERSION='4.5.1';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
