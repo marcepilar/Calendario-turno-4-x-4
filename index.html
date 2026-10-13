@@ -1052,6 +1052,95 @@ body.light .event-count{
 }
 
 
+
+/* ===== CONFIGURACIÓN V4.5.5 · T5 EDITAR COLOR XL VERTICAL ===== */
+#settingsModal.t5-profile .color-setting-row{
+  min-height:82px;
+  padding-top:7px;
+  padding-bottom:7px;
+}
+#settingsModal.t5-profile .color-edit-control{
+  height:70px;
+  width:158px;
+  padding:8px 11px;
+  border-radius:17px;
+}
+#settingsModal.t5-profile .color-input{
+  width:46px;
+  height:49px;
+  border-radius:10px;
+}
+#settingsModal.t5-profile .color-edit-text{
+  font-size:11px;
+}
+#settingsModal.t5-profile .settings-preview{
+  flex:1 1 auto;
+  min-height:112px;
+  max-height:176px;
+}
+#settingsModal.t5-profile .version-box{
+  margin-bottom:4px;
+}
+
+@media(max-width:620px){
+  #settingsModal.t5-profile .color-setting-row{
+    min-height:78px;
+    padding-top:6px;
+    padding-bottom:6px;
+  }
+  #settingsModal.t5-profile .color-edit-control{
+    width:150px;
+    height:66px;
+    padding:7px 10px;
+  }
+  #settingsModal.t5-profile .color-input{
+    width:43px;
+    height:45px;
+  }
+  #settingsModal.t5-profile .color-edit-text{
+    font-size:10.6px;
+  }
+  #settingsModal.t5-profile .settings-preview{
+    flex:1 1 auto;
+    min-height:100px;
+    max-height:150px;
+  }
+}
+
+@media(max-height:760px){
+  #settingsModal.t5-profile .color-setting-row{
+    min-height:74px;
+    padding-top:5px;
+    padding-bottom:5px;
+  }
+  #settingsModal.t5-profile .color-edit-control{
+    width:148px;
+    height:63px;
+    padding:6px 9px;
+  }
+  #settingsModal.t5-profile .color-input{
+    width:42px;
+    height:43px;
+  }
+  #settingsModal.t5-profile .color-edit-text{
+    font-size:10.4px;
+  }
+  #settingsModal.t5-profile .settings-preview{
+    flex:1 1 auto;
+    min-height:86px;
+    max-height:126px;
+    margin-top:3px;
+    padding:5px 7px 6px;
+  }
+  #settingsModal.t5-profile .action-row{
+    margin-top:3px;
+  }
+  #settingsModal.t5-profile .version-box{
+    margin-top:3px;
+    margin-bottom:3px;
+  }
+}
+
 .sheet-backdrop{
   position:fixed;
   inset:0;
@@ -2506,7 +2595,7 @@ body.light .day.today .event-count{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.5.4</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.5.5</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -2653,7 +2742,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.5.4';
+const CURRENT_VERSION='4.5.5';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
