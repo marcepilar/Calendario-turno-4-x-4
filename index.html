@@ -970,6 +970,88 @@ body.light .event-count{
 }
 
 
+
+/* ===== CONFIGURACIÓN V4.5.2 · OPTIMIZACIÓN ESPECÍFICA T5 ===== */
+#settingsModal.t5-profile .color-profile-note{
+  min-height:34px;
+}
+#settingsModal.t5-profile .color-setting-row{
+  min-height:58px;
+}
+#settingsModal.t5-profile .settings-preview{
+  flex:1 1 auto;
+  min-height:138px;
+  max-height:230px;
+  margin-top:6px;
+  padding:9px 10px 10px;
+}
+#settingsModal.t5-profile .settings-preview-head{
+  margin-bottom:6px;
+}
+#settingsModal.t5-profile .settings-preview-day{
+  border-radius:18px;
+  padding:9px 7px 10px;
+}
+#settingsModal.t5-profile .settings-preview-day strong{
+  font-size:calc(var(--code-size) * 1.08);
+}
+#settingsModal.t5-profile .settings-preview-day small{
+  font-size:9.5px;
+}
+#settingsModal.t5-profile .action-row{
+  margin-top:6px;
+}
+#settingsModal.t5-profile .version-box{
+  margin-bottom:8px;
+}
+
+@media(max-width:620px){
+  #settingsModal.t5-profile .color-setting-row{
+    min-height:55px;
+  }
+  #settingsModal.t5-profile .settings-preview{
+    flex:1 1 auto;
+    min-height:126px;
+    max-height:none;
+    margin-top:5px;
+    padding:8px 9px 9px;
+  }
+  #settingsModal.t5-profile .settings-preview-day{
+    border-radius:17px;
+    padding:8px 6px 9px;
+  }
+}
+
+@media(max-height:760px){
+  #settingsModal.t5-profile .color-profile-note{
+    min-height:27px;
+  }
+  #settingsModal.t5-profile .color-setting-row{
+    min-height:47px;
+  }
+  #settingsModal.t5-profile .settings-preview{
+    flex:1 1 auto;
+    min-height:92px;
+    max-height:none;
+    margin-top:3px;
+    padding:5px 7px 7px;
+  }
+  #settingsModal.t5-profile .settings-preview-day{
+    border-radius:14px;
+    padding:5px 5px 6px;
+  }
+  #settingsModal.t5-profile .settings-preview-day small{
+    font-size:7.5px;
+  }
+  #settingsModal.t5-profile .action-row{
+    margin-top:3px;
+  }
+  #settingsModal.t5-profile .version-box{
+    margin-bottom:7px;
+  }
+}
+
+
 .sheet-backdrop{
   position:fixed;
   inset:0;
@@ -2424,7 +2506,7 @@ body.light .day.today .event-count{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.5.1</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.5.2</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -2571,7 +2653,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.5.1';
+const CURRENT_VERSION='4.5.2';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
