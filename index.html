@@ -3036,6 +3036,21 @@ body.light .holiday-badge{
   }
 }
 
+
+/* ===== V4.6.2 · FERIADOS PUENTE EN AZUL ===== */
+.holiday-badge.holiday-bridge{
+  background:linear-gradient(180deg,#44b9f0,#2589d8);
+  border-color:rgba(210,240,255,.78);
+  box-shadow:
+    0 2px 7px rgba(0,0,0,.22),
+    0 0 8px rgba(39,174,228,.18),
+    inset 0 1px 0 rgba(255,255,255,.22);
+}
+body.light .holiday-badge.holiday-bridge{
+  background:linear-gradient(180deg,#38aee8,#247fc9);
+  border-color:rgba(255,255,255,.86);
+}
+
 </style>
 </head>
 <body>
@@ -3179,7 +3194,7 @@ body.light .holiday-badge{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.6.1</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.6.2</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -3326,7 +3341,7 @@ body.light .holiday-badge{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.6.1';
+const CURRENT_VERSION='4.6.2';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -3806,6 +3821,24 @@ function loadHolidayYear(year){
  return holidayMemory[year];
 }
 
+function isBridgeHoliday(holiday){
+ if(!holiday||holiday.custom)return false;
+ const tipo=String(holiday.tipo||'').toLowerCase();
+ const nombre=String(holiday.nombre||'').toLowerCase();
+
+ return (
+  tipo.includes('puente') ||
+  tipo.includes('turistic') ||
+  tipo.includes('turístic') ||
+  tipo.includes('no laborable') ||
+  tipo.includes('nolaborable') ||
+  nombre.includes('puente turístico') ||
+  nombre.includes('puente turistico') ||
+  nombre.includes('día no laborable con fines turísticos') ||
+  nombre.includes('dia no laborable con fines turisticos')
+ );
+}
+
 function holidayInfo(d){
  if(showHolidays&&!showHolidays.checked)return null;
 
@@ -3958,7 +3991,7 @@ function renderCalendar(){
   }
 
   const holidayBadge=holiday
-   ? `<span class="holiday-badge" title="${escapeHtml(holiday.custom?'Día del Metalúrgico · T1–T4':holiday.nombre)}"><em>FER</em></span>`
+   ? `<span class="holiday-badge${isBridgeHoliday(holiday)?' holiday-bridge':''}" title="${escapeHtml(holiday.custom?'Día del Metalúrgico · T1–T4':holiday.nombre)}"><em>FER</em></span>`
    : '';
 
   cell.innerHTML=`<span class="date">${d.getDate()}</span><span class="code">${codeText(turn,c)}</span>${showLabels.checked?`<span class="label">${shiftNames[c][0]}</span>`:''}${dots}${holidayBadge}`;
