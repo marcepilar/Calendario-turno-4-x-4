@@ -2674,8 +2674,8 @@ body.light .day.today .event-count{
 
   /* El valor se calcula según el alto real disponible del teléfono. */
   body.main-t5-active .day{
-    min-height:var(--t5-main-day-height,60px);
-    height:var(--t5-main-day-height,60px);
+    min-height:var(--main-day-height,60px);
+    height:var(--main-day-height,60px);
   }
 
   body.main-t5-active .legend{
@@ -2697,8 +2697,8 @@ body.light .day.today .event-count{
     padding-right:11px;
   }
   body.main-t5-active .day{
-    min-height:var(--t5-main-day-height,57px);
-    height:var(--t5-main-day-height,57px);
+    min-height:var(--main-day-height,57px);
+    height:var(--main-day-height,57px);
   }
 }
 
@@ -2741,6 +2741,31 @@ body.light .day.today .event-count{
   }
   body.main-t5-active .legend{
     padding-top:4px;
+  }
+}
+
+
+/* ===== V4.5.8 · PANTALLA PRINCIPAL FULL VIEWPORT ===== */
+@media(max-width:620px){
+  body.main-calendar-fit .app{
+    padding-bottom:4px;
+  }
+
+  body.main-calendar-fit .day{
+    min-height:var(--main-day-height,66px);
+    height:var(--main-day-height,66px);
+  }
+
+  body.main-calendar-fit .legend{
+    padding-top:4px;
+    padding-bottom:0;
+  }
+}
+
+@media(max-width:380px){
+  body.main-calendar-fit .day{
+    min-height:var(--main-day-height,61px);
+    height:var(--main-day-height,61px);
   }
 }
 
@@ -2868,7 +2893,7 @@ body.light .day.today .event-count{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.5.7</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.5.8</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -3015,7 +3040,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.5.7';
+const CURRENT_VERSION='4.5.8';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -3087,21 +3112,20 @@ function updateTurn5Visibility(){
  const active=turnSelect.value==='T5';
  turn5SubRow.classList.toggle('show',active);
  document.body.classList.toggle('main-t5-active',active);
- if(!active)document.documentElement.style.removeProperty('--t5-main-day-height');
 }
 
-let mainT5FitRaf=0;
-function fitMainTurn5Viewport(){
- const active=turnSelect.value==='T5';
- document.body.classList.toggle('main-t5-active',active);
+let mainViewportFitRaf=0;
+function fitMainCalendarViewport(){
+ const isMobile=window.innerWidth<=620;
+ document.body.classList.toggle('main-calendar-fit',isMobile);
 
- if(!active){
-  document.documentElement.style.removeProperty('--t5-main-day-height');
+ if(!isMobile){
+  document.documentElement.style.removeProperty('--main-day-height');
   return;
  }
 
- cancelAnimationFrame(mainT5FitRaf);
- mainT5FitRaf=requestAnimationFrame(()=>{
+ cancelAnimationFrame(mainViewportFitRaf);
+ mainViewportFitRaf=requestAnimationFrame(()=>{
   const vv=window.visualViewport;
   const viewportBottom=vv?(vv.offsetTop+vv.height):window.innerHeight;
   const calendarTop=calendarCard.getBoundingClientRect().top;
@@ -3109,27 +3133,29 @@ function fitMainTurn5Viewport(){
   const weekdaysH=weekdays?weekdays.getBoundingClientRect().height:26;
   const legendH=shiftLegend.getBoundingClientRect().height||22;
 
-  // Dejamos la leyenda completa dentro de la primera pantalla y un
-  // pequeño margen inferior. El calendario siempre tiene 6 filas.
-  const reservedAfterCalendar=legendH+11;
-  const usableForCalendar=viewportBottom-calendarTop-reservedAfterCalendar;
+  // El mes siempre usa 6 filas. El alto visible que queda desde el comienzo
+  // del calendario se reparte completo entre esas seis filas.
+  const bottomSafety=3;
+  const usableForCalendar=viewportBottom-calendarTop-legendH-bottomSafety;
   const rawDayHeight=(usableForCalendar-weekdaysH)/6;
 
-  // En pantallas altas conserva celdas amplias; en pantallas más bajas
-  // reduce sólo lo necesario para impedir que la última fila se recorte.
-  const minDay=window.innerWidth<=380?53:55;
-  const maxDay=64;
-  const dayHeight=Math.max(minDay,Math.min(maxDay,Math.floor(rawDayHeight)));
+  // Antes de recortar la última fila permitimos que las celdas se reduzcan.
+  // En una pantalla normal usamos el alto exacto, sin un máximo artificial,
+  // por lo que tampoco queda espacio libre abajo.
+  const minimumDayHeight=38;
+  const dayHeight=Math.max(minimumDayHeight,rawDayHeight);
 
-  document.documentElement.style.setProperty('--t5-main-day-height',`${dayHeight}px`);
+  document.documentElement.style.setProperty(
+   '--main-day-height',
+   `${dayHeight.toFixed(2)}px`
+  );
 
-  // El detalle inferior debe seguir comenzando después de la primera pantalla.
   setTimeout(scheduleBelowFoldLayout,0);
  });
 }
 
-function scheduleMainTurn5Fit(){
- requestAnimationFrame(fitMainTurn5Viewport);
+function scheduleMainViewportFit(){
+ requestAnimationFrame(fitMainCalendarViewport);
 }
 
 function vibrate(ms){if(hapticsToggle.checked&&navigator.vibrate)navigator.vibrate(ms)}
@@ -3664,7 +3690,7 @@ function renderAll(){
  renderCalendar();
  renderLegend();
  showDetail(selectedDate);
- scheduleMainTurn5Fit();
+ scheduleMainViewportFit();
 }
 
 function loadAgendaData(){try{const a=JSON.parse(localStorage.getItem(AGENDA_KEY)||'[]');return Array.isArray(a)?a:[]}catch{return[]}}
@@ -3965,8 +3991,8 @@ $$('.backdrop').forEach(b=>b.addEventListener('click',e=>{if(e.target===b)closeM
 
 $('#prevBtn').onclick=()=>animateMonthButton(-1);$('#nextBtn').onclick=()=>animateMonthButton(1);
 $('#todayBtn').onclick=()=>{const d=new Date();viewYear=d.getFullYear();viewMonth=d.getMonth();selectedDate=new Date(d.getFullYear(),d.getMonth(),d.getDate());renderAll();scheduleBelowFoldLayout()};
-turnSelect.onchange=()=>{updateTurn5Visibility();syncTurnPulseText();localStorage.setItem('turno4x4.turno',turnSelect.value);switchActiveColorProfile();renderAll();renderYear();renderStats();scheduleMainTurn5Fit();scheduleBelowFoldLayout()};
-turn5Select.onchange=()=>{syncTurn5PulseText();localStorage.setItem('turno4x4.turno5',turn5Select.value);updateColorSettingsUI();renderQuickPalette();renderAll();renderYear();renderStats();scheduleMainTurn5Fit();scheduleBelowFoldLayout()};
+turnSelect.onchange=()=>{updateTurn5Visibility();syncTurnPulseText();localStorage.setItem('turno4x4.turno',turnSelect.value);switchActiveColorProfile();renderAll();renderYear();renderStats();scheduleMainViewportFit();scheduleBelowFoldLayout()};
+turn5Select.onchange=()=>{syncTurn5PulseText();localStorage.setItem('turno4x4.turno5',turn5Select.value);updateColorSettingsUI();renderQuickPalette();renderAll();renderYear();renderStats();scheduleMainViewportFit();scheduleBelowFoldLayout()};
 themeBtn.onclick=()=>{document.body.classList.toggle('light');localStorage.setItem('turno4x4.theme',document.body.classList.contains('light')?'light':'dark');themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️'};
 settingsBtn.onclick=()=>{setPaletteDropdown(false);updateColorSettingsUI();renderQuickPalette();openModal('settingsModal')};
 [morningColor,nightColor,offColor].forEach(x=>x.oninput=()=>{saveSettings();renderQuickPalette()});
@@ -4164,10 +4190,10 @@ document.addEventListener('dragstart',ev=>{
  if(ev.target.closest?.('button,[role="button"]'))ev.preventDefault();
 });
 
-loadSettings();syncTurnPulseText();syncTurn5PulseText();renderQuickPalette();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();fitMainTurn5Viewport();keepDetailBelowInitialFold();setTimeout(()=>{fitMainTurn5Viewport();keepDetailBelowInitialFold()},260);setTimeout(()=>{fitMainTurn5Viewport();keepDetailBelowInitialFold()},700);initSplash();checkUpdate();checkReminders();
-window.addEventListener('resize',()=>{scheduleMainTurn5Fit();scheduleBelowFoldLayout()});
-window.addEventListener('orientationchange',()=>{scheduleMainTurn5Fit();scheduleBelowFoldLayout()});
-if(window.visualViewport)window.visualViewport.addEventListener('resize',()=>{scheduleMainTurn5Fit();scheduleBelowFoldLayout()});
+loadSettings();syncTurnPulseText();syncTurn5PulseText();renderQuickPalette();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();fitMainCalendarViewport();keepDetailBelowInitialFold();setTimeout(()=>{fitMainCalendarViewport();keepDetailBelowInitialFold()},260);setTimeout(()=>{fitMainCalendarViewport();keepDetailBelowInitialFold()},700);initSplash();checkUpdate();checkReminders();
+window.addEventListener('resize',()=>{scheduleMainViewportFit();scheduleBelowFoldLayout()});
+window.addEventListener('orientationchange',()=>{scheduleMainViewportFit();scheduleBelowFoldLayout()});
+if(window.visualViewport)window.visualViewport.addEventListener('resize',()=>{scheduleMainViewportFit();scheduleBelowFoldLayout()});
 setInterval(checkUpdate,5*60*1000);
 setInterval(checkReminders,30000);
 setInterval(()=>{
