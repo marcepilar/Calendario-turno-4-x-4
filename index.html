@@ -406,10 +406,49 @@ body.light .event-count{
   line-height:1.18;
   margin-top:2px;
 }
+#settingsModal .color-setting-row{
+  cursor:pointer;
+  transition:transform .10s ease,filter .10s ease,border-color .10s ease,box-shadow .10s ease;
+}
+#settingsModal .color-setting-row:active{
+  transform:translateY(1px) scale(.988);
+  filter:brightness(.96);
+}
+#settingsModal:not(.t5-profile) #offColorRow{
+  grid-column:1/-1;
+}
+#settingsModal.t5-profile #offColorRow{
+  grid-column:auto;
+}
+#settingsModal .color-edit-control{
+  width:54px;
+  display:grid;
+  grid-template-rows:28px 11px;
+  align-items:center;
+  justify-items:center;
+  gap:2px;
+  flex:none;
+}
 #settingsModal .color-input{
-  width:42px;
-  height:32px;
+  width:48px;
+  height:28px;
+  padding:3px;
+  border:1px solid rgba(145,169,199,.30);
   border-radius:9px;
+  background:linear-gradient(180deg,var(--panel3),var(--panel2));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 4px 10px rgba(0,0,0,.12);
+  cursor:pointer;
+}
+#settingsModal .color-edit-text{
+  color:#9fb1c7;
+  font-size:7.2px;
+  line-height:1;
+  font-weight:950;
+  letter-spacing:.055em;
+  white-space:nowrap;
+}
+#settingsModal .color-setting-row:hover .color-edit-text{
+  color:var(--text);
 }
 #settingsModal .switch{
   width:42px;
@@ -422,6 +461,22 @@ body.light .event-count{
 #settingsModal .switch input:checked+.slider::before{
   transform:translateX(18px);
 }
+#settingsModal .toggle-setting{
+  align-items:center;
+}
+#settingsModal .toggle-setting > div{
+  min-width:0;
+}
+#settingsModal .toggle-setting b{
+  font-size:11.7px;
+  white-space:nowrap;
+  letter-spacing:-.012em;
+}
+#settingsModal .toggle-setting small{
+  font-size:8.2px;
+  white-space:nowrap;
+}
+
 
 #settingsModal .setting-range-row{
   grid-column:1/-1;
@@ -452,7 +507,7 @@ body.light .event-count{
   touch-action:pan-x;
 }
 #settingsModal .setting-range-row .range-wrap input[type="range"]::-webkit-slider-runnable-track{
-  height:8px;
+  height:7px;
   border-radius:999px;
   border:1px solid var(--line);
   background:
@@ -468,38 +523,38 @@ body.light .event-count{
 #settingsModal .setting-range-row .range-wrap input[type="range"]::-webkit-slider-thumb{
   appearance:none;
   -webkit-appearance:none;
-  width:25px;
-  height:25px;
-  margin-top:-9px;
+  width:23px;
+  height:23px;
+  margin-top:-8px;
   border:3px solid var(--panel);
   border-radius:50%;
   background:var(--accent2);
   box-shadow:0 4px 12px rgba(0,0,0,.34),0 0 0 1px rgba(255,255,255,.16);
 }
 #settingsModal .setting-range-row .range-wrap input[type="range"]::-moz-range-track{
-  height:8px;
+  height:7px;
   border-radius:999px;
   border:1px solid var(--line);
   background:var(--panel3);
   box-shadow:inset 0 1px 2px rgba(0,0,0,.28);
 }
 #settingsModal .setting-range-row .range-wrap input[type="range"]::-moz-range-progress{
-  height:8px;
+  height:7px;
   border-radius:999px;
   background:var(--accent);
 }
 #settingsModal .setting-range-row .range-wrap input[type="range"]::-moz-range-thumb{
-  width:23px;
-  height:23px;
+  width:21px;
+  height:21px;
   border:3px solid var(--panel);
   border-radius:50%;
   background:var(--accent2);
   box-shadow:0 4px 12px rgba(0,0,0,.34),0 0 0 1px rgba(255,255,255,.16);
 }
 #settingsModal .range-value{
-  min-width:88px;
-  height:52px;
-  padding:0 10px;
+  min-width:82px;
+  height:48px;
+  padding:0 9px;
   display:grid;
   place-items:center;
   text-align:center;
@@ -507,7 +562,7 @@ body.light .event-count{
   border-radius:17px;
   background:linear-gradient(180deg,var(--panel3),var(--panel2));
   color:var(--text);
-  font-size:15px;
+  font-size:14px;
   font-weight:950;
   letter-spacing:.01em;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 8px 18px rgba(0,0,0,.12);
@@ -592,35 +647,36 @@ body.light .event-count{
 #settingsModal .action-row{
   flex:0 0 auto;
   gap:8px;
-  margin-top:7px;
+  margin-top:6px;
 }
 #settingsModal .action-row button,
 #settingsModal .action-row label{
-  min-height:46px !important;
+  min-height:48px !important;
   border-radius:14px;
   font-size:12.5px;
   font-weight:950;
   letter-spacing:.01em;
-  border:1px solid rgba(145,169,199,.24);
+  border:1px solid rgba(145,169,199,.26);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.045),
+    inset 0 1px 0 rgba(255,255,255,.055),
     0 7px 16px rgba(0,0,0,.15);
   transition:transform .10s ease,filter .10s ease,box-shadow .10s ease;
 }
 #settingsModal .action-row .btn-secondary{
   background:
-    radial-gradient(circle at 82% 0%,rgba(67,168,255,.06),transparent 42%),
-    linear-gradient(180deg,var(--panel3),var(--panel2));
+    radial-gradient(circle at 82% 0%,rgba(67,168,255,.07),transparent 42%),
+    linear-gradient(180deg,color-mix(in srgb,var(--panel3) 96%,white 4%),var(--panel2));
   color:var(--text);
 }
 #settingsModal .action-row .btn-primary{
   background:
-    linear-gradient(180deg,color-mix(in srgb,var(--accent) 92%,white 8%),var(--accent));
+    radial-gradient(circle at 78% 0%,rgba(255,255,255,.12),transparent 38%),
+    linear-gradient(180deg,color-mix(in srgb,var(--accent) 90%,white 10%),color-mix(in srgb,var(--accent) 92%,#0f4e45 8%));
   color:#fff;
-  border-color:color-mix(in srgb,var(--accent) 58%,white 14%);
+  border-color:rgba(117,230,205,.44);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.15),
-    0 8px 19px rgba(0,0,0,.17);
+    inset 0 1px 0 rgba(255,255,255,.17),
+    0 8px 18px rgba(0,0,0,.16);
 }
 #settingsModal .action-row button:active,
 #settingsModal .action-row label:active{
@@ -630,10 +686,10 @@ body.light .event-count{
 }
 #settingsModal .version-box{
   flex:0 0 auto;
-  min-height:46px;
+  min-height:40px;
   margin-top:5px;
-  margin-bottom:4px;
-  padding:6px 8px;
+  margin-bottom:7px;
+  padding:5px 8px;
   border-radius:11px;
   font-size:10px;
   line-height:1.2;
@@ -650,10 +706,10 @@ body.light .event-count{
 
 
 #settingsModal .settings-preview{
-  flex:1 1 auto;
-  min-height:104px;
-  margin-top:7px;
-  padding:10px 10px 12px;
+  flex:0 0 clamp(104px,16.5vh,126px);
+  min-height:0;
+  margin-top:6px;
+  padding:8px 9px 9px;
   border:1px solid var(--line);
   border-radius:14px;
   background:
@@ -669,7 +725,7 @@ body.light .event-count{
   align-items:center;
   justify-content:space-between;
   gap:8px;
-  margin-bottom:7px;
+  margin-bottom:5px;
 }
 #settingsModal .settings-preview-head b{
   font-size:12.5px;
@@ -760,22 +816,34 @@ body.light .event-count{
     min-height:47px;
     padding:5px 7px;
   }
+  #settingsModal .color-edit-control{
+    width:51px;
+    grid-template-rows:26px 10px;
+  }
+  #settingsModal .color-input{
+    width:45px;
+    height:26px;
+    padding:2px;
+  }
+  #settingsModal .color-edit-text{
+    font-size:6.8px;
+  }
   #settingsModal .setting-range-row{
     grid-column:1/-1;
     min-height:60px;
     padding:6px 9px;
   }
   #settingsModal .setting-range-row .range-wrap{
-    grid-template-columns:minmax(0,1fr) 62px;
+    grid-template-columns:minmax(0,1fr) 59px;
     gap:10px;
   }
   #settingsModal .setting-range-row .range-wrap input[type="range"]{
     height:28px;
   }
   #settingsModal .range-value{
-    min-width:62px;
-    height:37px;
-    font-size:10.5px;
+    min-width:59px;
+    height:35px;
+    font-size:10px;
   }
   #settingsModal .palette-setting{
     min-height:41px;
@@ -784,19 +852,20 @@ body.light .event-count{
     grid-template-columns:repeat(10,minmax(0,1fr));
   }
   #settingsModal .settings-preview{
-    min-height:72px;
+    flex:0 0 clamp(102px,16vh,120px);
+    min-height:0;
     margin-top:4px;
     padding:6px 8px 7px;
   }
   #settingsModal .settings-preview-grid{gap:6px}
   #settingsModal .settings-preview-day{min-height:0;height:100%;padding:7px 5px 8px;border-radius:16px}
   #settingsModal .action-row{margin-top:4px}
-  #settingsModal .action-row button{min-height:43px !important}
+  #settingsModal .action-row button{min-height:46px !important}
   #settingsModal .version-box{
-    min-height:44px;
+    min-height:39px;
     margin-top:4px;
-    margin-bottom:6px;
-    padding:5px 8px;
+    margin-bottom:8px;
+    padding:4px 8px;
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -812,6 +881,8 @@ body.light .event-count{
 @media(max-width:390px){
   #settingsModal .setting-row b{font-size:11.5px}
   #settingsModal .setting-row small{font-size:8.2px}
+  #settingsModal .toggle-setting b{font-size:10.8px}
+  #settingsModal .toggle-setting small{font-size:7.6px}
   .palette-toggle-btn{padding:0 8px;font-size:9.5px}
   .palette-dropdown{padding:7px}
   .palette-dropdown .quick-palette{gap:4px}
@@ -849,7 +920,8 @@ body.light .event-count{
   }
   #settingsModal .palette-setting{min-height:38px}
   #settingsModal .settings-preview{
-    min-height:58px;
+    flex:0 0 92px;
+    min-height:0;
     margin-top:3px;
     padding:4px 7px 6px;
   }
@@ -857,12 +929,12 @@ body.light .event-count{
   #settingsModal .settings-preview-day{min-height:0;height:100%;padding:4px 4px 5px;border-radius:13px}
   #settingsModal .settings-preview-day small{font-size:7px}
   #settingsModal .action-row{margin-top:3px}
-  #settingsModal .action-row button{min-height:39px !important}
+  #settingsModal .action-row button{min-height:42px !important}
   #settingsModal .version-box{
-    min-height:42px;
+    min-height:36px;
     margin-top:3px;
-    margin-bottom:5px;
-    padding:4px 7px;
+    margin-bottom:7px;
+    padding:3px 7px;
   }
 }
 
@@ -2266,9 +2338,9 @@ body.light .day.today .event-count{
   <div class="modal-head"><div><h2>⚙️ Configuración</h2><small>Personalizá la aplicación</small></div><button class="close-btn" data-close="settingsModal">×</button></div>
   <div id="colorProfileNote" class="color-profile-note"><b id="colorProfileTitle">Colores · Turnos 1–4</b><span id="colorProfileText">M / N / F</span></div>
   <div class="settings-list">
-    <div id="morningColorRow" class="setting-row"><div><b id="morningColorTitle">Color M — Mañana</b><small id="morningColorNote">06:00 a 18:00</small></div><input id="morningColor" class="color-input" type="color" value="#ffd84d"></div>
-    <div id="nightColorRow" class="setting-row"><div><b>Color N — Noche</b><small>18:00 a 06:00</small></div><input id="nightColor" class="color-input" type="color" value="#27aee4"></div>
-    <div id="offColorRow" class="setting-row"><div><b>Color F — Franco</b><small>Día libre</small></div><input id="offColor" class="color-input" type="color" value="#3fbe62"></div>
+    <label id="morningColorRow" class="setting-row color-setting-row"><div><b id="morningColorTitle">Color M — Mañana</b><small id="morningColorNote">06:00 a 18:00</small></div><span class="color-edit-control"><input id="morningColor" class="color-input" type="color" value="#ffd84d" aria-label="Editar color de Mañana"><span class="color-edit-text">EDITAR ›</span></span></label>
+    <label id="nightColorRow" class="setting-row color-setting-row"><div><b>Color N — Noche</b><small>18:00 a 06:00</small></div><span class="color-edit-control"><input id="nightColor" class="color-input" type="color" value="#27aee4" aria-label="Editar color de Noche"><span class="color-edit-text">EDITAR ›</span></span></label>
+    <label id="offColorRow" class="setting-row color-setting-row"><div><b>Color F — Franco</b><small>Día libre</small></div><span class="color-edit-control"><input id="offColor" class="color-input" type="color" value="#3fbe62" aria-label="Editar color de Franco"><span class="color-edit-text">EDITAR ›</span></span></label>
 
     <div class="setting-row palette-setting">
       <div>
@@ -2291,8 +2363,8 @@ body.light .day.today .event-count{
 
     <div class="setting-row setting-range-row"><div><b>Tamaño M / N / F</b><small>Rango 14 a 24 px</small></div><div class="range-wrap"><input id="codeSize" type="range" min="14" max="24" value="18"><span id="codeSizeValue" class="range-value">18 px</span></div></div>
     <div class="setting-row setting-range-row"><div><b>Tamaño número del día</b><small>Rango 10 a 18 px</small></div><div class="range-wrap"><input id="dayNumberSize" type="range" min="10" max="18" value="10"><span id="dayNumberSizeValue" class="range-value">10 px</span></div></div>
-    <div class="setting-row"><div><b>Mostrar descripción</b><small>Mañana / Noche / Franco</small></div><label class="switch"><input id="showLabels" type="checkbox" checked><span class="slider"></span></label></div>
-    <div class="setting-row"><div><b>Vibración háptica</b><small>Android y equipos compatibles</small></div><label class="switch"><input id="hapticsToggle" type="checkbox" checked><span class="slider"></span></label></div>
+    <div class="setting-row toggle-setting"><div><b>Mostrar descripción</b><small>Mañana / Noche / Franco</small></div><label class="switch"><input id="showLabels" type="checkbox" checked><span class="slider"></span></label></div>
+    <div class="setting-row toggle-setting"><div><b>Vibración háptica</b><small>Android y equipos compatibles</small></div><label class="switch"><input id="hapticsToggle" type="checkbox" checked><span class="slider"></span></label></div>
   </div>
 
   <div class="settings-preview">
@@ -2321,7 +2393,7 @@ body.light .day.today .event-count{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.4.8</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.4.9</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -2468,7 +2540,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.4.8';
+const CURRENT_VERSION='4.4.9';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -2554,6 +2626,7 @@ function loadActiveColorProfile(){
 }
 function updateColorSettingsUI(){
  const t5=isTurn5Profile();
+ $('#settingsModal')?.classList.toggle('t5-profile',t5);
  nightColorRow.classList.toggle('settings-hidden',t5);
  paletteNightTab.classList.toggle('settings-hidden',t5);
  $('#settingsPreviewNight')?.classList.toggle('settings-hidden',t5);
