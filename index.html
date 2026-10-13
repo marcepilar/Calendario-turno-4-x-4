@@ -2769,6 +2769,44 @@ body.light .day.today .event-count{
   }
 }
 
+
+/* ===== V4.5.9 · PULSO DE TURNOS COMPATIBLE CON SAMSUNG ===== */
+.turn-pulse-text{
+  -webkit-transform-origin:left center;
+  transform-origin:left center;
+  will-change:transform;
+  -webkit-backface-visibility:hidden;
+  backface-visibility:hidden;
+}
+.turn5-selected-pulse{
+  -webkit-transform-origin:left center;
+  transform-origin:left center;
+  will-change:transform;
+  -webkit-backface-visibility:hidden;
+  backface-visibility:hidden;
+}
+
+/* Estos dos efectos forman parte de la identidad visual de la app.
+   Se mantienen incluso cuando Android/Samsung solicita reducir movimiento. */
+@media (prefers-reduced-motion:reduce){
+  .turn-pulse-text{
+    -webkit-animation:turnSelectedPulse 2.4s ease-in-out infinite !important;
+    animation:turnSelectedPulse 2.4s ease-in-out infinite !important;
+    -webkit-animation-duration:2.4s !important;
+    animation-duration:2.4s !important;
+    -webkit-animation-iteration-count:infinite !important;
+    animation-iteration-count:infinite !important;
+  }
+  .turn5-selected-pulse{
+    -webkit-animation:turn5SelectedPulse 2.4s ease-in-out infinite !important;
+    animation:turn5SelectedPulse 2.4s ease-in-out infinite !important;
+    -webkit-animation-duration:2.4s !important;
+    animation-duration:2.4s !important;
+    -webkit-animation-iteration-count:infinite !important;
+    animation-iteration-count:infinite !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2893,7 +2931,7 @@ body.light .day.today .event-count{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.5.8</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.5.9</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -3040,7 +3078,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.5.8';
+const CURRENT_VERSION='4.5.9';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -3257,6 +3295,59 @@ function syncTurn5PulseText(){
  const opt=turn5Select.options[turn5Select.selectedIndex];
  turn5PulseText.textContent=opt?opt.textContent:'T5';
 }
+
+function startPersistentTurnPulse(el,type){
+ if(!el)return;
+
+ try{
+  if(el._persistentTurnPulse){
+   el._persistentTurnPulse.cancel();
+   el._persistentTurnPulse=null;
+  }
+ }catch{}
+
+ const isMain=type==='main';
+ const cssName=isMain?'turnSelectedPulse':'turn5SelectedPulse';
+ const minScale=isMain?.93:.96;
+ const maxScale=isMain?1.15:1.10;
+
+ // Preferimos Web Animations API porque no queda afectada por las reglas
+ // CSS globales de "reducir movimiento" de algunos Samsung/One UI.
+ if(typeof el.animate==='function'){
+  el.style.setProperty('animation','none','important');
+  el.style.setProperty('-webkit-animation','none','important');
+
+  try{
+   const anim=el.animate(
+    [
+     {transform:`scale(${minScale})`,offset:0},
+     {transform:`scale(${maxScale})`,offset:.5},
+     {transform:`scale(${minScale})`,offset:1}
+    ],
+    {
+     duration:2400,
+     iterations:Infinity,
+     easing:'ease-in-out',
+     fill:'both'
+    }
+   );
+   el._persistentTurnPulse=anim;
+   return;
+  }catch{}
+ }
+
+ // Fallback para navegadores antiguos.
+ el.style.setProperty('animation',`${cssName} 2.4s ease-in-out infinite`,'important');
+ el.style.setProperty('-webkit-animation',`${cssName} 2.4s ease-in-out infinite`,'important');
+ el.style.setProperty('animation-duration','2.4s','important');
+ el.style.setProperty('animation-iteration-count','infinite','important');
+}
+
+function ensurePersistentTurnPulses(){
+ startPersistentTurnPulse($('#turnPulseText'),'main');
+ startPersistentTurnPulse($('#turn5PulseText'),'t5');
+}
+
 
 
 // Paleta propia de la app: igual en Android, iOS y PC.
@@ -3991,8 +4082,8 @@ $$('.backdrop').forEach(b=>b.addEventListener('click',e=>{if(e.target===b)closeM
 
 $('#prevBtn').onclick=()=>animateMonthButton(-1);$('#nextBtn').onclick=()=>animateMonthButton(1);
 $('#todayBtn').onclick=()=>{const d=new Date();viewYear=d.getFullYear();viewMonth=d.getMonth();selectedDate=new Date(d.getFullYear(),d.getMonth(),d.getDate());renderAll();scheduleBelowFoldLayout()};
-turnSelect.onchange=()=>{updateTurn5Visibility();syncTurnPulseText();localStorage.setItem('turno4x4.turno',turnSelect.value);switchActiveColorProfile();renderAll();renderYear();renderStats();scheduleMainViewportFit();scheduleBelowFoldLayout()};
-turn5Select.onchange=()=>{syncTurn5PulseText();localStorage.setItem('turno4x4.turno5',turn5Select.value);updateColorSettingsUI();renderQuickPalette();renderAll();renderYear();renderStats();scheduleMainViewportFit();scheduleBelowFoldLayout()};
+turnSelect.onchange=()=>{updateTurn5Visibility();syncTurnPulseText();ensurePersistentTurnPulses();localStorage.setItem('turno4x4.turno',turnSelect.value);switchActiveColorProfile();renderAll();renderYear();renderStats();scheduleMainViewportFit();scheduleBelowFoldLayout()};
+turn5Select.onchange=()=>{syncTurn5PulseText();ensurePersistentTurnPulses();localStorage.setItem('turno4x4.turno5',turn5Select.value);updateColorSettingsUI();renderQuickPalette();renderAll();renderYear();renderStats();scheduleMainViewportFit();scheduleBelowFoldLayout()};
 themeBtn.onclick=()=>{document.body.classList.toggle('light');localStorage.setItem('turno4x4.theme',document.body.classList.contains('light')?'light':'dark');themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️'};
 settingsBtn.onclick=()=>{setPaletteDropdown(false);updateColorSettingsUI();renderQuickPalette();openModal('settingsModal')};
 [morningColor,nightColor,offColor].forEach(x=>x.oninput=()=>{saveSettings();renderQuickPalette()});
@@ -4190,9 +4281,11 @@ document.addEventListener('dragstart',ev=>{
  if(ev.target.closest?.('button,[role="button"]'))ev.preventDefault();
 });
 
-loadSettings();syncTurnPulseText();syncTurn5PulseText();renderQuickPalette();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();fitMainCalendarViewport();keepDetailBelowInitialFold();setTimeout(()=>{fitMainCalendarViewport();keepDetailBelowInitialFold()},260);setTimeout(()=>{fitMainCalendarViewport();keepDetailBelowInitialFold()},700);initSplash();checkUpdate();checkReminders();
+loadSettings();syncTurnPulseText();syncTurn5PulseText();ensurePersistentTurnPulses();renderQuickPalette();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();fitMainCalendarViewport();keepDetailBelowInitialFold();setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},260);setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},700);initSplash();checkUpdate();checkReminders();
 window.addEventListener('resize',()=>{scheduleMainViewportFit();scheduleBelowFoldLayout()});
 window.addEventListener('orientationchange',()=>{scheduleMainViewportFit();scheduleBelowFoldLayout()});
+window.addEventListener('focus',ensurePersistentTurnPulses);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)ensurePersistentTurnPulses()});
 if(window.visualViewport)window.visualViewport.addEventListener('resize',()=>{scheduleMainViewportFit();scheduleBelowFoldLayout()});
 setInterval(checkUpdate,5*60*1000);
 setInterval(checkReminders,30000);
