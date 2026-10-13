@@ -2584,6 +2584,166 @@ body.light .day.today .event-count{
   -webkit-text-fill-color:#05080d !important;
 }
 
+
+/* ===== V4.5.7 · PANTALLA PRINCIPAL T5 SIN RECORTE ===== */
+@media(max-width:620px){
+  body.main-t5-active .app{
+    padding-top:6px;
+    padding-bottom:22px;
+  }
+
+  body.main-t5-active .topbar{
+    margin-bottom:6px;
+  }
+  body.main-t5-active .logo{
+    width:40px;
+    height:40px;
+    border-radius:13px;
+  }
+  body.main-t5-active .brand h1{
+    font-size:16px;
+  }
+  body.main-t5-active .author-signature{
+    margin-top:2px;
+    font-size:10px;
+  }
+  body.main-t5-active .icon-btn{
+    width:39px;
+    height:39px;
+  }
+
+  body.main-t5-active .controls{
+    padding:8px 9px;
+    margin-bottom:6px;
+  }
+  body.main-t5-active .turn-row{
+    gap:7px;
+    margin-bottom:6px;
+  }
+  body.main-t5-active .today-btn,
+  body.main-t5-active .nav-btn{
+    min-height:39px;
+  }
+  body.main-t5-active .turn5-subrow.show{
+    margin:-1px 0 6px;
+  }
+  body.main-t5-active #turn5Select{
+    min-height:43px;
+    padding-top:16px;
+    padding-bottom:6px;
+  }
+  body.main-t5-active .turn5-select-wrap label{
+    top:4px;
+  }
+  body.main-t5-active .turn5-selected-pulse{
+    top:21px;
+  }
+  body.main-t5-active .month-nav{
+    gap:7px;
+  }
+  body.main-t5-active .month-title strong{
+    font-size:16px;
+  }
+  body.main-t5-active .month-title span{
+    margin-top:1px;
+    font-size:9px;
+  }
+
+  body.main-t5-active .cycle-card{
+    padding:7px 7px;
+    margin-bottom:6px;
+  }
+  body.main-t5-active .cycle-head{
+    margin-bottom:5px;
+  }
+  body.main-t5-active .cycle-head b{
+    font-size:11px;
+  }
+  body.main-t5-active .cycle-head span{
+    font-size:9px;
+  }
+  body.main-t5-active .cycle-chip{
+    height:21px;
+    font-size:8px;
+  }
+
+  body.main-t5-active .weekday{
+    padding:7px 2px;
+    font-size:9px;
+  }
+
+  /* El valor se calcula según el alto real disponible del teléfono. */
+  body.main-t5-active .day{
+    min-height:var(--t5-main-day-height,60px);
+    height:var(--t5-main-day-height,60px);
+  }
+
+  body.main-t5-active .legend{
+    gap:7px;
+    padding-top:5px;
+  }
+  body.main-t5-active .pill{
+    font-size:9px;
+  }
+}
+
+@media(max-width:380px){
+  body.main-t5-active .controls{
+    padding-left:7px;
+    padding-right:7px;
+  }
+  body.main-t5-active .today-btn{
+    padding-left:11px;
+    padding-right:11px;
+  }
+  body.main-t5-active .day{
+    min-height:var(--t5-main-day-height,57px);
+    height:var(--t5-main-day-height,57px);
+  }
+}
+
+/* En teléfonos de poca altura recuperamos unos píxeles extra arriba. */
+@media(max-height:760px) and (max-width:620px){
+  body.main-t5-active .app{
+    padding-top:4px;
+  }
+  body.main-t5-active .topbar{
+    margin-bottom:4px;
+  }
+  body.main-t5-active .controls{
+    padding-top:7px;
+    padding-bottom:7px;
+    margin-bottom:5px;
+  }
+  body.main-t5-active .turn-row{
+    margin-bottom:5px;
+  }
+  body.main-t5-active .turn5-subrow.show{
+    margin-bottom:5px;
+  }
+  body.main-t5-active #turn5Select{
+    min-height:41px;
+  }
+  body.main-t5-active .cycle-card{
+    padding-top:6px;
+    padding-bottom:6px;
+    margin-bottom:5px;
+  }
+  body.main-t5-active .cycle-head{
+    margin-bottom:4px;
+  }
+  body.main-t5-active .cycle-chip{
+    height:20px;
+  }
+  body.main-t5-active .weekday{
+    padding-top:6px;
+    padding-bottom:6px;
+  }
+  body.main-t5-active .legend{
+    padding-top:4px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2708,7 +2868,7 @@ body.light .day.today .event-count{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.5.6</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.5.7</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -2855,7 +3015,7 @@ body.light .day.today .event-count{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.5.6';
+const CURRENT_VERSION='4.5.7';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -2923,7 +3083,55 @@ function codeFor(turn,d){
 }
 function cls(code){return code==='M'?'morning':code==='N'?'night':code==='D'?'daytime':'off'}
 function codeText(turn,code){return turn==='T5LV'&&code==='D'?'T5':code}
-function updateTurn5Visibility(){turn5SubRow.classList.toggle('show',turnSelect.value==='T5')}
+function updateTurn5Visibility(){
+ const active=turnSelect.value==='T5';
+ turn5SubRow.classList.toggle('show',active);
+ document.body.classList.toggle('main-t5-active',active);
+ if(!active)document.documentElement.style.removeProperty('--t5-main-day-height');
+}
+
+let mainT5FitRaf=0;
+function fitMainTurn5Viewport(){
+ const active=turnSelect.value==='T5';
+ document.body.classList.toggle('main-t5-active',active);
+
+ if(!active){
+  document.documentElement.style.removeProperty('--t5-main-day-height');
+  return;
+ }
+
+ cancelAnimationFrame(mainT5FitRaf);
+ mainT5FitRaf=requestAnimationFrame(()=>{
+  const vv=window.visualViewport;
+  const viewportBottom=vv?(vv.offsetTop+vv.height):window.innerHeight;
+  const calendarTop=calendarCard.getBoundingClientRect().top;
+  const weekdays=calendarCard.querySelector('.weekdays');
+  const weekdaysH=weekdays?weekdays.getBoundingClientRect().height:26;
+  const legendH=shiftLegend.getBoundingClientRect().height||22;
+
+  // Dejamos la leyenda completa dentro de la primera pantalla y un
+  // pequeño margen inferior. El calendario siempre tiene 6 filas.
+  const reservedAfterCalendar=legendH+11;
+  const usableForCalendar=viewportBottom-calendarTop-reservedAfterCalendar;
+  const rawDayHeight=(usableForCalendar-weekdaysH)/6;
+
+  // En pantallas altas conserva celdas amplias; en pantallas más bajas
+  // reduce sólo lo necesario para impedir que la última fila se recorte.
+  const minDay=window.innerWidth<=380?53:55;
+  const maxDay=64;
+  const dayHeight=Math.max(minDay,Math.min(maxDay,Math.floor(rawDayHeight)));
+
+  document.documentElement.style.setProperty('--t5-main-day-height',`${dayHeight}px`);
+
+  // El detalle inferior debe seguir comenzando después de la primera pantalla.
+  setTimeout(scheduleBelowFoldLayout,0);
+ });
+}
+
+function scheduleMainTurn5Fit(){
+ requestAnimationFrame(fitMainTurn5Viewport);
+}
+
 function vibrate(ms){if(hapticsToggle.checked&&navigator.vibrate)navigator.vibrate(ms)}
 function cap(s){return s?s.charAt(0).toUpperCase()+s.slice(1):s}
 function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[ch]))}
@@ -3451,7 +3659,13 @@ function showDetail(d){
  ['T1','T2','T3','T4','T5LV','T5A','T5B'].forEach(t=>{const c=codeFor(t,d),el=document.createElement('div');el.className=`shift${t===active?' active':''}`;el.innerHTML=`<b>${scheduleName(t)} · ${codeText(t,c)} — ${shiftNames[c][0]}</b><span>${shiftNames[c][1]}</span>`;detailGrid.appendChild(el)});
 }
 
-function renderAll(){renderCycle();renderCalendar();renderLegend();showDetail(selectedDate)}
+function renderAll(){
+ renderCycle();
+ renderCalendar();
+ renderLegend();
+ showDetail(selectedDate);
+ scheduleMainTurn5Fit();
+}
 
 function loadAgendaData(){try{const a=JSON.parse(localStorage.getItem(AGENDA_KEY)||'[]');return Array.isArray(a)?a:[]}catch{return[]}}
 function saveAgendaData(a){localStorage.setItem(AGENDA_KEY,JSON.stringify(a))}
@@ -3751,8 +3965,8 @@ $$('.backdrop').forEach(b=>b.addEventListener('click',e=>{if(e.target===b)closeM
 
 $('#prevBtn').onclick=()=>animateMonthButton(-1);$('#nextBtn').onclick=()=>animateMonthButton(1);
 $('#todayBtn').onclick=()=>{const d=new Date();viewYear=d.getFullYear();viewMonth=d.getMonth();selectedDate=new Date(d.getFullYear(),d.getMonth(),d.getDate());renderAll();scheduleBelowFoldLayout()};
-turnSelect.onchange=()=>{updateTurn5Visibility();syncTurnPulseText();localStorage.setItem('turno4x4.turno',turnSelect.value);switchActiveColorProfile();renderAll();renderYear();renderStats();scheduleBelowFoldLayout()};
-turn5Select.onchange=()=>{syncTurn5PulseText();localStorage.setItem('turno4x4.turno5',turn5Select.value);updateColorSettingsUI();renderQuickPalette();renderAll();renderYear();renderStats();scheduleBelowFoldLayout()};
+turnSelect.onchange=()=>{updateTurn5Visibility();syncTurnPulseText();localStorage.setItem('turno4x4.turno',turnSelect.value);switchActiveColorProfile();renderAll();renderYear();renderStats();scheduleMainTurn5Fit();scheduleBelowFoldLayout()};
+turn5Select.onchange=()=>{syncTurn5PulseText();localStorage.setItem('turno4x4.turno5',turn5Select.value);updateColorSettingsUI();renderQuickPalette();renderAll();renderYear();renderStats();scheduleMainTurn5Fit();scheduleBelowFoldLayout()};
 themeBtn.onclick=()=>{document.body.classList.toggle('light');localStorage.setItem('turno4x4.theme',document.body.classList.contains('light')?'light':'dark');themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️'};
 settingsBtn.onclick=()=>{setPaletteDropdown(false);updateColorSettingsUI();renderQuickPalette();openModal('settingsModal')};
 [morningColor,nightColor,offColor].forEach(x=>x.oninput=()=>{saveSettings();renderQuickPalette()});
@@ -3950,10 +4164,10 @@ document.addEventListener('dragstart',ev=>{
  if(ev.target.closest?.('button,[role="button"]'))ev.preventDefault();
 });
 
-loadSettings();syncTurnPulseText();syncTurn5PulseText();renderQuickPalette();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();keepDetailBelowInitialFold();setTimeout(keepDetailBelowInitialFold,260);setTimeout(keepDetailBelowInitialFold,700);initSplash();checkUpdate();checkReminders();
-window.addEventListener('resize',scheduleBelowFoldLayout);
-window.addEventListener('orientationchange',scheduleBelowFoldLayout);
-if(window.visualViewport)window.visualViewport.addEventListener('resize',scheduleBelowFoldLayout);
+loadSettings();syncTurnPulseText();syncTurn5PulseText();renderQuickPalette();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();fitMainTurn5Viewport();keepDetailBelowInitialFold();setTimeout(()=>{fitMainTurn5Viewport();keepDetailBelowInitialFold()},260);setTimeout(()=>{fitMainTurn5Viewport();keepDetailBelowInitialFold()},700);initSplash();checkUpdate();checkReminders();
+window.addEventListener('resize',()=>{scheduleMainTurn5Fit();scheduleBelowFoldLayout()});
+window.addEventListener('orientationchange',()=>{scheduleMainTurn5Fit();scheduleBelowFoldLayout()});
+if(window.visualViewport)window.visualViewport.addEventListener('resize',()=>{scheduleMainTurn5Fit();scheduleBelowFoldLayout()});
 setInterval(checkUpdate,5*60*1000);
 setInterval(checkReminders,30000);
 setInterval(()=>{
