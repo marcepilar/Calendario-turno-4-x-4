@@ -4145,6 +4145,190 @@ body.light .holiday-detail-icon.holiday-bridge{
   }
 }
 
+
+/* ===== V4.7.2 · MODO CLARO · CONTRASTE ESTADÍSTICAS + FERIADOS ===== */
+
+/* ---------- ESTADÍSTICAS: cabecera clara ---------- */
+body.light #statsModal .stats-head-copy h2{
+  color:#162231;
+}
+body.light #statsModal .stats-head small{
+  color:#596a7f;
+}
+body.light #statsModal .stats-head .close-btn{
+  color:#f7f9fc;
+  -webkit-text-fill-color:#f7f9fc;
+}
+body.light #statsModal .stats-head-icon{
+  color:#eaf8ff;
+}
+
+/* El título "Tu turno termina en" está sobre el fondo claro general */
+body.light #statsModal .stats-turn-end > h3{
+  color:#172536;
+}
+
+/* ---------- TARJETAS OSCURAS: texto claro ---------- */
+body.light #statsModal .stat-card small{
+  color:#b8c5d5;
+}
+body.light #statsModal .stat-card b{
+  color:#f8fbff;
+  -webkit-text-fill-color:#f8fbff;
+}
+body.light #statsModal .stat-card .stat-icon{
+  color:#eef7ff;
+}
+
+/* Hero de turno activo */
+body.light #statsModal .turn-end-card,
+body.light #statsModal .turn-end-card *{
+  --light-card-text:#f8fbff;
+}
+body.light #statsModal .turn-end-copy small{
+  color:#a9bed8;
+}
+body.light #statsModal .turn-end-copy b{
+  color:#f8fbff;
+  -webkit-text-fill-color:#f8fbff;
+}
+body.light #statsModal .turn-end-copy span{
+  color:#bdcada;
+}
+body.light #statsModal .turn-end-badge{
+  color:#f8fbff;
+  -webkit-text-fill-color:#f8fbff;
+}
+
+/* Distribución / anual / feriados / descanso / sueldo:
+   siguen siendo tarjetas oscuras, así que sus textos deben seguir claros. */
+body.light #statsModal .stats-month h3,
+body.light #statsModal .stats-year h3,
+body.light #statsModal .stats-holidays h3,
+body.light #statsModal .stats-off h3,
+body.light #statsModal .stats-salary h3{
+  color:#f3f7fb;
+}
+body.light #statsModal .bar-row span,
+body.light #statsModal .bar-row b{
+  color:#edf3fa;
+}
+body.light #statsModal .off-premium small,
+body.light #statsModal .off-premium span,
+body.light #statsModal .salary-copy small,
+body.light #statsModal .salary-copy span{
+  color:#aebccd;
+}
+body.light #statsModal .off-premium b,
+body.light #statsModal .off-premium strong,
+body.light #statsModal .salary-copy b{
+  color:#f7f9fc;
+  -webkit-text-fill-color:#f7f9fc;
+}
+body.light #statsModal .salary-days strong,
+body.light #statsModal .salary-days span{
+  color:#f7f9fc;
+  -webkit-text-fill-color:#f7f9fc;
+}
+body.light #statsModal .holiday-work-chip span{
+  color:#b9c5d4;
+}
+body.light #statsModal .holiday-work-chip b{
+  color:#f7f9fc;
+  -webkit-text-fill-color:#f7f9fc;
+}
+body.light #statsModal .holiday-work-note{
+  color:#aebccd;
+}
+
+/* ---------- DETALLE DE FERIADOS: fondo claro + texto oscuro ---------- */
+body.light #holidayStatsDetailModal .holiday-stats-detail-window{
+  color:#172536;
+  background:
+    radial-gradient(circle at 92% 4%,rgba(67,168,255,.055),transparent 36%),
+    linear-gradient(180deg,rgba(252,253,255,.985),rgba(241,245,249,.985));
+  border-color:rgba(62,82,106,.17);
+}
+body.light #holidayStatsDetailModal .holiday-stats-detail-head h2{
+  color:#172536;
+}
+body.light #holidayStatsDetailModal .holiday-stats-detail-head small{
+  color:#617287;
+}
+body.light #holidayStatsDetailModal .close-btn{
+  color:#172536;
+  -webkit-text-fill-color:#172536;
+  background:rgba(244,247,251,.95);
+  border-color:rgba(54,70,90,.18);
+}
+
+/* Resumen superior */
+body.light #holidayStatsDetailModal .holiday-stats-detail-summary > div{
+  background:linear-gradient(180deg,#f7f9fc,#eef2f6);
+  border-color:rgba(62,82,106,.16);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.80);
+}
+body.light #holidayStatsDetailModal .holiday-stats-detail-summary small{
+  color:#66778c;
+}
+body.light #holidayStatsDetailModal .holiday-stats-detail-summary b{
+  color:#172536;
+  -webkit-text-fill-color:#172536;
+}
+
+/* Cada feriado */
+body.light #holidayStatsDetailModal .holiday-stat-detail-row{
+  background:
+    radial-gradient(circle at 92% 5%,rgba(67,168,255,.035),transparent 38%),
+    linear-gradient(180deg,#f8fafc,#eef2f6);
+  border-color:rgba(62,82,106,.15);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.76),
+    0 3px 9px rgba(34,48,68,.045);
+}
+body.light #holidayStatsDetailModal .holiday-stat-detail-date b,
+body.light #holidayStatsDetailModal .holiday-stat-detail-copy b{
+  color:#1a2737;
+  -webkit-text-fill-color:#1a2737;
+}
+body.light #holidayStatsDetailModal .holiday-stat-detail-date small,
+body.light #holidayStatsDetailModal .holiday-stat-detail-copy small{
+  color:#64758a;
+}
+
+/* M / N / T5 dentro del detalle */
+body.light #holidayStatsDetailModal .holiday-stat-detail-shift{
+  color:#172536;
+  -webkit-text-fill-color:#172536;
+  background:rgba(255,255,255,.72);
+}
+body.light #holidayStatsDetailModal .holiday-stat-detail-shift.morning,
+body.light #holidayStatsDetailModal .holiday-stat-detail-shift.daytime{
+  color:#5b4d00;
+  -webkit-text-fill-color:#5b4d00;
+  background:rgba(255,216,77,.13);
+}
+body.light #holidayStatsDetailModal .holiday-stat-detail-shift.night{
+  color:#07567a;
+  -webkit-text-fill-color:#07567a;
+  background:rgba(39,174,228,.10);
+}
+
+/* Leyenda inferior */
+body.light #holidayStatsDetailModal .holiday-stats-detail-legend{
+  color:#586a7f;
+}
+body.light #holidayStatsDetailModal .holiday-stats-detail-empty{
+  color:#5e7085;
+}
+
+/* Los badges FER mantienen texto blanco sobre rojo/azul */
+body.light #holidayStatsDetailModal .holiday-list-badge,
+body.light #holidayStatsDetailModal .holiday-stats-head-fer{
+  color:#fff;
+  -webkit-text-fill-color:#fff;
+}
+
 </style>
 </head>
 <body>
@@ -4288,7 +4472,7 @@ body.light .holiday-detail-icon.holiday-bridge{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.7.1</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.7.2</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -4477,7 +4661,7 @@ body.light .holiday-detail-icon.holiday-bridge{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.7.1';
+const CURRENT_VERSION='4.7.2';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
