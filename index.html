@@ -4554,6 +4554,36 @@ body.light #holidayStatsDetailModal .holiday-stats-detail-window{
     linear-gradient(180deg,rgba(252,253,255,.985),rgba(241,245,249,.985));
 }
 
+
+/* ===== V4.7.5 · TEXTO "SIN TURNO ACTIVO" MÁS PROPORCIONADO ===== */
+#statsModal .turn-end-card.is-inactive .turn-end-copy b{
+  font-size:clamp(24px,4.1vw,32px);
+  line-height:1.04;
+  letter-spacing:.018em;
+  max-width:470px;
+}
+
+@media(max-width:620px){
+  #statsModal .turn-end-card.is-inactive .turn-end-copy b{
+    font-size:25px;
+    line-height:1.04;
+    letter-spacing:.012em;
+  }
+}
+
+@media(max-width:390px){
+  #statsModal .turn-end-card.is-inactive .turn-end-copy b{
+    font-size:23px;
+  }
+}
+
+@media(max-height:760px){
+  #statsModal .turn-end-card.is-inactive .turn-end-copy b{
+    font-size:21px;
+    line-height:1.03;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -4697,7 +4727,7 @@ body.light #holidayStatsDetailModal .holiday-stats-detail-window{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.7.4</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.7.5</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -4803,7 +4833,7 @@ body.light #holidayStatsDetailModal .holiday-stats-detail-window{
   <div id="statsCards" class="stats-grid"></div>
   <div class="stats-section stats-turn-end">
     <h3><span class="stats-title-dot"></span>Tu turno termina en</h3>
-    <div class="turn-end-card">
+    <div id="turnEndCard" class="turn-end-card">
       <div class="turn-end-top">
         <div class="turn-end-copy">
           <small id="turnEndLabel">Turno actual</small>
@@ -4886,7 +4916,7 @@ body.light #holidayStatsDetailModal .holiday-stats-detail-window{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.7.4';
+const CURRENT_VERSION='4.7.5';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -6072,12 +6102,14 @@ function nextWorkStart(turn,nowDate){
 function renderTurnEndCard(turn){
  const now=new Date();
  const info=activeTurnInfo(turn,now);
+ const card=$('#turnEndCard');
  const badge=$('#turnEndBadge');
  const label=$('#turnEndLabel');
  const text=$('#turnEndText');
  const note=$('#turnEndNote');
 
  badge.className='turn-end-badge';
+ card?.classList.toggle('is-inactive',!info.active);
  if(info.active){
   const remaining=Math.max(0,info.end-now);
   label.textContent='Turno activo · tiempo restante';
