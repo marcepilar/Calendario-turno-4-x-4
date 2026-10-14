@@ -3481,6 +3481,401 @@ body.light .holiday-detail-icon.holiday-bridge{
   }
 }
 
+
+/* ===== V4.6.9 · FERIADOS ESTADÍSTICAS · BOTONES + DETALLE ===== */
+
+/* Un poco más altos, pero sin agrandar demasiado el panel total */
+#statsModal .holiday-work-chip{
+  appearance:none;
+  -webkit-appearance:none;
+  min-height:39px;
+  cursor:pointer;
+  color:inherit;
+  font:inherit;
+  touch-action:manipulation;
+  transition:
+    transform .11s ease,
+    border-color .16s ease,
+    background .16s ease,
+    box-shadow .16s ease;
+}
+#statsModal .holiday-work-chip:active,
+#statsModal .holiday-work-chip.is-pressed{
+  transform:scale(.965);
+}
+#statsModal .holiday-work-chip::after{
+  content:"›";
+  position:absolute;
+  right:5px;
+  top:50%;
+  transform:translateY(-50%);
+  color:#8395aa;
+  font-size:8px;
+  font-weight:1000;
+  opacity:.55;
+}
+#statsModal .holiday-work-chip{
+  position:relative;
+}
+#statsModal .holiday-work-chip.standard:hover{
+  border-color:rgba(255,95,114,.35);
+  background:rgba(255,95,114,.045);
+}
+#statsModal .holiday-work-chip.t5:hover{
+  border-color:rgba(39,174,228,.35);
+  background:rgba(39,174,228,.045);
+}
+
+/* Compensación mínima para que Estadísticas siga entrando completa */
+#statsModal .stats-holidays{
+  padding-top:3px;
+  padding-bottom:4px;
+}
+#statsModal .holiday-work-note{
+  margin-top:0;
+}
+
+/* Modal de detalle */
+#holidayStatsDetailModal{
+  z-index:10040;
+  padding:
+    calc(env(safe-area-inset-top) + 8px)
+    7px
+    calc(env(safe-area-inset-bottom) + 8px);
+}
+#holidayStatsDetailModal .holiday-stats-detail-window{
+  width:min(620px,calc(100vw - 14px));
+  height:min(760px,calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 16px));
+  max-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 16px);
+  padding:9px 11px 10px;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+#holidayStatsDetailModal .holiday-stats-detail-head{
+  position:relative;
+  top:auto;
+  flex:0 0 auto;
+  margin:0;
+  padding:4px 1px 8px;
+}
+#holidayStatsDetailModal .holiday-stats-detail-head h2{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:17px;
+}
+#holidayStatsDetailModal .holiday-stats-detail-head small{
+  margin-top:3px;
+  font-size:9px;
+}
+.holiday-stats-head-fer{
+  min-width:34px;
+  height:25px;
+  padding:0 7px;
+  display:inline-grid;
+  place-items:center;
+  border-radius:9px;
+  background:linear-gradient(180deg,#ff6676,#dc3047);
+  border:1px solid rgba(255,255,255,.25);
+  color:#fff;
+  font-size:8px;
+  font-weight:1000;
+  letter-spacing:.045em;
+  box-shadow:0 4px 10px rgba(0,0,0,.15);
+}
+.holiday-stats-detail-summary{
+  flex:0 0 auto;
+  display:grid;
+  grid-template-columns:1fr 1fr 1.3fr;
+  gap:6px;
+  margin:3px 0 8px;
+}
+.holiday-stats-detail-summary > div{
+  min-width:0;
+  min-height:54px;
+  padding:7px 8px;
+  border-radius:13px;
+  border:1px solid rgba(145,169,199,.16);
+  background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.018));
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.holiday-stats-detail-summary small{
+  color:#8999ad;
+  font-size:7.5px;
+  line-height:1;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.035em;
+}
+.holiday-stats-detail-summary b{
+  margin-top:4px;
+  color:#f4f7fb;
+  font-size:14px;
+  line-height:1;
+}
+.holiday-stats-detail-list{
+  flex:1 1 auto;
+  min-height:0;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  padding:1px 2px 3px;
+}
+.holiday-stats-detail-empty{
+  height:100%;
+  min-height:120px;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  padding:22px;
+  color:#8f9db0;
+  font-size:10px;
+  line-height:1.4;
+}
+.holiday-stat-detail-row{
+  display:grid;
+  grid-template-columns:auto 74px minmax(0,1fr) auto;
+  align-items:center;
+  gap:8px;
+  min-height:58px;
+  padding:7px 8px;
+  margin-bottom:6px;
+  border-radius:14px;
+  border:1px solid rgba(145,169,199,.14);
+  background:
+    radial-gradient(circle at 92% 5%,rgba(67,168,255,.035),transparent 38%),
+    linear-gradient(180deg,rgba(255,255,255,.033),rgba(255,255,255,.016));
+}
+.holiday-stat-detail-row:last-child{
+  margin-bottom:0;
+}
+.holiday-list-badge{
+  width:38px;
+  height:26px;
+  display:grid;
+  place-items:center;
+  border-radius:9px;
+  background:linear-gradient(180deg,#ff6676,#dc3047);
+  border:1px solid rgba(255,255,255,.35);
+  box-shadow:
+    0 3px 9px rgba(0,0,0,.18),
+    inset 0 1px 0 rgba(255,255,255,.18);
+  color:#fff;
+  font-size:8px;
+  font-weight:1000;
+  letter-spacing:.04em;
+}
+.holiday-list-badge.bridge{
+  background:linear-gradient(180deg,#44b9f0,#2589d8);
+  border-color:rgba(210,240,255,.78);
+  box-shadow:
+    0 3px 9px rgba(0,0,0,.18),
+    0 0 8px rgba(39,174,228,.14),
+    inset 0 1px 0 rgba(255,255,255,.22);
+}
+.holiday-list-badge em{
+  font-style:normal;
+  -webkit-animation:holidayFerPulse 2.15s ease-in-out infinite;
+  animation:holidayFerPulse 2.15s ease-in-out infinite;
+}
+.holiday-stat-detail-date{
+  min-width:0;
+}
+.holiday-stat-detail-date b{
+  display:block;
+  color:#f3f6fa;
+  font-size:10px;
+  line-height:1.05;
+}
+.holiday-stat-detail-date small{
+  display:block;
+  margin-top:3px;
+  color:#8190a4;
+  font-size:7px;
+  line-height:1;
+}
+.holiday-stat-detail-copy{
+  min-width:0;
+}
+.holiday-stat-detail-copy b{
+  display:block;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  color:#f3f6fa;
+  font-size:10px;
+  line-height:1.15;
+}
+.holiday-stat-detail-copy small{
+  display:block;
+  margin-top:3px;
+  color:#8898ac;
+  font-size:7.2px;
+  line-height:1.1;
+}
+.holiday-stat-detail-shift{
+  min-width:42px;
+  height:29px;
+  padding:0 7px;
+  display:grid;
+  place-items:center;
+  border-radius:9px;
+  border:1px solid rgba(145,169,199,.18);
+  background:rgba(255,255,255,.025);
+  color:#f5f7fb;
+  font-size:9px;
+  font-weight:1000;
+}
+.holiday-stat-detail-shift.morning{
+  border-color:rgba(255,216,77,.33);
+  box-shadow:inset 0 -2px 0 rgba(255,216,77,.45);
+}
+.holiday-stat-detail-shift.night{
+  border-color:rgba(39,174,228,.34);
+  box-shadow:inset 0 -2px 0 rgba(39,174,228,.48);
+}
+.holiday-stat-detail-shift.daytime{
+  border-color:rgba(255,216,77,.33);
+  box-shadow:inset 0 -2px 0 rgba(255,216,77,.45);
+}
+.holiday-stats-detail-legend{
+  flex:0 0 auto;
+  display:flex;
+  justify-content:center;
+  gap:16px;
+  padding:7px 3px 1px;
+  color:#8998aa;
+  font-size:7.4px;
+}
+.holiday-stats-detail-legend span{
+  display:flex;
+  align-items:center;
+  gap:5px;
+}
+.holiday-legend-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  display:inline-block;
+}
+.holiday-legend-dot.red{
+  background:#e94a60;
+  box-shadow:0 0 7px rgba(233,74,96,.25);
+}
+.holiday-legend-dot.blue{
+  background:#2d9fe0;
+  box-shadow:0 0 7px rgba(45,159,224,.25);
+}
+
+@media(max-width:620px){
+  #statsModal .holiday-work-chip{
+    min-height:36px;
+  }
+  #statsModal .holiday-work-chip::after{
+    right:3px;
+    font-size:7px;
+  }
+
+  #holidayStatsDetailModal .holiday-stats-detail-window{
+    width:calc(100vw - 10px);
+    height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 12px);
+    max-height:none;
+    padding:7px 8px 8px;
+    border-radius:22px;
+  }
+  #holidayStatsDetailModal .holiday-stats-detail-head h2{
+    font-size:15px;
+  }
+  #holidayStatsDetailModal .holiday-stats-detail-head small{
+    font-size:8px;
+  }
+  .holiday-stats-detail-summary{
+    gap:4px;
+    margin-bottom:6px;
+  }
+  .holiday-stats-detail-summary > div{
+    min-height:48px;
+    padding:6px;
+  }
+  .holiday-stats-detail-summary small{
+    font-size:6.7px;
+  }
+  .holiday-stats-detail-summary b{
+    font-size:12px;
+  }
+  .holiday-stat-detail-row{
+    grid-template-columns:auto 66px minmax(0,1fr) auto;
+    gap:6px;
+    min-height:54px;
+    padding:6px;
+    margin-bottom:5px;
+  }
+  .holiday-list-badge{
+    width:35px;
+    height:24px;
+    font-size:7.4px;
+  }
+  .holiday-stat-detail-date b{
+    font-size:9.2px;
+  }
+  .holiday-stat-detail-date small{
+    font-size:6.4px;
+  }
+  .holiday-stat-detail-copy b{
+    font-size:9.2px;
+  }
+  .holiday-stat-detail-copy small{
+    font-size:6.7px;
+  }
+  .holiday-stat-detail-shift{
+    min-width:38px;
+    height:27px;
+    font-size:8px;
+  }
+  .holiday-stats-detail-legend{
+    gap:12px;
+    padding-top:5px;
+    font-size:6.8px;
+  }
+}
+
+@media(max-height:760px){
+  #statsModal .holiday-work-chip{
+    min-height:30px;
+  }
+
+  #holidayStatsDetailModal .holiday-stats-detail-head{
+    padding-bottom:5px;
+  }
+  .holiday-stats-detail-summary{
+    margin-top:1px;
+    margin-bottom:5px;
+  }
+  .holiday-stats-detail-summary > div{
+    min-height:43px;
+    padding-top:4px;
+    padding-bottom:4px;
+  }
+  .holiday-stat-detail-row{
+    min-height:48px;
+    margin-bottom:4px;
+    padding-top:4px;
+    padding-bottom:4px;
+  }
+  .holiday-stats-detail-legend{
+    padding-top:4px;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .holiday-list-badge em{
+    -webkit-animation:holidayFerPulse 2.15s ease-in-out infinite !important;
+    animation:holidayFerPulse 2.15s ease-in-out infinite !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -3624,7 +4019,7 @@ body.light .holiday-detail-icon.holiday-bridge{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.6.8</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.6.9</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -3769,6 +4164,41 @@ body.light .holiday-detail-icon.holiday-bridge{
   </div>
 </div></div>
 
+<!-- Detalle de feriados por turno -->
+<div id="holidayStatsDetailModal" class="backdrop holiday-stats-detail-backdrop">
+  <div class="modal glass holiday-stats-detail-window">
+    <div class="modal-head holiday-stats-detail-head">
+      <div>
+        <h2><span class="holiday-stats-head-fer">FER</span> Detalle de feriados</h2>
+        <small id="holidayStatsDetailSubtitle"></small>
+      </div>
+      <button class="close-btn" data-close="holidayStatsDetailModal" aria-label="Cerrar detalle de feriados">×</button>
+    </div>
+
+    <div class="holiday-stats-detail-summary">
+      <div>
+        <small>Turno</small>
+        <b id="holidayStatsDetailTurn">—</b>
+      </div>
+      <div>
+        <small>Año</small>
+        <b id="holidayStatsDetailYear">—</b>
+      </div>
+      <div>
+        <small>Feriados trabajados</small>
+        <b id="holidayStatsDetailCount">0</b>
+      </div>
+    </div>
+
+    <div id="holidayStatsDetailList" class="holiday-stats-detail-list"></div>
+
+    <div class="holiday-stats-detail-legend">
+      <span><i class="holiday-legend-dot red"></i>Feriado</span>
+      <span><i class="holiday-legend-dot blue"></i>Puente / no laborable</span>
+    </div>
+  </div>
+</div>
+
 <!-- Update -->
 <div id="updateBanner" class="update-banner glass">
   <div class="update-inner"><div style="font-size:20px">🔄</div><div class="update-copy"><b>Nueva versión disponible</b><span id="updateVersionText"></span></div><button id="updateLaterBtn" class="update-later">Más tarde</button><button id="updateNowBtn" class="update-now">ACTUALIZAR</button></div>
@@ -3778,7 +4208,7 @@ body.light .holiday-detail-icon.holiday-bridge{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.6.8';
+const CURRENT_VERSION='4.6.9';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -4346,6 +4776,15 @@ async function ensureHolidayYear(year){
 
    const statsModal=$('#statsModal');
    if(viewYear===year&&statsModal?.classList.contains('open'))renderStats();
+
+   const holidayDetailModal=$('#holidayStatsDetailModal');
+   if(
+    holidayStatsDetailYear===year &&
+    holidayStatsDetailTurn &&
+    holidayDetailModal?.classList.contains('open')
+   ){
+    renderHolidayStatsDetail(holidayStatsDetailTurn,holidayStatsDetailYear);
+   }
 
    return items;
   }catch{
@@ -5013,21 +5452,103 @@ function holidayExistsForTurnOnDate(d,turn){
  return national||metalurgico;
 }
 
-function holidayWorkCountsAllTurns(year){
- const turns=['T1','T2','T3','T4','T5LV','T5B','T5A'];
- const result=Object.fromEntries(turns.map(t=>[t,0]));
-
+function holidayWorkDetailsForTurn(year,turn){
+ const details=[];
+ const holidayMap=loadHolidayYear(year);
  const start=new Date(year,0,1);
  const end=new Date(year+1,0,1);
 
  for(let d=new Date(start);d<end;d=addDays(d,1)){
-  for(const turn of turns){
-   if(!holidayExistsForTurnOnDate(d,turn))continue;
-   const code=codeFor(turn,d);
-   if(isWorkCodeForHoliday(turn,code))result[turn]++;
-  }
+  const key=dateKey(d);
+  const national=holidayMap[key]||null;
+  const metalurgico=
+   d.getMonth()===8 &&
+   d.getDate()===7 &&
+   ['T1','T2','T3','T4'].includes(turn);
+
+  if(!national&&!metalurgico)continue;
+
+  const code=codeFor(turn,d);
+  if(!isWorkCodeForHoliday(turn,code))continue;
+
+  const names=[];
+  if(national)names.push(national.nombre);
+  if(metalurgico)names.push('Día del Metalúrgico');
+
+  details.push({
+   date:new Date(d),
+   key,
+   code,
+   bridge:Boolean(national&&isBridgeHoliday(national)),
+   metalurgico,
+   national:Boolean(national),
+   name:names.join(' · '),
+   type: national
+    ? (isBridgeHoliday(national)?'Puente / no laborable':'Feriado nacional')
+    : 'Feriado gremial'
+  });
  }
- return result;
+
+ return details;
+}
+
+function holidayWorkCountsAllTurns(year){
+ const turns=['T1','T2','T3','T4','T5LV','T5B','T5A'];
+ return Object.fromEntries(
+  turns.map(turn=>[turn,holidayWorkDetailsForTurn(year,turn).length])
+ );
+}
+
+let holidayStatsDetailTurn=null;
+let holidayStatsDetailYear=null;
+const holidayStatsDateFmt=new Intl.DateTimeFormat('es-AR',{weekday:'short',day:'2-digit',month:'short'});
+const holidayStatsFullDateFmt=new Intl.DateTimeFormat('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'});
+
+function renderHolidayStatsDetail(turn,year){
+ holidayStatsDetailTurn=turn;
+ holidayStatsDetailYear=year;
+
+ const details=holidayWorkDetailsForTurn(year,turn);
+ const turnName=scheduleName(turn);
+
+ $('#holidayStatsDetailSubtitle').textContent=`${turnName} · Feriados que coinciden con día de trabajo`;
+ $('#holidayStatsDetailTurn').textContent=turnName;
+ $('#holidayStatsDetailYear').textContent=year;
+ $('#holidayStatsDetailCount').textContent=details.length;
+
+ const list=$('#holidayStatsDetailList');
+
+ if(!details.length){
+  list.innerHTML=`<div class="holiday-stats-detail-empty">No hay feriados que coincidan con días de trabajo para ${escapeHtml(turnName)} en ${year}.</div>`;
+  return;
+ }
+
+ list.innerHTML=details.map(item=>{
+  const codeLabel=codeText(turn,item.code);
+  const codeClass=cls(item.code);
+  const typeText=item.metalurgico&&!item.national
+   ?'Feriado gremial · T1–T4'
+   :item.type;
+
+  return `
+   <div class="holiday-stat-detail-row">
+    <span class="holiday-list-badge${item.bridge?' bridge':''}"><em>FER</em></span>
+    <div class="holiday-stat-detail-date">
+      <b>${escapeHtml(cap(holidayStatsDateFmt.format(item.date)))}</b>
+      <small>${escapeHtml(holidayStatsFullDateFmt.format(item.date))}</small>
+    </div>
+    <div class="holiday-stat-detail-copy">
+      <b>${escapeHtml(item.name)}</b>
+      <small>${escapeHtml(typeText)}</small>
+    </div>
+    <span class="holiday-stat-detail-shift ${codeClass}">${escapeHtml(codeLabel)}</span>
+   </div>`;
+ }).join('');
+}
+
+function openHolidayStatsDetail(turn,year){
+ renderHolidayStatsDetail(turn,year);
+ openModal('holidayStatsDetailModal');
 }
 
 function renderHolidayWorkStats(year){
@@ -5044,8 +5565,12 @@ function renderHolidayWorkStats(year){
 
  $('#holidayStatsYear').textContent=year;
  $('#holidayWorkStats').innerHTML=items.map(([key,label,kind])=>
-  `<div class="holiday-work-chip ${kind}" title="${scheduleName(key)} · ${counts[key]||0} feriados en día de trabajo"><span>${label}</span><b>${counts[key]||0}</b></div>`
+  `<button type="button" class="holiday-work-chip ${kind}" data-holiday-turn="${key}" aria-label="Ver feriados de ${scheduleName(key)} en ${year}" title="${scheduleName(key)} · ${counts[key]||0} feriados en día de trabajo"><span>${label}</span><b>${counts[key]||0}</b></button>`
  ).join('');
+
+ $$('#holidayWorkStats .holiday-work-chip').forEach(btn=>{
+  btn.onclick=()=>openHolidayStatsDetail(btn.dataset.holidayTurn,year);
+ });
 }
 
 function renderStats(){
@@ -5070,7 +5595,12 @@ function renderStats(){
 }
 
 function openModal(id){$('#'+id).classList.add('open');document.body.style.overflow='hidden'}
-function closeModal(id){$('#'+id).classList.remove('open');document.body.style.overflow=''}
+function closeModal(id){
+ const modal=$('#'+id);
+ if(!modal)return;
+ modal.classList.remove('open');
+ document.body.style.overflow=$$('.backdrop.open').length?'hidden':'';
+}
 $$('[data-close]').forEach(b=>b.onclick=()=>{const id=b.dataset.close;if(id==='agendaSheet')closeAgenda();else{if(id==='settingsModal')setPaletteDropdown(false);closeModal(id)}});
 $$('.backdrop').forEach(b=>b.addEventListener('click',e=>{if(e.target===b)closeModal(b.id)}));agendaSheet.addEventListener('click',e=>{if(e.target===agendaSheet)closeAgenda()});
 
