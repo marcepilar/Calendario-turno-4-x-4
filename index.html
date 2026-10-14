@@ -4329,6 +4329,231 @@ body.light #holidayStatsDetailModal .holiday-stats-head-fer{
   -webkit-text-fill-color:#fff;
 }
 
+
+/* ===== V4.7.4 · MODO CLARO · ESTADÍSTICAS CON TARJETAS CLARAS ===== */
+
+/* Fondo general de la ventana */
+body.light #statsModal .stats-modal-window{
+  color:#172536;
+  background:
+    radial-gradient(circle at 92% 4%,rgba(67,168,255,.045),transparent 34%),
+    linear-gradient(180deg,rgba(252,253,255,.99),rgba(241,245,249,.99));
+  border-color:rgba(62,82,106,.17);
+}
+
+/* Cabecera */
+body.light #statsModal .stats-head-copy h2{
+  color:#172536;
+  -webkit-text-fill-color:#172536;
+}
+body.light #statsModal .stats-head small{
+  color:#617287;
+}
+body.light #statsModal .stats-head .close-btn{
+  color:#f7f9fc;
+  -webkit-text-fill-color:#f7f9fc;
+}
+
+/* ---------- Tarjetas superiores ---------- */
+body.light #statsModal .stat-card{
+  background:
+    radial-gradient(circle at 86% 5%,var(--stat-glow),transparent 46%),
+    linear-gradient(180deg,#f8fafc,#eef2f6);
+  border-color:rgba(62,82,106,.16);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.80),
+    0 4px 11px rgba(34,48,68,.055);
+}
+body.light #statsModal .stat-card small{
+  color:#637489;
+}
+body.light #statsModal .stat-card b{
+  color:#172536;
+  -webkit-text-fill-color:#172536;
+}
+body.light #statsModal .stat-card i{
+  color:var(--stat-accent);
+  background:color-mix(in srgb,var(--stat-accent) 10%,white 90%);
+  border-color:color-mix(in srgb,var(--stat-accent) 28%,white 72%);
+}
+
+/* ---------- Tu turno termina en ---------- */
+body.light #statsModal .stats-turn-end > h3{
+  color:#172536;
+}
+body.light #statsModal .turn-end-card{
+  background:
+    radial-gradient(circle at 88% 18%,rgba(67,168,255,.09),transparent 35%),
+    radial-gradient(circle at 97% 92%,rgba(66,214,176,.055),transparent 26%),
+    linear-gradient(135deg,#f8fafc,#edf3f8);
+  border-color:rgba(70,118,182,.20);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.82),
+    0 6px 15px rgba(34,48,68,.055);
+}
+body.light #statsModal .turn-end-copy small{
+  color:#60748d;
+}
+body.light #statsModal .turn-end-copy b{
+  color:#172536;
+  -webkit-text-fill-color:#172536;
+  text-shadow:none;
+}
+body.light #statsModal .turn-end-copy span{
+  color:#64758a;
+}
+body.light #statsModal .turn-end-badge{
+  color:#172536;
+  -webkit-text-fill-color:#172536;
+  background:
+    radial-gradient(circle at 70% 20%,rgba(79,141,255,.10),transparent 45%),
+    linear-gradient(180deg,#f7f9fc,#e9eff6);
+  border-color:rgba(70,118,182,.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.85),
+    0 5px 12px rgba(34,48,68,.05);
+}
+
+/* ---------- Distribución del mes / Resumen anual ---------- */
+body.light #statsModal .stats-month,
+body.light #statsModal .stats-year{
+  background:
+    radial-gradient(circle at 88% 4%,rgba(67,168,255,.035),transparent 40%),
+    linear-gradient(180deg,#f8fafc,#eef2f6);
+  border-color:rgba(62,82,106,.15);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.78),
+    0 3px 9px rgba(34,48,68,.045);
+}
+body.light #statsModal .stats-month h3,
+body.light #statsModal .stats-year h3{
+  color:#1a2737;
+  -webkit-text-fill-color:#1a2737;
+}
+body.light #statsModal .bar-row{
+  background:rgba(82,102,128,.045);
+}
+body.light #statsModal .bar-row span{
+  color:#3f5064;
+}
+body.light #statsModal .bar-row b{
+  color:#1a2737;
+  -webkit-text-fill-color:#1a2737;
+}
+body.light #statsModal .bar-track{
+  background:rgba(84,103,127,.12);
+  box-shadow:inset 0 1px 2px rgba(34,48,68,.07);
+}
+
+/* ---------- Feriados ---------- */
+body.light #statsModal .stats-holidays{
+  background:
+    radial-gradient(circle at 92% 6%,rgba(255,95,114,.045),transparent 34%),
+    radial-gradient(circle at 8% 92%,rgba(39,174,228,.045),transparent 38%),
+    linear-gradient(180deg,#f8fafc,#eef2f6);
+  border-color:rgba(112,73,91,.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.80),
+    0 4px 11px rgba(34,48,68,.045);
+}
+body.light #statsModal .stats-holidays h3{
+  color:#1a2737;
+  -webkit-text-fill-color:#1a2737;
+}
+body.light #statsModal .holiday-work-chip{
+  background:linear-gradient(180deg,#f7f9fc,#edf2f6);
+  border-color:rgba(62,82,106,.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.82),
+    0 2px 6px rgba(34,48,68,.035);
+}
+body.light #statsModal .holiday-work-chip span{
+  color:#65768a;
+}
+body.light #statsModal .holiday-work-chip b{
+  color:#172536;
+  -webkit-text-fill-color:#172536;
+}
+body.light #statsModal .holiday-work-chip::after{
+  color:#708198;
+}
+body.light #statsModal .holiday-work-note{
+  color:#65768a;
+}
+
+/* ---------- Próximo descanso / Próximo sueldo ---------- */
+body.light #statsModal .stats-off,
+body.light #statsModal .stats-salary{
+  background:
+    radial-gradient(circle at 92% 8%,rgba(66,214,176,.035),transparent 42%),
+    linear-gradient(180deg,#f8fafc,#eef2f6);
+  border-color:rgba(62,82,106,.15);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.78),
+    0 3px 9px rgba(34,48,68,.045);
+}
+body.light #statsModal .stats-off h3,
+body.light #statsModal .stats-salary h3{
+  color:#1a2737;
+  -webkit-text-fill-color:#1a2737;
+}
+body.light #statsModal .off-premium,
+body.light #statsModal .salary-card{
+  background:linear-gradient(180deg,#f7f9fc,#edf2f6);
+  border-color:rgba(62,82,106,.11);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.80);
+}
+body.light #statsModal .off-premium small,
+body.light #statsModal .off-premium span,
+body.light #statsModal .salary-copy small,
+body.light #statsModal .salary-copy span{
+  color:#65768a;
+}
+body.light #statsModal .off-premium b,
+body.light #statsModal .off-premium strong,
+body.light #statsModal .salary-copy b{
+  color:#172536;
+  -webkit-text-fill-color:#172536;
+}
+body.light #statsModal .salary-days{
+  background:
+    radial-gradient(circle at 70% 18%,rgba(66,214,176,.10),transparent 46%),
+    linear-gradient(180deg,#f4faf8,#e9f3ef);
+  border-color:rgba(32,143,115,.25);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.82),
+    0 3px 9px rgba(34,48,68,.035);
+}
+body.light #statsModal .salary-days strong{
+  color:#153b32;
+  -webkit-text-fill-color:#153b32;
+}
+body.light #statsModal .salary-days span{
+  color:#4f6d65;
+  -webkit-text-fill-color:#4f6d65;
+}
+
+/* Iconos de títulos: más claros pero manteniendo el azul */
+body.light #statsModal .stats-title-mark{
+  background:rgba(39,142,230,.08);
+  border-color:rgba(39,142,230,.16);
+  color:#207fca;
+}
+
+/* Mantener el acento FER rojo */
+body.light #statsModal .stats-holidays .stats-title-mark{
+  color:#d84d61;
+  background:rgba(232,73,96,.08);
+  border-color:rgba(232,73,96,.17);
+}
+
+/* El detalle de feriados ya usa esta misma familia visual clara */
+body.light #holidayStatsDetailModal .holiday-stats-detail-window{
+  background:
+    radial-gradient(circle at 92% 4%,rgba(67,168,255,.055),transparent 36%),
+    linear-gradient(180deg,rgba(252,253,255,.985),rgba(241,245,249,.985));
+}
+
 </style>
 </head>
 <body>
@@ -4472,7 +4697,7 @@ body.light #holidayStatsDetailModal .holiday-stats-head-fer{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.7.3</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.7.4</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -4661,7 +4886,7 @@ body.light #holidayStatsDetailModal .holiday-stats-head-fer{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.7.3';
+const CURRENT_VERSION='4.7.4';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
