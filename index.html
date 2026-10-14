@@ -3081,6 +3081,198 @@ body.light .holiday-detail-icon.holiday-bridge{
   bottom:auto;
 }
 
+
+/* ===== V4.6.6 · FERIADOS TRABAJADOS EN ESTADÍSTICAS ===== */
+#statsModal .stats-modal-window{
+  grid-template-rows:
+    auto
+    auto
+    minmax(104px,.78fr)
+    minmax(132px,.90fr)
+    minmax(78px,.48fr)
+    minmax(100px,.70fr);
+  grid-template-areas:
+    "head head"
+    "cards cards"
+    "turn turn"
+    "month year"
+    "holidays holidays"
+    "off salary";
+}
+
+#statsModal .stats-holidays{
+  grid-area:holidays;
+  min-width:0;
+  min-height:0;
+  overflow:hidden;
+  border:1px solid rgba(140,165,195,.17);
+  border-radius:17px;
+  padding:7px 9px 8px;
+  background:
+    radial-gradient(circle at 92% 8%,rgba(255,95,114,.055),transparent 34%),
+    radial-gradient(circle at 7% 90%,rgba(39,174,228,.055),transparent 38%),
+    linear-gradient(180deg,rgba(31,43,59,.94),rgba(26,37,52,.96));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+#statsModal .stats-holidays h3{
+  margin-bottom:5px;
+  white-space:nowrap;
+}
+#statsModal .stats-holidays .stats-title-mark{
+  width:26px;
+  font-size:7px;
+  letter-spacing:.025em;
+  color:#ff8390;
+  background:rgba(255,95,114,.09);
+  border-color:rgba(255,95,114,.17);
+}
+#statsModal .holiday-work-grid{
+  display:grid;
+  grid-template-columns:repeat(7,minmax(0,1fr));
+  gap:4px;
+  min-width:0;
+}
+#statsModal .holiday-work-chip{
+  min-width:0;
+  min-height:38px;
+  border-radius:10px;
+  padding:4px 2px 3px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  background:rgba(255,255,255,.025);
+  border:1px solid rgba(145,169,199,.12);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.018);
+}
+#statsModal .holiday-work-chip span{
+  font-size:6.8px;
+  line-height:1;
+  font-weight:900;
+  color:#9fadc0;
+  white-space:nowrap;
+}
+#statsModal .holiday-work-chip b{
+  margin-top:3px;
+  font-size:15px;
+  line-height:1;
+  color:#f7f9fc;
+  font-variant-numeric:tabular-nums;
+}
+#statsModal .holiday-work-chip.standard{
+  border-bottom-color:rgba(255,95,114,.48);
+}
+#statsModal .holiday-work-chip.t5{
+  border-bottom-color:rgba(39,174,228,.48);
+}
+#statsModal .holiday-work-note{
+  display:block;
+  margin-top:4px;
+  color:#8292a7;
+  font-size:6.5px;
+  line-height:1;
+  text-align:center;
+  white-space:nowrap;
+}
+
+@media(max-width:620px){
+  #statsModal .stats-modal-window{
+    grid-template-rows:
+      auto
+      auto
+      minmax(104px,.76fr)
+      minmax(128px,.88fr)
+      minmax(74px,.45fr)
+      minmax(94px,.66fr);
+    gap:5px;
+    padding-top:5px;
+    padding-bottom:6px;
+  }
+  #statsModal .stats-holidays{
+    padding:5px 6px 6px;
+  }
+  #statsModal .stats-holidays h3{
+    margin-bottom:4px;
+    font-size:9px;
+  }
+  #statsModal .holiday-work-grid{
+    gap:3px;
+  }
+  #statsModal .holiday-work-chip{
+    min-height:34px;
+    padding:3px 1px;
+    border-radius:9px;
+  }
+  #statsModal .holiday-work-chip span{
+    font-size:6.1px;
+  }
+  #statsModal .holiday-work-chip b{
+    font-size:13px;
+    margin-top:2px;
+  }
+  #statsModal .holiday-work-note{
+    margin-top:3px;
+    font-size:5.8px;
+  }
+}
+
+@media(max-height:760px){
+  #statsModal .stats-modal-window{
+    grid-template-rows:
+      auto
+      auto
+      minmax(82px,.68fr)
+      minmax(102px,.82fr)
+      minmax(62px,.40fr)
+      minmax(82px,.60fr);
+    gap:3px;
+    padding-top:3px;
+    padding-bottom:4px;
+  }
+  #statsModal .stat-card{
+    min-height:58px;
+    padding-top:5px;
+    padding-bottom:6px;
+  }
+  #statsModal .turn-end-card{
+    padding-top:6px;
+    padding-bottom:6px;
+  }
+  #statsModal .stats-month,
+  #statsModal .stats-year,
+  #statsModal .stats-off,
+  #statsModal .stats-salary{
+    padding-top:4px;
+    padding-bottom:4px;
+  }
+  #statsModal .stats-holidays{
+    padding:4px 5px;
+  }
+  #statsModal .stats-holidays h3{
+    font-size:7.6px;
+    margin-bottom:2px;
+  }
+  #statsModal .holiday-work-chip{
+    min-height:28px;
+    border-radius:8px;
+    padding:2px 1px;
+  }
+  #statsModal .holiday-work-chip span{
+    font-size:5.5px;
+  }
+  #statsModal .holiday-work-chip b{
+    font-size:11px;
+    margin-top:1px;
+  }
+  #statsModal .holiday-work-note{
+    margin-top:2px;
+    font-size:5.1px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -3224,7 +3416,7 @@ body.light .holiday-detail-icon.holiday-bridge{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.6.5</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.6.6</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -3343,6 +3535,13 @@ body.light .holiday-detail-icon.holiday-bridge{
   </div>
   <div class="stats-section stats-month"><h3><span class="stats-title-mark">▥</span>Distribución del mes</h3><div id="monthBars"></div></div>
   <div class="stats-section stats-year"><h3><span class="stats-title-mark">◔</span>Resumen anual</h3><div id="yearBars"></div></div>
+
+  <div class="stats-section stats-holidays">
+    <h3><span class="stats-title-mark">FER</span>Feriados que caen en turno · <span id="holidayStatsYear"></span></h3>
+    <div id="holidayWorkStats" class="holiday-work-grid"></div>
+    <small class="holiday-work-note">Incluye feriados nacionales y puentes · 7 Sep. Metalúrgico sólo T1–T4</small>
+  </div>
+
   <div class="stats-section stats-off"><h3><span class="stats-title-mark">▰</span>Próximo descanso</h3><div id="nextOffBox" class="next-off"></div></div>
   <div class="stats-section stats-salary">
     <h3><span class="stats-title-mark">▣</span>Próximo sueldo</h3>
@@ -3371,7 +3570,7 @@ body.light .holiday-detail-icon.holiday-bridge{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.6.5';
+const CURRENT_VERSION='4.6.6';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -3936,6 +4135,10 @@ async function ensureHolidayYear(year){
    }
    const yearModal=$('#yearModal');
    if(yearViewYear===year&&yearModal?.classList.contains('open'))renderYear();
+
+   const statsModal=$('#statsModal');
+   if(viewYear===year&&statsModal?.classList.contains('open'))renderStats();
+
    return items;
   }catch{
    return null;
@@ -4583,8 +4786,64 @@ function barsHtml(c,turn){
  const total=rows.reduce((s,[k])=>s+(c[k]||0),0)||1;
  return rows.map(([k,n])=>`<div class="bar-row code-${k}"><span>${n}</span><div class="bar-track"><div class="bar-fill ${k}" style="width:${((c[k]||0)/total*100).toFixed(1)}%"></div></div><b>${c[k]||0}</b></div>`).join('')
 }
+
+function isWorkCodeForHoliday(turn,code){
+ return turn==='T5LV' ? code==='D' : (code==='M'||code==='N');
+}
+
+function holidayExistsForTurnOnDate(d,turn){
+ const key=dateKey(d);
+ const national=Boolean(loadHolidayYear(d.getFullYear())[key]);
+
+ // 7 de septiembre: Día del Metalúrgico, sólo T1–T4.
+ const metalurgico=
+  d.getMonth()===8 &&
+  d.getDate()===7 &&
+  ['T1','T2','T3','T4'].includes(turn);
+
+ // Si alguna vez coincide un feriado nacional con el 7/9, cuenta como un solo día.
+ return national||metalurgico;
+}
+
+function holidayWorkCountsAllTurns(year){
+ const turns=['T1','T2','T3','T4','T5LV','T5B','T5A'];
+ const result=Object.fromEntries(turns.map(t=>[t,0]));
+
+ const start=new Date(year,0,1);
+ const end=new Date(year+1,0,1);
+
+ for(let d=new Date(start);d<end;d=addDays(d,1)){
+  for(const turn of turns){
+   if(!holidayExistsForTurnOnDate(d,turn))continue;
+   const code=codeFor(turn,d);
+   if(isWorkCodeForHoliday(turn,code))result[turn]++;
+  }
+ }
+ return result;
+}
+
+function renderHolidayWorkStats(year){
+ const counts=holidayWorkCountsAllTurns(year);
+ const items=[
+  ['T1','T1','standard'],
+  ['T2','T2','standard'],
+  ['T3','T3','standard'],
+  ['T4','T4','standard'],
+  ['T5LV','FIJO','t5'],
+  ['T5B','UNO','t5'],
+  ['T5A','DOS','t5']
+ ];
+
+ $('#holidayStatsYear').textContent=year;
+ $('#holidayWorkStats').innerHTML=items.map(([key,label,kind])=>
+  `<div class="holiday-work-chip ${kind}" title="${scheduleName(key)} · ${counts[key]||0} feriados en día de trabajo"><span>${label}</span><b>${counts[key]||0}</b></div>`
+ ).join('');
+}
+
 function renderStats(){
  const t=activeTurnKey(),m=countsForPeriod(t,viewYear,viewMonth),y=countsForPeriod(t,viewYear),hours=t==='T5LV'?m.D*9:(m.M+m.N)*12,off=nextOffBlock(t,new Date());
+ ensureHolidayYear(viewYear);
+ renderHolidayWorkStats(viewYear);
  $('#statsSubtitle').textContent=`${scheduleName(t)} · ${monthFmt.format(new Date(viewYear,viewMonth,1))}`;
  if(t==='T5LV')$('#statsCards').innerHTML=`<div class="stat-card stat-morning"><i>☀</i><small>Días T5</small><b>${m.D}</b></div><div class="stat-card stat-off"><i>▦</i><small>Francos</small><b>${m.F}</b></div><div class="stat-card stat-hours"><i>◷</i><small>Horas mes</small><b>${hours}</b></div><div class="stat-card stat-cycle"><i>↻</i><small>Jornada</small><b>9 h</b></div>`;
  else if(t==='T5A'||t==='T5B')$('#statsCards').innerHTML=`<div class="stat-card stat-morning"><i>☀</i><small>Mañanas</small><b>${m.M}</b></div><div class="stat-card stat-off"><i>▦</i><small>Francos</small><b>${m.F}</b></div><div class="stat-card stat-hours"><i>◷</i><small>Horas mes</small><b>${hours}</b></div><div class="stat-card stat-cycle"><i>↻</i><small>Ciclo</small><b>4×4</b></div>`;
