@@ -4472,7 +4472,7 @@ body.light #holidayStatsDetailModal .holiday-stats-head-fer{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.7.2</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.7.3</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -4595,7 +4595,7 @@ body.light #holidayStatsDetailModal .holiday-stats-head-fer{
   <div class="stats-section stats-holidays">
     <h3><span class="stats-title-mark">FER</span>Feriados que caen en turno · <span id="holidayStatsYear"></span></h3>
     <div id="holidayWorkStats" class="holiday-work-grid"></div>
-    <small class="holiday-work-note">Incluye feriados nacionales y puentes · 7 Sep. Metalúrgico sólo T1–T4</small>
+    <small class="holiday-work-note">Incluye feriados nacionales y puentes · 7 Sep. Metalúrgico · todos los turnos</small>
   </div>
 
   <div class="stats-section stats-off"><h3><span class="stats-title-mark">▰</span>Próximo descanso</h3><div id="nextOffBox" class="next-off"></div></div>
@@ -4661,7 +4661,7 @@ body.light #holidayStatsDetailModal .holiday-stats-head-fer{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.7.2';
+const CURRENT_VERSION='4.7.3';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -5162,20 +5162,17 @@ function isBridgeHoliday(holiday){
 function holidayInfo(d){
  if(showHolidays&&!showHolidays.checked)return null;
 
- const turn=activeTurnKey();
-
  // Feriado especial del Día del Metalúrgico:
- // todos los 7 de septiembre, exclusivamente visible en T1–T4.
+ // todos los 7 de septiembre, visible para TODOS los turnos.
  if(
   d.getMonth()===8 &&
-  d.getDate()===7 &&
-  ['T1','T2','T3','T4'].includes(turn)
+  d.getDate()===7
  ){
   return {
    fecha:dateKey(d),
    tipo:'metalurgico',
    nombre:'Día del Metalúrgico',
-   alcance:'T1–T4',
+   alcance:'Todos los turnos',
    custom:true
   };
  }
@@ -5324,7 +5321,7 @@ function renderCalendar(){
   }
 
   const holidayBadge=holiday
-   ? `<span class="holiday-badge${isBridgeHoliday(holiday)?' holiday-bridge':''}" title="${escapeHtml(holiday.custom?'Día del Metalúrgico · T1–T4':holiday.nombre)}"><em>FER</em></span>`
+   ? `<span class="holiday-badge${isBridgeHoliday(holiday)?' holiday-bridge':''}" title="${escapeHtml(holiday.custom?'Día del Metalúrgico · Todos los turnos':holiday.nombre)}"><em>FER</em></span>`
    : '';
 
   cell.innerHTML=`<span class="date">${d.getDate()}</span><span class="code">${codeText(turn,c)}</span>${showLabels.checked?`<span class="label">${shiftNames[c][0]}</span>`:''}${dots}${holidayBadge}`;
@@ -5592,7 +5589,7 @@ function showDetail(d){
 
   if(holiday){
    holidayType.textContent=holiday.custom
-    ? 'Feriado gremial · Turnos T1–T4'
+    ? 'Feriado gremial · Todos los turnos'
     : 'Feriado nacional · Argentina';
    holidayName.textContent=`(${holiday.nombre})`;
   }else{
@@ -5895,13 +5892,12 @@ function holidayExistsForTurnOnDate(d,turn){
  const key=dateKey(d);
  const national=Boolean(loadHolidayYear(d.getFullYear())[key]);
 
- // 7 de septiembre: Día del Metalúrgico, sólo T1–T4.
+ // 7 de septiembre: Día del Metalúrgico, válido para TODOS los turnos.
  const metalurgico=
   d.getMonth()===8 &&
-  d.getDate()===7 &&
-  ['T1','T2','T3','T4'].includes(turn);
+  d.getDate()===7;
 
- // Si alguna vez coincide un feriado nacional con el 7/9, cuenta como un solo día.
+ // Si alguna vez coincide con un feriado nacional, cuenta como un solo día.
  return national||metalurgico;
 }
 
@@ -5916,8 +5912,7 @@ function holidayWorkDetailsForTurn(year,turn){
   const national=holidayMap[key]||null;
   const metalurgico=
    d.getMonth()===8 &&
-   d.getDate()===7 &&
-   ['T1','T2','T3','T4'].includes(turn);
+   d.getDate()===7;
 
   if(!national&&!metalurgico)continue;
 
@@ -5980,7 +5975,7 @@ function renderHolidayStatsDetail(turn,year){
   const codeLabel=codeText(turn,item.code);
   const codeClass=cls(item.code);
   const typeText=item.metalurgico&&!item.national
-   ?'Feriado gremial · T1–T4'
+   ?'Feriado gremial · Todos los turnos'
    :item.type;
 
   return `
