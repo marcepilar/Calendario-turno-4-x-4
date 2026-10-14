@@ -3273,6 +3273,110 @@ body.light .holiday-detail-icon.holiday-bridge{
   }
 }
 
+
+/* ===== V4.6.7 · ESTADÍSTICAS FERIADOS · TEXTO MÁS LEGIBLE ===== */
+#statsModal .stats-holidays{
+  padding:5px 7px 6px;
+}
+#statsModal .stats-holidays h3{
+  margin-bottom:3px;
+  font-size:10.7px;
+  line-height:1.05;
+}
+#statsModal .stats-holidays .stats-title-mark{
+  width:28px;
+  min-width:28px;
+  height:26px;
+  font-size:8px;
+}
+#statsModal .holiday-work-grid{
+  gap:3px;
+}
+#statsModal .holiday-work-chip{
+  min-height:34px;
+  padding:2px 1px 2px;
+}
+#statsModal .holiday-work-chip span{
+  font-size:7.4px;
+  line-height:1;
+}
+#statsModal .holiday-work-chip b{
+  margin-top:2px;
+  font-size:16px;
+  line-height:.95;
+}
+#statsModal .holiday-work-note{
+  margin-top:2px;
+  font-size:6.6px;
+  line-height:1.05;
+}
+
+@media(max-width:620px){
+  #statsModal .stats-holidays{
+    padding:4px 5px 5px;
+  }
+  #statsModal .stats-holidays h3{
+    margin-bottom:2px;
+    font-size:10.2px;
+  }
+  #statsModal .stats-holidays .stats-title-mark{
+    width:27px;
+    min-width:27px;
+    height:24px;
+    font-size:7.7px;
+  }
+  #statsModal .holiday-work-grid{
+    gap:2px;
+  }
+  #statsModal .holiday-work-chip{
+    min-height:32px;
+    padding:2px 1px;
+    border-radius:8px;
+  }
+  #statsModal .holiday-work-chip span{
+    font-size:7px;
+  }
+  #statsModal .holiday-work-chip b{
+    font-size:15px;
+    margin-top:1px;
+  }
+  #statsModal .holiday-work-note{
+    margin-top:2px;
+    font-size:6.2px;
+  }
+}
+
+@media(max-height:760px){
+  #statsModal .stats-holidays{
+    padding:3px 4px 4px;
+  }
+  #statsModal .stats-holidays h3{
+    margin-bottom:1px;
+    font-size:9.4px;
+  }
+  #statsModal .stats-holidays .stats-title-mark{
+    width:25px;
+    min-width:25px;
+    height:22px;
+    font-size:7.1px;
+  }
+  #statsModal .holiday-work-chip{
+    min-height:27px;
+    padding:1px;
+  }
+  #statsModal .holiday-work-chip span{
+    font-size:6.6px;
+  }
+  #statsModal .holiday-work-chip b{
+    font-size:13.5px;
+    margin-top:1px;
+  }
+  #statsModal .holiday-work-note{
+    margin-top:1px;
+    font-size:5.8px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -3416,7 +3520,7 @@ body.light .holiday-detail-icon.holiday-bridge{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.6.6</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.6.7</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -3570,7 +3674,7 @@ body.light .holiday-detail-icon.holiday-bridge{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.6.6';
+const CURRENT_VERSION='4.6.7';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
