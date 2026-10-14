@@ -4109,6 +4109,42 @@ body.light .holiday-detail-icon.holiday-bridge{
   }
 }
 
+
+/* ===== V4.7.1 · NOTA DE FERIADOS MÁS LEGIBLE ===== */
+#statsModal .stats-holidays{
+  padding-bottom:6px;
+}
+#statsModal .holiday-work-note{
+  margin-top:2px;
+  font-size:8.4px;
+  line-height:1.08;
+  font-weight:650;
+  color:#9aa9bb;
+  letter-spacing:.005em;
+}
+
+@media(max-width:620px){
+  #statsModal .stats-holidays{
+    padding-bottom:5px;
+  }
+  #statsModal .holiday-work-note{
+    margin-top:2px;
+    font-size:8px;
+    line-height:1.06;
+  }
+}
+
+@media(max-height:760px){
+  #statsModal .stats-holidays{
+    padding-bottom:3px;
+  }
+  #statsModal .holiday-work-note{
+    margin-top:1px;
+    font-size:6.9px;
+    line-height:1.02;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -4252,7 +4288,7 @@ body.light .holiday-detail-icon.holiday-bridge{
 
   <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.7.0</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.7.1</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 <!-- Agenda bottom sheet -->
@@ -4441,7 +4477,7 @@ body.light .holiday-detail-icon.holiday-bridge{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.7.0';
+const CURRENT_VERSION='4.7.1';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
