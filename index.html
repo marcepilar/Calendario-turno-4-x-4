@@ -7895,6 +7895,43 @@ body.light #helpModal .help-steps{
 }
 .share-top-btn:active{transform:scale(.94)}
 
+body.light .top-actions .icon-btn{
+  color:#243244;
+  background:linear-gradient(180deg,#ffffff,#edf3f8);
+  border-color:rgba(61,83,107,.22);
+  box-shadow:0 10px 24px rgba(30,45,65,.10),inset 0 1px 0 rgba(255,255,255,.96);
+}
+body.light .share-top-btn{
+  color:#0f8f73;
+  border-color:rgba(10,167,133,.28);
+  background:
+    radial-gradient(circle at 72% 18%,rgba(10,167,133,.12),transparent 46%),
+    linear-gradient(180deg,#ffffff,#ecf8f4);
+}
+body.light .help-top-btn{
+  color:#227fd3;
+  border-color:rgba(39,142,230,.28);
+  background:
+    radial-gradient(circle at 72% 18%,rgba(39,142,230,.12),transparent 46%),
+    linear-gradient(180deg,#ffffff,#eef5fc);
+}
+body.light #settingsBtn{
+  color:#445364;
+  background:
+    radial-gradient(circle at 72% 18%,rgba(99,115,129,.10),transparent 46%),
+    linear-gradient(180deg,#ffffff,#f0f4f8);
+  border-color:rgba(93,108,123,.22);
+}
+body.light #themeBtn{
+  background:linear-gradient(180deg,#ffffff,#fff6df);
+  border-color:rgba(201,159,35,.26);
+  box-shadow:0 10px 24px rgba(30,45,65,.09),inset 0 1px 0 rgba(255,255,255,.96);
+}
+body.light .share-top-btn .share-symbol circle{
+  fill:#fbfffd;
+}
+
+
 /* Ventana */
 #shareModal{
   z-index:10070;
@@ -8362,6 +8399,87 @@ body.light #helpModal .help-install-os.iphone .help-install-os-icon{
 @media(display-mode:standalone) and (max-width:620px){
   .app{
     padding-top:calc(12px + var(--safe-top));
+  }
+}
+
+
+/* ===== V4.9.7 · MODO CLARO · CABECERA CON CONTRASTE REFORZADO ===== */
+
+/* Base de los cuatro botones superiores */
+body.light .top-actions .icon-btn{
+  color:#253446;
+  background:linear-gradient(180deg,#ffffff 0%,#edf2f7 100%);
+  border:1.5px solid rgba(60,78,99,.30);
+  box-shadow:
+    0 7px 16px rgba(31,47,66,.13),
+    inset 0 1px 0 rgba(255,255,255,.98);
+}
+
+/* Compartir */
+body.light .share-top-btn{
+  color:#087b63;
+  background:
+    radial-gradient(circle at 72% 18%,rgba(10,167,133,.16),transparent 48%),
+    linear-gradient(180deg,#ffffff 0%,#e9f7f2 100%);
+  border-color:rgba(8,123,99,.44);
+}
+body.light .share-top-btn .share-symbol path,
+body.light .share-top-btn .share-symbol circle{
+  stroke:#087b63;
+}
+body.light .share-top-btn .share-symbol circle{
+  fill:#f8fffc;
+}
+
+/* Ayuda */
+body.light .help-top-btn{
+  color:#126fc7;
+  background:
+    radial-gradient(circle at 72% 18%,rgba(39,142,230,.16),transparent 48%),
+    linear-gradient(180deg,#ffffff 0%,#eaf3fb 100%);
+  border-color:rgba(18,111,199,.42);
+  text-shadow:0 1px 0 rgba(255,255,255,.85);
+}
+
+/* Configuración */
+body.light #settingsBtn{
+  color:#394a5b;
+  background:
+    radial-gradient(circle at 72% 18%,rgba(88,105,122,.13),transparent 48%),
+    linear-gradient(180deg,#ffffff 0%,#edf1f5 100%);
+  border-color:rgba(57,74,91,.34);
+}
+
+/* Tema: fondo algo más marcado para que la luna amarilla resalte */
+body.light #themeBtn{
+  color:#2b3440;
+  background:
+    radial-gradient(circle at 70% 20%,rgba(255,204,64,.20),transparent 45%),
+    linear-gradient(180deg,#fffdf7 0%,#f3ead2 100%);
+  border-color:rgba(170,132,26,.40);
+}
+
+/* Update dot bien visible en fondo claro */
+body.light .update-dot{
+  background:#e63d5e;
+  box-shadow:
+    0 0 0 3px rgba(230,61,94,.17),
+    0 1px 3px rgba(90,20,35,.22);
+}
+
+/* Efecto táctil visible también en claro */
+body.light .top-actions .icon-btn:active{
+  transform:scale(.95);
+  filter:brightness(.94);
+  box-shadow:
+    0 3px 8px rgba(31,47,66,.14),
+    inset 0 1px 0 rgba(255,255,255,.85);
+}
+
+/* En pantallas chicas mantenemos contraste sin perder tamaño útil */
+@media(max-width:390px){
+  body.light .top-actions .icon-btn{
+    border-width:1.5px;
   }
 }
 
@@ -9340,7 +9458,7 @@ body.light #helpModal .help-install-os.iphone .help-install-os-icon{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.9.5';
+const CURRENT_VERSION='4.9.7';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
