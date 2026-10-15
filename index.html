@@ -4584,6 +4584,493 @@ body.light #holidayStatsDetailModal .holiday-stats-detail-window{
   }
 }
 
+
+/* ===== V4.7.6 · VACACIONES ===== */
+:root{
+  --vacation:#9b7cff;
+  --vacation2:#7856e8;
+  --vacation-text:#ffffff;
+}
+
+/* Configuración: tres accesos en una sola fila */
+#settingsModal .settings-main-actions{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:6px;
+}
+#settingsModal .settings-main-actions button{
+  min-width:0;
+  padding-left:5px;
+  padding-right:5px;
+  font-size:10.5px;
+  white-space:nowrap;
+}
+
+/* Capa visual sobre la celda sin reemplazar M/N/F/T5 */
+.day.vacation-day .date,
+.day.vacation-day .code,
+.day.vacation-day .label{
+  z-index:2;
+}
+.vacation-overlay{
+  position:absolute;
+  inset:2px;
+  z-index:1;
+  pointer-events:none;
+  border:2px solid rgba(155,124,255,.78);
+  border-radius:9px;
+  box-shadow:
+    inset 0 -12px 18px rgba(118,86,232,.12),
+    inset 0 0 10px rgba(155,124,255,.10);
+}
+.vacation-badge{
+  position:absolute;
+  right:4px;
+  bottom:4px;
+  z-index:3;
+  width:22px;
+  height:19px;
+  display:grid;
+  place-items:center;
+  border-radius:8px;
+  background:linear-gradient(180deg,var(--vacation),var(--vacation2));
+  color:var(--vacation-text);
+  border:1px solid rgba(255,255,255,.50);
+  box-shadow:
+    0 2px 7px rgba(0,0,0,.20),
+    0 0 8px rgba(155,124,255,.22),
+    inset 0 1px 0 rgba(255,255,255,.22);
+  font-size:10px;
+  line-height:1;
+  font-weight:1000;
+}
+.day.today .vacation-badge{
+  right:6px;
+  bottom:6px;
+}
+.day.other .vacation-badge{
+  opacity:.76;
+}
+body.light .vacation-overlay{
+  border-color:rgba(112,78,222,.72);
+  box-shadow:
+    inset 0 -12px 18px rgba(118,86,232,.09),
+    inset 0 0 9px rgba(155,124,255,.08);
+}
+
+/* Detalle del día */
+.vacation-detail-banner{
+  display:none;
+  align-items:center;
+  gap:8px;
+  margin:-1px 0 9px;
+  padding:8px 10px;
+  border:1px solid rgba(155,124,255,.30);
+  border-radius:12px;
+  background:
+    radial-gradient(circle at 90% 0%,rgba(155,124,255,.12),transparent 44%),
+    linear-gradient(180deg,rgba(155,124,255,.08),rgba(155,124,255,.035));
+}
+.vacation-detail-banner.show{display:flex}
+.vacation-detail-icon{
+  flex:0 0 auto;
+  width:34px;
+  height:25px;
+  display:grid;
+  place-items:center;
+  border-radius:9px;
+  background:linear-gradient(180deg,var(--vacation),var(--vacation2));
+  color:#fff;
+  font-size:11px;
+  font-weight:1000;
+  box-shadow:0 4px 10px rgba(0,0,0,.16);
+}
+.vacation-detail-copy{min-width:0}
+.vacation-detail-copy b{
+  display:block;
+  font-size:10px;
+  line-height:1.15;
+}
+.vacation-detail-copy span{
+  display:block;
+  margin-top:2px;
+  font-size:8px;
+  line-height:1.25;
+  color:var(--muted);
+}
+
+/* Modal */
+#vacationModal{
+  z-index:10020;
+  padding:
+    calc(env(safe-area-inset-top) + 7px)
+    6px
+    calc(env(safe-area-inset-bottom) + 7px);
+}
+#vacationModal .vacation-modal-window{
+  width:min(650px,calc(100vw - 12px));
+  height:min(780px,calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 14px));
+  max-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 14px);
+  padding:8px 10px 9px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+#vacationModal .vacation-head{
+  position:relative;
+  top:auto;
+  flex:0 0 auto;
+  margin:0;
+  padding:3px 1px 7px;
+}
+#vacationModal .vacation-head h2{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:18px;
+}
+.vacation-head-icon{
+  width:34px;
+  height:28px;
+  display:inline-grid;
+  place-items:center;
+  border-radius:9px;
+  background:linear-gradient(180deg,var(--vacation),var(--vacation2));
+  color:#fff;
+  font-size:12px;
+  font-weight:1000;
+  box-shadow:0 4px 11px rgba(0,0,0,.16);
+}
+.vacation-summary{
+  flex:0 0 auto;
+  display:grid;
+  grid-template-columns:1fr 1fr 1.35fr;
+  gap:6px;
+  margin:3px 0 7px;
+}
+.vacation-summary > div{
+  min-width:0;
+  min-height:54px;
+  padding:7px 8px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:var(--panel2);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.vacation-summary small{
+  color:var(--muted);
+  font-size:7.5px;
+  line-height:1.05;
+  font-weight:800;
+}
+.vacation-summary b{
+  margin-top:4px;
+  font-size:15px;
+  line-height:1;
+}
+.vacation-summary .vacation-summary-accent{
+  flex-direction:row;
+  align-items:center;
+  gap:8px;
+}
+.vacation-summary-v{
+  flex:0 0 auto;
+  width:32px;
+  height:28px;
+  display:grid;
+  place-items:center;
+  border-radius:9px;
+  background:linear-gradient(180deg,var(--vacation),var(--vacation2));
+  color:#fff;
+  font-size:12px;
+  font-weight:1000;
+}
+.vacation-editor,
+.vacation-saved-panel{
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:var(--panel2);
+  padding:8px;
+}
+.vacation-editor{
+  flex:0 0 auto;
+  margin-bottom:7px;
+}
+.vacation-section-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:6px;
+}
+.vacation-section-title b{
+  font-size:11px;
+}
+.vacation-section-title span{
+  color:var(--muted);
+  font-size:7.5px;
+  font-weight:900;
+}
+.vacation-form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+}
+.vacation-field{
+  display:block;
+  min-width:0;
+}
+.vacation-field.full{
+  grid-column:1/-1;
+}
+.vacation-field span{
+  display:block;
+  margin:0 0 3px 2px;
+  color:var(--muted);
+  font-size:7px;
+  font-weight:850;
+}
+.vacation-field input{
+  width:100%;
+  min-height:39px;
+  padding:0 9px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:var(--panel3);
+  color:var(--text);
+  font:inherit;
+  font-size:10px;
+  outline:none;
+}
+.vacation-field input:focus{
+  border-color:rgba(155,124,255,.58);
+  box-shadow:0 0 0 2px rgba(155,124,255,.10);
+}
+.vacation-form-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+  margin-top:7px;
+}
+.vacation-form-actions button{
+  min-height:39px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  font-size:10px;
+  font-weight:950;
+}
+#vacationSaveBtn{
+  background:linear-gradient(180deg,var(--vacation),var(--vacation2));
+  color:#fff;
+  border-color:rgba(190,171,255,.50);
+}
+.vacation-saved-panel{
+  flex:1 1 auto;
+  min-height:0;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+.vacation-list{
+  flex:1 1 auto;
+  min-height:0;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+}
+.vacation-empty{
+  height:100%;
+  min-height:86px;
+  display:grid;
+  place-items:center;
+  padding:14px;
+  text-align:center;
+  color:var(--muted);
+  font-size:9px;
+  line-height:1.35;
+}
+.vacation-item{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  gap:8px;
+  align-items:center;
+  min-height:58px;
+  margin-bottom:5px;
+  padding:7px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:color-mix(in srgb,var(--panel3) 72%,transparent);
+}
+.vacation-item:last-child{margin-bottom:0}
+.vacation-item-v{
+  width:34px;
+  height:34px;
+  display:grid;
+  place-items:center;
+  border-radius:10px;
+  background:linear-gradient(180deg,var(--vacation),var(--vacation2));
+  color:#fff;
+  font-size:13px;
+  font-weight:1000;
+  box-shadow:0 4px 10px rgba(0,0,0,.14);
+}
+.vacation-item-copy{min-width:0}
+.vacation-item-copy b{
+  display:block;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:10px;
+}
+.vacation-item-copy span{
+  display:block;
+  margin-top:3px;
+  color:var(--muted);
+  font-size:7.5px;
+}
+.vacation-item-actions{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:4px;
+}
+.vacation-item-actions button{
+  min-width:56px;
+  min-height:25px;
+  padding:0 6px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:var(--panel3);
+  color:var(--text);
+  font-size:7px;
+  font-weight:900;
+}
+.vacation-item-actions button.delete{
+  color:#ff7181;
+  border-color:rgba(255,95,114,.24);
+}
+.vacation-legend{
+  flex:0 0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  padding:6px 3px 0;
+  color:var(--muted);
+  font-size:7px;
+  text-align:center;
+}
+.vacation-legend-v{
+  width:22px;
+  height:20px;
+  display:inline-grid;
+  place-items:center;
+  flex:0 0 auto;
+  border-radius:7px;
+  background:linear-gradient(180deg,var(--vacation),var(--vacation2));
+  color:#fff;
+  font-size:9px;
+  font-weight:1000;
+}
+
+/* Vista anual: pequeño borde violeta si el día pertenece a vacaciones */
+.mini-day.has-vacation{
+  box-shadow:inset 0 0 0 1.5px rgba(155,124,255,.95);
+}
+
+/* Modo claro del modal */
+body.light #vacationModal .vacation-modal-window{
+  background:
+    radial-gradient(circle at 92% 4%,rgba(155,124,255,.055),transparent 35%),
+    linear-gradient(180deg,rgba(252,253,255,.99),rgba(241,245,249,.99));
+  color:#172536;
+  border-color:rgba(62,82,106,.17);
+}
+body.light #vacationModal .vacation-summary > div,
+body.light #vacationModal .vacation-editor,
+body.light #vacationModal .vacation-saved-panel{
+  background:linear-gradient(180deg,#f8fafc,#eef2f6);
+  border-color:rgba(62,82,106,.15);
+}
+body.light #vacationModal .vacation-field input,
+body.light #vacationModal .vacation-item,
+body.light #vacationModal .vacation-item-actions button{
+  background:#f7f9fc;
+  color:#172536;
+  border-color:rgba(62,82,106,.15);
+}
+body.light #vacationModal .vacation-summary small,
+body.light #vacationModal .vacation-field span,
+body.light #vacationModal .vacation-item-copy span,
+body.light #vacationModal .vacation-legend{
+  color:#64758a;
+}
+body.light #vacationModal .vacation-summary b,
+body.light #vacationModal .vacation-item-copy b,
+body.light #vacationModal .vacation-section-title b{
+  color:#172536;
+}
+body.light #vacationModal .close-btn{
+  color:#172536;
+  -webkit-text-fill-color:#172536;
+  background:#f2f5f9;
+}
+
+@media(max-width:620px){
+  #settingsModal .settings-main-actions button{
+    font-size:9.2px;
+    padding-left:2px;
+    padding-right:2px;
+  }
+
+  .vacation-badge{
+    width:21px;
+    height:18px;
+    font-size:9.5px;
+  }
+
+  #vacationModal .vacation-modal-window{
+    width:calc(100vw - 10px);
+    height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 12px);
+    max-height:none;
+    padding:7px 8px 8px;
+    border-radius:22px;
+  }
+  #vacationModal .vacation-head h2{font-size:16px}
+  #vacationModal .vacation-head small{font-size:8px}
+  .vacation-summary{gap:4px;margin-bottom:6px}
+  .vacation-summary > div{min-height:48px;padding:6px}
+  .vacation-summary small{font-size:6.7px}
+  .vacation-summary b{font-size:13px}
+  .vacation-editor{padding:7px;margin-bottom:6px}
+  .vacation-saved-panel{padding:7px}
+  .vacation-field input{min-height:37px;font-size:9px}
+  .vacation-form-actions button{min-height:37px}
+  .vacation-item{min-height:54px;padding:6px;gap:6px}
+  .vacation-item-v{width:31px;height:31px}
+  .vacation-item-actions button{min-width:51px}
+}
+
+@media(max-width:390px){
+  #settingsModal .settings-main-actions button{
+    font-size:8.5px;
+  }
+}
+
+@media(max-height:760px){
+  #vacationModal .vacation-head{padding-bottom:4px}
+  .vacation-summary{margin:1px 0 5px}
+  .vacation-summary > div{min-height:42px;padding-top:4px;padding-bottom:4px}
+  .vacation-editor{padding:5px;margin-bottom:5px}
+  .vacation-section-title{margin-bottom:4px}
+  .vacation-field input{min-height:34px}
+  .vacation-form-actions{margin-top:5px}
+  .vacation-form-actions button{min-height:33px}
+  .vacation-saved-panel{padding:5px}
+  .vacation-item{min-height:48px;margin-bottom:4px;padding-top:4px;padding-bottom:4px}
+  .vacation-legend{padding-top:4px}
+}
+
 </style>
 </head>
 <body>
@@ -4647,6 +5134,13 @@ body.light #holidayStatsDetailModal .holiday-stats-detail-window{
       <div class="holiday-detail-copy">
         <b id="holidayDetailType">Feriado nacional · Argentina</b>
         <span id="holidayDetailName"></span>
+      </div>
+    </div>
+    <div id="vacationDetailBanner" class="vacation-detail-banner">
+      <div class="vacation-detail-icon">V</div>
+      <div class="vacation-detail-copy">
+        <b id="vacationDetailTitle">Vacaciones</b>
+        <span id="vacationDetailText"></span>
       </div>
     </div>
     <div id="detailGrid" class="detail-grid"></div>
@@ -4725,10 +5219,81 @@ body.light #holidayStatsDetailModal .holiday-stats-detail-window{
     </div>
   </div>
 
-  <div class="action-row"><button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button><button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button></div>
+  <div class="action-row settings-main-actions">
+    <button id="settingsAgendaBtn" class="btn-secondary">📅 Agenda</button>
+    <button id="settingsVacationBtn" class="btn-secondary">🏖️ Vacaciones</button>
+    <button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button>
+  </div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.7.5</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.7.6</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
+
+
+<!-- Vacaciones -->
+<div id="vacationModal" class="backdrop vacation-backdrop">
+  <div class="modal glass vacation-modal-window">
+    <div class="modal-head vacation-head">
+      <div>
+        <h2><span class="vacation-head-icon">V</span> Vacaciones</h2>
+        <small>Registrá períodos sin modificar tu turno real</small>
+      </div>
+      <button class="close-btn" data-close="vacationModal" aria-label="Cerrar vacaciones">×</button>
+    </div>
+
+    <div class="vacation-summary">
+      <div>
+        <small>Períodos guardados</small>
+        <b id="vacationPeriodCount">0</b>
+      </div>
+      <div>
+        <small>Días registrados</small>
+        <b id="vacationDayCount">0</b>
+      </div>
+      <div class="vacation-summary-accent">
+        <span class="vacation-summary-v">V</span>
+        <small>No altera M / N / F / T5</small>
+      </div>
+    </div>
+
+    <div class="vacation-editor">
+      <div class="vacation-section-title">
+        <b id="vacationFormTitle">Nuevo período</b>
+        <span id="vacationFormMode">NUEVO</span>
+      </div>
+      <div class="vacation-form-grid">
+        <label class="vacation-field">
+          <span>Desde</span>
+          <input id="vacationStartInput" type="date">
+        </label>
+        <label class="vacation-field">
+          <span>Hasta</span>
+          <input id="vacationEndInput" type="date">
+        </label>
+        <label class="vacation-field full">
+          <span>Descripción opcional</span>
+          <input id="vacationTitleInput" maxlength="60" placeholder="Ej: Vacaciones de verano">
+        </label>
+      </div>
+      <div class="vacation-form-actions">
+        <button id="vacationClearBtn" class="btn-secondary" type="button">LIMPIAR</button>
+        <button id="vacationSaveBtn" class="btn-primary" type="button">GUARDAR</button>
+      </div>
+    </div>
+
+    <div class="vacation-saved-panel">
+      <div class="vacation-section-title">
+        <b>Períodos guardados</b>
+        <span id="vacationSavedCount">0</span>
+      </div>
+      <div id="vacationList" class="vacation-list"></div>
+    </div>
+
+    <div class="vacation-legend">
+      <span class="vacation-legend-v">V</span>
+      <span>En el calendario la V aparece abajo a la derecha y el turno original sigue visible.</span>
+    </div>
+  </div>
+</div>
 
 <!-- Agenda bottom sheet -->
 <div id="agendaSheet" class="sheet-backdrop"><div class="sheet glass">
@@ -4916,7 +5481,7 @@ body.light #holidayStatsDetailModal .holiday-stats-detail-window{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.7.5';
+const CURRENT_VERSION='4.7.6';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -4944,9 +5509,11 @@ const agendaSearchInput=$('#agendaSearchInput'),agendaFilterInput=$('#agendaFilt
 const settingsBtn=$('#settingsBtn'),morningColor=$('#morningColor'),nightColor=$('#nightColor'),offColor=$('#offColor'),codeSize=$('#codeSize'),codeSizeValue=$('#codeSizeValue'),showLabels=$('#showLabels'),showHolidays=$('#showHolidays'),hapticsToggle=$('#hapticsToggle');
 const morningColorRow=$('#morningColorRow'),nightColorRow=$('#nightColorRow'),offColorRow=$('#offColorRow'),paletteNightTab=$('#paletteNightTab'),colorProfileTitle=$('#colorProfileTitle'),colorProfileText=$('#colorProfileText'),morningColorTitle=$('#morningColorTitle'),morningColorNote=$('#morningColorNote'),paletteHelp=$('#paletteHelp'),paletteNote=$('#paletteNote');
 const AGENDA_KEY='turno4x4.agenda.v1', NOTIFIED_KEY='turno4x4.agenda.notified.v1', BACKUP_KEY='turno4x4.agenda.lastBackup';
+const VACATION_KEY='turno4x4.vacations.v1';
 
 let now=new Date(),viewYear=now.getFullYear(),viewMonth=now.getMonth(),selectedDate=new Date(now.getFullYear(),now.getMonth(),now.getDate());
 let agendaSelectedDate=new Date(selectedDate),agendaEditingId=null,agendaHoldTimer=null,agendaHoldOpened=false,agendaAllExpanded=false;
+let vacationEditingId=null;
 let swipeStartX=0,swipeStartY=0,swipeStartedAt=0,calendarSwipeMoved=false,calendarSwipeActive=false,monthAnimating=false,yearViewYear=viewYear;
 const AGENDA_HOLD_MS=450;
 
@@ -5545,6 +6112,177 @@ window.addEventListener('online',()=>{
  if($('#yearModal')?.classList.contains('open'))ensureHolidayYear(yearViewYear);
 });
 
+
+const vacationDateFmt=new Intl.DateTimeFormat('es-AR',{day:'2-digit',month:'short',year:'numeric'});
+
+function loadVacationData(){
+ try{
+  const data=JSON.parse(localStorage.getItem(VACATION_KEY)||'[]');
+  return Array.isArray(data)?data:[];
+ }catch{
+  return [];
+ }
+}
+
+function saveVacationData(items){
+ localStorage.setItem(VACATION_KEY,JSON.stringify(items));
+}
+
+function normalizeVacation(item){
+ return {
+  id:item?.id||'',
+  start:String(item?.start||''),
+  end:String(item?.end||''),
+  title:String(item?.title||'').trim(),
+  createdAt:item?.createdAt||new Date().toISOString()
+ };
+}
+
+function vacationsForDate(d){
+ const key=dateKey(d);
+ return loadVacationData()
+  .map(normalizeVacation)
+  .filter(v=>v.start&&v.end&&key>=v.start&&key<=v.end)
+  .sort((a,b)=>a.start.localeCompare(b.start));
+}
+
+function vacationDaysCount(v){
+ if(!v?.start||!v?.end)return 0;
+ return Math.max(0,diffDays(parseDateKey(v.end),parseDateKey(v.start))+1);
+}
+
+function vacationRangeText(v){
+ return `${vacationDateFmt.format(parseDateKey(v.start))} → ${vacationDateFmt.format(parseDateKey(v.end))}`;
+}
+
+function vacationTotals(items=loadVacationData()){
+ const normalized=items.map(normalizeVacation).filter(v=>v.start&&v.end);
+ return {
+  periods:normalized.length,
+  days:normalized.reduce((sum,v)=>sum+vacationDaysCount(v),0)
+ };
+}
+
+function clearVacationForm(useSelectedDate=false){
+ vacationEditingId=null;
+ $('#vacationFormTitle').textContent='Nuevo período';
+ $('#vacationFormMode').textContent='NUEVO';
+ $('#vacationSaveBtn').textContent='GUARDAR';
+ $('#vacationTitleInput').value='';
+
+ if(useSelectedDate){
+  const key=dateKey(selectedDate);
+  $('#vacationStartInput').value=key;
+  $('#vacationEndInput').value=key;
+ }else{
+  $('#vacationStartInput').value='';
+  $('#vacationEndInput').value='';
+ }
+}
+
+function renderVacationList(){
+ const list=$('#vacationList');
+ const items=loadVacationData()
+  .map(normalizeVacation)
+  .filter(v=>v.start&&v.end)
+  .sort((a,b)=>a.start.localeCompare(b.start));
+
+ const totals=vacationTotals(items);
+ $('#vacationPeriodCount').textContent=totals.periods;
+ $('#vacationDayCount').textContent=totals.days;
+ $('#vacationSavedCount').textContent=items.length;
+
+ if(!items.length){
+  list.innerHTML='<div class="vacation-empty">Todavía no hay períodos de vacaciones guardados.<br>Elegí una fecha desde/hasta y tocá GUARDAR.</div>';
+  return;
+ }
+
+ list.innerHTML=items.map(v=>{
+  const title=v.title||'Vacaciones';
+  const days=vacationDaysCount(v);
+  return `
+   <div class="vacation-item">
+    <div class="vacation-item-v">V</div>
+    <div class="vacation-item-copy">
+      <b>${escapeHtml(title)}</b>
+      <span>${escapeHtml(vacationRangeText(v))} · ${days} día${days===1?'':'s'}</span>
+    </div>
+    <div class="vacation-item-actions">
+      <button type="button" data-vac-edit="${escapeHtml(v.id)}">EDITAR</button>
+      <button type="button" class="delete" data-vac-delete="${escapeHtml(v.id)}">ELIMINAR</button>
+    </div>
+   </div>`;
+ }).join('');
+
+ $$('[data-vac-edit]').forEach(btn=>{
+  btn.onclick=()=>{
+   const v=items.find(x=>x.id===btn.dataset.vacEdit);
+   if(!v)return;
+   vacationEditingId=v.id;
+   $('#vacationStartInput').value=v.start;
+   $('#vacationEndInput').value=v.end;
+   $('#vacationTitleInput').value=v.title||'';
+   $('#vacationFormTitle').textContent='Editar período';
+   $('#vacationFormMode').textContent='EDITANDO';
+   $('#vacationSaveBtn').textContent='ACTUALIZAR';
+   $('#vacationStartInput').focus();
+  };
+ });
+
+ $$('[data-vac-delete]').forEach(btn=>{
+  btn.onclick=()=>{
+   const v=items.find(x=>x.id===btn.dataset.vacDelete);
+   if(!v)return;
+   const name=v.title||'Vacaciones';
+   if(!confirm(`¿Eliminar "${name}" (${vacationRangeText(v)})?`))return;
+   saveVacationData(loadVacationData().filter(x=>x.id!==v.id));
+   if(vacationEditingId===v.id)clearVacationForm();
+   renderVacationList();
+   renderAll();
+   renderYear();
+  };
+ });
+}
+
+function saveVacationPeriod(){
+ const start=$('#vacationStartInput').value;
+ const end=$('#vacationEndInput').value;
+ const title=$('#vacationTitleInput').value.trim();
+
+ if(!start||!end){
+  alert('Elegí la fecha DESDE y la fecha HASTA.');
+  return;
+ }
+ if(end<start){
+  alert('La fecha HASTA no puede ser anterior a DESDE.');
+  return;
+ }
+
+ const items=loadVacationData();
+ if(vacationEditingId){
+  const idx=items.findIndex(x=>x.id===vacationEditingId);
+  if(idx>=0){
+   items[idx]={...items[idx],start,end,title};
+  }
+ }else{
+  const id=(crypto?.randomUUID?.()||`vac-${Date.now()}-${Math.random().toString(16).slice(2)}`);
+  items.push({id,start,end,title,createdAt:new Date().toISOString()});
+ }
+
+ saveVacationData(items);
+ clearVacationForm();
+ renderVacationList();
+ renderAll();
+ renderYear();
+ vibrate(14);
+}
+
+function openVacations(){
+ clearVacationForm(true);
+ renderVacationList();
+ openModal('vacationModal');
+}
+
 function eventDotBackground(events){
  const cats=[...new Set(events.map(e=>e.category||'personal'))];
  const colors=cats.map(cat=>categoryInfo[cat]?.[1]||categoryInfo.personal[1]);
@@ -5567,7 +6305,9 @@ function renderCalendar(){
   cell.className=`day ${cls(c)}${d.getMonth()!==viewMonth?' other':''}${sameDate(d,new Date())?' today':''}${sameDate(d,selectedDate)?' selected-day':''}`;
   const events=agendaForDate(d);
   const holiday=holidayInfo(d);
+  const vacations=vacationsForDate(d);
   if(holiday)cell.classList.add('holiday');
+  if(vacations.length)cell.classList.add('vacation-day');
 
   let dots='';
   if(events.length){
@@ -5579,7 +6319,11 @@ function renderCalendar(){
    ? `<span class="holiday-badge${isBridgeHoliday(holiday)?' holiday-bridge':''}" title="${escapeHtml(holiday.custom?'Día del Metalúrgico · Todos los turnos':holiday.nombre)}"><em>FER</em></span>`
    : '';
 
-  cell.innerHTML=`<span class="date">${d.getDate()}</span><span class="code">${codeText(turn,c)}</span>${showLabels.checked?`<span class="label">${shiftNames[c][0]}</span>`:''}${dots}${holidayBadge}`;
+  const vacationBadge=vacations.length
+   ? `<span class="vacation-overlay" aria-hidden="true"></span><span class="vacation-badge" title="${escapeHtml(vacations[0].title||'Vacaciones')}">V</span>`
+   : '';
+
+  cell.innerHTML=`<span class="date">${d.getDate()}</span><span class="code">${codeText(turn,c)}</span>${showLabels.checked?`<span class="label">${shiftNames[c][0]}</span>`:''}${dots}${holidayBadge}${vacationBadge}`;
   attachDayGestures(cell,d);cal.appendChild(cell);
  }
  startHolidayBadgePulses();
@@ -5853,6 +6597,22 @@ function showDetail(d){
   }
  }
 
+ const vacations=vacationsForDate(d);
+ const vacationBanner=$('#vacationDetailBanner');
+ const vacationTitle=$('#vacationDetailTitle');
+ const vacationText=$('#vacationDetailText');
+ if(vacationBanner&&vacationTitle&&vacationText){
+  vacationBanner.classList.toggle('show',vacations.length>0);
+  if(vacations.length){
+   const v=vacations[0];
+   vacationTitle.textContent=v.title||'Vacaciones';
+   vacationText.textContent=`${vacationRangeText(v)}${vacations.length>1?` · +${vacations.length-1} período${vacations.length-1===1?'':'s'}`:''}`;
+  }else{
+   vacationTitle.textContent='Vacaciones';
+   vacationText.textContent='';
+  }
+ }
+
  const active=activeTurnKey();
  ['T1','T2','T3','T4','T5LV','T5A','T5B'].forEach(t=>{const c=codeFor(t,d),el=document.createElement('div');el.className=`shift${t===active?' active':''}`;el.innerHTML=`<b>${scheduleName(t)} · ${codeText(t,c)} — ${shiftNames[c][0]}</b><span>${shiftNames[c][1]}</span>`;detailGrid.appendChild(el)});
 }
@@ -6006,14 +6766,14 @@ function downloadICS(id,occ){const item=normalizedItem(loadAgendaData().find(x=>
  const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Turnos 4x4//Agenda//ES','CALSCALE:GREGORIAN','BEGIN:VEVENT',`UID:${item.id}-${occ}@turnos4x4`,`DTSTAMP:${icsLocal(new Date())}`,dtStart,dtEnd,`SUMMARY:${icsEscape(item.title)}`,`DESCRIPTION:${icsEscape(item.notes)}`,alarm,'END:VEVENT','END:VCALENDAR'].filter(Boolean).join('\r\n');
  const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=`agenda-${occ}-${item.title.replace(/[^\wáéíóúñ-]+/gi,'_')}.ics`;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)
 }
-function exportBackup(){const payload={app:'Turnos 4x4',format:2,version:CURRENT_VERSION,exportedAt:new Date().toISOString(),agenda:loadAgendaData()};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=`turnos4x4-agenda-backup-${dateKey(new Date())}.json`;a.click();localStorage.setItem(BACKUP_KEY,new Date().toISOString());renderBackupStatus();setTimeout(()=>URL.revokeObjectURL(u),1000)}
-async function importBackup(file){if(!file)return;try{const data=JSON.parse(await file.text()),arr=Array.isArray(data)?data:data.agenda;if(!Array.isArray(arr))throw 0;if(!confirm(`Se encontraron ${arr.length} eventos. ¿Reemplazar la agenda actual?`))return;saveAgendaData(arr);renderAgenda();renderCalendar()}catch{alert('No pude leer esa copia de seguridad.')}finally{$('#agendaImportInput').value=''}}
+function exportBackup(){const payload={app:'Turnos 4x4',format:3,version:CURRENT_VERSION,exportedAt:new Date().toISOString(),agenda:loadAgendaData(),vacations:loadVacationData()};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=`turnos4x4-backup-${dateKey(new Date())}.json`;a.click();localStorage.setItem(BACKUP_KEY,new Date().toISOString());renderBackupStatus();setTimeout(()=>URL.revokeObjectURL(u),1000)}
+async function importBackup(file){if(!file)return;try{const data=JSON.parse(await file.text()),arr=Array.isArray(data)?data:data.agenda,vacs=Array.isArray(data?.vacations)?data.vacations:null;if(!Array.isArray(arr))throw 0;const extra=vacs?` y ${vacs.length} período${vacs.length===1?'':'s'} de vacaciones`:'';if(!confirm(`Se encontraron ${arr.length} eventos${extra}. ¿Reemplazar los datos incluidos en la copia?`))return;saveAgendaData(arr);if(vacs)saveVacationData(vacs);renderAgenda();renderVacationList();renderAll();renderYear()}catch{alert('No pude leer esa copia de seguridad.')}finally{$('#agendaImportInput').value=''}}
 function renderBackupStatus(){const x=localStorage.getItem(BACKUP_KEY);backupStatus.textContent=x?`Última copia: ${new Intl.DateTimeFormat('es-AR',{dateStyle:'medium',timeStyle:'short'}).format(new Date(x))}`:'Todavía no hiciste una copia de seguridad.'}
 
 function renderYear(){
  if(!showHolidays||showHolidays.checked)ensureHolidayYear(yearViewYear);
  $('#yearTitle').textContent=yearViewYear;const grid=$('#yearGrid');grid.innerHTML='';
- for(let m=0;m<12;m++){const box=document.createElement('div');box.className='mini-month';box.innerHTML=`<h3>${new Intl.DateTimeFormat('es-AR',{month:'short'}).format(new Date(yearViewYear,m,1))}</h3>`;const days=document.createElement('div');days.className='mini-days';for(let b=0;b<new Date(yearViewYear,m,1).getDay();b++){const blank=document.createElement('i');blank.className='mini-day blank';days.appendChild(blank)}const last=new Date(yearViewYear,m+1,0).getDate();for(let d=1;d<=last;d++){const dt=new Date(yearViewYear,m,d),c=codeFor(activeTurnKey(),dt),el=document.createElement('i');el.className=`mini-day ${c}${agendaForDate(dt).length?' has-event':''}`;el.textContent=d;days.appendChild(el)}box.appendChild(days);box.onclick=()=>{viewYear=yearViewYear;viewMonth=m;closeModal('yearModal');renderCalendar()};grid.appendChild(box)}
+ for(let m=0;m<12;m++){const box=document.createElement('div');box.className='mini-month';box.innerHTML=`<h3>${new Intl.DateTimeFormat('es-AR',{month:'short'}).format(new Date(yearViewYear,m,1))}</h3>`;const days=document.createElement('div');days.className='mini-days';for(let b=0;b<new Date(yearViewYear,m,1).getDay();b++){const blank=document.createElement('i');blank.className='mini-day blank';days.appendChild(blank)}const last=new Date(yearViewYear,m+1,0).getDate();for(let d=1;d<=last;d++){const dt=new Date(yearViewYear,m,d),c=codeFor(activeTurnKey(),dt),el=document.createElement('i');el.className=`mini-day ${c}${agendaForDate(dt).length?' has-event':''}${vacationsForDate(dt).length?' has-vacation':''}`;el.textContent=d;days.appendChild(el)}box.appendChild(days);box.onclick=()=>{viewYear=yearViewYear;viewMonth=m;closeModal('yearModal');renderCalendar()};grid.appendChild(box)}
 }
 
 function countsForPeriod(turn,y,m=null){const start=m===null?new Date(y,0,1):new Date(y,m,1),end=m===null?new Date(y+1,0,1):new Date(y,m+1,1),r={M:0,N:0,D:0,F:0};for(let d=new Date(start);d<end;d=addDays(d,1))r[codeFor(turn,d)]++;return r}
@@ -6320,7 +7080,8 @@ codeSize.oninput=()=>{codeSizeValue.textContent=`${codeSize.value} px`;saveSetti
 dayNumberSize.oninput=()=>{dayNumberSizeValue.textContent=`${dayNumberSize.value} px`;saveSettings()};
 showLabels.onchange=saveSettings;showHolidays.onchange=saveSettings;hapticsToggle.onchange=saveSettings;
 $('#resetSettingsBtn').onclick=()=>{morningColor.value=defaults.morning;offColor.value=defaults.off;if(!isTurn5Profile())nightColor.value=defaults.night;codeSize.value=18;codeSizeValue.textContent='18 px';dayNumberSize.value=10;dayNumberSizeValue.textContent='10 px';showLabels.checked=true;showHolidays.checked=true;hapticsToggle.checked=true;saveSettings();updateColorSettingsUI();renderQuickPalette()};
-$('#agendaSaveBtn').onclick=saveAgenda;$('#agendaClearBtn').onclick=clearAgendaForm;$('#agendaNotifyBtn').onclick=requestNotificationPermission;$('#agendaExportBtn').onclick=exportBackup;$('#agendaImportInput').onchange=()=>importBackup($('#agendaImportInput').files[0]);agendaSearchInput.oninput=renderAllAgendaEvents;
+$('#agendaSaveBtn').onclick=saveAgenda;$('#agendaClearBtn').onclick=clearAgendaForm;$('#agendaNotifyBtn').onclick=requestNotificationPermission;
+$('#vacationSaveBtn').onclick=saveVacationPeriod;$('#vacationClearBtn').onclick=()=>clearVacationForm(true);$('#agendaExportBtn').onclick=exportBackup;$('#agendaImportInput').onchange=()=>importBackup($('#agendaImportInput').files[0]);agendaSearchInput.oninput=renderAllAgendaEvents;
 agendaFilterInput.onchange=renderAllAgendaEvents;
 agendaAllToggle.onclick=()=>{
  agendaAllExpanded=!agendaAllExpanded;
@@ -6331,6 +7092,7 @@ agendaAllToggle.onclick=()=>{
 };
 $('#yearBtn').onclick=()=>{yearViewYear=viewYear;renderYear();openModal('yearModal')};
 $('#settingsAgendaBtn').onclick=()=>{setPaletteDropdown(false);closeModal('settingsModal');setTimeout(()=>openAgenda(selectedDate),80)};
+$('#settingsVacationBtn').onclick=()=>{setPaletteDropdown(false);closeModal('settingsModal');setTimeout(openVacations,80)};
 $('#settingsStatsBtn').onclick=()=>{setPaletteDropdown(false);closeModal('settingsModal');renderStats();setTimeout(()=>openModal('statsModal'),80)};
 
 let yearHoldDelayTimer=null;
