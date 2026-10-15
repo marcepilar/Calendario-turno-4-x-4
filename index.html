@@ -6332,6 +6332,24 @@ body.light .worklog-stat-delete{
   }
 }
 
+
+/* ===== V4.8.2 · JORNADA · RETORNO A PRINCIPAL + HORAS RÁPIDAS ===== */
+.workday-overtime-quick button{
+  font-size:8px;
+  letter-spacing:.01em;
+}
+
+/* Evita transiciones visuales del fondo durante el retorno desde Jornada. */
+body.main-calendar-fit #calendarCard{
+  contain:layout paint;
+}
+
+@media(max-width:620px){
+  .workday-overtime-quick button{
+    font-size:7.5px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -6506,7 +6524,7 @@ body.light .worklog-stat-delete{
     <button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button>
   </div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.8.1</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.8.2</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 
@@ -6571,10 +6589,10 @@ body.light .worklog-stat-delete{
         <button id="workdayOvertimePlus" type="button" aria-label="Agregar media hora">+</button>
       </div>
       <div class="workday-overtime-quick">
-        <button type="button" data-overtime="0">0 h</button>
-        <button type="button" data-overtime="1">1 h</button>
-        <button type="button" data-overtime="2">2 h</button>
-        <button type="button" data-overtime="4">4 h</button>
+        <button type="button" data-overtime="6">6 hs</button>
+        <button type="button" data-overtime="8">8 hs</button>
+        <button type="button" data-overtime="10">10 hs</button>
+        <button type="button" data-overtime="12">12 hs</button>
       </div>
     </div>
 
@@ -6910,7 +6928,7 @@ body.light .worklog-stat-delete{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.8.1';
+const CURRENT_VERSION='4.8.2';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -7052,6 +7070,31 @@ function fitMainCalendarViewport(){
 
 function scheduleMainViewportFit(){
  requestAnimationFrame(fitMainCalendarViewport);
+}
+
+function restoreMainAfterWorkday(){
+ // El modal Jornada normalmente se abre después de haber bajado hasta
+ // el detalle del día. Al cerrarlo volvemos al inicio de la app y
+ // descartamos cualquier alto calculado con un viewport transitorio.
+ document.documentElement.style.removeProperty('--main-day-height');
+
+ const goHome=()=>{
+  try{
+   window.scrollTo({top:0,left:0,behavior:'auto'});
+  }catch{
+   window.scrollTo(0,0);
+  }
+  document.documentElement.scrollTop=0;
+  document.body.scrollTop=0;
+
+  scheduleMainViewportFit();
+  scheduleBelowFoldLayout();
+ };
+
+ requestAnimationFrame(goHome);
+ setTimeout(goHome,60);
+ setTimeout(goHome,180);
+ setTimeout(goHome,360);
 }
 
 function vibrate(ms){if(hapticsToggle.checked&&navigator.vibrate)navigator.vibrate(ms)}
@@ -7591,7 +7634,7 @@ function markWorkdayFeatureSeen(){
  updateWorkdayNewState();
 }
 
-function deleteWorklogById(id,{closeWorkday=false,ask=true}={}){
+function deleteWorklogById(id,{closeWorkday=false,returnMain=false,ask=true}={}){
  const current=loadWorklogData().map(normalizeWorklog).find(x=>x.id===id);
  if(!current)return false;
 
@@ -7610,18 +7653,19 @@ function deleteWorklogById(id,{closeWorkday=false,ask=true}={}){
   renderWorklogStatsDetail(worklogStatsDetailMode);
  }
 
- // Dos reajustes: inmediato y luego de que el navegador termine
- // de cerrar la ventana/modal y restaurar el viewport.
- scheduleMainViewportFit();
- setTimeout(scheduleMainViewportFit,120);
- setTimeout(scheduleMainViewportFit,320);
+ if(returnMain&&!closeWorkday){
+  restoreMainAfterWorkday();
+ }else if(!closeWorkday){
+  scheduleMainViewportFit();
+ }
+
  return true;
 }
 
 function deleteSelectedWorklog(){
  const record=worklogForDate(selectedDate,activeTurnKey());
  if(!record)return;
- deleteWorklogById(record.id);
+ deleteWorklogById(record.id,{returnMain:true});
 }
 
 
@@ -7729,12 +7773,9 @@ function saveWorkdayRecord(){
  }
 
  saveWorklogData(items);
- closeModal('workdayModal');
  renderAll();
  renderStats();
- scheduleMainViewportFit();
- setTimeout(scheduleMainViewportFit,120);
- setTimeout(scheduleMainViewportFit,320);
+ closeModal('workdayModal');
  vibrate(14);
 }
 
@@ -8907,6 +8948,12 @@ function closeModal(id){
  if(!modal)return;
  modal.classList.remove('open');
  document.body.style.overflow=$$('.backdrop.open').length?'hidden':'';
+
+ // Jornada siempre vuelve a la pantalla principal.
+ // Se hace también al cerrar con X o tocando fuera del modal.
+ if(id==='workdayModal'){
+  restoreMainAfterWorkday();
+ }
 }
 $$('[data-close]').forEach(b=>b.onclick=()=>{const id=b.dataset.close;if(id==='agendaSheet')closeAgenda();else{if(id==='settingsModal')setPaletteDropdown(false);closeModal(id)}});
 $$('.backdrop').forEach(b=>b.addEventListener('click',e=>{if(e.target===b)closeModal(b.id)}));agendaSheet.addEventListener('click',e=>{if(e.target===agendaSheet)closeAgenda()});
