@@ -7739,6 +7739,423 @@ body.light #helpModal .help-legend-grid > div{
   .help-index{top:47px}
 }
 
+
+/* ===== V4.9.0 · AYUDA · INSTALACIÓN ANDROID + IPHONE ===== */
+.help-install-recommend{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+  margin:1px 0 10px;
+}
+.help-install-os{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:color-mix(in srgb,var(--panel3) 70%,transparent);
+}
+.help-install-os-icon{
+  flex:0 0 auto;
+  width:34px;
+  height:34px;
+  display:grid;
+  place-items:center;
+  border-radius:10px;
+  font-size:12px;
+  font-weight:1000;
+}
+.help-install-os.android .help-install-os-icon{
+  color:#082719;
+  background:linear-gradient(145deg,#6bdc8e,#3fbe62);
+}
+.help-install-os.iphone .help-install-os-icon{
+  color:#071725;
+  background:linear-gradient(145deg,#82c9ff,#43a8ff);
+}
+.help-install-os b{
+  display:block;
+  font-size:9px;
+  line-height:1.08;
+}
+.help-install-os small{
+  display:block;
+  margin-top:3px;
+  color:var(--muted);
+  font-size:6.7px;
+  line-height:1.2;
+}
+
+.help-install-platform{
+  margin-top:8px;
+  padding:9px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:color-mix(in srgb,var(--panel3) 58%,transparent);
+}
+.help-install-platform h4{
+  margin:0 0 7px;
+  color:var(--text);
+  font-size:10px;
+  line-height:1.1;
+}
+.help-install-platform h4 span{
+  display:inline-grid;
+  place-items:center;
+  min-width:48px;
+  height:20px;
+  margin-right:5px;
+  padding:0 6px;
+  border-radius:7px;
+  background:rgba(67,168,255,.10);
+  border:1px solid rgba(67,168,255,.18);
+  color:#69bfff;
+  font-size:6.5px;
+  font-weight:1000;
+}
+.help-steps{
+  margin:0;
+  padding-left:20px;
+  color:var(--muted);
+}
+.help-steps li{
+  margin:0 0 6px;
+  padding-left:2px;
+  font-size:8.7px;
+  line-height:1.35;
+}
+.help-steps li:last-child{margin-bottom:0}
+.help-steps strong{color:var(--text)}
+.help-install-note{
+  margin-top:8px!important;
+  padding:7px 8px;
+  border-radius:9px;
+  border:1px solid rgba(67,168,255,.16);
+  background:rgba(67,168,255,.045);
+}
+
+body.light #helpModal .help-install-os,
+body.light #helpModal .help-install-platform{
+  background:#f7f9fc;
+  border-color:rgba(62,82,106,.13);
+}
+body.light #helpModal .help-install-os b,
+body.light #helpModal .help-install-platform h4,
+body.light #helpModal .help-steps strong{
+  color:#172536;
+}
+body.light #helpModal .help-install-os small,
+body.light #helpModal .help-steps{
+  color:#64758a;
+}
+
+@media(max-width:620px){
+  .help-install-recommend{
+    grid-template-columns:1fr;
+  }
+  .help-install-platform{
+    padding:8px;
+  }
+  .help-steps li{
+    font-size:8.2px;
+  }
+}
+
+
+/* ===== V4.9.1 · COMPARTIR APP ===== */
+
+.share-symbol{
+  width:20px;
+  height:20px;
+  display:block;
+  overflow:visible;
+}
+.share-symbol path{
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2;
+  stroke-linecap:round;
+}
+.share-symbol circle{
+  fill:var(--panel);
+  stroke:currentColor;
+  stroke-width:2;
+}
+.share-top-btn{
+  color:#d7f7ef;
+  border-color:rgba(66,214,176,.28);
+  background:
+    radial-gradient(circle at 70% 18%,rgba(66,214,176,.14),transparent 48%),
+    var(--panel);
+}
+.share-top-btn .share-symbol{
+  width:21px;
+  height:21px;
+}
+.share-top-btn:active{transform:scale(.94)}
+
+/* Ventana */
+#shareModal{
+  z-index:10070;
+}
+#shareModal .share-modal-window{
+  width:min(560px,calc(100vw - 18px));
+  max-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 24px);
+  padding:10px 12px 12px;
+  overflow:hidden;
+}
+#shareModal .share-head{
+  position:relative;
+  top:auto;
+  margin:0;
+  padding:3px 1px 9px;
+}
+#shareModal .share-head h2{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:19px;
+}
+.share-head-icon{
+  width:34px;
+  height:31px;
+  display:grid;
+  place-items:center;
+  border-radius:10px;
+  color:#a8f0db;
+  border:1px solid rgba(66,214,176,.26);
+  background:rgba(66,214,176,.08);
+}
+
+.share-preview{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px;
+  margin:2px 0 9px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:
+    radial-gradient(circle at 90% 0%,rgba(67,168,255,.08),transparent 40%),
+    var(--panel2);
+}
+.share-preview-logo{
+  flex:0 0 auto;
+  width:45px;
+  height:45px;
+  display:grid;
+  place-items:center;
+  border-radius:13px;
+  background:linear-gradient(145deg,#39d2aa,#268bd7);
+  color:#fff;
+  font-size:14px;
+  font-weight:1000;
+}
+.share-preview b{
+  display:block;
+  font-size:11px;
+}
+.share-preview span{
+  display:block;
+  margin-top:3px;
+  color:var(--muted);
+  font-size:7.5px;
+  line-height:1.25;
+}
+
+/* WhatsApp principal */
+.share-main-btn{
+  width:100%;
+  min-height:62px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 10px;
+  border-radius:14px;
+  cursor:pointer;
+  touch-action:manipulation;
+}
+.share-main-btn.whatsapp{
+  border:1px solid rgba(37,211,102,.42);
+  background:
+    radial-gradient(circle at 90% 0%,rgba(255,255,255,.11),transparent 40%),
+    linear-gradient(180deg,#28cf69,#1dad56);
+  color:#061d0f;
+  box-shadow:
+    0 7px 18px rgba(29,173,86,.16),
+    inset 0 1px 0 rgba(255,255,255,.22);
+}
+.share-wa-icon{
+  flex:0 0 auto;
+  width:39px;
+  height:39px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:rgba(255,255,255,.90);
+  color:#168d47;
+  font-size:9px;
+  font-weight:1000;
+}
+.share-main-btn > span:last-child{
+  min-width:0;
+  text-align:left;
+}
+.share-main-btn b{
+  display:block;
+  font-size:10.5px;
+  font-weight:1000;
+}
+.share-main-btn small{
+  display:block;
+  margin-top:3px;
+  font-size:7px;
+  font-weight:800;
+  opacity:.78;
+}
+
+.share-secondary-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+  margin-top:7px;
+}
+.share-secondary-btn{
+  min-height:56px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 8px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--panel2);
+  color:var(--text);
+}
+.share-secondary-btn > span:last-child{
+  min-width:0;
+  text-align:left;
+}
+.share-secondary-btn b{
+  display:block;
+  font-size:8.5px;
+}
+.share-secondary-btn small{
+  display:block;
+  margin-top:2px;
+  color:var(--muted);
+  font-size:6.3px;
+}
+.share-mini-icon{
+  flex:0 0 auto;
+  width:31px;
+  height:31px;
+  display:grid;
+  place-items:center;
+  border-radius:9px;
+  border:1px solid rgba(67,168,255,.18);
+  background:rgba(67,168,255,.07);
+  color:#72c2ff;
+  font-size:13px;
+}
+.share-mini-icon .share-symbol{
+  width:17px;
+  height:17px;
+}
+
+.share-link-box{
+  margin-top:7px;
+  padding:7px 9px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:color-mix(in srgb,var(--panel3) 62%,transparent);
+}
+.share-link-box small{
+  display:block;
+  color:var(--muted);
+  font-size:6.2px;
+  font-weight:850;
+}
+.share-link-box span{
+  display:block;
+  margin-top:3px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:var(--text);
+  font-size:7px;
+}
+
+.share-status{
+  min-height:17px;
+  padding:5px 3px 0;
+  text-align:center;
+  color:var(--muted);
+  font-size:7px;
+  line-height:1.1;
+}
+.share-status.ok{color:#63dcae}
+.share-status.error{color:#ff7585}
+
+body.light #shareModal .share-modal-window{
+  background:
+    radial-gradient(circle at 92% 4%,rgba(66,214,176,.05),transparent 35%),
+    linear-gradient(180deg,rgba(252,253,255,.99),rgba(241,245,249,.99));
+  color:#172536;
+}
+body.light #shareModal .share-preview,
+body.light #shareModal .share-secondary-btn,
+body.light #shareModal .share-link-box{
+  background:linear-gradient(180deg,#f8fafc,#eef2f6);
+  border-color:rgba(62,82,106,.15);
+}
+body.light #shareModal .share-preview b,
+body.light #shareModal .share-secondary-btn,
+body.light #shareModal .share-link-box span{
+  color:#172536;
+}
+body.light #shareModal .share-preview span,
+body.light #shareModal .share-secondary-btn small,
+body.light #shareModal .share-link-box small{
+  color:#64758a;
+}
+
+/* Cuatro botones de cabecera: conservar espacio en móviles */
+@media(max-width:620px){
+  .top-actions{
+    gap:5px;
+  }
+  .top-actions .icon-btn{
+    width:38px;
+    height:38px;
+  }
+  #shareModal .share-modal-window{
+    width:calc(100vw - 12px);
+    padding:8px 9px 10px;
+  }
+}
+
+@media(max-width:390px){
+  .top-actions{
+    gap:3px;
+  }
+  .top-actions .icon-btn{
+    width:33px;
+    height:33px;
+    border-radius:11px;
+  }
+  .share-top-btn .share-symbol{
+    width:18px;
+    height:18px;
+  }
+  .help-top-btn{
+    font-size:18px!important;
+  }
+  .share-secondary-grid{
+    gap:4px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -7750,6 +8167,14 @@ body.light #helpModal .help-legend-grid > div{
   <header class="topbar">
     <div class="brand"><div class="logo">4×4</div><div><h1>Calendario de Turnos</h1><span class="author-signature">Made By Goma E.</span></div></div>
     <div class="top-actions">
+      <button id="shareBtn" class="icon-btn share-top-btn" aria-label="Compartir app" title="Compartir app">
+        <svg class="share-symbol" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8.3 10.7 15.7 6.6M8.3 13.3l7.4 4.1"></path>
+          <circle cx="6" cy="12" r="2.6"></circle>
+          <circle cx="18" cy="5.5" r="2.6"></circle>
+          <circle cx="18" cy="18.5" r="2.6"></circle>
+        </svg>
+      </button>
       <button id="helpBtn" class="icon-btn help-top-btn" aria-label="Ayuda">?</button>
       <button id="settingsBtn" class="icon-btn" aria-label="Configuración">⚙️<i class="update-dot"></i></button>
       <button id="themeBtn" class="icon-btn" aria-label="Cambiar tema">☀️</button>
@@ -7922,11 +8347,77 @@ body.light #helpModal .help-legend-grid > div{
     <button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button>
   </div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.8.9</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.9.1</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 
 
+
+
+<!-- Compartir app -->
+<div id="shareModal" class="backdrop share-backdrop">
+  <div class="modal glass share-modal-window">
+    <div class="modal-head share-head">
+      <div>
+        <h2>
+          <span class="share-head-icon">
+            <svg class="share-symbol" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M8.3 10.7 15.7 6.6M8.3 13.3l7.4 4.1"></path>
+              <circle cx="6" cy="12" r="2.6"></circle>
+              <circle cx="18" cy="5.5" r="2.6"></circle>
+              <circle cx="18" cy="18.5" r="2.6"></circle>
+            </svg>
+          </span>
+          Compartir app
+        </h2>
+        <small>Enviá el Calendario de Turnos 4×4 a otra persona</small>
+      </div>
+      <button class="close-btn" data-close="shareModal" aria-label="Cerrar Compartir">×</button>
+    </div>
+
+    <div class="share-preview">
+      <div class="share-preview-logo">4×4</div>
+      <div>
+        <b>Calendario de Turnos 4×4</b>
+        <span>Compartí el enlace para que puedan abrirlo e instalarlo en Android o iPhone.</span>
+      </div>
+    </div>
+
+    <button id="shareWhatsAppBtn" class="share-main-btn whatsapp" type="button">
+      <span class="share-wa-icon">WA</span>
+      <span>
+        <b>COMPARTIR POR WHATSAPP</b>
+        <small>Opción recomendada</small>
+      </span>
+    </button>
+
+    <div class="share-secondary-grid">
+      <button id="shareNativeBtn" class="share-secondary-btn" type="button">
+        <span class="share-mini-icon">
+          <svg class="share-symbol" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M8.3 10.7 15.7 6.6M8.3 13.3l7.4 4.1"></path>
+            <circle cx="6" cy="12" r="2.6"></circle>
+            <circle cx="18" cy="5.5" r="2.6"></circle>
+            <circle cx="18" cy="18.5" r="2.6"></circle>
+          </svg>
+        </span>
+        <span><b>Compartir…</b><small>Menú del teléfono</small></span>
+      </button>
+
+      <button id="shareCopyBtn" class="share-secondary-btn" type="button">
+        <span class="share-mini-icon">⧉</span>
+        <span><b>Copiar enlace</b><small>Para pegar donde quieras</small></span>
+      </button>
+    </div>
+
+    <div class="share-link-box">
+      <small>Enlace de la app</small>
+      <span id="shareAppUrl">https://marcepilar.github.io/Calendario-turno-4-x-4/</span>
+    </div>
+
+    <div id="shareStatus" class="share-status" aria-live="polite"></div>
+  </div>
+</div>
 
 <!-- Ayuda -->
 <div id="helpModal" class="backdrop help-backdrop">
@@ -7943,7 +8434,7 @@ body.light #helpModal .help-legend-grid > div{
       <div class="help-intro-logo">4×4</div>
       <div>
         <b>Cómo usar la aplicación</b>
-        <span>Turnos, calendario, Agenda, Vacaciones, Jornada, Licencias, Estadísticas y Configuración.</span>
+        <span>Turnos, calendario, instalación, Agenda, Vacaciones, Jornada, Licencias, Estadísticas y Configuración.</span>
       </div>
     </div>
 
@@ -7956,6 +8447,7 @@ body.light #helpModal .help-legend-grid > div{
       <button type="button" data-help-go="help-licenses">Licencias</button>
       <button type="button" data-help-go="help-stats">Estadísticas</button>
       <button type="button" data-help-go="help-settings">Configuración</button>
+      <button type="button" data-help-go="help-install">Instalar</button>
     </div>
 
     <div class="help-content">
@@ -7967,6 +8459,7 @@ body.light #helpModal .help-legend-grid > div{
           <p><strong>Turno 5:</strong> al elegirlo aparece un segundo selector con T5 FIJO, T5 UNO y T5 DOS.</p>
           <p><strong>T5 FIJO:</strong> lunes a viernes, 07:30–16:30. <strong>T5 UNO / T5 DOS:</strong> ciclo 4×4 de 12 horas, 06:00–18:00.</p>
           <p><strong>HOY:</strong> vuelve al día actual. <strong>AÑO:</strong> abre los 12 meses. Las flechas ‹ › cambian de mes.</p>
+          <p><strong>Compartir app:</strong> tocá el símbolo de los tres puntos unidos de la cabecera. WhatsApp aparece como opción principal; también podés usar el menú de compartir del teléfono o copiar el enlace.</p>
           <p class="help-tip">La rotación base nunca se altera por Vacaciones, Jornada, Licencias, Agenda o Feriados.</p>
         </div>
       </section>
@@ -8058,18 +8551,68 @@ body.light #helpModal .help-legend-grid > div{
         </div>
       </section>
 
-      <section class="help-section">
-        <div class="help-section-title"><span>9</span><div><b>Datos, copias y actualizaciones</b><small>Cómo se conserva la información</small></div></div>
+      <section id="help-install" class="help-section">
+        <div class="help-section-title"><span>9</span><div><b>Instalar la app</b><small>Android e iPhone paso a paso</small></div></div>
         <div class="help-card">
-          <p>Agenda, Vacaciones, Jornada y Licencias se guardan localmente en el dispositivo.</p>
-          <p>La copia de seguridad incluye Agenda, Vacaciones, preferencias de Vacaciones, Registro laboral y Licencias.</p>
-          <p>Cuando existe una versión nueva aparece <strong>“Nueva versión disponible”</strong>. ACTUALIZAR instala la nueva versión; Más tarde conserva la actual por el momento.</p>
-          <p>La app puede instalarse como PWA en la pantalla de inicio. Los feriados usan datos en caché cuando no hay Internet.</p>
+          <div class="help-install-recommend">
+            <div class="help-install-os android">
+              <span class="help-install-os-icon">A</span>
+              <div>
+                <b>Android · Recomendado: Google Chrome</b>
+                <small>Es la opción recomendada para instalar esta PWA como aplicación.</small>
+              </div>
+            </div>
+            <div class="help-install-os iphone">
+              <span class="help-install-os-icon">i</span>
+              <div>
+                <b>iPhone · Recomendado: Safari</b>
+                <small>Es la opción más directa para agregarla como app web a la pantalla de inicio.</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="help-install-platform">
+            <h4><span>ANDROID</span> Instalar con Google Chrome</h4>
+            <ol class="help-steps">
+              <li>Abrí <strong>Google Chrome</strong> en el teléfono.</li>
+              <li>Entrá al enlace del <strong>Calendario de Turnos 4×4</strong> y esperá a que cargue completamente.</li>
+              <li>Tocá el menú <strong>⋮</strong> de Chrome.</li>
+              <li>Elegí <strong>“Instalar y crear acceso directo”</strong> y después <strong>“Instalar”</strong>.</li>
+              <li>Confirmá la instalación. El icono aparecerá en la pantalla de inicio o en el listado de aplicaciones.</li>
+            </ol>
+            <p class="help-install-note"><strong>Si no aparece “Instalar”:</strong> en el mismo menú buscá “Instalar y crear acceso directo” → “Crear acceso directo”. Para la experiencia completa de app, mantené Chrome actualizado.</p>
+          </div>
+
+          <div class="help-install-platform">
+            <h4><span>IPHONE</span> Instalar con Safari</h4>
+            <ol class="help-steps">
+              <li>Abrí <strong>Safari</strong> en el iPhone.</li>
+              <li>Entrá al enlace del <strong>Calendario de Turnos 4×4</strong> y esperá a que cargue.</li>
+              <li>Tocá el botón de <strong>Menú de página / Compartir</strong>.</li>
+              <li>Desplazate por las opciones y tocá <strong>“Agregar a Inicio”</strong>.</li>
+              <li>Activá <strong>“Abrir como app web”</strong>.</li>
+              <li>Tocá <strong>“Agregar”</strong>. El icono aparecerá en la pantalla de inicio y abrirá la app sin la interfaz normal del navegador.</li>
+            </ol>
+            <p class="help-install-note"><strong>Si no aparece “Agregar a Inicio”:</strong> bajá hasta “Editar acciones” y agregá esa opción al menú.</p>
+          </div>
+
+          <p class="help-tip"><strong>Importante:</strong> una vez instalada no hace falta volver a instalarla para recibir nuevas versiones. Cuando la app detecta una actualización, muestra el aviso “Nueva versión disponible”.</p>
+          <p><strong>Consejo:</strong> hacé la instalación desde una pestaña normal, no desde modo incógnito/privado, y mantené el navegador actualizado.</p>
         </div>
       </section>
 
       <section class="help-section">
-        <div class="help-section-title"><span>10</span><div><b>Cómo interpretar la app</b><small>Programado vs. registrado</small></div></div>
+        <div class="help-section-title"><span>10</span><div><b>Datos, copias y actualizaciones</b><small>Cómo se conserva la información</small></div></div>
+        <div class="help-card">
+          <p>Agenda, Vacaciones, Jornada y Licencias se guardan localmente en el dispositivo.</p>
+          <p>La copia de seguridad incluye Agenda, Vacaciones, preferencias de Vacaciones, Registro laboral y Licencias.</p>
+          <p>Cuando existe una versión nueva aparece <strong>“Nueva versión disponible”</strong>. ACTUALIZAR instala la nueva versión; Más tarde conserva la actual por el momento.</p>
+          <p>La app puede instalarse en Android y iPhone desde la sección “Instalar” de esta Ayuda. Los feriados usan datos en caché cuando no hay Internet.</p>
+        </div>
+      </section>
+
+      <section class="help-section">
+        <div class="help-section-title"><span>11</span><div><b>Cómo interpretar la app</b><small>Programado vs. registrado</small></div></div>
         <div class="help-card">
           <p>El calendario base siempre representa el <strong>turno programado</strong>. Vacaciones, Licencias, Cambios, Horas extra, Feriados y Agenda agregan información sin modificar la rotación.</p>
           <p>Así podés comparar qué correspondía trabajar y qué ocurrió realmente.</p>
@@ -8567,7 +9110,10 @@ body.light #helpModal .help-legend-grid > div{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.8.9';
+const CURRENT_VERSION='4.9.1';
+const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
+const APP_SHARE_TITLE='Calendario de Turnos 4×4';
+const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -8740,6 +9286,77 @@ function restoreMainAfterWorkday(){
 
 function vibrate(ms){if(hapticsToggle.checked&&navigator.vibrate)navigator.vibrate(ms)}
 function cap(s){return s?s.charAt(0).toUpperCase()+s.slice(1):s}
+
+function setShareStatus(message,type=''){
+ const el=$('#shareStatus');
+ if(!el)return;
+ el.textContent=message||'';
+ el.className=`share-status${type?` ${type}`:''}`;
+}
+
+function openShareModal(){
+ const urlEl=$('#shareAppUrl');
+ if(urlEl)urlEl.textContent=APP_SHARE_URL;
+ setShareStatus('');
+ openModal('shareModal');
+}
+
+function shareByWhatsApp(){
+ const message=`${APP_SHARE_TEXT}\n\n${APP_SHARE_URL}`;
+ const url=`https://wa.me/?text=${encodeURIComponent(message)}`;
+ setShareStatus('Abriendo WhatsApp…','ok');
+ try{
+  const opened=window.open(url,'_blank','noopener,noreferrer');
+  if(!opened)window.location.href=url;
+ }catch{
+  window.location.href=url;
+ }
+}
+
+async function shareWithSystem(){
+ if(navigator.share){
+  try{
+   await navigator.share({
+    title:APP_SHARE_TITLE,
+    text:APP_SHARE_TEXT,
+    url:APP_SHARE_URL
+   });
+   setShareStatus('Compartido.','ok');
+   return;
+  }catch(err){
+   if(err?.name==='AbortError'){
+    setShareStatus('');
+    return;
+   }
+  }
+ }
+
+ // Si el menú nativo no está disponible, WhatsApp es el respaldo principal.
+ shareByWhatsApp();
+}
+
+async function copyShareLink(){
+ try{
+  if(navigator.clipboard?.writeText){
+   await navigator.clipboard.writeText(APP_SHARE_URL);
+  }else{
+   const ta=document.createElement('textarea');
+   ta.value=APP_SHARE_URL;
+   ta.style.position='fixed';
+   ta.style.opacity='0';
+   document.body.appendChild(ta);
+   ta.focus();
+   ta.select();
+   document.execCommand('copy');
+   ta.remove();
+  }
+  setShareStatus('Enlace copiado.','ok');
+  vibrate(10);
+ }catch{
+  setShareStatus('No se pudo copiar el enlace.','error');
+ }
+}
+
 function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[ch]))}
 
 const defaults={morning:'#ffd84d',night:'#27aee4',off:'#3fbe62',codeSize:18,dayNumberSize:10,showLabels:true,showHolidays:true,haptics:true};
@@ -11017,6 +11634,10 @@ $('#todayBtn').onclick=()=>{const d=new Date();viewYear=d.getFullYear();viewMont
 turnSelect.onchange=()=>{updateTurn5Visibility();syncTurnPulseText();ensurePersistentTurnPulses();localStorage.setItem('turno4x4.turno',turnSelect.value);switchActiveColorProfile();renderAll();renderYear();renderStats();scheduleMainViewportFit();scheduleBelowFoldLayout()};
 turn5Select.onchange=()=>{syncTurn5PulseText();ensurePersistentTurnPulses();localStorage.setItem('turno4x4.turno5',turn5Select.value);updateColorSettingsUI();renderQuickPalette();renderAll();renderYear();renderStats();scheduleMainViewportFit();scheduleBelowFoldLayout()};
 themeBtn.onclick=()=>{document.body.classList.toggle('light');localStorage.setItem('turno4x4.theme',document.body.classList.contains('light')?'light':'dark');themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️'};
+shareBtn.onclick=openShareModal;
+$('#shareWhatsAppBtn').onclick=shareByWhatsApp;
+$('#shareNativeBtn').onclick=shareWithSystem;
+$('#shareCopyBtn').onclick=copyShareLink;
 helpBtn.onclick=()=>{
  const hv=$('#helpVersionLabel');
  if(hv)hv.textContent=CURRENT_VERSION;
