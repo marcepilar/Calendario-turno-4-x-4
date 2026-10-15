@@ -5263,6 +5263,99 @@ body.light .vacation-color-input{
   .vacation-color-input{width:26px;height:24px}
 }
 
+
+/* ===== V4.7.9 · VACACIONES · MOSTRAR / OCULTAR ===== */
+.vacation-visibility-row{
+  flex:0 0 auto;
+  min-height:42px;
+  margin:0 0 6px;
+  padding:6px 8px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:var(--panel2);
+}
+.vacation-visibility-copy{
+  min-width:0;
+}
+.vacation-visibility-copy b{
+  display:block;
+  font-size:10px;
+  line-height:1.05;
+}
+.vacation-visibility-copy small{
+  display:block;
+  margin-top:2px;
+  color:var(--muted);
+  font-size:7px;
+  line-height:1.05;
+}
+.vacation-visibility-switch{
+  flex:0 0 auto;
+  width:42px;
+  height:24px;
+}
+.vacation-visibility-switch .slider::before{
+  width:18px;
+  height:18px;
+}
+.vacation-visibility-switch input:checked+.slider::before{
+  transform:translateX(18px);
+}
+
+body.light #vacationModal .vacation-visibility-row{
+  background:linear-gradient(180deg,#f8fafc,#eef2f6);
+  border-color:rgba(62,82,106,.15);
+}
+body.light #vacationModal .vacation-visibility-copy b{
+  color:#172536;
+}
+body.light #vacationModal .vacation-visibility-copy small{
+  color:#64758a;
+}
+
+@media(max-width:620px){
+  .vacation-visibility-row{
+    min-height:38px;
+    margin-bottom:5px;
+    padding:5px 7px;
+  }
+  .vacation-visibility-copy b{
+    font-size:9.3px;
+  }
+  .vacation-visibility-copy small{
+    font-size:6.5px;
+  }
+  .vacation-visibility-switch{
+    width:40px;
+    height:22px;
+  }
+  .vacation-visibility-switch .slider::before{
+    width:16px;
+    height:16px;
+  }
+  .vacation-visibility-switch input:checked+.slider::before{
+    transform:translateX(18px);
+  }
+}
+
+@media(max-height:760px){
+  .vacation-visibility-row{
+    min-height:34px;
+    margin-bottom:4px;
+    padding:4px 6px;
+  }
+  .vacation-visibility-copy b{
+    font-size:8.6px;
+  }
+  .vacation-visibility-copy small{
+    font-size:5.9px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -5417,7 +5510,7 @@ body.light .vacation-color-input{
     <button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button>
   </div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.7.8</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.7.9</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 
@@ -5449,6 +5542,17 @@ body.light .vacation-color-input{
         </span>
         <input id="vacationColorInput" class="vacation-color-input" type="color" value="#9b7cff" tabindex="-1" aria-label="Elegir color del icono V">
       </div>
+    </div>
+
+    <div class="vacation-visibility-row">
+      <div class="vacation-visibility-copy">
+        <b>Mostrar vacaciones</b>
+        <small>Mostrar la V y el marco en el calendario</small>
+      </div>
+      <label class="switch vacation-visibility-switch">
+        <input id="showVacationsToggle" type="checkbox" checked>
+        <span class="slider"></span>
+      </label>
     </div>
 
     <div class="vacation-editor">
@@ -5681,7 +5785,7 @@ body.light .vacation-color-input{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.7.8';
+const CURRENT_VERSION='4.7.9';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -5711,6 +5815,7 @@ const morningColorRow=$('#morningColorRow'),nightColorRow=$('#nightColorRow'),of
 const AGENDA_KEY='turno4x4.agenda.v1', NOTIFIED_KEY='turno4x4.agenda.notified.v1', BACKUP_KEY='turno4x4.agenda.lastBackup';
 const VACATION_KEY='turno4x4.vacations.v1';
 const VACATION_COLOR_KEY='turno4x4.vacationColor.v1';
+const SHOW_VACATIONS_KEY='turno4x4.showVacations.v1';
 
 let now=new Date(),viewYear=now.getFullYear(),viewMonth=now.getMonth(),selectedDate=new Date(now.getFullYear(),now.getMonth(),now.getDate());
 let agendaSelectedDate=new Date(selectedDate),agendaEditingId=null,agendaHoldTimer=null,agendaHoldOpened=false,agendaAllExpanded=false;
@@ -6378,6 +6483,29 @@ function loadVacationColor(){
  applyVacationColor(saved,false);
 }
 
+function vacationsAreVisible(){
+ const toggle=$('#showVacationsToggle');
+ if(toggle)return toggle.checked;
+ return localStorage.getItem(SHOW_VACATIONS_KEY)!=='false';
+}
+
+function loadVacationVisibility(){
+ const visible=localStorage.getItem(SHOW_VACATIONS_KEY)!=='false';
+ const toggle=$('#showVacationsToggle');
+ if(toggle)toggle.checked=visible;
+ return visible;
+}
+
+function saveVacationVisibility(){
+ const toggle=$('#showVacationsToggle');
+ if(!toggle)return;
+ localStorage.setItem(SHOW_VACATIONS_KEY,toggle.checked?'true':'false');
+ renderAll();
+ renderYear();
+ showDetail(selectedDate);
+}
+
+
 function openVacationColorPicker(){
  const input=$('#vacationColorInput');
  if(!input)return;
@@ -6549,6 +6677,7 @@ function saveVacationPeriod(){
 function openVacations(){
  clearVacationForm(true);
  loadVacationColor();
+ loadVacationVisibility();
  renderVacationList();
  openModal('vacationModal');
 }
@@ -6575,7 +6704,7 @@ function renderCalendar(){
   cell.className=`day ${cls(c)}${d.getMonth()!==viewMonth?' other':''}${sameDate(d,new Date())?' today':''}${sameDate(d,selectedDate)?' selected-day':''}`;
   const events=agendaForDate(d);
   const holiday=holidayInfo(d);
-  const vacations=vacationsForDate(d);
+  const vacations=vacationsAreVisible()?vacationsForDate(d):[];
   if(holiday)cell.classList.add('holiday');
   if(vacations.length)cell.classList.add('vacation-day');
 
@@ -6867,7 +6996,7 @@ function showDetail(d){
   }
  }
 
- const vacations=vacationsForDate(d);
+ const vacations=vacationsAreVisible()?vacationsForDate(d):[];
  const vacationBanner=$('#vacationDetailBanner');
  const vacationTitle=$('#vacationDetailTitle');
  const vacationText=$('#vacationDetailText');
@@ -7036,14 +7165,14 @@ function downloadICS(id,occ){const item=normalizedItem(loadAgendaData().find(x=>
  const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Turnos 4x4//Agenda//ES','CALSCALE:GREGORIAN','BEGIN:VEVENT',`UID:${item.id}-${occ}@turnos4x4`,`DTSTAMP:${icsLocal(new Date())}`,dtStart,dtEnd,`SUMMARY:${icsEscape(item.title)}`,`DESCRIPTION:${icsEscape(item.notes)}`,alarm,'END:VEVENT','END:VCALENDAR'].filter(Boolean).join('\r\n');
  const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=`agenda-${occ}-${item.title.replace(/[^\wáéíóúñ-]+/gi,'_')}.ics`;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)
 }
-function exportBackup(){const payload={app:'Turnos 4x4',format:4,version:CURRENT_VERSION,exportedAt:new Date().toISOString(),agenda:loadAgendaData(),vacations:loadVacationData(),vacationColor:localStorage.getItem(VACATION_COLOR_KEY)||DEFAULT_VACATION_COLOR};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=`turnos4x4-backup-${dateKey(new Date())}.json`;a.click();localStorage.setItem(BACKUP_KEY,new Date().toISOString());renderBackupStatus();setTimeout(()=>URL.revokeObjectURL(u),1000)}
-async function importBackup(file){if(!file)return;try{const data=JSON.parse(await file.text()),arr=Array.isArray(data)?data:data.agenda,vacs=Array.isArray(data?.vacations)?data.vacations:null,vacColor=typeof data?.vacationColor==='string'?data.vacationColor:null;if(!Array.isArray(arr))throw 0;const extra=vacs?` y ${vacs.length} período${vacs.length===1?'':'s'} de vacaciones`:'';if(!confirm(`Se encontraron ${arr.length} eventos${extra}. ¿Reemplazar los datos incluidos en la copia?`))return;saveAgendaData(arr);if(vacs)saveVacationData(vacs);if(vacColor)applyVacationColor(vacColor,true);renderAgenda();renderVacationList();renderAll();renderYear()}catch{alert('No pude leer esa copia de seguridad.')}finally{$('#agendaImportInput').value=''}}
+function exportBackup(){const payload={app:'Turnos 4x4',format:4,version:CURRENT_VERSION,exportedAt:new Date().toISOString(),agenda:loadAgendaData(),vacations:loadVacationData(),vacationColor:localStorage.getItem(VACATION_COLOR_KEY)||DEFAULT_VACATION_COLOR,showVacations:localStorage.getItem(SHOW_VACATIONS_KEY)!=='false'};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=`turnos4x4-backup-${dateKey(new Date())}.json`;a.click();localStorage.setItem(BACKUP_KEY,new Date().toISOString());renderBackupStatus();setTimeout(()=>URL.revokeObjectURL(u),1000)}
+async function importBackup(file){if(!file)return;try{const data=JSON.parse(await file.text()),arr=Array.isArray(data)?data:data.agenda,vacs=Array.isArray(data?.vacations)?data.vacations:null,vacColor=typeof data?.vacationColor==='string'?data.vacationColor:null,showVacs=typeof data?.showVacations==='boolean'?data.showVacations:null;if(!Array.isArray(arr))throw 0;const extra=vacs?` y ${vacs.length} período${vacs.length===1?'':'s'} de vacaciones`:'';if(!confirm(`Se encontraron ${arr.length} eventos${extra}. ¿Reemplazar los datos incluidos en la copia?`))return;saveAgendaData(arr);if(vacs)saveVacationData(vacs);if(vacColor)applyVacationColor(vacColor,true);if(showVacs!==null)localStorage.setItem(SHOW_VACATIONS_KEY,showVacs?'true':'false');loadVacationVisibility();renderAgenda();renderVacationList();renderAll();renderYear()}catch{alert('No pude leer esa copia de seguridad.')}finally{$('#agendaImportInput').value=''}}
 function renderBackupStatus(){const x=localStorage.getItem(BACKUP_KEY);backupStatus.textContent=x?`Última copia: ${new Intl.DateTimeFormat('es-AR',{dateStyle:'medium',timeStyle:'short'}).format(new Date(x))}`:'Todavía no hiciste una copia de seguridad.'}
 
 function renderYear(){
  if(!showHolidays||showHolidays.checked)ensureHolidayYear(yearViewYear);
  $('#yearTitle').textContent=yearViewYear;const grid=$('#yearGrid');grid.innerHTML='';
- for(let m=0;m<12;m++){const box=document.createElement('div');box.className='mini-month';box.innerHTML=`<h3>${new Intl.DateTimeFormat('es-AR',{month:'short'}).format(new Date(yearViewYear,m,1))}</h3>`;const days=document.createElement('div');days.className='mini-days';for(let b=0;b<new Date(yearViewYear,m,1).getDay();b++){const blank=document.createElement('i');blank.className='mini-day blank';days.appendChild(blank)}const last=new Date(yearViewYear,m+1,0).getDate();for(let d=1;d<=last;d++){const dt=new Date(yearViewYear,m,d),c=codeFor(activeTurnKey(),dt),el=document.createElement('i');el.className=`mini-day ${c}${agendaForDate(dt).length?' has-event':''}${vacationsForDate(dt).length?' has-vacation':''}`;el.textContent=d;days.appendChild(el)}box.appendChild(days);box.onclick=()=>{viewYear=yearViewYear;viewMonth=m;closeModal('yearModal');renderCalendar()};grid.appendChild(box)}
+ for(let m=0;m<12;m++){const box=document.createElement('div');box.className='mini-month';box.innerHTML=`<h3>${new Intl.DateTimeFormat('es-AR',{month:'short'}).format(new Date(yearViewYear,m,1))}</h3>`;const days=document.createElement('div');days.className='mini-days';for(let b=0;b<new Date(yearViewYear,m,1).getDay();b++){const blank=document.createElement('i');blank.className='mini-day blank';days.appendChild(blank)}const last=new Date(yearViewYear,m+1,0).getDate();for(let d=1;d<=last;d++){const dt=new Date(yearViewYear,m,d),c=codeFor(activeTurnKey(),dt),el=document.createElement('i');el.className=`mini-day ${c}${agendaForDate(dt).length?' has-event':''}${vacationsAreVisible()&&vacationsForDate(dt).length?' has-vacation':''}`;el.textContent=d;days.appendChild(el)}box.appendChild(days);box.onclick=()=>{viewYear=yearViewYear;viewMonth=m;closeModal('yearModal');renderCalendar()};grid.appendChild(box)}
 }
 
 function countsForPeriod(turn,y,m=null){const start=m===null?new Date(y,0,1):new Date(y,m,1),end=m===null?new Date(y+1,0,1):new Date(y,m+1,1),r={M:0,N:0,D:0,F:0};for(let d=new Date(start);d<end;d=addDays(d,1))r[codeFor(turn,d)]++;return r}
@@ -7355,6 +7484,11 @@ $('#vacationSaveBtn').onclick=saveVacationPeriod;$('#vacationClearBtn').onclick=
 
 const vacationColorCard=$('#vacationColorCard');
 const vacationColorInput=$('#vacationColorInput');
+const showVacationsToggle=$('#showVacationsToggle');
+
+if(showVacationsToggle){
+ showVacationsToggle.onchange=saveVacationVisibility;
+}
 
 if(vacationColorInput){
  vacationColorInput.oninput=()=>{
@@ -7628,7 +7762,7 @@ document.addEventListener('dragstart',ev=>{
  if(ev.target.closest?.('button,[role="button"]'))ev.preventDefault();
 });
 
-loadSettings();loadVacationColor();syncTurnPulseText();syncTurn5PulseText();ensurePersistentTurnPulses();renderQuickPalette();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();fitMainCalendarViewport();keepDetailBelowInitialFold();setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},260);setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},700);initSplash();checkUpdate();checkReminders();
+loadSettings();loadVacationColor();loadVacationVisibility();syncTurnPulseText();syncTurn5PulseText();ensurePersistentTurnPulses();renderQuickPalette();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();fitMainCalendarViewport();keepDetailBelowInitialFold();setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},260);setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},700);initSplash();checkUpdate();checkReminders();
 window.addEventListener('resize',()=>{scheduleMainViewportFit();scheduleBelowFoldLayout()});
 window.addEventListener('orientationchange',()=>{scheduleMainViewportFit();scheduleBelowFoldLayout()});
 window.addEventListener('focus',()=>{
