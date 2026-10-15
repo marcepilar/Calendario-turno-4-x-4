@@ -8464,7 +8464,7 @@ body.light #helpModal .help-install-os.iphone .help-install-os-icon{
     <button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button>
   </div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.9.3</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.9.4</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 
@@ -8557,6 +8557,7 @@ body.light #helpModal .help-install-os.iphone .help-install-os-icon{
 
     <div class="help-index">
       <button type="button" data-help-go="help-start">Inicio</button>
+      <button type="button" data-help-go="help-install">Instalar</button>
       <button type="button" data-help-go="help-calendar">Calendario</button>
       <button type="button" data-help-go="help-agenda">Agenda</button>
       <button type="button" data-help-go="help-vacations">Vacaciones</button>
@@ -8564,11 +8565,9 @@ body.light #helpModal .help-install-os.iphone .help-install-os-icon{
       <button type="button" data-help-go="help-licenses">Licencias</button>
       <button type="button" data-help-go="help-stats">Estadísticas</button>
       <button type="button" data-help-go="help-settings">Configuración</button>
-      <button type="button" data-help-go="help-install">Instalar</button>
     </div>
 
     <div class="help-content">
-
       <section id="help-start" class="help-section">
         <div class="help-section-title"><span>1</span><div><b>Primeros pasos</b><small>Elegir turno y navegar</small></div></div>
         <div class="help-card">
@@ -8581,95 +8580,8 @@ body.light #helpModal .help-install-os.iphone .help-install-os-icon{
         </div>
       </section>
 
-      <section id="help-calendar" class="help-section">
-        <div class="help-section-title"><span>2</span><div><b>Calendario y símbolos</b><small>Qué significa cada marca</small></div></div>
-        <div class="help-card">
-          <div class="help-legend-grid">
-            <div><i class="help-shift m">M</i><span><b>Mañana</b><small>06:00–18:00</small></span></div>
-            <div><i class="help-shift n">N</i><span><b>Noche</b><small>18:00–06:00</small></span></div>
-            <div><i class="help-shift f">F</i><span><b>Franco</b><small>Día libre</small></span></div>
-            <div><i class="help-shift fer">FER</i><span><b>Feriado</b><small>Rojo / azul puente</small></span></div>
-            <div><i class="help-shift vacation">V</i><span><b>Vacaciones</b><small>Color configurable</small></span></div>
-            <div><i class="help-shift license">L</i><span><b>Licencia</b><small>Período registrado</small></span></div>
-            <div><i class="help-shift change">C</i><span><b>Cambio</b><small>Cambio de turno</small></span></div>
-            <div><i class="help-shift extra">+H</i><span><b>Horas extra</b><small>Horas adicionales</small></span></div>
-          </div>
-          <p><strong>Tocar un día:</strong> abre su detalle debajo del calendario.</p>
-          <p><strong>Mantener 450 ms:</strong> abre rápidamente la Agenda para ese día.</p>
-          <p><strong>FER rojo:</strong> feriado. <strong>FER azul:</strong> puente/no laborable. El 7 de septiembre se incluye como Día del Metalúrgico para todos los turnos.</p>
-          <p><strong>Vista anual:</strong> muestra los 12 meses. Mantené pulsados los controles del año para avanzar más rápido.</p>
-        </div>
-      </section>
-
-      <section id="help-agenda" class="help-section">
-        <div class="help-section-title"><span>3</span><div><b>Agenda</b><small>Eventos y recordatorios</small></div></div>
-        <div class="help-card">
-          <p><strong>Abrir:</strong> Configuración → Agenda, o mantener un día durante 450 ms.</p>
-          <p>Guardá eventos con fecha, hora, título y notas. Después podés buscarlos, editarlos, abrirlos en calendario o eliminarlos.</p>
-          <p>Los días con eventos muestran su indicador en el calendario.</p>
-          <p>Agenda también permite exportar eventos y crear/importar una copia de seguridad de los datos de la app.</p>
-        </div>
-      </section>
-
-      <section id="help-vacations" class="help-section">
-        <div class="help-section-title"><span>4</span><div><b>Vacaciones</b><small>Períodos completos</small></div></div>
-        <div class="help-card">
-          <p><strong>Abrir:</strong> Configuración → Vacaciones.</p>
-          <p>Elegí <strong>Desde</strong> y <strong>Hasta</strong>, agregá una descripción opcional y guardá. Todo el recuadro de cada fecha funciona como botón.</p>
-          <p>Podés guardar varios períodos, editarlos y eliminarlos.</p>
-          <p>La <strong>V</strong> no reemplaza M/N/F/T5. El turno programado continúa visible.</p>
-          <p><strong>Color V:</strong> elegí el color del icono. <strong>Mostrar vacaciones:</strong> oculta o muestra las marcas sin borrar datos.</p>
-        </div>
-      </section>
-
-      <section id="help-workday" class="help-section">
-        <div class="help-section-title"><span>5</span><div><b>Jornada</b><small>Cambios de turno y horas extra</small></div></div>
-        <div class="help-card">
-          <p><strong>Abrir:</strong> tocá un día y luego el botón naranja <strong>JORNADA</strong>.</p>
-          <p>La app muestra el turno <strong>Programado</strong>. Si hubo cambio, elegí M, N, F o T5. El ciclo futuro no se modifica.</p>
-          <p><strong>Duración automática:</strong> M/N y turnos rotativos de 12 h = 12 horas; T5 FIJO = 9 horas; Franco = 0 horas.</p>
-          <p><strong>Horas extra:</strong> son independientes del cambio. Los botones rápidos cargan 6, 8, 10 o 12 hs; + y − ajustan de a 0,5 h.</p>
-          <p>Podés agregar una nota y eliminar el registro cuando sea necesario.</p>
-        </div>
-      </section>
-
-      <section id="help-licenses" class="help-section">
-        <div class="help-section-title"><span>6</span><div><b>Licencias</b><small>Ausencias justificadas</small></div></div>
-        <div class="help-card">
-          <p>Dentro de Jornada elegí la pestaña <strong>LICENCIAS</strong>.</p>
-          <p>Seleccioná Desde/Hasta, el tipo y una nota opcional. La marca <strong>L</strong> no altera el turno programado.</p>
-          <p>Tipos: Estudio, Enfermedad, Cambio de domicilio, Fallecimiento, Embarazo/Maternidad, Nacimiento/Paternidad, Día Trivium, Justicia/Trámite judicial, ART/Accidente laboral, Licencia gremial, Donación de sangre, Matrimonio y Otra.</p>
-          <p>Los francos incluidos en una licencia siguen siendo francos. Estadísticas cuenta las jornadas laborales realmente afectadas.</p>
-          <p>Las licencias guardadas se pueden editar o eliminar.</p>
-        </div>
-      </section>
-
-      <section id="help-stats" class="help-section">
-        <div class="help-section-title"><span>7</span><div><b>Estadísticas</b><small>Resumen del turno y registro laboral</small></div></div>
-        <div class="help-card">
-          <p>Las tarjetas superiores muestran Mañanas, Noches, Francos y Horas del mes según el turno seleccionado.</p>
-          <p><strong>Tu turno termina en:</strong> muestra el estado actual y el próximo ingreso.</p>
-          <p><strong>Feriados que caen en turno:</strong> muestra cuántos feriados del año coinciden con jornadas programadas de cada turno. Cada botón abre su detalle.</p>
-          <p><strong>Registro laboral:</strong> Cambios de turno, Horas extra, Licencias laborales y Feriados del período.</p>
-          <p><strong>Horas extra:</strong> el total principal usa el período desde el día 23 del mes anterior hasta el día 23 del mes mostrado, ambos inclusive.</p>
-          <p><strong>Feriados del período:</strong> usa el mismo 23→23 y cuenta sólo los que coinciden con un día programado de trabajo del turno seleccionado.</p>
-          <p>También se muestran Próximo descanso y fecha estimada del Próximo sueldo.</p>
-        </div>
-      </section>
-
-      <section id="help-settings" class="help-section">
-        <div class="help-section-title"><span>8</span><div><b>Configuración</b><small>Aspecto y comportamiento</small></div></div>
-        <div class="help-card">
-          <p>Desde ⚙️ personalizá colores, tamaños, paletas rápidas y la vista previa.</p>
-          <p>Podés mostrar/ocultar descripciones, feriados y activar/desactivar vibración.</p>
-          <p><strong>Restaurar:</strong> devuelve la configuración visual a sus valores originales.</p>
-          <p>El botón ☀️/🌙 cambia entre modo claro y oscuro.</p>
-          <p class="help-tip">Los cambios visuales no alteran la lógica de los turnos.</p>
-        </div>
-      </section>
-
       <section id="help-install" class="help-section">
-        <div class="help-section-title"><span>9</span><div><b>Instalar la app</b><small>Android e iPhone paso a paso</small></div></div>
+        <div class="help-section-title"><span>2</span><div><b>Instalar la app</b><small>Android e iPhone paso a paso</small></div></div>
         <div class="help-card">
           <div class="help-install-recommend">
             <div class="help-install-os android">
@@ -8736,6 +8648,93 @@ body.light #helpModal .help-install-os.iphone .help-install-os-icon{
 
           <p class="help-tip"><strong>Importante:</strong> una vez instalada no hace falta volver a instalarla para recibir nuevas versiones. Cuando la app detecta una actualización, muestra el aviso “Nueva versión disponible”.</p>
           <p><strong>Consejo:</strong> hacé la instalación desde una pestaña normal, no desde modo incógnito/privado, y mantené el navegador actualizado.</p>
+        </div>
+      </section>
+
+      <section id="help-calendar" class="help-section">
+        <div class="help-section-title"><span>3</span><div><b>Calendario y símbolos</b><small>Qué significa cada marca</small></div></div>
+        <div class="help-card">
+          <div class="help-legend-grid">
+            <div><i class="help-shift m">M</i><span><b>Mañana</b><small>06:00–18:00</small></span></div>
+            <div><i class="help-shift n">N</i><span><b>Noche</b><small>18:00–06:00</small></span></div>
+            <div><i class="help-shift f">F</i><span><b>Franco</b><small>Día libre</small></span></div>
+            <div><i class="help-shift fer">FER</i><span><b>Feriado</b><small>Rojo / azul puente</small></span></div>
+            <div><i class="help-shift vacation">V</i><span><b>Vacaciones</b><small>Color configurable</small></span></div>
+            <div><i class="help-shift license">L</i><span><b>Licencia</b><small>Período registrado</small></span></div>
+            <div><i class="help-shift change">C</i><span><b>Cambio</b><small>Cambio de turno</small></span></div>
+            <div><i class="help-shift extra">+H</i><span><b>Horas extra</b><small>Horas adicionales</small></span></div>
+          </div>
+          <p><strong>Tocar un día:</strong> abre su detalle debajo del calendario.</p>
+          <p><strong>Mantener 450 ms:</strong> abre rápidamente la Agenda para ese día.</p>
+          <p><strong>FER rojo:</strong> feriado. <strong>FER azul:</strong> puente/no laborable. El 7 de septiembre se incluye como Día del Metalúrgico para todos los turnos.</p>
+          <p><strong>Vista anual:</strong> muestra los 12 meses. Mantené pulsados los controles del año para avanzar más rápido.</p>
+        </div>
+      </section>
+
+      <section id="help-agenda" class="help-section">
+        <div class="help-section-title"><span>4</span><div><b>Agenda</b><small>Eventos y recordatorios</small></div></div>
+        <div class="help-card">
+          <p><strong>Abrir:</strong> Configuración → Agenda, o mantener un día durante 450 ms.</p>
+          <p>Guardá eventos con fecha, hora, título y notas. Después podés buscarlos, editarlos, abrirlos en calendario o eliminarlos.</p>
+          <p>Los días con eventos muestran su indicador en el calendario.</p>
+          <p>Agenda también permite exportar eventos y crear/importar una copia de seguridad de los datos de la app.</p>
+        </div>
+      </section>
+
+      <section id="help-vacations" class="help-section">
+        <div class="help-section-title"><span>5</span><div><b>Vacaciones</b><small>Períodos completos</small></div></div>
+        <div class="help-card">
+          <p><strong>Abrir:</strong> Configuración → Vacaciones.</p>
+          <p>Elegí <strong>Desde</strong> y <strong>Hasta</strong>, agregá una descripción opcional y guardá. Todo el recuadro de cada fecha funciona como botón.</p>
+          <p>Podés guardar varios períodos, editarlos y eliminarlos.</p>
+          <p>La <strong>V</strong> no reemplaza M/N/F/T5. El turno programado continúa visible.</p>
+          <p><strong>Color V:</strong> elegí el color del icono. <strong>Mostrar vacaciones:</strong> oculta o muestra las marcas sin borrar datos.</p>
+        </div>
+      </section>
+
+      <section id="help-workday" class="help-section">
+        <div class="help-section-title"><span>6</span><div><b>Jornada</b><small>Cambios de turno y horas extra</small></div></div>
+        <div class="help-card">
+          <p><strong>Abrir:</strong> tocá un día y luego el botón naranja <strong>JORNADA</strong>.</p>
+          <p>La app muestra el turno <strong>Programado</strong>. Si hubo cambio, elegí M, N, F o T5. El ciclo futuro no se modifica.</p>
+          <p><strong>Duración automática:</strong> M/N y turnos rotativos de 12 h = 12 horas; T5 FIJO = 9 horas; Franco = 0 horas.</p>
+          <p><strong>Horas extra:</strong> son independientes del cambio. Los botones rápidos cargan 6, 8, 10 o 12 hs; + y − ajustan de a 0,5 h.</p>
+          <p>Podés agregar una nota y eliminar el registro cuando sea necesario.</p>
+        </div>
+      </section>
+
+      <section id="help-licenses" class="help-section">
+        <div class="help-section-title"><span>7</span><div><b>Licencias</b><small>Ausencias justificadas</small></div></div>
+        <div class="help-card">
+          <p>Dentro de Jornada elegí la pestaña <strong>LICENCIAS</strong>.</p>
+          <p>Seleccioná Desde/Hasta, el tipo y una nota opcional. La marca <strong>L</strong> no altera el turno programado.</p>
+          <p>Tipos: Estudio, Enfermedad, Cambio de domicilio, Fallecimiento, Embarazo/Maternidad, Nacimiento/Paternidad, Día Trivium, Justicia/Trámite judicial, ART/Accidente laboral, Licencia gremial, Donación de sangre, Matrimonio y Otra.</p>
+          <p>Los francos incluidos en una licencia siguen siendo francos. Estadísticas cuenta las jornadas laborales realmente afectadas.</p>
+          <p>Las licencias guardadas se pueden editar o eliminar.</p>
+        </div>
+      </section>
+
+      <section id="help-stats" class="help-section">
+        <div class="help-section-title"><span>8</span><div><b>Estadísticas</b><small>Resumen del turno y registro laboral</small></div></div>
+        <div class="help-card">
+          <p>Las tarjetas superiores muestran Mañanas, Noches, Francos y Horas del mes según el turno seleccionado.</p>
+          <p><strong>Tu turno termina en:</strong> muestra el estado actual y el próximo ingreso.</p>
+          <p><strong>Feriados que caen en turno:</strong> muestra cuántos feriados del año coinciden con jornadas programadas de cada turno. Cada botón abre su detalle.</p>
+          <p><strong>Registro laboral:</strong> Cambios de turno, Horas extra, Licencias laborales y Feriados del período.</p>
+          <p><strong>Horas extra:</strong> el total principal usa el período desde el día 23 del mes anterior hasta el día 23 del mes mostrado, ambos inclusive.</p>
+          <p><strong>Feriados del período:</strong> usa el mismo 23→23 y cuenta sólo los que coinciden con un día programado de trabajo del turno seleccionado.</p>
+          <p>También se muestran Próximo descanso y fecha estimada del Próximo sueldo.</p>
+        </div>
+      </section>
+
+      <section id="help-settings" class="help-section">
+        <div class="help-section-title"><span>9</span><div><b>Configuración</b><small>Aspecto y comportamiento</small></div></div>
+        <div class="help-card">
+          <p>Desde ⚙️ personalizá colores, tamaños, paletas rápidas y la vista previa.</p>
+          <p>Podés mostrar/ocultar descripciones, feriados y activar/desactivar vibración.</p>
+          <p><strong>Restaurar:</strong> devuelve la configuración visual a sus valores originales.</p>
+          <p>El botón ☀️/🌙 cambia entre modo claro y oscuro.</p>
+          <p class="help-tip">Los cambios visuales no alteran la lógica de los turnos.</p>
         </div>
       </section>
 
@@ -9248,7 +9247,7 @@ body.light #helpModal .help-install-os.iphone .help-install-os-icon{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.9.3';
+const CURRENT_VERSION='4.9.4';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
