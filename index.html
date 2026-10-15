@@ -5356,6 +5356,780 @@ body.light #vacationModal .vacation-visibility-copy small{
   }
 }
 
+
+/* ===== V4.8.0 · JORNADA · CAMBIOS DE TURNO + HORAS EXTRA ===== */
+:root{
+  --worklog:#f0a03b;
+  --worklog2:#d97924;
+  --worklog-blue:#43a8ff;
+}
+
+/* Detalle del día */
+.detail-head-actions{
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+.workday-open-btn{
+  min-height:31px;
+  padding:0 10px;
+  border:1px solid rgba(240,160,59,.28);
+  border-radius:10px;
+  background:
+    radial-gradient(circle at 90% 0%,rgba(240,160,59,.10),transparent 46%),
+    var(--panel2);
+  color:var(--text);
+  font-size:8.5px;
+  font-weight:950;
+  cursor:pointer;
+  touch-action:manipulation;
+}
+.workday-open-btn:active{transform:scale(.97)}
+
+.worklog-detail-banner{
+  display:none;
+  align-items:center;
+  gap:8px;
+  margin:-1px 0 9px;
+  padding:8px 10px;
+  border:1px solid rgba(240,160,59,.28);
+  border-radius:12px;
+  background:
+    radial-gradient(circle at 90% 0%,rgba(240,160,59,.11),transparent 43%),
+    linear-gradient(180deg,rgba(240,160,59,.065),rgba(240,160,59,.025));
+}
+.worklog-detail-banner.show{display:flex}
+.worklog-detail-icon{
+  flex:0 0 auto;
+  width:34px;
+  height:27px;
+  display:grid;
+  place-items:center;
+  border-radius:9px;
+  background:linear-gradient(180deg,var(--worklog),var(--worklog2));
+  color:#201408;
+  font-size:11px;
+  font-weight:1000;
+  box-shadow:0 4px 10px rgba(0,0,0,.14);
+}
+.worklog-detail-copy{min-width:0}
+.worklog-detail-copy b{
+  display:block;
+  font-size:10px;
+  line-height:1.1;
+}
+.worklog-detail-copy span{
+  display:block;
+  margin-top:2px;
+  color:var(--muted);
+  font-size:8px;
+  line-height:1.2;
+}
+.worklog-detail-copy small{
+  display:block;
+  margin-top:3px;
+  color:var(--muted);
+  font-size:7px;
+  line-height:1.15;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+/* Marcas compactas dentro del calendario */
+.worklog-badges{
+  position:absolute;
+  left:50%;
+  bottom:3px;
+  z-index:3;
+  transform:translateX(-50%);
+  display:flex;
+  align-items:center;
+  gap:2px;
+  pointer-events:none;
+}
+.worklog-badge{
+  min-width:16px;
+  height:15px;
+  padding:0 4px;
+  display:grid;
+  place-items:center;
+  border-radius:6px;
+  border:1px solid rgba(255,255,255,.42);
+  box-shadow:0 2px 5px rgba(0,0,0,.16);
+  color:#fff;
+  font-size:6.5px;
+  line-height:1;
+  font-weight:1000;
+  white-space:nowrap;
+}
+.worklog-badge.change{
+  background:linear-gradient(180deg,#f0a03b,#d97924);
+  color:#271808;
+}
+.worklog-badge.overtime{
+  background:linear-gradient(180deg,#50b6ff,#2688d8);
+}
+.day.has-worklog .label{
+  top:63%;
+}
+
+/* Modal Jornada */
+#workdayModal{
+  z-index:10030;
+  padding:
+    calc(env(safe-area-inset-top) + 7px)
+    6px
+    calc(env(safe-area-inset-bottom) + 7px);
+}
+#workdayModal .workday-modal-window{
+  width:min(620px,calc(100vw - 12px));
+  height:min(760px,calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 14px));
+  max-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 14px);
+  padding:8px 10px 9px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+#workdayModal .workday-head{
+  position:relative;
+  top:auto;
+  flex:0 0 auto;
+  margin:0;
+  padding:3px 1px 7px;
+}
+#workdayModal .workday-head h2{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:18px;
+}
+.workday-head-icon{
+  width:34px;
+  height:28px;
+  display:inline-grid;
+  place-items:center;
+  border-radius:9px;
+  background:linear-gradient(180deg,var(--worklog),var(--worklog2));
+  color:#251708;
+  font-size:11px;
+  font-weight:1000;
+}
+.workday-summary{
+  flex:0 0 auto;
+  display:grid;
+  grid-template-columns:1fr 1fr 1.25fr;
+  gap:6px;
+  margin:3px 0 7px;
+}
+.workday-summary > div{
+  min-width:0;
+  min-height:54px;
+  padding:7px 8px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:var(--panel2);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.workday-summary small{
+  color:var(--muted);
+  font-size:7px;
+  line-height:1;
+  font-weight:850;
+}
+.workday-summary b{
+  margin-top:4px;
+  font-size:12px;
+  line-height:1.05;
+}
+.workday-planned-card{
+  border-color:rgba(240,160,59,.22)!important;
+}
+.workday-section{
+  flex:0 0 auto;
+  margin-bottom:7px;
+  padding:8px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:var(--panel2);
+}
+.workday-section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+  margin-bottom:7px;
+}
+.workday-section-head b{
+  display:block;
+  font-size:11px;
+}
+.workday-section-head small{
+  display:block;
+  margin-top:2px;
+  color:var(--muted);
+  font-size:7px;
+}
+.workday-section-head > span{
+  flex:0 0 auto;
+  padding:4px 7px;
+  border-radius:8px;
+  background:rgba(240,160,59,.10);
+  border:1px solid rgba(240,160,59,.18);
+  color:#f1ad56;
+  font-size:7px;
+  font-weight:1000;
+}
+.workday-shift-choices{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:4px;
+}
+.workday-shift-choices button{
+  min-width:0;
+  min-height:42px;
+  padding:3px 2px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:var(--panel3);
+  color:var(--text);
+  font-size:7.5px;
+  font-weight:900;
+  cursor:pointer;
+}
+.workday-shift-choices button.selected{
+  border-color:rgba(240,160,59,.52);
+  background:linear-gradient(180deg,rgba(240,160,59,.16),rgba(240,160,59,.07));
+  box-shadow:inset 0 -2px 0 rgba(240,160,59,.42);
+}
+.workday-overtime-control{
+  display:grid;
+  grid-template-columns:48px 1fr 48px;
+  gap:6px;
+  align-items:stretch;
+}
+.workday-overtime-control > button{
+  min-height:52px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--panel3);
+  color:var(--text);
+  font-size:22px;
+  font-weight:850;
+}
+.workday-overtime-display{
+  min-height:52px;
+  border:1px solid rgba(67,168,255,.24);
+  border-radius:12px;
+  background:
+    radial-gradient(circle at 90% 0%,rgba(67,168,255,.08),transparent 45%),
+    var(--panel3);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+}
+.workday-overtime-display strong{
+  font-size:24px;
+  line-height:1;
+}
+.workday-overtime-display span{
+  color:var(--muted);
+  font-size:9px;
+}
+.workday-overtime-quick{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:4px;
+  margin-top:5px;
+}
+.workday-overtime-quick button{
+  min-height:29px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:var(--panel3);
+  color:var(--text);
+  font-size:7.5px;
+  font-weight:900;
+}
+.workday-note-section{
+  flex:1 1 auto;
+  min-height:90px;
+  display:flex;
+  flex-direction:column;
+  margin-bottom:7px;
+}
+.workday-note-section label{
+  flex:0 0 auto;
+  margin-bottom:4px;
+  color:var(--muted);
+  font-size:7.5px;
+  font-weight:850;
+}
+.workday-note-section textarea{
+  flex:1 1 auto;
+  width:100%;
+  min-height:65px;
+  resize:none;
+  border:1px solid var(--line);
+  border-radius:11px;
+  padding:8px;
+  background:var(--panel3);
+  color:var(--text);
+  font:inherit;
+  font-size:9px;
+  outline:none;
+}
+.workday-note-section textarea:focus{
+  border-color:rgba(240,160,59,.48);
+  box-shadow:0 0 0 2px rgba(240,160,59,.08);
+}
+.workday-actions{
+  flex:0 0 auto;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+}
+.workday-actions button{
+  min-height:43px;
+  border-radius:11px;
+  font-size:9px;
+  font-weight:1000;
+}
+.workday-delete-btn{
+  border:1px solid rgba(255,95,114,.26);
+  background:rgba(255,95,114,.06);
+  color:#ff7383;
+}
+.workday-delete-btn:disabled{
+  opacity:.34;
+}
+.workday-save-btn{
+  border:1px solid rgba(240,160,59,.38);
+  background:linear-gradient(180deg,#f0a03b,#d97924);
+  color:#241609;
+}
+.workday-footnote{
+  flex:0 0 auto;
+  padding:6px 4px 0;
+  text-align:center;
+  color:var(--muted);
+  font-size:6.7px;
+  line-height:1.15;
+}
+
+/* Estadísticas · Registro laboral */
+#statsModal .stats-modal-window{
+  grid-template-areas:
+    "head head"
+    "cards cards"
+    "turn turn"
+    "month year"
+    "holidays holidays"
+    "worklog worklog"
+    "off salary";
+  grid-template-rows:
+    auto
+    auto
+    minmax(92px,.64fr)
+    minmax(100px,.58fr)
+    minmax(96px,.61fr)
+    minmax(68px,.42fr)
+    minmax(82px,.50fr);
+}
+#statsModal .stats-worklog{
+  grid-area:worklog;
+  min-width:0;
+  min-height:0;
+  padding:6px 8px;
+  border:1px solid rgba(240,160,59,.19);
+  border-radius:17px;
+  background:
+    radial-gradient(circle at 94% 5%,rgba(67,168,255,.055),transparent 35%),
+    radial-gradient(circle at 5% 95%,rgba(240,160,59,.065),transparent 38%),
+    linear-gradient(180deg,rgba(31,43,59,.95),rgba(26,37,52,.97));
+}
+#statsModal .stats-worklog h3{
+  margin-bottom:4px;
+  font-size:9.5px;
+  white-space:nowrap;
+}
+#statsModal .stats-worklog .stats-title-mark{
+  color:#f0a03b;
+  background:rgba(240,160,59,.09);
+  border-color:rgba(240,160,59,.17);
+}
+.worklog-stats-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5px;
+}
+.worklog-stat-btn{
+  min-height:40px;
+  padding:4px 8px;
+  display:grid;
+  grid-template-columns:1fr auto;
+  grid-template-rows:auto auto;
+  align-items:center;
+  gap:1px 6px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:rgba(255,255,255,.025);
+  color:var(--text);
+  text-align:left;
+}
+.worklog-stat-btn small{
+  color:var(--muted);
+  font-size:7px;
+  font-weight:850;
+}
+.worklog-stat-btn b{
+  grid-row:1/3;
+  grid-column:2;
+  font-size:18px;
+  line-height:1;
+}
+.worklog-stat-btn > span{
+  color:var(--muted);
+  font-size:6.5px;
+}
+.worklog-stat-btn.changes{
+  border-bottom-color:rgba(240,160,59,.50);
+}
+.worklog-stat-btn.overtime{
+  border-bottom-color:rgba(67,168,255,.52);
+}
+.worklog-stat-btn:active{transform:scale(.98)}
+
+/* Detalle de estadísticas laborales */
+#worklogStatsDetailModal{
+  z-index:10050;
+  padding:
+    calc(env(safe-area-inset-top) + 8px)
+    7px
+    calc(env(safe-area-inset-bottom) + 8px);
+}
+#worklogStatsDetailModal .worklog-stats-detail-window{
+  width:min(620px,calc(100vw - 14px));
+  height:min(760px,calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 16px));
+  max-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 16px);
+  padding:9px 11px 10px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+#worklogStatsDetailModal .worklog-stats-detail-head{
+  position:relative;
+  top:auto;
+  flex:0 0 auto;
+  margin:0;
+  padding:4px 1px 8px;
+}
+#worklogStatsDetailModal .worklog-stats-detail-head h2{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:17px;
+}
+.worklog-stats-head-icon{
+  width:34px;
+  height:25px;
+  display:inline-grid;
+  place-items:center;
+  border-radius:9px;
+  background:linear-gradient(180deg,var(--worklog),var(--worklog2));
+  color:#241609;
+  font-size:9px;
+  font-weight:1000;
+}
+.worklog-detail-summary{
+  flex:0 0 auto;
+  display:grid;
+  grid-template-columns:1fr 1fr 1.2fr;
+  gap:6px;
+  margin:3px 0 8px;
+}
+.worklog-detail-summary > div{
+  min-height:52px;
+  padding:7px 8px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:var(--panel2);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.worklog-detail-summary small{
+  color:var(--muted);
+  font-size:7px;
+  font-weight:850;
+}
+.worklog-detail-summary b{
+  margin-top:4px;
+  font-size:13px;
+}
+.worklog-stats-detail-list{
+  flex:1 1 auto;
+  min-height:0;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+}
+.worklog-stats-empty{
+  height:100%;
+  min-height:120px;
+  display:grid;
+  place-items:center;
+  padding:20px;
+  text-align:center;
+  color:var(--muted);
+  font-size:9px;
+}
+.worklog-stat-row{
+  display:grid;
+  grid-template-columns:auto 76px minmax(0,1fr) auto;
+  gap:7px;
+  align-items:center;
+  min-height:56px;
+  margin-bottom:5px;
+  padding:7px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:var(--panel2);
+}
+.worklog-stat-row-icon{
+  width:34px;
+  height:27px;
+  display:grid;
+  place-items:center;
+  border-radius:9px;
+  background:linear-gradient(180deg,var(--worklog),var(--worklog2));
+  color:#241609;
+  font-size:8px;
+  font-weight:1000;
+}
+.worklog-stat-row-icon.overtime{
+  background:linear-gradient(180deg,#50b6ff,#2688d8);
+  color:#fff;
+}
+.worklog-stat-row-date b{
+  display:block;
+  font-size:9px;
+}
+.worklog-stat-row-date small{
+  display:block;
+  margin-top:2px;
+  color:var(--muted);
+  font-size:6.5px;
+}
+.worklog-stat-row-copy{
+  min-width:0;
+}
+.worklog-stat-row-copy b{
+  display:block;
+  font-size:9px;
+  line-height:1.1;
+}
+.worklog-stat-row-copy small{
+  display:block;
+  margin-top:2px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:var(--muted);
+  font-size:6.5px;
+}
+.worklog-stat-row-value{
+  min-width:46px;
+  text-align:right;
+  font-size:10px;
+  font-weight:1000;
+}
+
+/* Modo claro */
+body.light #workdayModal .workday-modal-window,
+body.light #worklogStatsDetailModal .worklog-stats-detail-window{
+  background:
+    radial-gradient(circle at 92% 4%,rgba(240,160,59,.045),transparent 35%),
+    linear-gradient(180deg,rgba(252,253,255,.99),rgba(241,245,249,.99));
+  color:#172536;
+  border-color:rgba(62,82,106,.17);
+}
+body.light #workdayModal .workday-summary > div,
+body.light #workdayModal .workday-section,
+body.light #worklogStatsDetailModal .worklog-detail-summary > div,
+body.light #worklogStatsDetailModal .worklog-stat-row{
+  background:linear-gradient(180deg,#f8fafc,#eef2f6);
+  border-color:rgba(62,82,106,.15);
+}
+body.light #workdayModal .workday-shift-choices button,
+body.light #workdayModal .workday-overtime-control > button,
+body.light #workdayModal .workday-overtime-display,
+body.light #workdayModal .workday-overtime-quick button,
+body.light #workdayModal .workday-note-section textarea{
+  background:#f7f9fc;
+  color:#172536;
+  border-color:rgba(62,82,106,.15);
+}
+body.light #statsModal .stats-worklog{
+  background:
+    radial-gradient(circle at 94% 5%,rgba(67,168,255,.035),transparent 35%),
+    radial-gradient(circle at 5% 95%,rgba(240,160,59,.045),transparent 38%),
+    linear-gradient(180deg,#f8fafc,#eef2f6);
+  border-color:rgba(103,83,62,.14);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.80);
+}
+body.light #statsModal .stats-worklog h3,
+body.light #statsModal .worklog-stat-btn b{
+  color:#172536;
+}
+body.light #statsModal .worklog-stat-btn{
+  background:linear-gradient(180deg,#f7f9fc,#edf2f6);
+  border-color:rgba(62,82,106,.14);
+}
+body.light #statsModal .worklog-stat-btn small,
+body.light #statsModal .worklog-stat-btn > span{
+  color:#64758a;
+}
+body.light .worklog-detail-banner{
+  background:
+    radial-gradient(circle at 90% 0%,rgba(240,160,59,.08),transparent 43%),
+    linear-gradient(180deg,rgba(240,160,59,.05),rgba(240,160,59,.025));
+}
+body.light #workdayModal .close-btn,
+body.light #worklogStatsDetailModal .close-btn{
+  color:#172536;
+  -webkit-text-fill-color:#172536;
+  background:#f2f5f9;
+}
+
+/* Móviles */
+@media(max-width:620px){
+  .detail-head-actions{gap:5px}
+  .workday-open-btn{
+    min-height:29px;
+    padding:0 7px;
+    font-size:7.8px;
+  }
+  .hold-hint{font-size:7.6px}
+
+  .worklog-badge{
+    min-width:15px;
+    height:14px;
+    padding:0 3px;
+    font-size:6px;
+  }
+
+  #workdayModal .workday-modal-window{
+    width:calc(100vw - 10px);
+    height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 12px);
+    max-height:none;
+    padding:7px 8px 8px;
+    border-radius:22px;
+  }
+  #workdayModal .workday-head h2{font-size:16px}
+  .workday-summary{gap:4px;margin-bottom:6px}
+  .workday-summary > div{min-height:48px;padding:6px}
+  .workday-summary b{font-size:11px}
+  .workday-section{padding:7px;margin-bottom:6px}
+  .workday-shift-choices{gap:3px}
+  .workday-shift-choices button{min-height:39px;font-size:6.8px}
+  .workday-overtime-control{grid-template-columns:44px 1fr 44px;gap:5px}
+  .workday-overtime-control > button,
+  .workday-overtime-display{min-height:48px}
+  .workday-overtime-display strong{font-size:22px}
+  .workday-note-section{min-height:80px}
+  .workday-actions button{min-height:40px}
+
+  #statsModal .stats-modal-window{
+    grid-template-rows:
+      auto
+      auto
+      minmax(86px,.58fr)
+      minmax(92px,.52fr)
+      minmax(88px,.56fr)
+      minmax(62px,.39fr)
+      minmax(76px,.46fr);
+    gap:3px;
+  }
+  #statsModal .stats-worklog{
+    padding:4px 6px;
+  }
+  #statsModal .stats-worklog h3{
+    margin-bottom:3px;
+    font-size:8.6px;
+  }
+  .worklog-stat-btn{
+    min-height:36px;
+    padding:3px 6px;
+  }
+  .worklog-stat-btn b{font-size:16px}
+  .worklog-stat-btn small{font-size:6.5px}
+  .worklog-stat-btn > span{font-size:6px}
+
+  #worklogStatsDetailModal .worklog-stats-detail-window{
+    width:calc(100vw - 10px);
+    height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 12px);
+    max-height:none;
+    padding:7px 8px 8px;
+    border-radius:22px;
+  }
+  .worklog-detail-summary{gap:4px;margin-bottom:6px}
+  .worklog-detail-summary > div{min-height:47px;padding:6px}
+  .worklog-stat-row{
+    grid-template-columns:auto 66px minmax(0,1fr) auto;
+    gap:5px;
+    min-height:52px;
+    padding:6px;
+  }
+}
+
+@media(max-height:760px){
+  #workdayModal .workday-head{padding-bottom:4px}
+  .workday-summary{margin:1px 0 5px}
+  .workday-summary > div{min-height:41px;padding-top:4px;padding-bottom:4px}
+  .workday-section{padding:5px;margin-bottom:5px}
+  .workday-section-head{margin-bottom:4px}
+  .workday-shift-choices button{min-height:32px}
+  .workday-overtime-control > button,
+  .workday-overtime-display{min-height:40px}
+  .workday-overtime-display strong{font-size:19px}
+  .workday-overtime-quick{margin-top:3px}
+  .workday-overtime-quick button{min-height:24px}
+  .workday-note-section{min-height:58px}
+  .workday-note-section textarea{min-height:42px}
+  .workday-actions button{min-height:34px}
+  .workday-footnote{padding-top:4px;font-size:5.8px}
+
+  #statsModal .stats-modal-window{
+    grid-template-rows:
+      auto
+      auto
+      minmax(67px,.50fr)
+      minmax(76px,.46fr)
+      minmax(70px,.48fr)
+      minmax(50px,.34fr)
+      minmax(62px,.40fr);
+    gap:2px;
+  }
+  #statsModal .stats-worklog{
+    padding:3px 5px;
+  }
+  #statsModal .stats-worklog h3{
+    margin-bottom:2px;
+    font-size:7.6px;
+  }
+  .worklog-stat-btn{
+    min-height:30px;
+    padding:2px 5px;
+  }
+  .worklog-stat-btn b{font-size:14px}
+  .worklog-stat-btn small{font-size:5.8px}
+  .worklog-stat-btn > span{font-size:5.4px}
+}
+
 </style>
 </head>
 <body>
@@ -5413,7 +6187,13 @@ body.light #vacationModal .vacation-visibility-copy small{
   <div id="belowFoldSpacer" class="below-fold-spacer" aria-hidden="true"></div>
 
   <section class="detail glass">
-    <div class="detail-head"><div id="detailTitle" class="detail-title"></div><div class="hold-hint">Mantener 450 ms → Agenda</div></div>
+    <div class="detail-head">
+      <div id="detailTitle" class="detail-title"></div>
+      <div class="detail-head-actions">
+        <div class="hold-hint">Mantener 450 ms → Agenda</div>
+        <button id="workdayOpenBtn" class="workday-open-btn" type="button">🛠 Jornada</button>
+      </div>
+    </div>
     <div id="holidayDetailBanner" class="holiday-detail-banner">
       <div class="holiday-detail-icon">FER</div>
       <div class="holiday-detail-copy">
@@ -5426,6 +6206,14 @@ body.light #vacationModal .vacation-visibility-copy small{
       <div class="vacation-detail-copy">
         <b id="vacationDetailTitle">Vacaciones</b>
         <span id="vacationDetailText"></span>
+      </div>
+    </div>
+    <div id="worklogDetailBanner" class="worklog-detail-banner">
+      <div class="worklog-detail-icon">J</div>
+      <div class="worklog-detail-copy">
+        <b id="worklogDetailTitle">Registro laboral</b>
+        <span id="worklogDetailText"></span>
+        <small id="worklogDetailNote"></small>
       </div>
     </div>
     <div id="detailGrid" class="detail-grid"></div>
@@ -5510,9 +6298,91 @@ body.light #vacationModal .vacation-visibility-copy small{
     <button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button>
   </div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.7.9</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.8.0</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
+
+
+<!-- Jornada / Registro laboral -->
+<div id="workdayModal" class="backdrop workday-backdrop">
+  <div class="modal glass workday-modal-window">
+    <div class="modal-head workday-head">
+      <div>
+        <h2><span class="workday-head-icon">J</span> Jornada</h2>
+        <small id="workdaySubtitle">Registro del día seleccionado</small>
+      </div>
+      <button class="close-btn" data-close="workdayModal" aria-label="Cerrar Jornada">×</button>
+    </div>
+
+    <div class="workday-summary">
+      <div>
+        <small>Fecha</small>
+        <b id="workdayDateLabel">—</b>
+      </div>
+      <div>
+        <small>Turno</small>
+        <b id="workdayTurnLabel">—</b>
+      </div>
+      <div class="workday-planned-card">
+        <small>Programado</small>
+        <b id="workdayPlannedLabel">—</b>
+      </div>
+    </div>
+
+    <div class="workday-section">
+      <div class="workday-section-head">
+        <div>
+          <b>Cambio de turno</b>
+          <small>El ciclo original nunca se modifica</small>
+        </div>
+        <span id="workdayChangeState">SIN CAMBIO</span>
+      </div>
+      <div id="workdayShiftChoices" class="workday-shift-choices">
+        <button type="button" data-work-code="" class="selected">Sin cambio</button>
+        <button type="button" data-work-code="M">M · Mañana</button>
+        <button type="button" data-work-code="N">N · Noche</button>
+        <button type="button" data-work-code="F">F · Franco</button>
+        <button type="button" data-work-code="D">T5 · 07:30</button>
+      </div>
+    </div>
+
+    <div class="workday-section workday-overtime-section">
+      <div class="workday-section-head">
+        <div>
+          <b>Horas extra</b>
+          <small>Se registran aparte del turno programado</small>
+        </div>
+        <span id="workdayOvertimeState">0 h</span>
+      </div>
+      <div class="workday-overtime-control">
+        <button id="workdayOvertimeMinus" type="button" aria-label="Restar media hora">−</button>
+        <div class="workday-overtime-display">
+          <strong id="workdayOvertimeDisplay">0</strong>
+          <span>horas</span>
+        </div>
+        <button id="workdayOvertimePlus" type="button" aria-label="Agregar media hora">+</button>
+      </div>
+      <div class="workday-overtime-quick">
+        <button type="button" data-overtime="0">0 h</button>
+        <button type="button" data-overtime="1">1 h</button>
+        <button type="button" data-overtime="2">2 h</button>
+        <button type="button" data-overtime="4">4 h</button>
+      </div>
+    </div>
+
+    <div class="workday-section workday-note-section">
+      <label for="workdayNoteInput">Nota opcional</label>
+      <textarea id="workdayNoteInput" maxlength="220" placeholder="Ej: cambio con T3, cobertura, extensión de jornada..."></textarea>
+    </div>
+
+    <div class="workday-actions">
+      <button id="workdayDeleteBtn" class="workday-delete-btn" type="button">ELIMINAR REGISTRO</button>
+      <button id="workdaySaveBtn" class="workday-save-btn" type="button">GUARDAR</button>
+    </div>
+
+    <div class="workday-footnote">La M / N / F / T5 original del calendario siempre queda intacta. Jornada guarda solamente lo que realmente trabajaste.</div>
+  </div>
+</div>
 
 <!-- Vacaciones -->
 <div id="vacationModal" class="backdrop vacation-backdrop">
@@ -5722,6 +6592,22 @@ body.light #vacationModal .vacation-visibility-copy small{
     <small class="holiday-work-note">Incluye feriados nacionales y puentes · 7 Sep. Metalúrgico · todos los turnos</small>
   </div>
 
+  <div class="stats-section stats-worklog">
+    <h3><span class="stats-title-mark">J</span>Registro laboral · <span id="worklogStatsPeriod"></span></h3>
+    <div class="worklog-stats-grid">
+      <button id="worklogChangesStat" type="button" class="worklog-stat-btn changes">
+        <small>Cambios de turno</small>
+        <b id="worklogChangesMonth">0</b>
+        <span><strong id="worklogChangesYear">0</strong> en el año</span>
+      </button>
+      <button id="worklogOvertimeStat" type="button" class="worklog-stat-btn overtime">
+        <small>Horas extra</small>
+        <b><span id="worklogOvertimeMonth">0</span> h</b>
+        <span><strong id="worklogOvertimeYear">0</strong> h en el año</span>
+      </button>
+    </div>
+  </div>
+
   <div class="stats-section stats-off"><h3><span class="stats-title-mark">▰</span>Próximo descanso</h3><div id="nextOffBox" class="next-off"></div></div>
   <div class="stats-section stats-salary">
     <h3><span class="stats-title-mark">▣</span>Próximo sueldo</h3>
@@ -5740,6 +6626,37 @@ body.light #vacationModal .vacation-visibility-copy small{
     </div>
   </div>
 </div></div>
+
+
+<!-- Detalle del registro laboral -->
+<div id="worklogStatsDetailModal" class="backdrop worklog-stats-detail-backdrop">
+  <div class="modal glass worklog-stats-detail-window">
+    <div class="modal-head worklog-stats-detail-head">
+      <div>
+        <h2><span class="worklog-stats-head-icon">J</span> Registro laboral</h2>
+        <small id="worklogStatsDetailSubtitle"></small>
+      </div>
+      <button class="close-btn" data-close="worklogStatsDetailModal" aria-label="Cerrar detalle del registro laboral">×</button>
+    </div>
+
+    <div class="worklog-detail-summary">
+      <div>
+        <small>Turno</small>
+        <b id="worklogStatsDetailTurn">—</b>
+      </div>
+      <div>
+        <small>Período</small>
+        <b id="worklogStatsDetailPeriod">—</b>
+      </div>
+      <div>
+        <small id="worklogStatsDetailMetricLabel">Registros</small>
+        <b id="worklogStatsDetailMetric">0</b>
+      </div>
+    </div>
+
+    <div id="worklogStatsDetailList" class="worklog-stats-detail-list"></div>
+  </div>
+</div>
 
 <!-- Detalle de feriados por turno -->
 <div id="holidayStatsDetailModal" class="backdrop holiday-stats-detail-backdrop">
@@ -5785,7 +6702,7 @@ body.light #vacationModal .vacation-visibility-copy small{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.7.9';
+const CURRENT_VERSION='4.8.0';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -5814,12 +6731,15 @@ const settingsBtn=$('#settingsBtn'),morningColor=$('#morningColor'),nightColor=$
 const morningColorRow=$('#morningColorRow'),nightColorRow=$('#nightColorRow'),offColorRow=$('#offColorRow'),paletteNightTab=$('#paletteNightTab'),colorProfileTitle=$('#colorProfileTitle'),colorProfileText=$('#colorProfileText'),morningColorTitle=$('#morningColorTitle'),morningColorNote=$('#morningColorNote'),paletteHelp=$('#paletteHelp'),paletteNote=$('#paletteNote');
 const AGENDA_KEY='turno4x4.agenda.v1', NOTIFIED_KEY='turno4x4.agenda.notified.v1', BACKUP_KEY='turno4x4.agenda.lastBackup';
 const VACATION_KEY='turno4x4.vacations.v1';
+const WORKLOG_KEY='turno4x4.worklog.v1';
 const VACATION_COLOR_KEY='turno4x4.vacationColor.v1';
 const SHOW_VACATIONS_KEY='turno4x4.showVacations.v1';
 
 let now=new Date(),viewYear=now.getFullYear(),viewMonth=now.getMonth(),selectedDate=new Date(now.getFullYear(),now.getMonth(),now.getDate());
 let agendaSelectedDate=new Date(selectedDate),agendaEditingId=null,agendaHoldTimer=null,agendaHoldOpened=false,agendaAllExpanded=false;
 let vacationEditingId=null;
+let workdayEditingDate=new Date(selectedDate),workdayEditingTurn=activeTurnKey(),workdayWorkedCode='',workdayOvertime=0;
+let worklogStatsDetailMode='changes';
 let swipeStartX=0,swipeStartY=0,swipeStartedAt=0,calendarSwipeMoved=false,calendarSwipeActive=false,monthAnimating=false,yearViewYear=viewYear;
 const AGENDA_HOLD_MS=450;
 
@@ -6431,6 +7351,231 @@ window.addEventListener('online',()=>{
 });
 
 
+
+const worklogDateFmt=new Intl.DateTimeFormat('es-AR',{weekday:'short',day:'2-digit',month:'short'});
+const worklogFullDateFmt=new Intl.DateTimeFormat('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'});
+
+function loadWorklogData(){
+ try{
+  const data=JSON.parse(localStorage.getItem(WORKLOG_KEY)||'[]');
+  return Array.isArray(data)?data:[];
+ }catch{
+  return [];
+ }
+}
+
+function saveWorklogData(items){
+ localStorage.setItem(WORKLOG_KEY,JSON.stringify(items));
+}
+
+function normalizeWorklog(item){
+ return {
+  id:String(item?.id||''),
+  date:String(item?.date||''),
+  turn:String(item?.turn||''),
+  workedCode:['M','N','F','D'].includes(item?.workedCode)?item.workedCode:'',
+  overtime:Math.max(0,Math.min(24,Number(item?.overtime)||0)),
+  note:String(item?.note||'').trim(),
+  updatedAt:item?.updatedAt||new Date().toISOString()
+ };
+}
+
+function worklogIdFor(date,turn){
+ return `${dateKey(date)}|${turn}`;
+}
+
+function worklogForDate(date,turn=activeTurnKey()){
+ const id=worklogIdFor(date,turn);
+ const found=loadWorklogData().map(normalizeWorklog).find(x=>x.id===id);
+ return found||null;
+}
+
+function worklogCodeLabel(code){
+ if(code==='M')return 'M · Mañana';
+ if(code==='N')return 'N · Noche';
+ if(code==='F')return 'F · Franco';
+ if(code==='D')return 'T5 · 07:30–16:30';
+ return 'Sin cambio';
+}
+
+function worklogOvertimeText(value){
+ const n=Number(value)||0;
+ return Number.isInteger(n)?String(n):n.toFixed(1).replace('.',',');
+}
+
+function setWorkdayWorkedCode(code){
+ workdayWorkedCode=['M','N','F','D'].includes(code)?code:'';
+ $$('#workdayShiftChoices [data-work-code]').forEach(btn=>{
+  btn.classList.toggle('selected',btn.dataset.workCode===workdayWorkedCode);
+ });
+ $('#workdayChangeState').textContent=workdayWorkedCode
+  ?worklogCodeLabel(workdayWorkedCode)
+  :'SIN CAMBIO';
+}
+
+function setWorkdayOvertime(value){
+ const n=Math.round(Math.max(0,Math.min(24,Number(value)||0))*2)/2;
+ workdayOvertime=n;
+ $('#workdayOvertimeDisplay').textContent=worklogOvertimeText(n);
+ $('#workdayOvertimeState').textContent=`${worklogOvertimeText(n)} h`;
+}
+
+function renderWorkdayModal(date,turn){
+ workdayEditingDate=new Date(date.getFullYear(),date.getMonth(),date.getDate());
+ workdayEditingTurn=turn;
+
+ const planned=codeFor(turn,workdayEditingDate);
+ const existing=worklogForDate(workdayEditingDate,turn);
+
+ $('#workdaySubtitle').textContent=`${scheduleName(turn)} · ${cap(longFmt.format(workdayEditingDate))}`;
+ $('#workdayDateLabel').textContent=cap(shortDateFmt.format(workdayEditingDate));
+ $('#workdayTurnLabel').textContent=scheduleName(turn);
+ $('#workdayPlannedLabel').textContent=`${codeText(turn,planned)} · ${shiftNames[planned][0]}`;
+
+ setWorkdayWorkedCode(existing?.workedCode||'');
+ setWorkdayOvertime(existing?.overtime||0);
+ $('#workdayNoteInput').value=existing?.note||'';
+ $('#workdayDeleteBtn').disabled=!existing;
+}
+
+function openWorkday(date=selectedDate,turn=activeTurnKey()){
+ renderWorkdayModal(date,turn);
+ openModal('workdayModal');
+}
+
+function saveWorkdayRecord(){
+ const planned=codeFor(workdayEditingTurn,workdayEditingDate);
+ let workedCode=workdayWorkedCode;
+
+ // Elegir exactamente el turno programado equivale a "sin cambio".
+ if(workedCode===planned)workedCode='';
+
+ const overtime=workdayOvertime;
+ const note=$('#workdayNoteInput').value.trim();
+ const id=worklogIdFor(workdayEditingDate,workdayEditingTurn);
+ let items=loadWorklogData().map(normalizeWorklog).filter(x=>x.id!==id);
+
+ if(workedCode||overtime>0||note){
+  items.push({
+   id,
+   date:dateKey(workdayEditingDate),
+   turn:workdayEditingTurn,
+   workedCode,
+   overtime,
+   note,
+   updatedAt:new Date().toISOString()
+  });
+ }
+
+ saveWorklogData(items);
+ closeModal('workdayModal');
+ renderAll();
+ renderStats();
+ vibrate(14);
+}
+
+function deleteWorkdayRecord(){
+ const existing=worklogForDate(workdayEditingDate,workdayEditingTurn);
+ if(!existing)return;
+ if(!confirm(`¿Eliminar el registro laboral del ${shortDateFmt.format(workdayEditingDate)}?`))return;
+
+ saveWorklogData(loadWorklogData().filter(x=>normalizeWorklog(x).id!==existing.id));
+ closeModal('workdayModal');
+ renderAll();
+ renderStats();
+}
+
+function worklogRecordsForPeriod(turn,year,month=null){
+ return loadWorklogData()
+  .map(normalizeWorklog)
+  .filter(r=>{
+   if(r.turn!==turn||!r.date)return false;
+   const d=parseDateKey(r.date);
+   if(d.getFullYear()!==year)return false;
+   return month===null||d.getMonth()===month;
+  })
+  .sort((a,b)=>a.date.localeCompare(b.date));
+}
+
+function worklogPeriodStats(turn,year,month=null){
+ const records=worklogRecordsForPeriod(turn,year,month);
+ return {
+  records,
+  changes:records.filter(r=>r.workedCode).length,
+  overtime:records.reduce((sum,r)=>sum+(Number(r.overtime)||0),0)
+ };
+}
+
+function renderWorklogStats(){
+ const turn=activeTurnKey();
+ const monthStats=worklogPeriodStats(turn,viewYear,viewMonth);
+ const yearStats=worklogPeriodStats(turn,viewYear,null);
+
+ $('#worklogStatsPeriod').textContent=cap(monthFmt.format(new Date(viewYear,viewMonth,1)));
+ $('#worklogChangesMonth').textContent=monthStats.changes;
+ $('#worklogChangesYear').textContent=yearStats.changes;
+ $('#worklogOvertimeMonth').textContent=worklogOvertimeText(monthStats.overtime);
+ $('#worklogOvertimeYear').textContent=worklogOvertimeText(yearStats.overtime);
+}
+
+function renderWorklogStatsDetail(mode){
+ worklogStatsDetailMode=mode;
+ const turn=activeTurnKey();
+ const stats=worklogPeriodStats(turn,viewYear,viewMonth);
+ const records=mode==='overtime'
+  ?stats.records.filter(r=>r.overtime>0)
+  :stats.records.filter(r=>r.workedCode);
+
+ const label=mode==='overtime'?'Horas extra':'Cambios de turno';
+ $('#worklogStatsDetailSubtitle').textContent=`${scheduleName(turn)} · ${cap(monthFmt.format(new Date(viewYear,viewMonth,1)))}`;
+ $('#worklogStatsDetailTurn').textContent=scheduleName(turn);
+ $('#worklogStatsDetailPeriod').textContent=cap(monthFmt.format(new Date(viewYear,viewMonth,1)));
+ $('#worklogStatsDetailMetricLabel').textContent=label;
+ $('#worklogStatsDetailMetric').textContent=mode==='overtime'
+  ?`${worklogOvertimeText(stats.overtime)} h`
+  :stats.changes;
+
+ const list=$('#worklogStatsDetailList');
+ if(!records.length){
+  list.innerHTML=`<div class="worklog-stats-empty">No hay ${mode==='overtime'?'horas extra':'cambios de turno'} registrados en este mes.</div>`;
+  return;
+ }
+
+ list.innerHTML=records.map(r=>{
+  const d=parseDateKey(r.date);
+  const planned=codeFor(turn,d);
+  const worked=r.workedCode||planned;
+  const iconClass=mode==='overtime'?' overtime':'';
+  const icon=mode==='overtime'?'+H':'C';
+  const mainText=r.workedCode
+   ?`${codeText(turn,planned)} → ${codeText(turn,worked)}`
+   :`${codeText(turn,planned)} · Sin cambio`;
+  const detailText=[
+   r.overtime>0?`${worklogOvertimeText(r.overtime)} h extra`:'',
+   r.note||''
+  ].filter(Boolean).join(' · ');
+
+  return `
+   <div class="worklog-stat-row">
+    <span class="worklog-stat-row-icon${iconClass}">${icon}</span>
+    <div class="worklog-stat-row-date">
+      <b>${escapeHtml(cap(worklogDateFmt.format(d)))}</b>
+      <small>${escapeHtml(worklogFullDateFmt.format(d))}</small>
+    </div>
+    <div class="worklog-stat-row-copy">
+      <b>${escapeHtml(mainText)}</b>
+      <small>${escapeHtml(detailText||'Sin nota')}</small>
+    </div>
+    <span class="worklog-stat-row-value">${mode==='overtime'?`${worklogOvertimeText(r.overtime)} h`:'CAMBIO'}</span>
+   </div>`;
+ }).join('');
+}
+
+function openWorklogStatsDetail(mode){
+ renderWorklogStatsDetail(mode);
+ openModal('worklogStatsDetailModal');
+}
+
 const vacationDateFmt=new Intl.DateTimeFormat('es-AR',{day:'2-digit',month:'short',year:'numeric'});
 
 
@@ -6705,8 +7850,10 @@ function renderCalendar(){
   const events=agendaForDate(d);
   const holiday=holidayInfo(d);
   const vacations=vacationsAreVisible()?vacationsForDate(d):[];
+  const worklog=worklogForDate(d,turn);
   if(holiday)cell.classList.add('holiday');
   if(vacations.length)cell.classList.add('vacation-day');
+  if(worklog&&(worklog.workedCode||worklog.overtime>0))cell.classList.add('has-worklog');
 
   let dots='';
   if(events.length){
@@ -6722,7 +7869,11 @@ function renderCalendar(){
    ? `<span class="vacation-overlay" aria-hidden="true"></span><span class="vacation-badge" title="${escapeHtml(vacations[0].title||'Vacaciones')}">V</span>`
    : '';
 
-  cell.innerHTML=`<span class="date">${d.getDate()}</span><span class="code">${codeText(turn,c)}</span>${showLabels.checked?`<span class="label">${shiftNames[c][0]}</span>`:''}${dots}${holidayBadge}${vacationBadge}`;
+  const worklogBadges=worklog&&(worklog.workedCode||worklog.overtime>0)
+   ? `<span class="worklog-badges">${worklog.workedCode?'<i class="worklog-badge change">C</i>':''}${worklog.overtime>0?`<i class="worklog-badge overtime">+${worklogOvertimeText(worklog.overtime)}h</i>`:''}</span>`
+   : '';
+
+  cell.innerHTML=`<span class="date">${d.getDate()}</span><span class="code">${codeText(turn,c)}</span>${showLabels.checked?`<span class="label">${shiftNames[c][0]}</span>`:''}${dots}${holidayBadge}${vacationBadge}${worklogBadges}`;
   attachDayGestures(cell,d);cal.appendChild(cell);
  }
  startHolidayBadgePulses();
@@ -7013,6 +8164,26 @@ function showDetail(d){
  }
 
  const active=activeTurnKey();
+ const record=worklogForDate(d,active);
+ const worklogBanner=$('#worklogDetailBanner');
+ const worklogTitle=$('#worklogDetailTitle');
+ const worklogText=$('#worklogDetailText');
+ const worklogNote=$('#worklogDetailNote');
+
+ if(worklogBanner&&worklogTitle&&worklogText&&worklogNote){
+  worklogBanner.classList.toggle('show',Boolean(record));
+  if(record){
+   const planned=codeFor(active,d);
+   const worked=record.workedCode||planned;
+   worklogTitle.textContent='Registro laboral';
+   worklogText.textContent=`Programado ${codeText(active,planned)} · Trabajado ${codeText(active,worked)}${record.overtime>0?` · +${worklogOvertimeText(record.overtime)} h extra`:''}`;
+   worklogNote.textContent=record.note||'';
+  }else{
+   worklogText.textContent='';
+   worklogNote.textContent='';
+  }
+ }
+
  ['T1','T2','T3','T4','T5LV','T5A','T5B'].forEach(t=>{const c=codeFor(t,d),el=document.createElement('div');el.className=`shift${t===active?' active':''}`;el.innerHTML=`<b>${scheduleName(t)} · ${codeText(t,c)} — ${shiftNames[c][0]}</b><span>${shiftNames[c][1]}</span>`;detailGrid.appendChild(el)});
 }
 
@@ -7165,8 +8336,8 @@ function downloadICS(id,occ){const item=normalizedItem(loadAgendaData().find(x=>
  const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Turnos 4x4//Agenda//ES','CALSCALE:GREGORIAN','BEGIN:VEVENT',`UID:${item.id}-${occ}@turnos4x4`,`DTSTAMP:${icsLocal(new Date())}`,dtStart,dtEnd,`SUMMARY:${icsEscape(item.title)}`,`DESCRIPTION:${icsEscape(item.notes)}`,alarm,'END:VEVENT','END:VCALENDAR'].filter(Boolean).join('\r\n');
  const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=`agenda-${occ}-${item.title.replace(/[^\wáéíóúñ-]+/gi,'_')}.ics`;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)
 }
-function exportBackup(){const payload={app:'Turnos 4x4',format:4,version:CURRENT_VERSION,exportedAt:new Date().toISOString(),agenda:loadAgendaData(),vacations:loadVacationData(),vacationColor:localStorage.getItem(VACATION_COLOR_KEY)||DEFAULT_VACATION_COLOR,showVacations:localStorage.getItem(SHOW_VACATIONS_KEY)!=='false'};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=`turnos4x4-backup-${dateKey(new Date())}.json`;a.click();localStorage.setItem(BACKUP_KEY,new Date().toISOString());renderBackupStatus();setTimeout(()=>URL.revokeObjectURL(u),1000)}
-async function importBackup(file){if(!file)return;try{const data=JSON.parse(await file.text()),arr=Array.isArray(data)?data:data.agenda,vacs=Array.isArray(data?.vacations)?data.vacations:null,vacColor=typeof data?.vacationColor==='string'?data.vacationColor:null,showVacs=typeof data?.showVacations==='boolean'?data.showVacations:null;if(!Array.isArray(arr))throw 0;const extra=vacs?` y ${vacs.length} período${vacs.length===1?'':'s'} de vacaciones`:'';if(!confirm(`Se encontraron ${arr.length} eventos${extra}. ¿Reemplazar los datos incluidos en la copia?`))return;saveAgendaData(arr);if(vacs)saveVacationData(vacs);if(vacColor)applyVacationColor(vacColor,true);if(showVacs!==null)localStorage.setItem(SHOW_VACATIONS_KEY,showVacs?'true':'false');loadVacationVisibility();renderAgenda();renderVacationList();renderAll();renderYear()}catch{alert('No pude leer esa copia de seguridad.')}finally{$('#agendaImportInput').value=''}}
+function exportBackup(){const payload={app:'Turnos 4x4',format:5,version:CURRENT_VERSION,exportedAt:new Date().toISOString(),agenda:loadAgendaData(),vacations:loadVacationData(),vacationColor:localStorage.getItem(VACATION_COLOR_KEY)||DEFAULT_VACATION_COLOR,showVacations:localStorage.getItem(SHOW_VACATIONS_KEY)!=='false',worklog:loadWorklogData()};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=`turnos4x4-backup-${dateKey(new Date())}.json`;a.click();localStorage.setItem(BACKUP_KEY,new Date().toISOString());renderBackupStatus();setTimeout(()=>URL.revokeObjectURL(u),1000)}
+async function importBackup(file){if(!file)return;try{const data=JSON.parse(await file.text()),arr=Array.isArray(data)?data:data.agenda,vacs=Array.isArray(data?.vacations)?data.vacations:null,vacColor=typeof data?.vacationColor==='string'?data.vacationColor:null,showVacs=typeof data?.showVacations==='boolean'?data.showVacations:null,worklog=Array.isArray(data?.worklog)?data.worklog:null;if(!Array.isArray(arr))throw 0;const extraV=vacs?` · ${vacs.length} período${vacs.length===1?'':'s'} de vacaciones`:'';const extraW=worklog?` · ${worklog.length} registro${worklog.length===1?'':'s'} laborales`:'';if(!confirm(`Se encontraron ${arr.length} eventos${extraV}${extraW}. ¿Reemplazar los datos incluidos en la copia?`))return;saveAgendaData(arr);if(vacs)saveVacationData(vacs);if(vacColor)applyVacationColor(vacColor,true);if(showVacs!==null)localStorage.setItem(SHOW_VACATIONS_KEY,showVacs?'true':'false');if(worklog)saveWorklogData(worklog);loadVacationVisibility();renderAgenda();renderVacationList();renderAll();renderYear();renderStats()}catch{alert('No pude leer esa copia de seguridad.')}finally{$('#agendaImportInput').value=''}}
 function renderBackupStatus(){const x=localStorage.getItem(BACKUP_KEY);backupStatus.textContent=x?`Última copia: ${new Intl.DateTimeFormat('es-AR',{dateStyle:'medium',timeStyle:'short'}).format(new Date(x))}`:'Todavía no hiciste una copia de seguridad.'}
 
 function renderYear(){
@@ -7441,6 +8612,7 @@ function renderStats(){
  const t=activeTurnKey(),m=countsForPeriod(t,viewYear,viewMonth),y=countsForPeriod(t,viewYear),hours=t==='T5LV'?m.D*9:(m.M+m.N)*12,off=nextOffBlock(t,new Date());
  ensureHolidayYear(viewYear);
  renderHolidayWorkStats(viewYear);
+ renderWorklogStats();
  $('#statsSubtitle').textContent=`${scheduleName(t)} · ${monthFmt.format(new Date(viewYear,viewMonth,1))}`;
  if(t==='T5LV')$('#statsCards').innerHTML=`<div class="stat-card stat-morning"><i>☀</i><small>Días T5</small><b>${m.D}</b></div><div class="stat-card stat-off"><i>▦</i><small>Francos</small><b>${m.F}</b></div><div class="stat-card stat-hours"><i>◷</i><small>Horas mes</small><b>${hours}</b></div><div class="stat-card stat-cycle"><i>↻</i><small>Jornada</small><b>9 h</b></div>`;
  else if(t==='T5A'||t==='T5B')$('#statsCards').innerHTML=`<div class="stat-card stat-morning"><i>☀</i><small>Mañanas</small><b>${m.M}</b></div><div class="stat-card stat-off"><i>▦</i><small>Francos</small><b>${m.F}</b></div><div class="stat-card stat-hours"><i>◷</i><small>Horas mes</small><b>${hours}</b></div><div class="stat-card stat-cycle"><i>↻</i><small>Ciclo</small><b>4×4</b></div>`;
@@ -7480,6 +8652,23 @@ dayNumberSize.oninput=()=>{dayNumberSizeValue.textContent=`${dayNumberSize.value
 showLabels.onchange=saveSettings;showHolidays.onchange=saveSettings;hapticsToggle.onchange=saveSettings;
 $('#resetSettingsBtn').onclick=()=>{morningColor.value=defaults.morning;offColor.value=defaults.off;if(!isTurn5Profile())nightColor.value=defaults.night;codeSize.value=18;codeSizeValue.textContent='18 px';dayNumberSize.value=10;dayNumberSizeValue.textContent='10 px';showLabels.checked=true;showHolidays.checked=true;hapticsToggle.checked=true;saveSettings();updateColorSettingsUI();renderQuickPalette()};
 $('#agendaSaveBtn').onclick=saveAgenda;$('#agendaClearBtn').onclick=clearAgendaForm;$('#agendaNotifyBtn').onclick=requestNotificationPermission;
+$('#workdayOpenBtn').onclick=()=>openWorkday(selectedDate,activeTurnKey());
+$('#workdaySaveBtn').onclick=saveWorkdayRecord;
+$('#workdayDeleteBtn').onclick=deleteWorkdayRecord;
+
+$$('#workdayShiftChoices [data-work-code]').forEach(btn=>{
+ btn.onclick=()=>setWorkdayWorkedCode(btn.dataset.workCode);
+});
+
+$('#workdayOvertimeMinus').onclick=()=>setWorkdayOvertime(workdayOvertime-.5);
+$('#workdayOvertimePlus').onclick=()=>setWorkdayOvertime(workdayOvertime+.5);
+$$('.workday-overtime-quick [data-overtime]').forEach(btn=>{
+ btn.onclick=()=>setWorkdayOvertime(Number(btn.dataset.overtime));
+});
+
+$('#worklogChangesStat').onclick=()=>openWorklogStatsDetail('changes');
+$('#worklogOvertimeStat').onclick=()=>openWorklogStatsDetail('overtime');
+
 $('#vacationSaveBtn').onclick=saveVacationPeriod;$('#vacationClearBtn').onclick=()=>clearVacationForm(true);
 
 const vacationColorCard=$('#vacationColorCard');
