@@ -8273,6 +8273,98 @@ body.light #helpModal .help-install-os.iphone .help-install-os-icon{
   }
 }
 
+
+/* ===== V4.9.5 · IPHONE SAFE AREA / DYNAMIC ISLAND ===== */
+
+/*
+  viewport-fit=cover ya está activo.
+  Estas reglas reservan la zona segura real del dispositivo para que
+  la barra superior de la app nunca quede debajo del reloj, notch o
+  Dynamic Island.
+*/
+:root{
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-right:env(safe-area-inset-right,0px);
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+  --safe-left:env(safe-area-inset-left,0px);
+}
+
+/* Pantalla principal */
+.app{
+  padding-top:calc(12px + var(--safe-top));
+  padding-right:calc(10px + var(--safe-right));
+  padding-bottom:calc(30px + var(--safe-bottom));
+  padding-left:calc(10px + var(--safe-left));
+}
+
+/* La cabecera queda siempre por debajo de la zona del sistema. */
+.topbar{
+  position:relative;
+  z-index:30;
+}
+
+/* En horizontal también se respetan notch/bordes laterales. */
+@media(orientation:landscape){
+  .app{
+    padding-right:calc(10px + var(--safe-right));
+    padding-left:calc(10px + var(--safe-left));
+  }
+}
+
+/*
+  Las ventanas modales ya utilizaban safe-area, pero se refuerza el
+  cálculo para iPhone instalado como PWA y para los cuatro laterales.
+*/
+.backdrop{
+  padding-top:calc(var(--safe-top) + 4px);
+  padding-right:calc(var(--safe-right) + 4px);
+  padding-bottom:calc(var(--safe-bottom) + 4px);
+  padding-left:calc(var(--safe-left) + 4px);
+}
+
+.modal{
+  max-width:calc(100vw - var(--safe-left) - var(--safe-right) - 8px);
+  height:calc(100dvh - var(--safe-top) - var(--safe-bottom) - 8px);
+}
+
+/* Splash: evita cualquier invasión de la barra del sistema. */
+.splash{
+  padding-top:var(--safe-top);
+  padding-right:var(--safe-right);
+  padding-bottom:var(--safe-bottom);
+  padding-left:var(--safe-left);
+}
+
+/* Banner de actualización, si aparece, también respeta el iPhone. */
+#updateBanner{
+  left:calc(8px + var(--safe-left));
+  right:calc(8px + var(--safe-right));
+}
+
+/* iOS instalado desde pantalla de inicio */
+@media(display-mode:standalone){
+  .app{
+    padding-top:calc(14px + var(--safe-top));
+    padding-bottom:calc(32px + var(--safe-bottom));
+  }
+}
+
+/* Pantallas pequeñas: no reducimos nunca la zona segura. */
+@media(max-width:620px){
+  .app{
+    padding-top:calc(10px + var(--safe-top));
+    padding-right:calc(7px + var(--safe-right));
+    padding-bottom:calc(24px + var(--safe-bottom));
+    padding-left:calc(7px + var(--safe-left));
+  }
+}
+
+@media(display-mode:standalone) and (max-width:620px){
+  .app{
+    padding-top:calc(12px + var(--safe-top));
+  }
+}
+
 </style>
 </head>
 <body>
@@ -8464,7 +8556,7 @@ body.light #helpModal .help-install-os.iphone .help-install-os-icon{
     <button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button>
   </div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.9.4</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.9.5</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 
@@ -8647,6 +8739,7 @@ body.light #helpModal .help-install-os.iphone .help-install-os-icon{
           </div>
 
           <p class="help-tip"><strong>Importante:</strong> una vez instalada no hace falta volver a instalarla para recibir nuevas versiones. Cuando la app detecta una actualización, muestra el aviso “Nueva versión disponible”.</p>
+          <p><strong>iPhone con notch o Dynamic Island:</strong> la app respeta automáticamente la zona segura superior e inferior para que los controles del sistema no se superpongan con los botones de la aplicación.</p>
           <p><strong>Consejo:</strong> hacé la instalación desde una pestaña normal, no desde modo incógnito/privado, y mantené el navegador actualizado.</p>
         </div>
       </section>
@@ -9247,7 +9340,7 @@ body.light #helpModal .help-install-os.iphone .help-install-os-icon{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.9.4';
+const CURRENT_VERSION='4.9.5';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
