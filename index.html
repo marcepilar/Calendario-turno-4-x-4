@@ -7379,6 +7379,99 @@ body.light #statsModal .worklog-stat-btn.period-holidays > span{
   }
 }
 
+
+/* ===== V4.8.8 · REGISTRO LABORAL · TEXTOS EXTRA GRANDES ===== */
+
+#statsModal .worklog-stat-btn small{
+  font-size:12.8px;
+  line-height:1.08;
+  font-weight:1000;
+  letter-spacing:-.005em;
+}
+
+#statsModal .worklog-stat-btn b{
+  font-size:33px;
+  line-height:.94;
+  font-weight:1000;
+}
+
+#statsModal .worklog-stat-btn > span{
+  font-size:11px;
+  line-height:1.08;
+  font-weight:800;
+}
+#statsModal .worklog-stat-btn > span strong{
+  font-size:11.8px;
+  font-weight:1000;
+}
+
+#statsModal #worklogOvertimeLabel{
+  font-size:11.5px;
+  line-height:1.06;
+  white-space:nowrap;
+  letter-spacing:-.02em;
+}
+
+#statsModal #worklogHolidaysRange{
+  font-size:10.6px;
+  line-height:1.08;
+}
+
+#statsModal .worklog-stat-btn{
+  padding:12px 13px;
+  gap:5px 10px;
+}
+
+@media(max-width:620px){
+  #statsModal .worklog-stat-btn small{
+    font-size:11.7px;
+  }
+  #statsModal .worklog-stat-btn b{
+    font-size:30px;
+  }
+  #statsModal .worklog-stat-btn > span{
+    font-size:9.8px;
+  }
+  #statsModal .worklog-stat-btn > span strong{
+    font-size:10.4px;
+  }
+  #statsModal #worklogOvertimeLabel{
+    font-size:10.4px;
+  }
+  #statsModal #worklogHolidaysRange{
+    font-size:9.5px;
+  }
+  #statsModal .worklog-stat-btn{
+    padding:9px 10px;
+    gap:4px 7px;
+  }
+}
+
+@media(max-height:760px){
+  #statsModal .worklog-stat-btn small{
+    font-size:8.8px;
+  }
+  #statsModal .worklog-stat-btn b{
+    font-size:21px;
+  }
+  #statsModal .worklog-stat-btn > span{
+    font-size:7.7px;
+  }
+  #statsModal .worklog-stat-btn > span strong{
+    font-size:8.2px;
+  }
+  #statsModal #worklogOvertimeLabel{
+    font-size:8px;
+  }
+  #statsModal #worklogHolidaysRange{
+    font-size:7.5px;
+  }
+  #statsModal .worklog-stat-btn{
+    padding:5px 6px;
+    gap:3px 5px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -7561,7 +7654,7 @@ body.light #statsModal .worklog-stat-btn.period-holidays > span{
     <button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button>
   </div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.8.7</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.8.8</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 
@@ -8050,7 +8143,7 @@ body.light #statsModal .worklog-stat-btn.period-holidays > span{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.8.7';
+const CURRENT_VERSION='4.8.8';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
