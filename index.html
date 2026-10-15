@@ -6130,6 +6130,208 @@ body.light #worklogStatsDetailModal .close-btn{
   .worklog-stat-btn > span{font-size:5.4px}
 }
 
+
+/* ===== V4.8.1 · JORNADA MÁS VISIBLE + ELIMINAR + FIX CALENDARIO ===== */
+
+/* Botón Jornada con más protagonismo */
+.workday-detail-buttons{
+  display:flex;
+  align-items:center;
+  gap:5px;
+}
+.workday-open-btn{
+  position:relative;
+  min-width:116px;
+  min-height:38px;
+  padding:0 11px;
+  overflow:visible;
+  border:1px solid rgba(255,190,92,.72);
+  background:
+    radial-gradient(circle at 85% 0%,rgba(255,255,255,.20),transparent 38%),
+    linear-gradient(180deg,#f4ab46,#d97924);
+  color:#241609;
+  box-shadow:
+    0 5px 13px rgba(217,121,36,.23),
+    inset 0 1px 0 rgba(255,255,255,.28);
+  font-size:9.5px;
+  letter-spacing:.025em;
+}
+.workday-open-label{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  font-weight:1000;
+}
+.workday-new-pill{
+  display:none;
+  position:absolute;
+  right:-5px;
+  top:-7px;
+  min-width:33px;
+  height:15px;
+  padding:0 4px;
+  place-items:center;
+  border-radius:7px;
+  background:#ff5269;
+  color:#fff;
+  border:1px solid rgba(255,255,255,.62);
+  box-shadow:0 3px 7px rgba(0,0,0,.24);
+  font-size:5.7px;
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:.045em;
+}
+.workday-open-btn.is-new .workday-new-pill{
+  display:grid;
+}
+.workday-open-btn.is-new{
+  animation:workdayNewPulse 2.35s ease-in-out infinite;
+}
+@keyframes workdayNewPulse{
+  0%,100%{
+    transform:scale(1);
+    box-shadow:
+      0 5px 13px rgba(217,121,36,.22),
+      0 0 0 0 rgba(240,160,59,.0),
+      inset 0 1px 0 rgba(255,255,255,.28);
+  }
+  50%{
+    transform:scale(1.035);
+    box-shadow:
+      0 7px 18px rgba(217,121,36,.32),
+      0 0 0 5px rgba(240,160,59,.11),
+      inset 0 1px 0 rgba(255,255,255,.30);
+  }
+}
+
+/* Botón de eliminación rápida junto a Jornada */
+.worklog-delete-quick-btn{
+  display:none;
+  min-height:34px;
+  padding:0 8px;
+  border:1px solid rgba(255,95,114,.34);
+  border-radius:10px;
+  background:rgba(255,95,114,.08);
+  color:#ff7181;
+  font-size:7.5px;
+  font-weight:1000;
+  white-space:nowrap;
+}
+.worklog-delete-quick-btn.show{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+.worklog-delete-quick-btn:active{
+  transform:scale(.97);
+}
+
+/* Eliminar dentro del modal ahora tiene más contraste */
+.workday-delete-btn:not(:disabled){
+  background:
+    radial-gradient(circle at 90% 0%,rgba(255,255,255,.10),transparent 40%),
+    rgba(255,95,114,.11);
+  border-color:rgba(255,95,114,.42);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
+}
+
+/* Eliminación desde detalle de Estadísticas */
+.worklog-stat-row{
+  grid-template-columns:auto 76px minmax(0,1fr) auto;
+}
+.worklog-stat-row-actions{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:4px;
+}
+.worklog-stat-delete{
+  min-width:54px;
+  min-height:22px;
+  padding:0 5px;
+  border:1px solid rgba(255,95,114,.28);
+  border-radius:7px;
+  background:rgba(255,95,114,.07);
+  color:#ff7181;
+  font-size:5.8px;
+  font-weight:1000;
+}
+.worklog-stat-delete:active{
+  transform:scale(.96);
+}
+
+body.light .workday-open-btn{
+  color:#2b1908;
+}
+body.light .worklog-delete-quick-btn,
+body.light .worklog-stat-delete{
+  background:#fff5f6;
+  color:#cf4054;
+  border-color:rgba(207,64,84,.28);
+}
+
+/* Compatibilidad Samsung / reduced motion:
+   el botón NUEVO debe seguir llamando la atención. */
+@media(prefers-reduced-motion:reduce){
+  .workday-open-btn.is-new{
+    animation:workdayNewReduced 2.8s ease-in-out infinite !important;
+  }
+  @keyframes workdayNewReduced{
+    0%,100%{box-shadow:0 5px 13px rgba(217,121,36,.22),0 0 0 0 rgba(240,160,59,0)}
+    50%{box-shadow:0 7px 18px rgba(217,121,36,.30),0 0 0 4px rgba(240,160,59,.10)}
+  }
+}
+
+@media(max-width:620px){
+  .detail-head-actions{
+    gap:4px;
+  }
+  .workday-detail-buttons{
+    gap:4px;
+  }
+  .workday-open-btn{
+    min-width:105px;
+    min-height:36px;
+    padding:0 8px;
+    font-size:8.8px;
+  }
+  .worklog-delete-quick-btn{
+    min-height:32px;
+    padding:0 6px;
+    font-size:6.8px;
+  }
+  .worklog-stat-row{
+    grid-template-columns:auto 66px minmax(0,1fr) auto;
+  }
+  .worklog-stat-delete{
+    min-width:50px;
+    font-size:5.4px;
+  }
+}
+
+@media(max-width:390px){
+  .detail-head{
+    align-items:flex-start;
+  }
+  .detail-head-actions{
+    flex-direction:column;
+    align-items:flex-end;
+  }
+  .workday-open-btn{
+    min-width:101px;
+  }
+}
+
+@media(max-height:760px){
+  .workday-open-btn{
+    min-height:33px;
+  }
+  .worklog-delete-quick-btn{
+    min-height:30px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -6191,7 +6393,13 @@ body.light #worklogStatsDetailModal .close-btn{
       <div id="detailTitle" class="detail-title"></div>
       <div class="detail-head-actions">
         <div class="hold-hint">Mantener 450 ms → Agenda</div>
-        <button id="workdayOpenBtn" class="workday-open-btn" type="button">🛠 Jornada</button>
+        <div class="workday-detail-buttons">
+          <button id="worklogDeleteQuickBtn" class="worklog-delete-quick-btn" type="button" aria-label="Eliminar registro laboral">🗑 Eliminar</button>
+          <button id="workdayOpenBtn" class="workday-open-btn is-new" type="button">
+            <span class="workday-new-pill">NUEVO</span>
+            <span class="workday-open-label">🛠 JORNADA</span>
+          </button>
+        </div>
       </div>
     </div>
     <div id="holidayDetailBanner" class="holiday-detail-banner">
@@ -6298,7 +6506,7 @@ body.light #worklogStatsDetailModal .close-btn{
     <button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button>
   </div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.8.0</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.8.1</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 
@@ -6376,7 +6584,7 @@ body.light #worklogStatsDetailModal .close-btn{
     </div>
 
     <div class="workday-actions">
-      <button id="workdayDeleteBtn" class="workday-delete-btn" type="button">ELIMINAR REGISTRO</button>
+      <button id="workdayDeleteBtn" class="workday-delete-btn" type="button">🗑 ELIMINAR REGISTRO</button>
       <button id="workdaySaveBtn" class="workday-save-btn" type="button">GUARDAR</button>
     </div>
 
@@ -6702,7 +6910,7 @@ body.light #worklogStatsDetailModal .close-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.8.0';
+const CURRENT_VERSION='4.8.1';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -6732,6 +6940,7 @@ const morningColorRow=$('#morningColorRow'),nightColorRow=$('#nightColorRow'),of
 const AGENDA_KEY='turno4x4.agenda.v1', NOTIFIED_KEY='turno4x4.agenda.notified.v1', BACKUP_KEY='turno4x4.agenda.lastBackup';
 const VACATION_KEY='turno4x4.vacations.v1';
 const WORKLOG_KEY='turno4x4.worklog.v1';
+const WORKDAY_SEEN_KEY='turno4x4.workdaySeen.v1';
 const VACATION_COLOR_KEY='turno4x4.vacationColor.v1';
 const SHOW_VACATIONS_KEY='turno4x4.showVacations.v1';
 
@@ -6805,24 +7014,30 @@ function fitMainCalendarViewport(){
   return;
  }
 
+ // Mientras hay una ventana modal abierta no recalculamos el calendario
+ // de fondo. Esto evita que el teclado/visualViewport altere sus alturas.
+ if(document.querySelector('.backdrop.open'))return;
+
  cancelAnimationFrame(mainViewportFitRaf);
  mainViewportFitRaf=requestAnimationFrame(()=>{
   const vv=window.visualViewport;
-  const viewportBottom=vv?(vv.offsetTop+vv.height):window.innerHeight;
-  const calendarTop=calendarCard.getBoundingClientRect().top;
+  const viewportHeight=vv?vv.height:window.innerHeight;
+
+  // IMPORTANTE: usamos la posición real del calendario dentro del documento,
+  // no su posición relativa al scroll actual. Antes, si Jornada se abría desde
+  // el detalle inferior, calendarTop podía ser negativo y las 6 filas se
+  // agrandaban artificialmente al guardar un registro.
+  const scrollY=window.scrollY||window.pageYOffset||0;
+  const calendarTopDocument=calendarCard.getBoundingClientRect().top+scrollY;
+
   const weekdays=calendarCard.querySelector('.weekdays');
   const weekdaysH=weekdays?weekdays.getBoundingClientRect().height:26;
   const legendH=shiftLegend.getBoundingClientRect().height||22;
 
-  // El mes siempre usa 6 filas. El alto visible que queda desde el comienzo
-  // del calendario se reparte completo entre esas seis filas.
   const bottomSafety=3;
-  const usableForCalendar=viewportBottom-calendarTop-legendH-bottomSafety;
+  const usableForCalendar=viewportHeight-calendarTopDocument-legendH-bottomSafety;
   const rawDayHeight=(usableForCalendar-weekdaysH)/6;
 
-  // Antes de recortar la última fila permitimos que las celdas se reduzcan.
-  // En una pantalla normal usamos el alto exacto, sin un máximo artificial,
-  // por lo que tampoco queda espacio libre abajo.
   const minimumDayHeight=38;
   const dayHeight=Math.max(minimumDayHeight,rawDayHeight);
 
@@ -7364,6 +7579,52 @@ function loadWorklogData(){
  }
 }
 
+function updateWorkdayNewState(){
+ const btn=$('#workdayOpenBtn');
+ if(!btn)return;
+ const seen=localStorage.getItem(WORKDAY_SEEN_KEY)==='true';
+ btn.classList.toggle('is-new',!seen);
+}
+
+function markWorkdayFeatureSeen(){
+ localStorage.setItem(WORKDAY_SEEN_KEY,'true');
+ updateWorkdayNewState();
+}
+
+function deleteWorklogById(id,{closeWorkday=false,ask=true}={}){
+ const current=loadWorklogData().map(normalizeWorklog).find(x=>x.id===id);
+ if(!current)return false;
+
+ const d=parseDateKey(current.date);
+ if(ask&&!confirm(`¿Eliminar el registro laboral del ${shortDateFmt.format(d)}?`))return false;
+
+ saveWorklogData(loadWorklogData().filter(x=>normalizeWorklog(x).id!==id));
+
+ if(closeWorkday)closeModal('workdayModal');
+
+ renderAll();
+ renderStats();
+
+ const statsDetail=$('#worklogStatsDetailModal');
+ if(statsDetail?.classList.contains('open')){
+  renderWorklogStatsDetail(worklogStatsDetailMode);
+ }
+
+ // Dos reajustes: inmediato y luego de que el navegador termine
+ // de cerrar la ventana/modal y restaurar el viewport.
+ scheduleMainViewportFit();
+ setTimeout(scheduleMainViewportFit,120);
+ setTimeout(scheduleMainViewportFit,320);
+ return true;
+}
+
+function deleteSelectedWorklog(){
+ const record=worklogForDate(selectedDate,activeTurnKey());
+ if(!record)return;
+ deleteWorklogById(record.id);
+}
+
+
 function saveWorklogData(items){
  localStorage.setItem(WORKLOG_KEY,JSON.stringify(items));
 }
@@ -7471,18 +7732,16 @@ function saveWorkdayRecord(){
  closeModal('workdayModal');
  renderAll();
  renderStats();
+ scheduleMainViewportFit();
+ setTimeout(scheduleMainViewportFit,120);
+ setTimeout(scheduleMainViewportFit,320);
  vibrate(14);
 }
 
 function deleteWorkdayRecord(){
  const existing=worklogForDate(workdayEditingDate,workdayEditingTurn);
  if(!existing)return;
- if(!confirm(`¿Eliminar el registro laboral del ${shortDateFmt.format(workdayEditingDate)}?`))return;
-
- saveWorklogData(loadWorklogData().filter(x=>normalizeWorklog(x).id!==existing.id));
- closeModal('workdayModal');
- renderAll();
- renderStats();
+ deleteWorklogById(existing.id,{closeWorkday:true});
 }
 
 function worklogRecordsForPeriod(turn,year,month=null){
@@ -7566,9 +7825,18 @@ function renderWorklogStatsDetail(mode){
       <b>${escapeHtml(mainText)}</b>
       <small>${escapeHtml(detailText||'Sin nota')}</small>
     </div>
-    <span class="worklog-stat-row-value">${mode==='overtime'?`${worklogOvertimeText(r.overtime)} h`:'CAMBIO'}</span>
+    <div class="worklog-stat-row-actions">
+      <span class="worklog-stat-row-value">${mode==='overtime'?`${worklogOvertimeText(r.overtime)} h`:'CAMBIO'}</span>
+      <button type="button" class="worklog-stat-delete" data-worklog-delete="${escapeHtml(r.id)}">ELIMINAR</button>
+    </div>
    </div>`;
  }).join('');
+
+ $$('[data-worklog-delete]').forEach(btn=>{
+  btn.onclick=()=>{
+   deleteWorklogById(btn.dataset.worklogDelete);
+  };
+ });
 }
 
 function openWorklogStatsDetail(mode){
@@ -8165,6 +8433,9 @@ function showDetail(d){
 
  const active=activeTurnKey();
  const record=worklogForDate(d,active);
+ const quickDelete=$('#worklogDeleteQuickBtn');
+ if(quickDelete)quickDelete.classList.toggle('show',Boolean(record));
+
  const worklogBanner=$('#worklogDetailBanner');
  const worklogTitle=$('#worklogDetailTitle');
  const worklogText=$('#worklogDetailText');
@@ -8652,7 +8923,11 @@ dayNumberSize.oninput=()=>{dayNumberSizeValue.textContent=`${dayNumberSize.value
 showLabels.onchange=saveSettings;showHolidays.onchange=saveSettings;hapticsToggle.onchange=saveSettings;
 $('#resetSettingsBtn').onclick=()=>{morningColor.value=defaults.morning;offColor.value=defaults.off;if(!isTurn5Profile())nightColor.value=defaults.night;codeSize.value=18;codeSizeValue.textContent='18 px';dayNumberSize.value=10;dayNumberSizeValue.textContent='10 px';showLabels.checked=true;showHolidays.checked=true;hapticsToggle.checked=true;saveSettings();updateColorSettingsUI();renderQuickPalette()};
 $('#agendaSaveBtn').onclick=saveAgenda;$('#agendaClearBtn').onclick=clearAgendaForm;$('#agendaNotifyBtn').onclick=requestNotificationPermission;
-$('#workdayOpenBtn').onclick=()=>openWorkday(selectedDate,activeTurnKey());
+$('#workdayOpenBtn').onclick=()=>{
+ markWorkdayFeatureSeen();
+ openWorkday(selectedDate,activeTurnKey());
+};
+$('#worklogDeleteQuickBtn').onclick=deleteSelectedWorklog;
 $('#workdaySaveBtn').onclick=saveWorkdayRecord;
 $('#workdayDeleteBtn').onclick=deleteWorkdayRecord;
 
@@ -8951,7 +9226,7 @@ document.addEventListener('dragstart',ev=>{
  if(ev.target.closest?.('button,[role="button"]'))ev.preventDefault();
 });
 
-loadSettings();loadVacationColor();loadVacationVisibility();syncTurnPulseText();syncTurn5PulseText();ensurePersistentTurnPulses();renderQuickPalette();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();fitMainCalendarViewport();keepDetailBelowInitialFold();setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},260);setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},700);initSplash();checkUpdate();checkReminders();
+loadSettings();loadVacationColor();loadVacationVisibility();updateWorkdayNewState();syncTurnPulseText();syncTurn5PulseText();ensurePersistentTurnPulses();renderQuickPalette();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();fitMainCalendarViewport();keepDetailBelowInitialFold();setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},260);setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},700);initSplash();checkUpdate();checkReminders();
 window.addEventListener('resize',()=>{scheduleMainViewportFit();scheduleBelowFoldLayout()});
 window.addEventListener('orientationchange',()=>{scheduleMainViewportFit();scheduleBelowFoldLayout()});
 window.addEventListener('focus',()=>{
