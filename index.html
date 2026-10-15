@@ -7285,6 +7285,100 @@ body.light #statsModal .worklog-stat-btn.period-holidays > span{
   }
 }
 
+
+/* ===== V4.8.7 · REGISTRO LABORAL · TEXTOS MÁS GRANDES ===== */
+
+/* Títulos internos de cada tarjeta */
+#statsModal .worklog-stat-btn small{
+  font-size:10.6px;
+  line-height:1.08;
+  font-weight:950;
+  letter-spacing:.002em;
+}
+
+/* Valores grandes */
+#statsModal .worklog-stat-btn b{
+  font-size:28px;
+  line-height:.96;
+  font-weight:1000;
+}
+
+/* Texto inferior: "en el año" / período / en tu turno */
+#statsModal .worklog-stat-btn > span{
+  font-size:9.2px;
+  line-height:1.08;
+  font-weight:760;
+}
+#statsModal .worklog-stat-btn > span strong{
+  font-size:10px;
+  font-weight:950;
+}
+
+/* Horas extra necesita un poco menos porque muestra un rango completo */
+#statsModal #worklogOvertimeLabel{
+  font-size:9.6px;
+  line-height:1.05;
+  white-space:nowrap;
+  letter-spacing:-.015em;
+}
+
+/* Feriados del período: rango inferior más legible */
+#statsModal #worklogHolidaysRange{
+  font-size:8.9px;
+  line-height:1.08;
+}
+
+/* Aprovechamos mejor el espacio vertical existente */
+#statsModal .worklog-stat-btn{
+  justify-content:center;
+  align-content:center;
+  padding:9px 11px;
+}
+
+/* Teléfonos */
+@media(max-width:620px){
+  #statsModal .worklog-stat-btn small{
+    font-size:9.4px;
+  }
+  #statsModal .worklog-stat-btn b{
+    font-size:25px;
+  }
+  #statsModal .worklog-stat-btn > span{
+    font-size:8.1px;
+  }
+  #statsModal .worklog-stat-btn > span strong{
+    font-size:8.8px;
+  }
+  #statsModal #worklogOvertimeLabel{
+    font-size:8.4px;
+  }
+  #statsModal #worklogHolidaysRange{
+    font-size:7.9px;
+  }
+}
+
+/* Pantallas de poca altura: sigue siendo bastante más grande que antes */
+@media(max-height:760px){
+  #statsModal .worklog-stat-btn small{
+    font-size:7.4px;
+  }
+  #statsModal .worklog-stat-btn b{
+    font-size:18px;
+  }
+  #statsModal .worklog-stat-btn > span{
+    font-size:6.6px;
+  }
+  #statsModal .worklog-stat-btn > span strong{
+    font-size:7.1px;
+  }
+  #statsModal #worklogOvertimeLabel{
+    font-size:6.8px;
+  }
+  #statsModal #worklogHolidaysRange{
+    font-size:6.5px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -7467,7 +7561,7 @@ body.light #statsModal .worklog-stat-btn.period-holidays > span{
     <button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button>
   </div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.8.6</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.8.7</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 
@@ -7956,7 +8050,7 @@ body.light #statsModal .worklog-stat-btn.period-holidays > span{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.8.6';
+const CURRENT_VERSION='4.8.7';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
