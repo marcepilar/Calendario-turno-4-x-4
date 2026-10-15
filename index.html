@@ -7005,6 +7005,19 @@ body.light #statsModal .worklog-stat-btn.licenses{
   }
 }
 
+
+/* ===== V4.8.5 · HORAS EXTRA · PERÍODO 23→23 INCLUSIVE ===== */
+#statsModal #worklogOvertimeLabel{
+  white-space:nowrap;
+  letter-spacing:-.01em;
+}
+@media(max-width:620px){
+  #statsModal #worklogOvertimeLabel{font-size:6.9px}
+}
+@media(max-height:760px){
+  #statsModal #worklogOvertimeLabel{font-size:5.8px}
+}
+
 </style>
 </head>
 <body>
@@ -7187,7 +7200,7 @@ body.light #statsModal .worklog-stat-btn.licenses{
     <button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button>
   </div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.8.4</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.8.5</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 
@@ -7565,7 +7578,7 @@ body.light #statsModal .worklog-stat-btn.licenses{
         <span><strong id="worklogChangesYear">0</strong> en el año</span>
       </button>
       <button id="worklogOvertimeStat" type="button" class="worklog-stat-btn overtime">
-        <small>Horas extra</small>
+        <small id="worklogOvertimeLabel">Horas extra · 23→23</small>
         <b><span id="worklogOvertimeMonth">0</span> h</b>
         <span><strong id="worklogOvertimeYear">0</strong> h en el año</span>
       </button>
@@ -7671,7 +7684,7 @@ body.light #statsModal .worklog-stat-btn.licenses{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.8.4';
+const CURRENT_VERSION='4.8.5';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -8563,9 +8576,45 @@ function worklogPeriodStats(turn,year,month=null){
  };
 }
 
+function overtimePayrollPeriod(year,month){
+ // Para el mes mostrado: día 23 del mes anterior hasta día 23
+ // del mes mostrado, ambos inclusive.
+ const start=new Date(year,month-1,23);
+ const end=new Date(year,month,23);
+ return {start,end,startKey:dateKey(start),endKey:dateKey(end)};
+}
+
+function overtimePayrollStats(turn,year,month){
+ const period=overtimePayrollPeriod(year,month);
+ const records=loadWorklogData()
+  .map(normalizeWorklog)
+  .filter(r=>
+   r.turn===turn &&
+   r.date &&
+   r.date>=period.startKey &&
+   r.date<=period.endKey &&
+   Number(r.overtime)>0
+  )
+  .sort((a,b)=>a.date.localeCompare(b.date));
+
+ return {
+  ...period,
+  records,
+  overtime:records.reduce((sum,r)=>sum+(Number(r.overtime)||0),0)
+ };
+}
+
+function overtimePayrollPeriodLabel(year,month){
+ const {start,end}=overtimePayrollPeriod(year,month);
+ const fmt=new Intl.DateTimeFormat('es-AR',{day:'2-digit',month:'2-digit'});
+ return `${fmt.format(start)} → ${fmt.format(end)}`;
+}
+
+
 function renderWorklogStats(){
  const turn=activeTurnKey();
  const monthStats=worklogPeriodStats(turn,viewYear,viewMonth);
+ const overtimeStats=overtimePayrollStats(turn,viewYear,viewMonth);
  const yearStats=worklogPeriodStats(turn,viewYear,null);
  const monthLicenses=licenseStatsForPeriod(turn,viewYear,viewMonth);
  const yearLicenses=licenseStatsForPeriod(turn,viewYear,null);
@@ -8573,7 +8622,8 @@ function renderWorklogStats(){
  $('#worklogStatsPeriod').textContent=cap(monthFmt.format(new Date(viewYear,viewMonth,1)));
  $('#worklogChangesMonth').textContent=monthStats.changes;
  $('#worklogChangesYear').textContent=yearStats.changes;
- $('#worklogOvertimeMonth').textContent=worklogOvertimeText(monthStats.overtime);
+ $('#worklogOvertimeLabel').textContent=`Horas extra · ${overtimePayrollPeriodLabel(viewYear,viewMonth)}`;
+ $('#worklogOvertimeMonth').textContent=worklogOvertimeText(overtimeStats.overtime);
  $('#worklogOvertimeYear').textContent=worklogOvertimeText(yearStats.overtime);
  $('#worklogLicensesMonth').textContent=monthLicenses.workDays;
  $('#worklogLicensesYear').textContent=yearLicenses.workDays;
@@ -8582,11 +8632,13 @@ function renderWorklogStats(){
 function renderWorklogStatsDetail(mode){
  worklogStatsDetailMode=mode;
  const turn=activeTurnKey();
- const periodLabel=cap(monthFmt.format(new Date(viewYear,viewMonth,1)));
+ const calendarPeriodLabel=cap(monthFmt.format(new Date(viewYear,viewMonth,1)));
+ const overtimePeriodLabel=overtimePayrollPeriodLabel(viewYear,viewMonth);
+ const periodLabel=mode==='overtime'?overtimePeriodLabel:calendarPeriodLabel;
  const titleIcon=$('#worklogStatsHeadIcon');
  const titleText=$('#worklogStatsDetailTitleText');
 
- $('#worklogStatsDetailSubtitle').textContent=`${scheduleName(turn)} · ${periodLabel}`;
+ $('#worklogStatsDetailSubtitle').textContent=`${scheduleName(turn)} · ${mode==='overtime'?'Período de horas extra ':''}${periodLabel}`;
  $('#worklogStatsDetailTurn').textContent=scheduleName(turn);
  $('#worklogStatsDetailPeriod').textContent=periodLabel;
 
@@ -8632,20 +8684,21 @@ function renderWorklogStatsDetail(mode){
  }
 
  const stats=worklogPeriodStats(turn,viewYear,viewMonth);
+ const overtimeStats=overtimePayrollStats(turn,viewYear,viewMonth);
  const records=mode==='overtime'
-  ?stats.records.filter(r=>r.overtime>0)
+  ?overtimeStats.records
   :stats.records.filter(r=>r.workedCode);
- const label=mode==='overtime'?'Horas extra':'Cambios de turno';
+ const label=mode==='overtime'?'Horas extra · 23→23':'Cambios de turno';
  titleIcon.textContent=mode==='overtime'?'+H':'J';
  titleIcon.classList.remove('license');
  titleText.textContent='Registro laboral';
  $('#worklogStatsDetailMetricLabel').textContent=label;
  $('#worklogStatsDetailMetric').textContent=mode==='overtime'
-  ?`${worklogOvertimeText(stats.overtime)} h`
+  ?`${worklogOvertimeText(overtimeStats.overtime)} h`
   :stats.changes;
 
  if(!records.length){
-  list.innerHTML=`<div class="worklog-stats-empty">No hay ${mode==='overtime'?'horas extra':'cambios de turno'} registrados en este mes.</div>`;
+  list.innerHTML=`<div class="worklog-stats-empty">No hay ${mode==='overtime'?`horas extra registradas entre ${overtimePeriodLabel} inclusive`:'cambios de turno registrados en este mes'}.</div>`;
   return;
  }
 
