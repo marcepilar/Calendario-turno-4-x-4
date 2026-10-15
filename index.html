@@ -7018,6 +7018,273 @@ body.light #statsModal .worklog-stat-btn.licenses{
   #statsModal #worklogOvertimeLabel{font-size:5.8px}
 }
 
+
+/* ===== V4.8.6 · REGISTRO LABORAL PRIORITARIO + FERIADOS 23→23 ===== */
+
+/* Jerarquía vertical: Registro laboral > tarjeta de turno actual */
+#statsModal .stats-modal-window{
+  grid-template-rows:
+    auto
+    auto
+    minmax(72px,.42fr)
+    minmax(104px,.66fr)
+    minmax(148px,1.12fr)
+    minmax(86px,.58fr);
+}
+
+/* "Tu turno termina en" queda informativo, pero ya no domina la pantalla */
+#statsModal .stats-turn-end > h3{
+  margin-bottom:3px;
+  font-size:9.4px;
+}
+#statsModal .turn-end-card{
+  padding:7px 10px;
+  border-radius:15px;
+}
+#statsModal .turn-end-top{
+  gap:9px;
+}
+#statsModal .turn-end-copy small{
+  font-size:6.5px;
+}
+#statsModal .turn-end-copy b{
+  font-size:clamp(18px,3vw,23px);
+  line-height:1.02;
+  margin-top:3px;
+}
+#statsModal .turn-end-card.is-inactive .turn-end-copy b{
+  font-size:clamp(18px,3vw,23px);
+  line-height:1.02;
+}
+#statsModal .turn-end-copy span{
+  margin-top:4px;
+  font-size:7.8px;
+}
+#statsModal .turn-end-badge{
+  min-width:58px;
+  min-height:52px;
+  padding:6px 8px;
+  border-radius:13px;
+  font-size:19px;
+}
+
+/* Registro laboral ahora es una matriz 2×2 grande */
+#statsModal .stats-worklog{
+  padding:10px 10px 9px;
+  border-width:1.5px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.045),
+    0 8px 20px rgba(0,0,0,.09);
+}
+#statsModal .stats-worklog h3{
+  margin-bottom:7px;
+  font-size:14px;
+  line-height:1.05;
+}
+#statsModal .stats-worklog .stats-title-mark{
+  width:36px;
+  min-width:36px;
+  height:33px;
+  font-size:13px;
+  border-radius:11px;
+}
+#statsModal .worklog-stats-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-rows:repeat(2,minmax(0,1fr));
+  gap:6px;
+  flex:1;
+  min-height:0;
+}
+#statsModal .worklog-stat-btn{
+  min-height:61px;
+  padding:7px 10px;
+  border-radius:13px;
+  grid-template-columns:minmax(0,1fr) auto;
+  grid-template-rows:auto auto;
+  gap:3px 8px;
+}
+#statsModal .worklog-stat-btn small{
+  font-size:8.8px;
+  line-height:1.05;
+  font-weight:900;
+}
+#statsModal .worklog-stat-btn b{
+  font-size:24px;
+  line-height:.95;
+}
+#statsModal .worklog-stat-btn > span{
+  font-size:7.5px;
+  line-height:1.05;
+  font-weight:700;
+}
+#statsModal .worklog-stat-btn.period-holidays{
+  border-bottom-color:rgba(255,95,114,.62);
+  background:
+    radial-gradient(circle at 92% 10%,rgba(255,95,114,.085),transparent 42%),
+    rgba(255,255,255,.028);
+}
+#statsModal .worklog-stat-btn.period-holidays b{
+  color:#ff7383;
+}
+#statsModal .worklog-stat-btn.period-holidays > span{
+  color:#aab7c8;
+}
+
+/* Detalle de feriados del período */
+.worklog-stats-head-icon.holiday-period,
+.worklog-stat-row-icon.holiday-period{
+  background:linear-gradient(180deg,#ff667a,#e93f59);
+  color:#fff;
+}
+.worklog-stat-row-icon.holiday-period.bridge{
+  background:linear-gradient(180deg,#4eb8f4,#238fce);
+}
+.worklog-stat-row.holiday-period-row{
+  border-color:rgba(255,95,114,.16);
+}
+
+/* Modo claro */
+body.light #statsModal .worklog-stat-btn.period-holidays{
+  background:
+    radial-gradient(circle at 92% 10%,rgba(255,95,114,.07),transparent 42%),
+    linear-gradient(180deg,#f8fafc,#eef2f6);
+}
+body.light #statsModal .worklog-stat-btn.period-holidays > span{
+  color:#64758a;
+}
+
+/* Teléfonos normales */
+@media(max-width:620px){
+  #statsModal .stats-modal-window{
+    grid-template-rows:
+      auto
+      auto
+      minmax(68px,.38fr)
+      minmax(98px,.60fr)
+      minmax(142px,1.08fr)
+      minmax(82px,.55fr);
+    gap:4px;
+  }
+
+  #statsModal .turn-end-card{
+    padding:6px 8px;
+  }
+  #statsModal .turn-end-copy b,
+  #statsModal .turn-end-card.is-inactive .turn-end-copy b{
+    font-size:20px;
+  }
+  #statsModal .turn-end-copy span{
+    font-size:7.2px;
+  }
+  #statsModal .turn-end-badge{
+    min-width:54px;
+    min-height:48px;
+    font-size:18px;
+  }
+
+  #statsModal .stats-worklog{
+    padding:8px 7px;
+  }
+  #statsModal .stats-worklog h3{
+    margin-bottom:6px;
+    font-size:12.5px;
+  }
+  #statsModal .stats-worklog .stats-title-mark{
+    width:32px;
+    min-width:32px;
+    height:29px;
+    font-size:11px;
+  }
+  #statsModal .worklog-stats-grid{
+    gap:4px;
+  }
+  #statsModal .worklog-stat-btn{
+    min-height:56px;
+    padding:6px 7px;
+    gap:2px 5px;
+  }
+  #statsModal .worklog-stat-btn small{
+    font-size:7.6px;
+  }
+  #statsModal .worklog-stat-btn b{
+    font-size:21px;
+  }
+  #statsModal .worklog-stat-btn > span{
+    font-size:6.6px;
+  }
+  #statsModal #worklogOvertimeLabel{
+    font-size:7.1px;
+  }
+}
+
+/* Pantallas bajas: se conserva una sola pantalla sin perder el 2×2 */
+@media(max-height:760px){
+  #statsModal .stats-modal-window{
+    grid-template-rows:
+      auto
+      auto
+      minmax(58px,.34fr)
+      minmax(78px,.50fr)
+      minmax(100px,.82fr)
+      minmax(68px,.48fr);
+    gap:2px;
+  }
+
+  #statsModal .stats-turn-end > h3{
+    font-size:7.4px;
+    margin-bottom:2px;
+  }
+  #statsModal .turn-end-card{
+    padding:4px 7px;
+  }
+  #statsModal .turn-end-copy b,
+  #statsModal .turn-end-card.is-inactive .turn-end-copy b{
+    font-size:17px;
+  }
+  #statsModal .turn-end-copy span{
+    font-size:6.3px;
+    margin-top:2px;
+  }
+  #statsModal .turn-end-badge{
+    min-width:46px;
+    min-height:41px;
+    font-size:16px;
+  }
+
+  #statsModal .stats-worklog{
+    padding:4px 5px;
+  }
+  #statsModal .stats-worklog h3{
+    margin-bottom:3px;
+    font-size:9.7px;
+  }
+  #statsModal .stats-worklog .stats-title-mark{
+    width:27px;
+    min-width:27px;
+    height:24px;
+    font-size:8.5px;
+  }
+  #statsModal .worklog-stats-grid{
+    gap:3px;
+  }
+  #statsModal .worklog-stat-btn{
+    min-height:39px;
+    padding:3px 5px;
+  }
+  #statsModal .worklog-stat-btn small{
+    font-size:6px;
+  }
+  #statsModal .worklog-stat-btn b{
+    font-size:15px;
+  }
+  #statsModal .worklog-stat-btn > span{
+    font-size:5.4px;
+  }
+  #statsModal #worklogOvertimeLabel{
+    font-size:5.7px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -7200,7 +7467,7 @@ body.light #statsModal .worklog-stat-btn.licenses{
     <button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button>
   </div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.8.5</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.8.6</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 
@@ -7587,6 +7854,11 @@ body.light #statsModal .worklog-stat-btn.licenses{
         <b><span id="worklogLicensesMonth">0</span> d</b>
         <span><strong id="worklogLicensesYear">0</strong> d en el año</span>
       </button>
+      <button id="worklogHolidaysStat" type="button" class="worklog-stat-btn period-holidays">
+        <small>Feriados del período</small>
+        <b><span id="worklogHolidaysPeriod">0</span></b>
+        <span id="worklogHolidaysRange">23→23 · en tu turno</span>
+      </button>
     </div>
   </div>
 
@@ -7684,7 +7956,7 @@ body.light #statsModal .worklog-stat-btn.licenses{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.8.5';
+const CURRENT_VERSION='4.8.6';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -8610,11 +8882,60 @@ function overtimePayrollPeriodLabel(year,month){
  return `${fmt.format(start)} → ${fmt.format(end)}`;
 }
 
+function payrollHolidayDetails(turn,year,month){
+ const period=overtimePayrollPeriod(year,month);
+ const details=[];
+
+ // Precarga/caché de los dos años involucrados si el período cruza enero.
+ loadHolidayYear(period.start.getFullYear());
+ loadHolidayYear(period.end.getFullYear());
+ ensureHolidayYear(period.start.getFullYear());
+ if(period.end.getFullYear()!==period.start.getFullYear()){
+  ensureHolidayYear(period.end.getFullYear());
+ }
+
+ for(let d=new Date(period.start);d<=period.end;d=addDays(d,1)){
+  const key=dateKey(d);
+  const national=loadHolidayYear(d.getFullYear())[key]||null;
+  const metalurgico=d.getMonth()===8&&d.getDate()===7;
+
+  if(!national&&!metalurgico)continue;
+
+  const code=codeFor(turn,d);
+  if(!isWorkCodeForHoliday(turn,code))continue;
+
+  const names=[];
+  if(national)names.push(national.nombre);
+  if(metalurgico)names.push('Día del Metalúrgico');
+
+  details.push({
+   date:new Date(d),
+   key,
+   code,
+   bridge:Boolean(national&&isBridgeHoliday(national)),
+   metalurgico,
+   national:Boolean(national),
+   name:names.join(' · '),
+   type:national
+    ?(isBridgeHoliday(national)?'Puente / no laborable':'Feriado nacional')
+    :'Feriado gremial'
+  });
+ }
+
+ return {
+  ...period,
+  details,
+  count:details.length
+ };
+}
+
+
 
 function renderWorklogStats(){
  const turn=activeTurnKey();
  const monthStats=worklogPeriodStats(turn,viewYear,viewMonth);
  const overtimeStats=overtimePayrollStats(turn,viewYear,viewMonth);
+ const payrollHolidays=payrollHolidayDetails(turn,viewYear,viewMonth);
  const yearStats=worklogPeriodStats(turn,viewYear,null);
  const monthLicenses=licenseStatsForPeriod(turn,viewYear,viewMonth);
  const yearLicenses=licenseStatsForPeriod(turn,viewYear,null);
@@ -8622,11 +8943,16 @@ function renderWorklogStats(){
  $('#worklogStatsPeriod').textContent=cap(monthFmt.format(new Date(viewYear,viewMonth,1)));
  $('#worklogChangesMonth').textContent=monthStats.changes;
  $('#worklogChangesYear').textContent=yearStats.changes;
+
  $('#worklogOvertimeLabel').textContent=`Horas extra · ${overtimePayrollPeriodLabel(viewYear,viewMonth)}`;
  $('#worklogOvertimeMonth').textContent=worklogOvertimeText(overtimeStats.overtime);
  $('#worklogOvertimeYear').textContent=worklogOvertimeText(yearStats.overtime);
+
  $('#worklogLicensesMonth').textContent=monthLicenses.workDays;
  $('#worklogLicensesYear').textContent=yearLicenses.workDays;
+
+ $('#worklogHolidaysPeriod').textContent=payrollHolidays.count;
+ $('#worklogHolidaysRange').textContent=`${overtimePayrollPeriodLabel(viewYear,viewMonth)} · en tu turno`;
 }
 
 function renderWorklogStatsDetail(mode){
@@ -8634,19 +8960,55 @@ function renderWorklogStatsDetail(mode){
  const turn=activeTurnKey();
  const calendarPeriodLabel=cap(monthFmt.format(new Date(viewYear,viewMonth,1)));
  const overtimePeriodLabel=overtimePayrollPeriodLabel(viewYear,viewMonth);
- const periodLabel=mode==='overtime'?overtimePeriodLabel:calendarPeriodLabel;
+ const periodLabel=(mode==='overtime'||mode==='holidays')?overtimePeriodLabel:calendarPeriodLabel;
  const titleIcon=$('#worklogStatsHeadIcon');
  const titleText=$('#worklogStatsDetailTitleText');
 
- $('#worklogStatsDetailSubtitle').textContent=`${scheduleName(turn)} · ${mode==='overtime'?'Período de horas extra ':''}${periodLabel}`;
+ $('#worklogStatsDetailSubtitle').textContent=`${scheduleName(turn)} · ${(mode==='overtime'||mode==='holidays')?'Período 23→23 ':''}${periodLabel}`;
  $('#worklogStatsDetailTurn').textContent=scheduleName(turn);
  $('#worklogStatsDetailPeriod').textContent=periodLabel;
 
  const list=$('#worklogStatsDetailList');
 
+ if(mode==='holidays'){
+  const hs=payrollHolidayDetails(turn,viewYear,viewMonth);
+  titleIcon.textContent='FER';
+  titleIcon.classList.remove('license');
+  titleIcon.classList.add('holiday-period');
+  titleText.textContent='Feriados del período';
+  $('#worklogStatsDetailMetricLabel').textContent='Feriados en tu turno';
+  $('#worklogStatsDetailMetric').textContent=hs.count;
+
+  if(!hs.details.length){
+   list.innerHTML=`<div class="worklog-stats-empty">No hay feriados que coincidan con un día programado de trabajo entre ${overtimePeriodLabel}, inclusive.</div>`;
+   return;
+  }
+
+  list.innerHTML=hs.details.map(item=>{
+   const codeLabel=codeText(turn,item.code);
+   return `
+    <div class="worklog-stat-row holiday-period-row">
+     <span class="worklog-stat-row-icon holiday-period${item.bridge?' bridge':''}">FER</span>
+     <div class="worklog-stat-row-date">
+       <b>${escapeHtml(cap(worklogDateFmt.format(item.date)))}</b>
+       <small>${escapeHtml(worklogFullDateFmt.format(item.date))}</small>
+     </div>
+     <div class="worklog-stat-row-copy">
+       <b>${escapeHtml(item.name)}</b>
+       <small>${escapeHtml(item.type)} · ${escapeHtml(codeLabel)}</small>
+     </div>
+     <div class="worklog-stat-row-actions">
+       <span class="worklog-stat-row-value">${escapeHtml(codeLabel)}</span>
+     </div>
+    </div>`;
+  }).join('');
+  return;
+ }
+
  if(mode==='licenses'){
   const ls=licenseStatsForPeriod(turn,viewYear,viewMonth);
   titleIcon.textContent='L';
+  titleIcon.classList.remove('holiday-period');
   titleIcon.classList.add('license');
   titleText.textContent='Licencias';
   $('#worklogStatsDetailMetricLabel').textContent='Jornadas afectadas';
@@ -8690,7 +9052,7 @@ function renderWorklogStatsDetail(mode){
   :stats.records.filter(r=>r.workedCode);
  const label=mode==='overtime'?'Horas extra · 23→23':'Cambios de turno';
  titleIcon.textContent=mode==='overtime'?'+H':'J';
- titleIcon.classList.remove('license');
+ titleIcon.classList.remove('license','holiday-period');
  titleText.textContent='Registro laboral';
  $('#worklogStatsDetailMetricLabel').textContent=label;
  $('#worklogStatsDetailMetric').textContent=mode==='overtime'
@@ -10086,6 +10448,7 @@ $$('.workday-overtime-quick [data-overtime]').forEach(btn=>{
 
 $('#worklogChangesStat').onclick=()=>openWorklogStatsDetail('changes');
 $('#worklogOvertimeStat').onclick=()=>openWorklogStatsDetail('overtime');
+$('#worklogHolidaysStat').onclick=()=>openWorklogStatsDetail('holidays');
 $('#worklogLicensesStat').onclick=()=>openWorklogStatsDetail('licenses');
 
 $('#vacationSaveBtn').onclick=saveVacationPeriod;$('#vacationClearBtn').onclick=()=>clearVacationForm(true);
