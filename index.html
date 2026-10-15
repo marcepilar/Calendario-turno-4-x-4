@@ -6732,6 +6732,279 @@ body.light .workday-change-duration b{color:#b46b18}
   .worklog-stat-btn>span{font-size:4.9px}
 }
 
+
+/* ===== V4.8.4 · ESTADÍSTICAS · FERIADOS + REGISTRO LABORAL MÁS PROTAGONISTAS ===== */
+
+/* Ambos bloques aprovechan mejor el alto ya disponible */
+#statsModal .stats-holidays,
+#statsModal .stats-worklog{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+/* ---------- FERIADOS ---------- */
+#statsModal .stats-holidays{
+  padding:10px 10px 9px;
+}
+#statsModal .stats-holidays h3{
+  margin-bottom:7px;
+  font-size:13.4px;
+  line-height:1.05;
+}
+#statsModal .stats-holidays .stats-title-mark{
+  width:34px;
+  min-width:34px;
+  height:32px;
+  font-size:9.8px;
+  border-radius:11px;
+}
+#statsModal .holiday-work-grid{
+  gap:5px;
+}
+#statsModal .holiday-work-chip{
+  min-height:57px;
+  padding:6px 2px 5px;
+  border-radius:12px;
+}
+#statsModal .holiday-work-chip span{
+  font-size:9.3px;
+}
+#statsModal .holiday-work-chip b{
+  margin-top:4px;
+  font-size:21px;
+  line-height:.95;
+}
+#statsModal .holiday-work-chip::after{
+  right:4px;
+  font-size:8.5px;
+}
+#statsModal .holiday-work-note{
+  margin-top:6px;
+  font-size:8.7px;
+  line-height:1.08;
+  font-weight:700;
+}
+
+/* ---------- REGISTRO LABORAL ---------- */
+#statsModal .stats-worklog{
+  padding:9px 10px;
+  border-color:rgba(240,160,59,.24);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.035),
+    0 6px 18px rgba(0,0,0,.07);
+}
+#statsModal .stats-worklog h3{
+  margin-bottom:7px;
+  font-size:13.2px;
+  line-height:1.05;
+}
+#statsModal .stats-worklog .stats-title-mark{
+  width:34px;
+  min-width:34px;
+  height:32px;
+  border-radius:11px;
+  font-size:12px;
+}
+#statsModal .worklog-stats-grid{
+  gap:6px;
+}
+#statsModal .worklog-stat-btn{
+  min-height:61px;
+  padding:7px 9px;
+  border-radius:12px;
+  grid-template-columns:minmax(0,1fr) auto;
+  grid-template-rows:auto auto;
+  gap:3px 7px;
+}
+#statsModal .worklog-stat-btn small{
+  font-size:8.4px;
+  line-height:1.05;
+  font-weight:900;
+}
+#statsModal .worklog-stat-btn b{
+  font-size:23px;
+  line-height:.95;
+}
+#statsModal .worklog-stat-btn > span{
+  font-size:7.6px;
+  line-height:1.05;
+  font-weight:700;
+}
+#statsModal .worklog-stat-btn > span strong{
+  font-size:8.2px;
+}
+#statsModal .worklog-stat-btn.changes{
+  background:
+    radial-gradient(circle at 92% 10%,rgba(240,160,59,.075),transparent 42%),
+    rgba(255,255,255,.028);
+}
+#statsModal .worklog-stat-btn.overtime{
+  background:
+    radial-gradient(circle at 92% 10%,rgba(67,168,255,.075),transparent 42%),
+    rgba(255,255,255,.028);
+}
+#statsModal .worklog-stat-btn.licenses{
+  background:
+    radial-gradient(circle at 92% 10%,rgba(233,95,158,.075),transparent 42%),
+    rgba(255,255,255,.028);
+}
+
+/* Modo claro */
+body.light #statsModal .stats-worklog{
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.86),
+    0 4px 11px rgba(34,48,68,.045);
+}
+body.light #statsModal .worklog-stat-btn.changes{
+  background:
+    radial-gradient(circle at 92% 10%,rgba(240,160,59,.065),transparent 42%),
+    linear-gradient(180deg,#f8fafc,#eef2f6);
+}
+body.light #statsModal .worklog-stat-btn.overtime{
+  background:
+    radial-gradient(circle at 92% 10%,rgba(67,168,255,.065),transparent 42%),
+    linear-gradient(180deg,#f8fafc,#eef2f6);
+}
+body.light #statsModal .worklog-stat-btn.licenses{
+  background:
+    radial-gradient(circle at 92% 10%,rgba(233,95,158,.065),transparent 42%),
+    linear-gradient(180deg,#f8fafc,#eef2f6);
+}
+
+/* Teléfonos */
+@media(max-width:620px){
+  #statsModal .stats-holidays{
+    padding:8px 7px;
+  }
+  #statsModal .stats-holidays h3{
+    margin-bottom:6px;
+    font-size:12.6px;
+  }
+  #statsModal .stats-holidays .stats-title-mark{
+    width:32px;
+    min-width:32px;
+    height:30px;
+    font-size:9.2px;
+  }
+  #statsModal .holiday-work-grid{
+    gap:3px;
+  }
+  #statsModal .holiday-work-chip{
+    min-height:51px;
+    padding:5px 1px 4px;
+  }
+  #statsModal .holiday-work-chip span{
+    font-size:8.7px;
+  }
+  #statsModal .holiday-work-chip b{
+    font-size:20px;
+  }
+  #statsModal .holiday-work-note{
+    margin-top:5px;
+    font-size:8px;
+  }
+
+  #statsModal .stats-worklog{
+    padding:7px 7px;
+  }
+  #statsModal .stats-worklog h3{
+    margin-bottom:6px;
+    font-size:11.8px;
+  }
+  #statsModal .stats-worklog .stats-title-mark{
+    width:31px;
+    min-width:31px;
+    height:29px;
+    font-size:10.5px;
+  }
+  #statsModal .worklog-stats-grid{
+    gap:4px;
+  }
+  #statsModal .worklog-stat-btn{
+    min-height:54px;
+    padding:6px 6px;
+    gap:2px 4px;
+  }
+  #statsModal .worklog-stat-btn small{
+    font-size:7.4px;
+  }
+  #statsModal .worklog-stat-btn b{
+    font-size:20px;
+  }
+  #statsModal .worklog-stat-btn > span{
+    font-size:6.8px;
+  }
+  #statsModal .worklog-stat-btn > span strong{
+    font-size:7.4px;
+  }
+}
+
+/* Pantallas de poca altura: sigue entrando en una sola pantalla */
+@media(max-height:760px){
+  #statsModal .stats-holidays{
+    padding:5px 6px;
+  }
+  #statsModal .stats-holidays h3{
+    margin-bottom:3px;
+    font-size:10.8px;
+  }
+  #statsModal .stats-holidays .stats-title-mark{
+    width:28px;
+    min-width:28px;
+    height:25px;
+    font-size:8px;
+  }
+  #statsModal .holiday-work-chip{
+    min-height:38px;
+    padding:3px 1px;
+  }
+  #statsModal .holiday-work-chip span{
+    font-size:7.5px;
+  }
+  #statsModal .holiday-work-chip b{
+    font-size:16.5px;
+    margin-top:2px;
+  }
+  #statsModal .holiday-work-note{
+    margin-top:2px;
+    font-size:6.8px;
+  }
+
+  #statsModal .stats-worklog{
+    padding:4px 6px;
+  }
+  #statsModal .stats-worklog h3{
+    margin-bottom:3px;
+    font-size:9.3px;
+  }
+  #statsModal .stats-worklog .stats-title-mark{
+    width:27px;
+    min-width:27px;
+    height:24px;
+    font-size:8.5px;
+  }
+  #statsModal .worklog-stats-grid{
+    gap:3px;
+  }
+  #statsModal .worklog-stat-btn{
+    min-height:39px;
+    padding:3px 5px;
+  }
+  #statsModal .worklog-stat-btn small{
+    font-size:6.2px;
+  }
+  #statsModal .worklog-stat-btn b{
+    font-size:15.5px;
+  }
+  #statsModal .worklog-stat-btn > span{
+    font-size:5.7px;
+  }
+  #statsModal .worklog-stat-btn > span strong{
+    font-size:6.2px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -6914,7 +7187,7 @@ body.light .workday-change-duration b{color:#b46b18}
     <button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button>
   </div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.8.3</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.8.4</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 
@@ -7398,7 +7671,7 @@ body.light .workday-change-duration b{color:#b46b18}
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.8.3';
+const CURRENT_VERSION='4.8.4';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
