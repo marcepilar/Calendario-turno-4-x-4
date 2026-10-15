@@ -7472,6 +7472,273 @@ body.light #statsModal .worklog-stat-btn.period-holidays > span{
   }
 }
 
+
+/* ===== V4.8.9 · AYUDA COMPLETA ===== */
+
+.help-top-btn{
+  font-family:inherit;
+  font-size:21px;
+  font-weight:1000;
+  color:#cfeaff;
+  background:
+    radial-gradient(circle at 72% 18%,rgba(67,168,255,.15),transparent 46%),
+    var(--panel);
+  border-color:rgba(67,168,255,.26);
+}
+
+#helpModal{z-index:10060}
+#helpModal .help-modal-window{
+  width:min(760px,calc(100vw - 8px));
+  height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 8px);
+  padding:8px 11px 12px;
+  overflow-y:auto;
+  scroll-behavior:smooth;
+}
+#helpModal .help-head{
+  top:-8px;
+  margin:0 -1px 8px;
+  padding:7px 1px 9px;
+}
+#helpModal .help-head h2{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:20px;
+}
+.help-head-icon{
+  width:34px;
+  height:30px;
+  display:inline-grid;
+  place-items:center;
+  border-radius:10px;
+  color:#e8f7ff;
+  background:linear-gradient(145deg,rgba(67,168,255,.34),rgba(66,214,176,.18));
+  border:1px solid rgba(84,174,255,.34);
+  font-size:15px;
+  font-weight:1000;
+}
+
+.help-intro{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 11px;
+  margin-bottom:8px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:
+    radial-gradient(circle at 94% 0%,rgba(67,168,255,.10),transparent 40%),
+    radial-gradient(circle at 5% 100%,rgba(66,214,176,.08),transparent 42%),
+    var(--panel2);
+}
+.help-intro-logo{
+  flex:0 0 auto;
+  width:46px;
+  height:46px;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  color:#fff;
+  background:linear-gradient(145deg,#39d2aa,#268bd7);
+  font-size:15px;
+  font-weight:1000;
+}
+.help-intro b{display:block;font-size:13px}
+.help-intro span{
+  display:block;
+  margin-top:3px;
+  color:var(--muted);
+  font-size:8.5px;
+  line-height:1.25;
+}
+
+.help-index{
+  position:sticky;
+  top:55px;
+  z-index:15;
+  display:flex;
+  gap:5px;
+  overflow-x:auto;
+  padding:5px 0 7px;
+  margin-bottom:2px;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--panel) 99%,transparent),color-mix(in srgb,var(--panel) 94%,transparent) 80%,transparent);
+  scrollbar-width:none;
+}
+.help-index::-webkit-scrollbar{display:none}
+.help-index button{
+  flex:0 0 auto;
+  min-height:30px;
+  padding:0 9px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:var(--panel2);
+  color:var(--text);
+  font-size:7px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.help-content{display:grid;gap:8px}
+.help-section{
+  scroll-margin-top:102px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:
+    radial-gradient(circle at 94% 2%,rgba(67,168,255,.035),transparent 34%),
+    var(--panel2);
+  overflow:hidden;
+}
+.help-section-title{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 9px 6px;
+}
+.help-section-title > span{
+  flex:0 0 auto;
+  width:29px;
+  height:27px;
+  display:grid;
+  place-items:center;
+  border-radius:9px;
+  background:rgba(67,168,255,.10);
+  border:1px solid rgba(67,168,255,.20);
+  color:#6bc0ff;
+  font-size:9px;
+  font-weight:1000;
+}
+.help-section-title b{display:block;font-size:12px;line-height:1.05}
+.help-section-title small{display:block;margin-top:2px;color:var(--muted);font-size:7px}
+.help-card{padding:2px 10px 10px 46px}
+.help-card p{
+  margin:0 0 7px;
+  color:var(--muted);
+  font-size:9px;
+  line-height:1.42;
+}
+.help-card p:last-child{margin-bottom:0}
+.help-card strong{color:var(--text);font-weight:950}
+.help-tip{
+  padding:7px 8px;
+  border:1px solid rgba(66,214,176,.18);
+  border-radius:10px;
+  background:rgba(66,214,176,.055);
+}
+
+.help-legend-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5px;
+  margin:1px 0 9px;
+}
+.help-legend-grid > div{
+  min-width:0;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:6px 7px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:color-mix(in srgb,var(--panel3) 68%,transparent);
+}
+.help-legend-grid b{display:block;font-size:8.5px;line-height:1}
+.help-legend-grid small{display:block;margin-top:3px;color:var(--muted);font-size:6.5px;line-height:1.15}
+.help-shift{
+  flex:0 0 auto;
+  min-width:31px;
+  height:26px;
+  padding:0 5px;
+  display:grid;
+  place-items:center;
+  border-radius:8px;
+  font-style:normal;
+  font-size:8px;
+  font-weight:1000;
+  border:1px solid rgba(255,255,255,.22);
+}
+.help-shift.m{background:#ffd84d;color:#2d2600}
+.help-shift.n{background:#27aee4;color:#041d2a}
+.help-shift.f{background:#3fbe62;color:#06220d}
+.help-shift.fer{background:#f34863;color:#fff}
+.help-shift.vacation{background:linear-gradient(180deg,var(--vacation-icon),var(--vacation-icon2));color:var(--vacation-icon-text)}
+.help-shift.license{background:linear-gradient(180deg,var(--license),var(--license2));color:#fff}
+.help-shift.change{background:linear-gradient(180deg,#f0a03b,#d97924);color:#271808}
+.help-shift.extra{background:linear-gradient(180deg,#50b6ff,#2688d8);color:#fff}
+
+.help-top-return{
+  width:100%;
+  min-height:40px;
+  margin-top:9px;
+  border:1px solid rgba(67,168,255,.22);
+  border-radius:12px;
+  background:var(--panel2);
+  color:var(--text);
+  font-size:8px;
+  font-weight:1000;
+}
+
+body.light #helpModal .help-modal-window{
+  background:
+    radial-gradient(circle at 92% 4%,rgba(67,168,255,.045),transparent 34%),
+    linear-gradient(180deg,rgba(252,253,255,.99),rgba(241,245,249,.99));
+  color:#172536;
+}
+body.light #helpModal .help-intro,
+body.light #helpModal .help-section,
+body.light #helpModal .help-index button,
+body.light #helpModal .help-top-return{
+  background:linear-gradient(180deg,#f8fafc,#eef2f6);
+  border-color:rgba(62,82,106,.15);
+}
+body.light #helpModal .help-index{
+  background:linear-gradient(180deg,rgba(247,250,253,.98),rgba(241,245,249,.92) 80%,transparent);
+}
+body.light #helpModal .help-section-title b,
+body.light #helpModal .help-card strong,
+body.light #helpModal .help-intro b,
+body.light #helpModal .help-index button,
+body.light #helpModal .help-top-return{color:#172536}
+body.light #helpModal .help-card p,
+body.light #helpModal .help-section-title small,
+body.light #helpModal .help-intro span{color:#64758a}
+body.light #helpModal .help-legend-grid > div{
+  background:#f7f9fc;
+  border-color:rgba(62,82,106,.13);
+}
+
+@media(max-width:620px){
+  #helpModal .help-modal-window{
+    width:calc(100vw - 2px);
+    height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 2px);
+    padding:7px 8px 10px;
+  }
+  .help-intro{padding:8px}
+  .help-intro-logo{width:41px;height:41px}
+  .help-section-title{padding:7px 7px 5px}
+  .help-card{padding:2px 8px 9px 42px}
+  .help-card p{font-size:8.4px}
+  .help-index{top:51px}
+}
+
+@media(max-width:380px){
+  .top-actions{gap:4px}
+  .top-actions .icon-btn{
+    width:36px;
+    height:36px;
+    border-radius:12px;
+    font-size:17px;
+  }
+  .help-top-btn{font-size:19px!important}
+  .brand h1{font-size:15px}
+  .logo{width:38px;height:38px}
+  .help-legend-grid{grid-template-columns:1fr}
+}
+
+@media(max-height:760px){
+  #helpModal .help-head{padding-top:5px;padding-bottom:7px}
+  .help-index{top:47px}
+}
+
 </style>
 </head>
 <body>
@@ -7483,6 +7750,7 @@ body.light #statsModal .worklog-stat-btn.period-holidays > span{
   <header class="topbar">
     <div class="brand"><div class="logo">4×4</div><div><h1>Calendario de Turnos</h1><span class="author-signature">Made By Goma E.</span></div></div>
     <div class="top-actions">
+      <button id="helpBtn" class="icon-btn help-top-btn" aria-label="Ayuda">?</button>
       <button id="settingsBtn" class="icon-btn" aria-label="Configuración">⚙️<i class="update-dot"></i></button>
       <button id="themeBtn" class="icon-btn" aria-label="Cambiar tema">☀️</button>
     </div>
@@ -7654,10 +7922,166 @@ body.light #statsModal .worklog-stat-btn.period-holidays > span{
     <button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button>
   </div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.8.8</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.8.9</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 
+
+
+<!-- Ayuda -->
+<div id="helpModal" class="backdrop help-backdrop">
+  <div class="modal glass help-modal-window">
+    <div class="modal-head help-head">
+      <div>
+        <h2><span class="help-head-icon">?</span> Ayuda</h2>
+        <small>Guía completa del Calendario de Turnos 4×4 · v<span id="helpVersionLabel">—</span></small>
+      </div>
+      <button class="close-btn" data-close="helpModal" aria-label="Cerrar Ayuda">×</button>
+    </div>
+
+    <div class="help-intro">
+      <div class="help-intro-logo">4×4</div>
+      <div>
+        <b>Cómo usar la aplicación</b>
+        <span>Turnos, calendario, Agenda, Vacaciones, Jornada, Licencias, Estadísticas y Configuración.</span>
+      </div>
+    </div>
+
+    <div class="help-index">
+      <button type="button" data-help-go="help-start">Inicio</button>
+      <button type="button" data-help-go="help-calendar">Calendario</button>
+      <button type="button" data-help-go="help-agenda">Agenda</button>
+      <button type="button" data-help-go="help-vacations">Vacaciones</button>
+      <button type="button" data-help-go="help-workday">Jornada</button>
+      <button type="button" data-help-go="help-licenses">Licencias</button>
+      <button type="button" data-help-go="help-stats">Estadísticas</button>
+      <button type="button" data-help-go="help-settings">Configuración</button>
+    </div>
+
+    <div class="help-content">
+
+      <section id="help-start" class="help-section">
+        <div class="help-section-title"><span>1</span><div><b>Primeros pasos</b><small>Elegir turno y navegar</small></div></div>
+        <div class="help-card">
+          <p><strong>Seleccionar turno:</strong> elegí TURNO 1, TURNO 2, TURNO 3, TURNO 4 o TURNO 5. El calendario se actualiza inmediatamente.</p>
+          <p><strong>Turno 5:</strong> al elegirlo aparece un segundo selector con T5 FIJO, T5 UNO y T5 DOS.</p>
+          <p><strong>T5 FIJO:</strong> lunes a viernes, 07:30–16:30. <strong>T5 UNO / T5 DOS:</strong> ciclo 4×4 de 12 horas, 06:00–18:00.</p>
+          <p><strong>HOY:</strong> vuelve al día actual. <strong>AÑO:</strong> abre los 12 meses. Las flechas ‹ › cambian de mes.</p>
+          <p class="help-tip">La rotación base nunca se altera por Vacaciones, Jornada, Licencias, Agenda o Feriados.</p>
+        </div>
+      </section>
+
+      <section id="help-calendar" class="help-section">
+        <div class="help-section-title"><span>2</span><div><b>Calendario y símbolos</b><small>Qué significa cada marca</small></div></div>
+        <div class="help-card">
+          <div class="help-legend-grid">
+            <div><i class="help-shift m">M</i><span><b>Mañana</b><small>06:00–18:00</small></span></div>
+            <div><i class="help-shift n">N</i><span><b>Noche</b><small>18:00–06:00</small></span></div>
+            <div><i class="help-shift f">F</i><span><b>Franco</b><small>Día libre</small></span></div>
+            <div><i class="help-shift fer">FER</i><span><b>Feriado</b><small>Rojo / azul puente</small></span></div>
+            <div><i class="help-shift vacation">V</i><span><b>Vacaciones</b><small>Color configurable</small></span></div>
+            <div><i class="help-shift license">L</i><span><b>Licencia</b><small>Período registrado</small></span></div>
+            <div><i class="help-shift change">C</i><span><b>Cambio</b><small>Cambio de turno</small></span></div>
+            <div><i class="help-shift extra">+H</i><span><b>Horas extra</b><small>Horas adicionales</small></span></div>
+          </div>
+          <p><strong>Tocar un día:</strong> abre su detalle debajo del calendario.</p>
+          <p><strong>Mantener 450 ms:</strong> abre rápidamente la Agenda para ese día.</p>
+          <p><strong>FER rojo:</strong> feriado. <strong>FER azul:</strong> puente/no laborable. El 7 de septiembre se incluye como Día del Metalúrgico para todos los turnos.</p>
+          <p><strong>Vista anual:</strong> muestra los 12 meses. Mantené pulsados los controles del año para avanzar más rápido.</p>
+        </div>
+      </section>
+
+      <section id="help-agenda" class="help-section">
+        <div class="help-section-title"><span>3</span><div><b>Agenda</b><small>Eventos y recordatorios</small></div></div>
+        <div class="help-card">
+          <p><strong>Abrir:</strong> Configuración → Agenda, o mantener un día durante 450 ms.</p>
+          <p>Guardá eventos con fecha, hora, título y notas. Después podés buscarlos, editarlos, abrirlos en calendario o eliminarlos.</p>
+          <p>Los días con eventos muestran su indicador en el calendario.</p>
+          <p>Agenda también permite exportar eventos y crear/importar una copia de seguridad de los datos de la app.</p>
+        </div>
+      </section>
+
+      <section id="help-vacations" class="help-section">
+        <div class="help-section-title"><span>4</span><div><b>Vacaciones</b><small>Períodos completos</small></div></div>
+        <div class="help-card">
+          <p><strong>Abrir:</strong> Configuración → Vacaciones.</p>
+          <p>Elegí <strong>Desde</strong> y <strong>Hasta</strong>, agregá una descripción opcional y guardá. Todo el recuadro de cada fecha funciona como botón.</p>
+          <p>Podés guardar varios períodos, editarlos y eliminarlos.</p>
+          <p>La <strong>V</strong> no reemplaza M/N/F/T5. El turno programado continúa visible.</p>
+          <p><strong>Color V:</strong> elegí el color del icono. <strong>Mostrar vacaciones:</strong> oculta o muestra las marcas sin borrar datos.</p>
+        </div>
+      </section>
+
+      <section id="help-workday" class="help-section">
+        <div class="help-section-title"><span>5</span><div><b>Jornada</b><small>Cambios de turno y horas extra</small></div></div>
+        <div class="help-card">
+          <p><strong>Abrir:</strong> tocá un día y luego el botón naranja <strong>JORNADA</strong>.</p>
+          <p>La app muestra el turno <strong>Programado</strong>. Si hubo cambio, elegí M, N, F o T5. El ciclo futuro no se modifica.</p>
+          <p><strong>Duración automática:</strong> M/N y turnos rotativos de 12 h = 12 horas; T5 FIJO = 9 horas; Franco = 0 horas.</p>
+          <p><strong>Horas extra:</strong> son independientes del cambio. Los botones rápidos cargan 6, 8, 10 o 12 hs; + y − ajustan de a 0,5 h.</p>
+          <p>Podés agregar una nota y eliminar el registro cuando sea necesario.</p>
+        </div>
+      </section>
+
+      <section id="help-licenses" class="help-section">
+        <div class="help-section-title"><span>6</span><div><b>Licencias</b><small>Ausencias justificadas</small></div></div>
+        <div class="help-card">
+          <p>Dentro de Jornada elegí la pestaña <strong>LICENCIAS</strong>.</p>
+          <p>Seleccioná Desde/Hasta, el tipo y una nota opcional. La marca <strong>L</strong> no altera el turno programado.</p>
+          <p>Tipos: Estudio, Enfermedad, Cambio de domicilio, Fallecimiento, Embarazo/Maternidad, Nacimiento/Paternidad, Día Trivium, Justicia/Trámite judicial, ART/Accidente laboral, Licencia gremial, Donación de sangre, Matrimonio y Otra.</p>
+          <p>Los francos incluidos en una licencia siguen siendo francos. Estadísticas cuenta las jornadas laborales realmente afectadas.</p>
+          <p>Las licencias guardadas se pueden editar o eliminar.</p>
+        </div>
+      </section>
+
+      <section id="help-stats" class="help-section">
+        <div class="help-section-title"><span>7</span><div><b>Estadísticas</b><small>Resumen del turno y registro laboral</small></div></div>
+        <div class="help-card">
+          <p>Las tarjetas superiores muestran Mañanas, Noches, Francos y Horas del mes según el turno seleccionado.</p>
+          <p><strong>Tu turno termina en:</strong> muestra el estado actual y el próximo ingreso.</p>
+          <p><strong>Feriados que caen en turno:</strong> muestra cuántos feriados del año coinciden con jornadas programadas de cada turno. Cada botón abre su detalle.</p>
+          <p><strong>Registro laboral:</strong> Cambios de turno, Horas extra, Licencias laborales y Feriados del período.</p>
+          <p><strong>Horas extra:</strong> el total principal usa el período desde el día 23 del mes anterior hasta el día 23 del mes mostrado, ambos inclusive.</p>
+          <p><strong>Feriados del período:</strong> usa el mismo 23→23 y cuenta sólo los que coinciden con un día programado de trabajo del turno seleccionado.</p>
+          <p>También se muestran Próximo descanso y fecha estimada del Próximo sueldo.</p>
+        </div>
+      </section>
+
+      <section id="help-settings" class="help-section">
+        <div class="help-section-title"><span>8</span><div><b>Configuración</b><small>Aspecto y comportamiento</small></div></div>
+        <div class="help-card">
+          <p>Desde ⚙️ personalizá colores, tamaños, paletas rápidas y la vista previa.</p>
+          <p>Podés mostrar/ocultar descripciones, feriados y activar/desactivar vibración.</p>
+          <p><strong>Restaurar:</strong> devuelve la configuración visual a sus valores originales.</p>
+          <p>El botón ☀️/🌙 cambia entre modo claro y oscuro.</p>
+          <p class="help-tip">Los cambios visuales no alteran la lógica de los turnos.</p>
+        </div>
+      </section>
+
+      <section class="help-section">
+        <div class="help-section-title"><span>9</span><div><b>Datos, copias y actualizaciones</b><small>Cómo se conserva la información</small></div></div>
+        <div class="help-card">
+          <p>Agenda, Vacaciones, Jornada y Licencias se guardan localmente en el dispositivo.</p>
+          <p>La copia de seguridad incluye Agenda, Vacaciones, preferencias de Vacaciones, Registro laboral y Licencias.</p>
+          <p>Cuando existe una versión nueva aparece <strong>“Nueva versión disponible”</strong>. ACTUALIZAR instala la nueva versión; Más tarde conserva la actual por el momento.</p>
+          <p>La app puede instalarse como PWA en la pantalla de inicio. Los feriados usan datos en caché cuando no hay Internet.</p>
+        </div>
+      </section>
+
+      <section class="help-section">
+        <div class="help-section-title"><span>10</span><div><b>Cómo interpretar la app</b><small>Programado vs. registrado</small></div></div>
+        <div class="help-card">
+          <p>El calendario base siempre representa el <strong>turno programado</strong>. Vacaciones, Licencias, Cambios, Horas extra, Feriados y Agenda agregan información sin modificar la rotación.</p>
+          <p>Así podés comparar qué correspondía trabajar y qué ocurrió realmente.</p>
+          <p class="help-tip">Si una marca no aparece, revisá el turno seleccionado y los controles de visibilidad de Configuración/Vacaciones.</p>
+        </div>
+      </section>
+
+    </div>
+
+    <button id="helpTopBtn" class="help-top-return" type="button">↑ VOLVER ARRIBA</button>
+  </div>
+</div>
 
 <!-- Jornada / Registro laboral -->
 <div id="workdayModal" class="backdrop workday-backdrop">
@@ -8143,7 +8567,7 @@ body.light #statsModal .worklog-stat-btn.period-holidays > span{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.8.8';
+const CURRENT_VERSION='4.8.9';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -10593,6 +11017,15 @@ $('#todayBtn').onclick=()=>{const d=new Date();viewYear=d.getFullYear();viewMont
 turnSelect.onchange=()=>{updateTurn5Visibility();syncTurnPulseText();ensurePersistentTurnPulses();localStorage.setItem('turno4x4.turno',turnSelect.value);switchActiveColorProfile();renderAll();renderYear();renderStats();scheduleMainViewportFit();scheduleBelowFoldLayout()};
 turn5Select.onchange=()=>{syncTurn5PulseText();ensurePersistentTurnPulses();localStorage.setItem('turno4x4.turno5',turn5Select.value);updateColorSettingsUI();renderQuickPalette();renderAll();renderYear();renderStats();scheduleMainViewportFit();scheduleBelowFoldLayout()};
 themeBtn.onclick=()=>{document.body.classList.toggle('light');localStorage.setItem('turno4x4.theme',document.body.classList.contains('light')?'light':'dark');themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️'};
+helpBtn.onclick=()=>{
+ const hv=$('#helpVersionLabel');
+ if(hv)hv.textContent=CURRENT_VERSION;
+ openModal('helpModal');
+ setTimeout(()=>{
+  const modal=$('#helpModal .help-modal-window');
+  if(modal)modal.scrollTop=0;
+ },0);
+};
 settingsBtn.onclick=()=>{setPaletteDropdown(false);updateColorSettingsUI();renderQuickPalette();openModal('settingsModal')};
 [morningColor,nightColor,offColor].forEach(x=>x.oninput=()=>{saveSettings();renderQuickPalette()});
 codeSize.oninput=()=>{codeSizeValue.textContent=`${codeSize.value} px`;saveSettings()};
@@ -10739,6 +11172,22 @@ agendaAllToggle.onclick=()=>{
  }
 };
 $('#yearBtn').onclick=()=>{yearViewYear=viewYear;renderYear();openModal('yearModal')};
+
+$$('[data-help-go]').forEach(btn=>{
+ btn.onclick=()=>{
+  const target=$('#'+btn.dataset.helpGo);
+  if(!target)return;
+  target.scrollIntoView({behavior:'smooth',block:'start'});
+ };
+});
+
+$('#helpTopBtn').onclick=()=>{
+ const modal=$('#helpModal .help-modal-window');
+ if(!modal)return;
+ try{modal.scrollTo({top:0,behavior:'smooth'})}
+ catch{modal.scrollTop=0}
+};
+
 $('#settingsAgendaBtn').onclick=()=>{setPaletteDropdown(false);closeModal('settingsModal');setTimeout(()=>openAgenda(selectedDate),80)};
 $('#settingsVacationBtn').onclick=()=>{setPaletteDropdown(false);closeModal('settingsModal');setTimeout(openVacations,80)};
 $('#settingsStatsBtn').onclick=()=>{setPaletteDropdown(false);closeModal('settingsModal');renderStats();setTimeout(()=>openModal('statsModal'),80)};
