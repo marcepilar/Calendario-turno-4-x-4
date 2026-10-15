@@ -8156,6 +8156,68 @@ body.light #shareModal .share-link-box small{
   }
 }
 
+
+/* ===== V4.9.2 · AYUDA · TEXTOS MÁS GRANDES ===== */
+#helpModal .help-head h2{font-size:24px}
+#helpModal .help-head small{font-size:10.5px;line-height:1.2}
+.help-head-icon{width:40px;height:36px;font-size:18px}
+.help-intro{padding:13px 14px;gap:12px}
+.help-intro-logo{width:54px;height:54px;font-size:18px}
+.help-intro b{font-size:16px;line-height:1.08}
+.help-intro span{margin-top:5px;font-size:11.5px;line-height:1.35}
+.help-index{gap:7px;padding:7px 0 9px}
+.help-index button{min-height:38px;padding:0 12px;font-size:9.5px;border-radius:11px}
+.help-section-title{gap:10px;padding:11px 12px 8px}
+.help-section-title > span{width:34px;height:32px;border-radius:10px;font-size:11px}
+.help-section-title b{font-size:15.5px;line-height:1.08}
+.help-section-title small{margin-top:3px;font-size:9.5px;line-height:1.2}
+.help-card{padding:3px 14px 14px 56px}
+.help-card p{margin-bottom:10px;font-size:12px;line-height:1.52}
+.help-tip{padding:10px 11px;border-radius:11px}
+.help-legend-grid{gap:7px;margin-bottom:12px}
+.help-legend-grid > div{gap:9px;padding:9px 10px;border-radius:11px}
+.help-legend-grid b{font-size:11px}
+.help-legend-grid small{margin-top:4px;font-size:8.8px;line-height:1.2}
+.help-shift{min-width:38px;height:32px;padding:0 6px;border-radius:9px;font-size:10px}
+.help-install-os{padding:11px;gap:10px}
+.help-install-os-icon{width:41px;height:41px;font-size:14px}
+.help-install-os b{font-size:12px}
+.help-install-os small{margin-top:4px;font-size:9px;line-height:1.3}
+.help-install-platform{margin-top:11px;padding:12px}
+.help-install-platform h4{margin-bottom:10px;font-size:13px}
+.help-install-platform h4 span{min-width:58px;height:24px;font-size:8px}
+.help-steps{padding-left:24px}
+.help-steps li{margin-bottom:9px;font-size:11.5px;line-height:1.45}
+.help-install-note{margin-top:11px!important;padding:10px 11px}
+.help-top-return{min-height:48px;margin-top:12px;font-size:10px}
+@media(max-width:620px){
+  #helpModal .help-head h2{font-size:22px}
+  #helpModal .help-head small{font-size:9.7px}
+  .help-intro{padding:11px}
+  .help-intro-logo{width:49px;height:49px;font-size:17px}
+  .help-intro b{font-size:14.5px}
+  .help-intro span{font-size:10.5px}
+  .help-index button{min-height:36px;padding:0 10px;font-size:9px}
+  .help-section-title{padding:10px 10px 7px}
+  .help-section-title b{font-size:14px}
+  .help-section-title small{font-size:8.8px}
+  .help-card{padding:3px 11px 13px 50px}
+  .help-card p{font-size:11.3px;line-height:1.48}
+  .help-legend-grid b{font-size:10.3px}
+  .help-legend-grid small{font-size:8.3px}
+  .help-install-os b{font-size:11.3px}
+  .help-install-os small{font-size:8.7px}
+  .help-install-platform h4{font-size:12.2px}
+  .help-steps li{font-size:10.8px}
+}
+@media(max-height:760px){
+  #helpModal .help-head h2{font-size:20px}
+  .help-index button{min-height:34px;font-size:8.5px}
+  .help-card p{font-size:10.8px}
+  .help-section-title b{font-size:13.5px}
+  .help-section-title small{font-size:8.4px}
+}
+
 </style>
 </head>
 <body>
@@ -8347,7 +8409,7 @@ body.light #shareModal .share-link-box small{
     <button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button>
   </div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.9.1</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.9.2</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 
@@ -9110,7 +9172,7 @@ body.light #shareModal .share-link-box small{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.9.1';
+const CURRENT_VERSION='4.9.2';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
