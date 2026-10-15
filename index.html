@@ -6350,6 +6350,388 @@ body.main-calendar-fit #calendarCard{
   }
 }
 
+
+/* ===== V4.8.3 · LICENCIAS + CAMBIO AUTOMÁTICO + ESTADÍSTICAS COMPACTAS ===== */
+:root{
+  --license:#e95f9e;
+  --license2:#c73f7e;
+}
+
+/* Tabs Jornada / Licencias */
+.workday-tabs{
+  flex:0 0 auto;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5px;
+  margin:0 0 7px;
+  padding:3px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--panel2);
+}
+.workday-tabs button{
+  min-height:34px;
+  border:1px solid transparent;
+  border-radius:9px;
+  background:transparent;
+  color:var(--muted);
+  font-size:8px;
+  font-weight:1000;
+  letter-spacing:.045em;
+}
+.workday-tabs button.selected{
+  color:var(--text);
+  border-color:rgba(240,160,59,.28);
+  background:linear-gradient(180deg,rgba(240,160,59,.15),rgba(240,160,59,.06));
+  box-shadow:inset 0 -2px 0 rgba(240,160,59,.35);
+}
+.workday-tabs button[data-workday-tab="license"].selected{
+  border-color:rgba(233,95,158,.30);
+  background:linear-gradient(180deg,rgba(233,95,158,.14),rgba(233,95,158,.055));
+  box-shadow:inset 0 -2px 0 rgba(233,95,158,.38);
+}
+.workday-pane{
+  display:none;
+  flex:1 1 auto;
+  min-height:0;
+  flex-direction:column;
+}
+.workday-pane.active{display:flex}
+.workday-head-icon.license{
+  background:linear-gradient(180deg,var(--license),var(--license2));
+  color:#fff;
+}
+
+/* Duración automática del cambio */
+.workday-change-duration{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:6px;
+  min-height:24px;
+  margin-top:5px;
+  padding:3px 6px;
+  border-radius:8px;
+  background:rgba(240,160,59,.055);
+  border:1px solid rgba(240,160,59,.11);
+}
+.workday-change-duration span{
+  margin-right:auto;
+  color:var(--muted);
+  font-size:6.8px;
+  font-weight:800;
+}
+.workday-change-duration b{
+  color:#f0ad57;
+  font-size:9px;
+}
+.workday-change-duration small{
+  color:var(--muted);
+  font-size:5.5px;
+  font-weight:950;
+}
+
+/* Licencias: formulario */
+.license-intro{
+  flex:0 0 auto;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-height:45px;
+  margin-bottom:6px;
+  padding:6px 8px;
+  border:1px solid rgba(233,95,158,.20);
+  border-radius:13px;
+  background:linear-gradient(180deg,rgba(233,95,158,.07),rgba(233,95,158,.025));
+}
+.license-intro-icon{
+  flex:0 0 auto;
+  width:33px;
+  height:29px;
+  display:grid;
+  place-items:center;
+  border-radius:9px;
+  background:linear-gradient(180deg,var(--license),var(--license2));
+  color:#fff;
+  font-size:12px;
+  font-weight:1000;
+}
+.license-intro b{display:block;font-size:10px}
+.license-intro small{display:block;margin-top:2px;color:var(--muted);font-size:6.8px}
+.license-form-card,
+.license-list-panel{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--panel2);
+  padding:7px;
+}
+.license-form-card{flex:0 0 auto;margin-bottom:6px}
+.license-form-head,
+.license-list-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:5px;
+}
+.license-form-head b,
+.license-list-head b{font-size:9px}
+.license-form-head span,
+.license-list-head>span{color:var(--muted);font-size:6.5px;font-weight:950}
+.license-form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5px;
+}
+.license-field{display:block;min-width:0}
+.license-field.full{grid-column:1/-1}
+.license-field>span,
+.license-note-field>span{
+  display:block;
+  margin:0 0 3px 2px;
+  color:var(--muted);
+  font-size:6.5px;
+  font-weight:850;
+}
+.license-field select,
+.license-note-field textarea{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:var(--panel3);
+  color:var(--text);
+  font:inherit;
+  outline:none;
+}
+.license-field select{
+  min-height:35px;
+  padding:0 8px;
+  font-size:8px;
+}
+.license-note-field textarea{
+  min-height:43px;
+  max-height:43px;
+  resize:none;
+  padding:7px 8px;
+  font-size:8px;
+}
+.license-field select:focus,
+.license-note-field textarea:focus{
+  border-color:rgba(233,95,158,.48);
+  box-shadow:0 0 0 2px rgba(233,95,158,.07);
+}
+.license-form-actions{
+  display:grid;
+  grid-template-columns:.8fr 1.2fr;
+  gap:5px;
+  margin-top:6px;
+}
+.license-form-actions button{
+  min-height:34px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  background:var(--panel3);
+  color:var(--text);
+  font-size:7px;
+  font-weight:1000;
+}
+#licenseSaveBtn{
+  border-color:rgba(233,95,158,.36);
+  background:linear-gradient(180deg,var(--license),var(--license2));
+  color:#fff;
+}
+.license-list-panel{
+  flex:1 1 auto;
+  min-height:0;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+.license-list{
+  flex:1 1 auto;
+  min-height:0;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+}
+.license-empty{
+  min-height:72px;
+  height:100%;
+  display:grid;
+  place-items:center;
+  padding:12px;
+  color:var(--muted);
+  text-align:center;
+  font-size:8px;
+}
+.license-item{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  gap:6px;
+  align-items:center;
+  min-height:53px;
+  margin-bottom:4px;
+  padding:6px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:color-mix(in srgb,var(--panel3) 72%,transparent);
+}
+.license-item:last-child{margin-bottom:0}
+.license-item-icon{
+  width:31px;height:31px;display:grid;place-items:center;border-radius:9px;
+  background:linear-gradient(180deg,var(--license),var(--license2));color:#fff;font-size:11px;font-weight:1000;
+}
+.license-item-copy{min-width:0}
+.license-item-copy b{display:block;font-size:8.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.license-item-copy span{display:block;margin-top:2px;color:var(--muted);font-size:6.5px}
+.license-item-copy small{display:block;margin-top:2px;color:var(--muted);font-size:5.9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.license-item-actions{display:grid;gap:3px}
+.license-item-actions button{
+  min-width:50px;min-height:23px;padding:0 4px;border:1px solid var(--line);border-radius:7px;
+  background:var(--panel3);color:var(--text);font-size:5.8px;font-weight:950;
+}
+.license-item-actions button.delete{color:#ff7181;border-color:rgba(255,95,114,.24)}
+.license-footnote{
+  flex:0 0 auto;padding:5px 3px 0;text-align:center;color:var(--muted);font-size:5.8px;line-height:1.1;
+}
+
+/* L en el calendario: arriba y centrada. FER queda izq., fecha der. */
+.license-badge{
+  position:absolute;
+  left:50%;
+  top:4px;
+  z-index:4;
+  transform:translateX(-50%);
+  min-width:20px;
+  height:18px;
+  padding:0 5px;
+  display:grid;
+  place-items:center;
+  border-radius:7px;
+  background:linear-gradient(180deg,var(--license),var(--license2));
+  color:#fff;
+  border:1px solid rgba(255,255,255,.46);
+  box-shadow:0 2px 6px rgba(0,0,0,.18);
+  font-size:8px;
+  line-height:1;
+  font-weight:1000;
+}
+.day.today .license-badge{top:6px}
+.mini-day.has-license{outline:1.5px solid rgba(233,95,158,.92);outline-offset:-1px}
+
+/* Banner en detalle del día */
+.license-detail-banner{
+  display:none;
+  align-items:center;
+  gap:8px;
+  margin:-1px 0 9px;
+  padding:8px 10px;
+  border:1px solid rgba(233,95,158,.28);
+  border-radius:12px;
+  background:linear-gradient(180deg,rgba(233,95,158,.075),rgba(233,95,158,.03));
+  cursor:pointer;
+}
+.license-detail-banner.show{display:flex}
+.license-detail-icon{
+  flex:0 0 auto;width:34px;height:25px;display:grid;place-items:center;border-radius:9px;
+  background:linear-gradient(180deg,var(--license),var(--license2));color:#fff;font-size:11px;font-weight:1000;
+}
+.license-detail-copy{min-width:0}
+.license-detail-copy b{display:block;font-size:10px;line-height:1.1}
+.license-detail-copy span{display:block;margin-top:2px;color:var(--muted);font-size:7.5px;line-height:1.15}
+.license-detail-copy small{display:block;margin-top:2px;color:var(--muted);font-size:6.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Estadísticas: se retiran las dos tarjetas de barras para conservar una sola pantalla. */
+#statsModal .stats-modal-window{
+  grid-template-areas:
+    "head head"
+    "cards cards"
+    "turn turn"
+    "holidays holidays"
+    "worklog worklog"
+    "off salary";
+  grid-template-rows:
+    auto
+    auto
+    minmax(106px,.95fr)
+    minmax(104px,.80fr)
+    minmax(78px,.62fr)
+    minmax(92px,.70fr);
+}
+.worklog-stats-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.worklog-stat-btn.licenses{border-bottom-color:rgba(233,95,158,.58)}
+.worklog-stat-btn.licenses b{color:#f58abb}
+.worklog-stat-row-icon.license,
+.worklog-stats-head-icon.license{
+  background:linear-gradient(180deg,var(--license),var(--license2));
+  color:#fff;
+}
+
+body.light #workdayModal .workday-tabs,
+body.light #workdayModal .license-form-card,
+body.light #workdayModal .license-list-panel{
+  background:linear-gradient(180deg,#f8fafc,#eef2f6);
+  border-color:rgba(62,82,106,.15);
+}
+body.light #workdayModal .license-field select,
+body.light #workdayModal .license-note-field textarea,
+body.light #workdayModal .license-item,
+body.light #workdayModal .license-item-actions button{
+  background:#f7f9fc;color:#172536;border-color:rgba(62,82,106,.15);
+}
+body.light #statsModal .worklog-stat-btn.licenses b{color:#b83473}
+body.light .workday-change-duration b{color:#b46b18}
+
+@media(max-width:620px){
+  .workday-tabs{margin-bottom:5px}
+  .workday-tabs button{min-height:31px;font-size:7.2px}
+  .workday-change-duration{min-height:21px;margin-top:4px}
+  .license-intro{min-height:40px;margin-bottom:5px;padding:5px 7px}
+  .license-form-card{padding:6px;margin-bottom:5px}
+  .license-list-panel{padding:6px}
+  .license-field select{min-height:32px}
+  .license-note-field textarea{min-height:38px;max-height:38px}
+  .license-form-actions{margin-top:5px}
+  .license-form-actions button{min-height:31px}
+  .license-item{min-height:48px;padding:5px}
+  .license-item-icon{width:28px;height:28px}
+  #statsModal .stats-modal-window{
+    grid-template-rows:auto auto minmax(98px,.86fr) minmax(94px,.72fr) minmax(70px,.55fr) minmax(84px,.62fr);
+    gap:3px;
+  }
+  .worklog-stat-btn{padding:3px 4px}
+  .worklog-stat-btn small{font-size:5.9px}
+  .worklog-stat-btn b{font-size:14px}
+  .worklog-stat-btn>span{font-size:5.4px}
+}
+
+@media(max-height:760px){
+  .workday-tabs{margin-bottom:4px;padding:2px}
+  .workday-tabs button{min-height:27px}
+  .workday-change-duration{min-height:18px;margin-top:3px;padding:2px 5px}
+  .license-intro{min-height:34px;margin-bottom:4px;padding:4px 6px}
+  .license-intro-icon{width:27px;height:25px}
+  .license-form-card{padding:5px;margin-bottom:4px}
+  .license-form-head,.license-list-head{margin-bottom:3px}
+  .license-form-grid{gap:3px}
+  .license-field select{min-height:28px}
+  .license-note-field textarea{min-height:31px;max-height:31px;padding:5px 7px}
+  .license-form-actions{margin-top:4px}
+  .license-form-actions button{min-height:28px}
+  .license-list-panel{padding:5px}
+  .license-item{min-height:43px;margin-bottom:3px;padding:4px}
+  .license-footnote{padding-top:3px;font-size:5.2px}
+  #statsModal .stats-modal-window{
+    grid-template-rows:auto auto minmax(78px,.72fr) minmax(76px,.62fr) minmax(56px,.45fr) minmax(68px,.52fr);
+    gap:2px;
+  }
+  #statsModal .stats-worklog{padding:3px 5px}
+  .worklog-stat-btn{min-height:29px;padding:2px 4px}
+  .worklog-stat-btn b{font-size:12px}
+  .worklog-stat-btn small{font-size:5.2px}
+  .worklog-stat-btn>span{font-size:4.9px}
+}
+
 </style>
 </head>
 <body>
@@ -6432,6 +6814,14 @@ body.main-calendar-fit #calendarCard{
       <div class="vacation-detail-copy">
         <b id="vacationDetailTitle">Vacaciones</b>
         <span id="vacationDetailText"></span>
+      </div>
+    </div>
+    <div id="licenseDetailBanner" class="license-detail-banner" role="button" tabindex="0">
+      <div class="license-detail-icon">L</div>
+      <div class="license-detail-copy">
+        <b id="licenseDetailTitle">Licencia</b>
+        <span id="licenseDetailText"></span>
+        <small id="licenseDetailNote"></small>
       </div>
     </div>
     <div id="worklogDetailBanner" class="worklog-detail-banner">
@@ -6524,7 +6914,7 @@ body.main-calendar-fit #calendarCard{
     <button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button>
   </div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.8.2</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
+  <div class="version-box"><b>Versión <span id="versionLabel">4.8.3</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 
@@ -6534,7 +6924,7 @@ body.main-calendar-fit #calendarCard{
   <div class="modal glass workday-modal-window">
     <div class="modal-head workday-head">
       <div>
-        <h2><span class="workday-head-icon">J</span> Jornada</h2>
+        <h2><span id="workdayHeadIcon" class="workday-head-icon">J</span> <span id="workdayTitleText">Jornada</span></h2>
         <small id="workdaySubtitle">Registro del día seleccionado</small>
       </div>
       <button class="close-btn" data-close="workdayModal" aria-label="Cerrar Jornada">×</button>
@@ -6555,60 +6945,138 @@ body.main-calendar-fit #calendarCard{
       </div>
     </div>
 
-    <div class="workday-section">
-      <div class="workday-section-head">
-        <div>
-          <b>Cambio de turno</b>
-          <small>El ciclo original nunca se modifica</small>
+    <div class="workday-tabs">
+      <button type="button" class="selected" data-workday-tab="work">JORNADA</button>
+      <button type="button" data-workday-tab="license">LICENCIAS</button>
+    </div>
+
+    <div id="workdayPane" class="workday-pane active">
+      <div class="workday-section">
+        <div class="workday-section-head">
+          <div>
+            <b>Cambio de turno</b>
+            <small>El ciclo original nunca se modifica</small>
+          </div>
+          <span id="workdayChangeState">SIN CAMBIO</span>
         </div>
-        <span id="workdayChangeState">SIN CAMBIO</span>
-      </div>
-      <div id="workdayShiftChoices" class="workday-shift-choices">
-        <button type="button" data-work-code="" class="selected">Sin cambio</button>
-        <button type="button" data-work-code="M">M · Mañana</button>
-        <button type="button" data-work-code="N">N · Noche</button>
-        <button type="button" data-work-code="F">F · Franco</button>
-        <button type="button" data-work-code="D">T5 · 07:30</button>
-      </div>
-    </div>
-
-    <div class="workday-section workday-overtime-section">
-      <div class="workday-section-head">
-        <div>
-          <b>Horas extra</b>
-          <small>Se registran aparte del turno programado</small>
+        <div id="workdayShiftChoices" class="workday-shift-choices">
+          <button type="button" data-work-code="" class="selected">Sin cambio</button>
+          <button type="button" data-work-code="M">M · Mañana</button>
+          <button type="button" data-work-code="N">N · Noche</button>
+          <button type="button" data-work-code="F">F · Franco</button>
+          <button type="button" data-work-code="D">T5 · 07:30</button>
         </div>
-        <span id="workdayOvertimeState">0 h</span>
-      </div>
-      <div class="workday-overtime-control">
-        <button id="workdayOvertimeMinus" type="button" aria-label="Restar media hora">−</button>
-        <div class="workday-overtime-display">
-          <strong id="workdayOvertimeDisplay">0</strong>
-          <span>horas</span>
+        <div class="workday-change-duration">
+          <span>Duración del cambio</span>
+          <b id="workdayChangeDuration">—</b>
+          <small>AUTOMÁTICA</small>
         </div>
-        <button id="workdayOvertimePlus" type="button" aria-label="Agregar media hora">+</button>
       </div>
-      <div class="workday-overtime-quick">
-        <button type="button" data-overtime="6">6 hs</button>
-        <button type="button" data-overtime="8">8 hs</button>
-        <button type="button" data-overtime="10">10 hs</button>
-        <button type="button" data-overtime="12">12 hs</button>
+
+      <div class="workday-section workday-overtime-section">
+        <div class="workday-section-head">
+          <div>
+            <b>Horas extra</b>
+            <small>Solo horas adicionales reales; no incluyen el cambio de turno</small>
+          </div>
+          <span id="workdayOvertimeState">0 h</span>
+        </div>
+        <div class="workday-overtime-control">
+          <button id="workdayOvertimeMinus" type="button" aria-label="Restar media hora">−</button>
+          <div class="workday-overtime-display">
+            <strong id="workdayOvertimeDisplay">0</strong>
+            <span>horas</span>
+          </div>
+          <button id="workdayOvertimePlus" type="button" aria-label="Agregar media hora">+</button>
+        </div>
+        <div class="workday-overtime-quick">
+          <button type="button" data-overtime="6">6 hs</button>
+          <button type="button" data-overtime="8">8 hs</button>
+          <button type="button" data-overtime="10">10 hs</button>
+          <button type="button" data-overtime="12">12 hs</button>
+        </div>
       </div>
+
+      <div class="workday-section workday-note-section">
+        <label for="workdayNoteInput">Nota opcional</label>
+        <textarea id="workdayNoteInput" maxlength="220" placeholder="Ej: cambio con T3, cobertura, extensión de jornada..."></textarea>
+      </div>
+
+      <div class="workday-actions">
+        <button id="workdayDeleteBtn" class="workday-delete-btn" type="button">🗑 ELIMINAR REGISTRO</button>
+        <button id="workdaySaveBtn" class="workday-save-btn" type="button">GUARDAR</button>
+      </div>
+
+      <div class="workday-footnote">El cambio de turno calcula su duración automáticamente. Horas extra queda exclusivamente para tiempo adicional real.</div>
     </div>
 
-    <div class="workday-section workday-note-section">
-      <label for="workdayNoteInput">Nota opcional</label>
-      <textarea id="workdayNoteInput" maxlength="220" placeholder="Ej: cambio con T3, cobertura, extensión de jornada..."></textarea>
-    </div>
+    <div id="licensePane" class="workday-pane license-pane">
+      <div class="license-intro">
+        <span class="license-intro-icon">L</span>
+        <div><b>Licencias</b><small>Se marcan sobre el calendario sin modificar el ciclo original.</small></div>
+      </div>
 
-    <div class="workday-actions">
-      <button id="workdayDeleteBtn" class="workday-delete-btn" type="button">🗑 ELIMINAR REGISTRO</button>
-      <button id="workdaySaveBtn" class="workday-save-btn" type="button">GUARDAR</button>
-    </div>
+      <div class="license-form-card">
+        <div class="license-form-head">
+          <b id="licenseFormTitle">Nueva licencia</b>
+          <span id="licenseFormMode">NUEVA</span>
+        </div>
+        <div class="license-form-grid">
+          <div class="license-field">
+            <span>Desde</span>
+            <div class="vacation-date-button license-date-button" role="button" tabindex="0" data-date-target="licenseStartInput" aria-label="Seleccionar inicio de licencia">
+              <input id="licenseStartInput" class="vacation-date-input license-date-input" type="date" tabindex="-1" aria-hidden="true">
+            </div>
+          </div>
+          <div class="license-field">
+            <span>Hasta</span>
+            <div class="vacation-date-button license-date-button" role="button" tabindex="0" data-date-target="licenseEndInput" aria-label="Seleccionar fin de licencia">
+              <input id="licenseEndInput" class="vacation-date-input license-date-input" type="date" tabindex="-1" aria-hidden="true">
+            </div>
+          </div>
+          <label class="license-field full">
+            <span>Tipo de licencia</span>
+            <select id="licenseTypeSelect">
+              <option value="">Seleccionar…</option>
+              <option>Estudio</option>
+              <option>Enfermedad</option>
+              <option>Cambio de domicilio</option>
+              <option>Fallecimiento</option>
+              <option>Embarazo / maternidad</option>
+              <option>Nacimiento / paternidad</option>
+              <option>Día Trivium</option>
+              <option>Justicia / trámite judicial</option>
+              <option>ART / accidente laboral</option>
+              <option>Licencia gremial</option>
+              <option>Donación de sangre</option>
+              <option>Matrimonio</option>
+              <option>Otra</option>
+            </select>
+          </label>
+          <label class="license-field full license-note-field">
+            <span>Nota opcional</span>
+            <textarea id="licenseNoteInput" maxlength="220" placeholder="Ej: examen, certificado, citación, trámite..."></textarea>
+          </label>
+        </div>
+        <div class="license-form-actions">
+          <button id="licenseClearBtn" type="button">LIMPIAR</button>
+          <button id="licenseSaveBtn" type="button">GUARDAR LICENCIA</button>
+        </div>
+      </div>
 
-    <div class="workday-footnote">La M / N / F / T5 original del calendario siempre queda intacta. Jornada guarda solamente lo que realmente trabajaste.</div>
+      <div class="license-list-panel">
+        <div class="license-list-head">
+          <b>Licencias guardadas · <span id="licenseListTurn">—</span></b>
+          <span id="licenseSavedCount">0</span>
+        </div>
+        <div id="licenseList" class="license-list"></div>
+      </div>
+
+      <div class="license-footnote">Los días de franco incluidos en una licencia se conservan como francos. Estadísticas cuenta por separado las jornadas laborales realmente afectadas.</div>
+    </div>
   </div>
 </div>
+
 
 <!-- Vacaciones -->
 <div id="vacationModal" class="backdrop vacation-backdrop">
@@ -6809,9 +7277,6 @@ body.main-calendar-fit #calendarCard{
       </div>
     </div>
   </div>
-  <div class="stats-section stats-month"><h3><span class="stats-title-mark">▥</span>Distribución del mes</h3><div id="monthBars"></div></div>
-  <div class="stats-section stats-year"><h3><span class="stats-title-mark">◔</span>Resumen anual</h3><div id="yearBars"></div></div>
-
   <div class="stats-section stats-holidays">
     <h3><span class="stats-title-mark">FER</span>Feriados que caen en turno · <span id="holidayStatsYear"></span></h3>
     <div id="holidayWorkStats" class="holiday-work-grid"></div>
@@ -6830,6 +7295,11 @@ body.main-calendar-fit #calendarCard{
         <small>Horas extra</small>
         <b><span id="worklogOvertimeMonth">0</span> h</b>
         <span><strong id="worklogOvertimeYear">0</strong> h en el año</span>
+      </button>
+      <button id="worklogLicensesStat" type="button" class="worklog-stat-btn licenses">
+        <small>Licencias laborales</small>
+        <b><span id="worklogLicensesMonth">0</span> d</b>
+        <span><strong id="worklogLicensesYear">0</strong> d en el año</span>
       </button>
     </div>
   </div>
@@ -6859,7 +7329,7 @@ body.main-calendar-fit #calendarCard{
   <div class="modal glass worklog-stats-detail-window">
     <div class="modal-head worklog-stats-detail-head">
       <div>
-        <h2><span class="worklog-stats-head-icon">J</span> Registro laboral</h2>
+        <h2><span id="worklogStatsHeadIcon" class="worklog-stats-head-icon">J</span> <span id="worklogStatsDetailTitleText">Registro laboral</span></h2>
         <small id="worklogStatsDetailSubtitle"></small>
       </div>
       <button class="close-btn" data-close="worklogStatsDetailModal" aria-label="Cerrar detalle del registro laboral">×</button>
@@ -6928,7 +7398,7 @@ body.main-calendar-fit #calendarCard{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.8.2';
+const CURRENT_VERSION='4.8.3';
 const ANCHOR=new Date(2026,9,2);
 const cycles={
  T1:['M','M','M','M','F','F','F','F','N','N','N','N','F','F','F','F'],
@@ -6958,6 +7428,7 @@ const morningColorRow=$('#morningColorRow'),nightColorRow=$('#nightColorRow'),of
 const AGENDA_KEY='turno4x4.agenda.v1', NOTIFIED_KEY='turno4x4.agenda.notified.v1', BACKUP_KEY='turno4x4.agenda.lastBackup';
 const VACATION_KEY='turno4x4.vacations.v1';
 const WORKLOG_KEY='turno4x4.worklog.v1';
+const LICENSE_KEY='turno4x4.licenses.v1';
 const WORKDAY_SEEN_KEY='turno4x4.workdaySeen.v1';
 const VACATION_COLOR_KEY='turno4x4.vacationColor.v1';
 const SHOW_VACATIONS_KEY='turno4x4.showVacations.v1';
@@ -6965,7 +7436,8 @@ const SHOW_VACATIONS_KEY='turno4x4.showVacations.v1';
 let now=new Date(),viewYear=now.getFullYear(),viewMonth=now.getMonth(),selectedDate=new Date(now.getFullYear(),now.getMonth(),now.getDate());
 let agendaSelectedDate=new Date(selectedDate),agendaEditingId=null,agendaHoldTimer=null,agendaHoldOpened=false,agendaAllExpanded=false;
 let vacationEditingId=null;
-let workdayEditingDate=new Date(selectedDate),workdayEditingTurn=activeTurnKey(),workdayWorkedCode='',workdayOvertime=0;
+let workdayEditingDate=new Date(selectedDate),workdayEditingTurn=activeTurnKey(),workdayWorkedCode='',workdayOvertime=0,workdayActiveTab='work';
+let licenseEditingId=null;
 let worklogStatsDetailMode='changes';
 let swipeStartX=0,swipeStartY=0,swipeStartedAt=0,calendarSwipeMoved=false,calendarSwipeActive=false,monthAnimating=false,yearViewYear=viewYear;
 const AGENDA_HOLD_MS=450;
@@ -7709,13 +8181,22 @@ function worklogOvertimeText(value){
 }
 
 function setWorkdayWorkedCode(code){
- workdayWorkedCode=['M','N','F','D'].includes(code)?code:'';
+ const planned=codeFor(workdayEditingTurn,workdayEditingDate);
+ let normalized=['M','N','F','D'].includes(code)?code:'';
+ if(normalized===planned)normalized='';
+ workdayWorkedCode=normalized;
  $$('#workdayShiftChoices [data-work-code]').forEach(btn=>{
   btn.classList.toggle('selected',btn.dataset.workCode===workdayWorkedCode);
  });
  $('#workdayChangeState').textContent=workdayWorkedCode
   ?worklogCodeLabel(workdayWorkedCode)
   :'SIN CAMBIO';
+ const duration=$('#workdayChangeDuration');
+ if(duration){
+  duration.textContent=workdayWorkedCode
+   ?`${workdayChangeHours(workdayWorkedCode)} h`
+   :'—';
+ }
 }
 
 function setWorkdayOvertime(value){
@@ -7741,10 +8222,13 @@ function renderWorkdayModal(date,turn){
  setWorkdayOvertime(existing?.overtime||0);
  $('#workdayNoteInput').value=existing?.note||'';
  $('#workdayDeleteBtn').disabled=!existing;
+ clearLicenseForm(true);
+ renderLicenseList();
 }
 
-function openWorkday(date=selectedDate,turn=activeTurnKey()){
+function openWorkday(date=selectedDate,turn=activeTurnKey(),tab='work'){
  renderWorkdayModal(date,turn);
+ setWorkdayTab(tab);
  openModal('workdayModal');
 }
 
@@ -7810,32 +8294,83 @@ function renderWorklogStats(){
  const turn=activeTurnKey();
  const monthStats=worklogPeriodStats(turn,viewYear,viewMonth);
  const yearStats=worklogPeriodStats(turn,viewYear,null);
+ const monthLicenses=licenseStatsForPeriod(turn,viewYear,viewMonth);
+ const yearLicenses=licenseStatsForPeriod(turn,viewYear,null);
 
  $('#worklogStatsPeriod').textContent=cap(monthFmt.format(new Date(viewYear,viewMonth,1)));
  $('#worklogChangesMonth').textContent=monthStats.changes;
  $('#worklogChangesYear').textContent=yearStats.changes;
  $('#worklogOvertimeMonth').textContent=worklogOvertimeText(monthStats.overtime);
  $('#worklogOvertimeYear').textContent=worklogOvertimeText(yearStats.overtime);
+ $('#worklogLicensesMonth').textContent=monthLicenses.workDays;
+ $('#worklogLicensesYear').textContent=yearLicenses.workDays;
 }
 
 function renderWorklogStatsDetail(mode){
  worklogStatsDetailMode=mode;
  const turn=activeTurnKey();
+ const periodLabel=cap(monthFmt.format(new Date(viewYear,viewMonth,1)));
+ const titleIcon=$('#worklogStatsHeadIcon');
+ const titleText=$('#worklogStatsDetailTitleText');
+
+ $('#worklogStatsDetailSubtitle').textContent=`${scheduleName(turn)} · ${periodLabel}`;
+ $('#worklogStatsDetailTurn').textContent=scheduleName(turn);
+ $('#worklogStatsDetailPeriod').textContent=periodLabel;
+
+ const list=$('#worklogStatsDetailList');
+
+ if(mode==='licenses'){
+  const ls=licenseStatsForPeriod(turn,viewYear,viewMonth);
+  titleIcon.textContent='L';
+  titleIcon.classList.add('license');
+  titleText.textContent='Licencias';
+  $('#worklogStatsDetailMetricLabel').textContent='Jornadas afectadas';
+  $('#worklogStatsDetailMetric').textContent=`${ls.workDays} d`;
+
+  if(!ls.periods.length){
+   list.innerHTML='<div class="worklog-stats-empty">No hay licencias registradas en este mes.</div>';
+   return;
+  }
+
+  list.innerHTML=ls.periods.map(l=>{
+   const work=licenseWorkDaysCount(l,turn),cal=licenseDaysCount(l);
+   return `
+    <div class="worklog-stat-row license-row">
+     <span class="worklog-stat-row-icon license">L</span>
+     <div class="worklog-stat-row-date">
+       <b>${escapeHtml(licenseDateFmt.format(parseDateKey(l.start)))}</b>
+       <small>${escapeHtml(licenseDateFmt.format(parseDateKey(l.end)))}</small>
+     </div>
+     <div class="worklog-stat-row-copy">
+       <b>${escapeHtml(l.type||'Licencia')}</b>
+       <small>${cal} día${cal===1?'':'s'} · ${work} jornada${work===1?'':'s'} laboral${work===1?'':'es'}${l.note?` · ${escapeHtml(l.note)}`:''}</small>
+     </div>
+     <div class="worklog-stat-row-actions">
+       <span class="worklog-stat-row-value">${work} d</span>
+       <button type="button" class="worklog-stat-delete" data-license-stat-delete="${escapeHtml(l.id)}">ELIMINAR</button>
+     </div>
+    </div>`;
+  }).join('');
+
+  $$('[data-license-stat-delete]').forEach(btn=>{
+   btn.onclick=()=>deleteLicenseById(btn.dataset.licenseStatDelete);
+  });
+  return;
+ }
+
  const stats=worklogPeriodStats(turn,viewYear,viewMonth);
  const records=mode==='overtime'
   ?stats.records.filter(r=>r.overtime>0)
   :stats.records.filter(r=>r.workedCode);
-
  const label=mode==='overtime'?'Horas extra':'Cambios de turno';
- $('#worklogStatsDetailSubtitle').textContent=`${scheduleName(turn)} · ${cap(monthFmt.format(new Date(viewYear,viewMonth,1)))}`;
- $('#worklogStatsDetailTurn').textContent=scheduleName(turn);
- $('#worklogStatsDetailPeriod').textContent=cap(monthFmt.format(new Date(viewYear,viewMonth,1)));
+ titleIcon.textContent=mode==='overtime'?'+H':'J';
+ titleIcon.classList.remove('license');
+ titleText.textContent='Registro laboral';
  $('#worklogStatsDetailMetricLabel').textContent=label;
  $('#worklogStatsDetailMetric').textContent=mode==='overtime'
   ?`${worklogOvertimeText(stats.overtime)} h`
   :stats.changes;
 
- const list=$('#worklogStatsDetailList');
  if(!records.length){
   list.innerHTML=`<div class="worklog-stats-empty">No hay ${mode==='overtime'?'horas extra':'cambios de turno'} registrados en este mes.</div>`;
   return;
@@ -7851,6 +8386,7 @@ function renderWorklogStatsDetail(mode){
    ?`${codeText(turn,planned)} → ${codeText(turn,worked)}`
    :`${codeText(turn,planned)} · Sin cambio`;
   const detailText=[
+   r.workedCode?`Cambio ${workdayChangeHours(r.workedCode)} h automático`:'',
    r.overtime>0?`${worklogOvertimeText(r.overtime)} h extra`:'',
    r.note||''
   ].filter(Boolean).join(' · ');
@@ -7874,15 +8410,210 @@ function renderWorklogStatsDetail(mode){
  }).join('');
 
  $$('[data-worklog-delete]').forEach(btn=>{
-  btn.onclick=()=>{
-   deleteWorklogById(btn.dataset.worklogDelete);
-  };
+  btn.onclick=()=>deleteWorklogById(btn.dataset.worklogDelete);
  });
 }
 
 function openWorklogStatsDetail(mode){
  renderWorklogStatsDetail(mode);
  openModal('worklogStatsDetailModal');
+}
+
+
+const licenseDateFmt=new Intl.DateTimeFormat('es-AR',{day:'2-digit',month:'short',year:'numeric'});
+
+function loadLicenseData(){
+ try{
+  const data=JSON.parse(localStorage.getItem(LICENSE_KEY)||'[]');
+  return Array.isArray(data)?data:[];
+ }catch{
+  return [];
+ }
+}
+
+function saveLicenseData(items){
+ localStorage.setItem(LICENSE_KEY,JSON.stringify(items));
+}
+
+function normalizeLicense(item){
+ return {
+  id:String(item?.id||''),
+  start:String(item?.start||''),
+  end:String(item?.end||''),
+  turn:String(item?.turn||''),
+  type:String(item?.type||'').trim(),
+  note:String(item?.note||'').trim(),
+  createdAt:item?.createdAt||new Date().toISOString(),
+  updatedAt:item?.updatedAt||new Date().toISOString()
+ };
+}
+
+function licensesForDate(d,turn=activeTurnKey()){
+ const key=dateKey(d);
+ return loadLicenseData()
+  .map(normalizeLicense)
+  .filter(l=>l.turn===turn&&l.start&&l.end&&key>=l.start&&key<=l.end)
+  .sort((a,b)=>a.start.localeCompare(b.start));
+}
+
+function licenseRangeText(l){
+ return `${licenseDateFmt.format(parseDateKey(l.start))} → ${licenseDateFmt.format(parseDateKey(l.end))}`;
+}
+
+function licenseDaysCount(l){
+ if(!l?.start||!l?.end)return 0;
+ return Math.max(0,diffDays(parseDateKey(l.end),parseDateKey(l.start))+1);
+}
+
+function licenseWorkDaysCount(l,turn=l.turn){
+ if(!l?.start||!l?.end||!turn)return 0;
+ let count=0,d=parseDateKey(l.start),end=parseDateKey(l.end);
+ while(d<=end){
+  if(isWorkCodeForHoliday(turn,codeFor(turn,d)))count++;
+  d=addDays(d,1);
+ }
+ return count;
+}
+
+function licenseStatsForPeriod(turn,year,month=null){
+ const periodStart=month===null?new Date(year,0,1):new Date(year,month,1);
+ const periodEnd=month===null?new Date(year,11,31):new Date(year,month+1,0);
+ const startKey=dateKey(periodStart),endKey=dateKey(periodEnd);
+ const periods=loadLicenseData().map(normalizeLicense).filter(l=>
+  l.turn===turn&&l.start&&l.end&&l.end>=startKey&&l.start<=endKey
+ );
+ const calendarDays=new Set(),workDays=new Set();
+ periods.forEach(l=>{
+  let d=parseDateKey(l.start)<periodStart?new Date(periodStart):parseDateKey(l.start);
+  const lend=parseDateKey(l.end)>periodEnd?periodEnd:parseDateKey(l.end);
+  while(d<=lend){
+   const k=dateKey(d);
+   calendarDays.add(k);
+   if(isWorkCodeForHoliday(turn,codeFor(turn,d)))workDays.add(k);
+   d=addDays(d,1);
+  }
+ });
+ return {periods,calendarDays:calendarDays.size,workDays:workDays.size};
+}
+
+function clearLicenseForm(useSelected=true){
+ licenseEditingId=null;
+ $('#licenseFormTitle').textContent='Nueva licencia';
+ $('#licenseFormMode').textContent='NUEVA';
+ $('#licenseSaveBtn').textContent='GUARDAR LICENCIA';
+ $('#licenseTypeSelect').value='';
+ $('#licenseNoteInput').value='';
+ const key=dateKey(workdayEditingDate||selectedDate);
+ $('#licenseStartInput').value=useSelected?key:'';
+ $('#licenseEndInput').value=useSelected?key:'';
+}
+
+function renderLicenseList(){
+ const turn=workdayEditingTurn||activeTurnKey();
+ const list=$('#licenseList');
+ if(!list)return;
+ const items=loadLicenseData().map(normalizeLicense)
+  .filter(l=>l.turn===turn&&l.start&&l.end)
+  .sort((a,b)=>a.start.localeCompare(b.start));
+ $('#licenseListTurn').textContent=scheduleName(turn);
+ $('#licenseSavedCount').textContent=items.length;
+ if(!items.length){
+  list.innerHTML='<div class="license-empty">Todavía no hay licencias guardadas para este turno.</div>';
+  return;
+ }
+ list.innerHTML=items.map(l=>{
+  const cal=licenseDaysCount(l),work=licenseWorkDaysCount(l,turn);
+  return `
+   <div class="license-item">
+    <span class="license-item-icon">L</span>
+    <div class="license-item-copy">
+      <b>${escapeHtml(l.type||'Licencia')}</b>
+      <span>${escapeHtml(licenseRangeText(l))}</span>
+      <small>${cal} día${cal===1?'':'s'} · ${work} jornada${work===1?'':'s'} laboral${work===1?'':'es'}${l.note?` · ${escapeHtml(l.note)}`:''}</small>
+    </div>
+    <div class="license-item-actions">
+      <button type="button" data-license-edit="${escapeHtml(l.id)}">EDITAR</button>
+      <button type="button" class="delete" data-license-delete="${escapeHtml(l.id)}">ELIMINAR</button>
+    </div>
+   </div>`;
+ }).join('');
+
+ $$('[data-license-edit]').forEach(btn=>{
+  btn.onclick=()=>{
+   const l=items.find(x=>x.id===btn.dataset.licenseEdit);
+   if(!l)return;
+   licenseEditingId=l.id;
+   $('#licenseStartInput').value=l.start;
+   $('#licenseEndInput').value=l.end;
+   $('#licenseTypeSelect').value=l.type;
+   $('#licenseNoteInput').value=l.note||'';
+   $('#licenseFormTitle').textContent='Editar licencia';
+   $('#licenseFormMode').textContent='EDITANDO';
+   $('#licenseSaveBtn').textContent='ACTUALIZAR';
+  };
+ });
+
+ $$('[data-license-delete]').forEach(btn=>{
+  btn.onclick=()=>deleteLicenseById(btn.dataset.licenseDelete,{closeWorkday:true});
+ });
+}
+
+function saveLicensePeriod(){
+ const start=$('#licenseStartInput').value;
+ const end=$('#licenseEndInput').value;
+ const type=$('#licenseTypeSelect').value.trim();
+ const note=$('#licenseNoteInput').value.trim();
+ if(!start||!end){alert('Elegí la fecha DESDE y la fecha HASTA.');return;}
+ if(end<start){alert('La fecha HASTA no puede ser anterior a DESDE.');return;}
+ if(!type){alert('Elegí el tipo de licencia.');return;}
+
+ let items=loadLicenseData().map(normalizeLicense);
+ if(licenseEditingId){
+  const idx=items.findIndex(x=>x.id===licenseEditingId);
+  if(idx>=0)items[idx]={...items[idx],start,end,type,note,turn:workdayEditingTurn,updatedAt:new Date().toISOString()};
+ }else{
+  const id=(crypto?.randomUUID?.()||`lic-${Date.now()}-${Math.random().toString(16).slice(2)}`);
+  items.push({id,start,end,type,note,turn:workdayEditingTurn,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()});
+ }
+ saveLicenseData(items);
+ renderAll();
+ renderYear();
+ renderStats();
+ closeModal('workdayModal');
+ vibrate(14);
+}
+
+function deleteLicenseById(id,{closeWorkday=false,ask=true}={}){
+ const current=loadLicenseData().map(normalizeLicense).find(x=>x.id===id);
+ if(!current)return false;
+ if(ask&&!confirm(`¿Eliminar la licencia "${current.type}" (${licenseRangeText(current)})?`))return false;
+ saveLicenseData(loadLicenseData().filter(x=>normalizeLicense(x).id!==id));
+ if(licenseEditingId===id)licenseEditingId=null;
+ renderAll();
+ renderYear();
+ renderStats();
+ if(closeWorkday)closeModal('workdayModal');
+ else renderLicenseList();
+ const statsDetail=$('#worklogStatsDetailModal');
+ if(statsDetail?.classList.contains('open')&&worklogStatsDetailMode==='licenses')renderWorklogStatsDetail('licenses');
+ return true;
+}
+
+function setWorkdayTab(tab){
+ workdayActiveTab=tab==='license'?'license':'work';
+ $$('[data-workday-tab]').forEach(btn=>btn.classList.toggle('selected',btn.dataset.workdayTab===workdayActiveTab));
+ $('#workdayPane').classList.toggle('active',workdayActiveTab==='work');
+ $('#licensePane').classList.toggle('active',workdayActiveTab==='license');
+ $('#workdayHeadIcon').textContent=workdayActiveTab==='license'?'L':'J';
+ $('#workdayHeadIcon').classList.toggle('license',workdayActiveTab==='license');
+ $('#workdayTitleText').textContent=workdayActiveTab==='license'?'Licencias':'Jornada';
+ if(workdayActiveTab==='license')renderLicenseList();
+}
+
+function workdayChangeHours(code){
+ if(code==='M'||code==='N')return 12;
+ if(code==='D')return 9;
+ return 0;
 }
 
 const vacationDateFmt=new Intl.DateTimeFormat('es-AR',{day:'2-digit',month:'short',year:'numeric'});
@@ -8159,9 +8890,11 @@ function renderCalendar(){
   const events=agendaForDate(d);
   const holiday=holidayInfo(d);
   const vacations=vacationsAreVisible()?vacationsForDate(d):[];
+  const licenses=licensesForDate(d,turn);
   const worklog=worklogForDate(d,turn);
   if(holiday)cell.classList.add('holiday');
   if(vacations.length)cell.classList.add('vacation-day');
+  if(licenses.length)cell.classList.add('license-day');
   if(worklog&&(worklog.workedCode||worklog.overtime>0))cell.classList.add('has-worklog');
 
   let dots='';
@@ -8178,11 +8911,15 @@ function renderCalendar(){
    ? `<span class="vacation-overlay" aria-hidden="true"></span><span class="vacation-badge" title="${escapeHtml(vacations[0].title||'Vacaciones')}">V</span>`
    : '';
 
+  const licenseBadge=licenses.length
+   ? `<span class="license-badge" title="${escapeHtml(licenses[0].type||'Licencia')}">L</span>`
+   : '';
+
   const worklogBadges=worklog&&(worklog.workedCode||worklog.overtime>0)
    ? `<span class="worklog-badges">${worklog.workedCode?'<i class="worklog-badge change">C</i>':''}${worklog.overtime>0?`<i class="worklog-badge overtime">+${worklogOvertimeText(worklog.overtime)}h</i>`:''}</span>`
    : '';
 
-  cell.innerHTML=`<span class="date">${d.getDate()}</span><span class="code">${codeText(turn,c)}</span>${showLabels.checked?`<span class="label">${shiftNames[c][0]}</span>`:''}${dots}${holidayBadge}${vacationBadge}${worklogBadges}`;
+  cell.innerHTML=`<span class="date">${d.getDate()}</span><span class="code">${codeText(turn,c)}</span>${showLabels.checked?`<span class="label">${shiftNames[c][0]}</span>`:''}${dots}${holidayBadge}${licenseBadge}${vacationBadge}${worklogBadges}`;
   attachDayGestures(cell,d);cal.appendChild(cell);
  }
  startHolidayBadgePulses();
@@ -8473,6 +9210,25 @@ function showDetail(d){
  }
 
  const active=activeTurnKey();
+ const licenses=licensesForDate(d,active);
+ const licenseBanner=$('#licenseDetailBanner');
+ const licenseTitle=$('#licenseDetailTitle');
+ const licenseText=$('#licenseDetailText');
+ const licenseNote=$('#licenseDetailNote');
+ if(licenseBanner&&licenseTitle&&licenseText&&licenseNote){
+  licenseBanner.classList.toggle('show',licenses.length>0);
+  if(licenses.length){
+   const l=licenses[0];
+   licenseTitle.textContent=`Licencia · ${l.type}`;
+   licenseText.textContent=`${licenseRangeText(l)} · ${licenseWorkDaysCount(l,active)} jornada${licenseWorkDaysCount(l,active)===1?'':'s'} laboral${licenseWorkDaysCount(l,active)===1?'':'es'}${licenses.length>1?` · +${licenses.length-1} licencia${licenses.length-1===1?'':'s'}`:''}`;
+   licenseNote.textContent=l.note||'';
+  }else{
+   licenseTitle.textContent='Licencia';
+   licenseText.textContent='';
+   licenseNote.textContent='';
+  }
+ }
+
  const record=worklogForDate(d,active);
  const quickDelete=$('#worklogDeleteQuickBtn');
  if(quickDelete)quickDelete.classList.toggle('show',Boolean(record));
@@ -8488,7 +9244,7 @@ function showDetail(d){
    const planned=codeFor(active,d);
    const worked=record.workedCode||planned;
    worklogTitle.textContent='Registro laboral';
-   worklogText.textContent=`Programado ${codeText(active,planned)} · Trabajado ${codeText(active,worked)}${record.overtime>0?` · +${worklogOvertimeText(record.overtime)} h extra`:''}`;
+   worklogText.textContent=`Programado ${codeText(active,planned)} · Trabajado ${codeText(active,worked)}${record.workedCode?` · Cambio ${workdayChangeHours(record.workedCode)} h`:''}${record.overtime>0?` · +${worklogOvertimeText(record.overtime)} h extra`:''}`;
    worklogNote.textContent=record.note||'';
   }else{
    worklogText.textContent='';
@@ -8648,14 +9404,14 @@ function downloadICS(id,occ){const item=normalizedItem(loadAgendaData().find(x=>
  const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Turnos 4x4//Agenda//ES','CALSCALE:GREGORIAN','BEGIN:VEVENT',`UID:${item.id}-${occ}@turnos4x4`,`DTSTAMP:${icsLocal(new Date())}`,dtStart,dtEnd,`SUMMARY:${icsEscape(item.title)}`,`DESCRIPTION:${icsEscape(item.notes)}`,alarm,'END:VEVENT','END:VCALENDAR'].filter(Boolean).join('\r\n');
  const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=`agenda-${occ}-${item.title.replace(/[^\wáéíóúñ-]+/gi,'_')}.ics`;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)
 }
-function exportBackup(){const payload={app:'Turnos 4x4',format:5,version:CURRENT_VERSION,exportedAt:new Date().toISOString(),agenda:loadAgendaData(),vacations:loadVacationData(),vacationColor:localStorage.getItem(VACATION_COLOR_KEY)||DEFAULT_VACATION_COLOR,showVacations:localStorage.getItem(SHOW_VACATIONS_KEY)!=='false',worklog:loadWorklogData()};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=`turnos4x4-backup-${dateKey(new Date())}.json`;a.click();localStorage.setItem(BACKUP_KEY,new Date().toISOString());renderBackupStatus();setTimeout(()=>URL.revokeObjectURL(u),1000)}
-async function importBackup(file){if(!file)return;try{const data=JSON.parse(await file.text()),arr=Array.isArray(data)?data:data.agenda,vacs=Array.isArray(data?.vacations)?data.vacations:null,vacColor=typeof data?.vacationColor==='string'?data.vacationColor:null,showVacs=typeof data?.showVacations==='boolean'?data.showVacations:null,worklog=Array.isArray(data?.worklog)?data.worklog:null;if(!Array.isArray(arr))throw 0;const extraV=vacs?` · ${vacs.length} período${vacs.length===1?'':'s'} de vacaciones`:'';const extraW=worklog?` · ${worklog.length} registro${worklog.length===1?'':'s'} laborales`:'';if(!confirm(`Se encontraron ${arr.length} eventos${extraV}${extraW}. ¿Reemplazar los datos incluidos en la copia?`))return;saveAgendaData(arr);if(vacs)saveVacationData(vacs);if(vacColor)applyVacationColor(vacColor,true);if(showVacs!==null)localStorage.setItem(SHOW_VACATIONS_KEY,showVacs?'true':'false');if(worklog)saveWorklogData(worklog);loadVacationVisibility();renderAgenda();renderVacationList();renderAll();renderYear();renderStats()}catch{alert('No pude leer esa copia de seguridad.')}finally{$('#agendaImportInput').value=''}}
+function exportBackup(){const payload={app:'Turnos 4x4',format:6,version:CURRENT_VERSION,exportedAt:new Date().toISOString(),agenda:loadAgendaData(),vacations:loadVacationData(),vacationColor:localStorage.getItem(VACATION_COLOR_KEY)||DEFAULT_VACATION_COLOR,showVacations:localStorage.getItem(SHOW_VACATIONS_KEY)!=='false',worklog:loadWorklogData(),licenses:loadLicenseData()};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=`turnos4x4-backup-${dateKey(new Date())}.json`;a.click();localStorage.setItem(BACKUP_KEY,new Date().toISOString());renderBackupStatus();setTimeout(()=>URL.revokeObjectURL(u),1000)}
+async function importBackup(file){if(!file)return;try{const data=JSON.parse(await file.text()),arr=Array.isArray(data)?data:data.agenda,vacs=Array.isArray(data?.vacations)?data.vacations:null,vacColor=typeof data?.vacationColor==='string'?data.vacationColor:null,showVacs=typeof data?.showVacations==='boolean'?data.showVacations:null,worklog=Array.isArray(data?.worklog)?data.worklog:null,licenses=Array.isArray(data?.licenses)?data.licenses:null;if(!Array.isArray(arr))throw 0;const extraV=vacs?` · ${vacs.length} período${vacs.length===1?'':'s'} de vacaciones`:'';const extraW=worklog?` · ${worklog.length} registro${worklog.length===1?'':'s'} laborales`:'';const extraL=licenses?` · ${licenses.length} licencia${licenses.length===1?'':'s'}`:'';if(!confirm(`Se encontraron ${arr.length} eventos${extraV}${extraW}${extraL}. ¿Reemplazar los datos incluidos en la copia?`))return;saveAgendaData(arr);if(vacs)saveVacationData(vacs);if(vacColor)applyVacationColor(vacColor,true);if(showVacs!==null)localStorage.setItem(SHOW_VACATIONS_KEY,showVacs?'true':'false');if(worklog)saveWorklogData(worklog);if(licenses)saveLicenseData(licenses);loadVacationVisibility();renderAgenda();renderVacationList();renderAll();renderYear();renderStats()}catch{alert('No pude leer esa copia de seguridad.')}finally{$('#agendaImportInput').value=''}}
 function renderBackupStatus(){const x=localStorage.getItem(BACKUP_KEY);backupStatus.textContent=x?`Última copia: ${new Intl.DateTimeFormat('es-AR',{dateStyle:'medium',timeStyle:'short'}).format(new Date(x))}`:'Todavía no hiciste una copia de seguridad.'}
 
 function renderYear(){
  if(!showHolidays||showHolidays.checked)ensureHolidayYear(yearViewYear);
  $('#yearTitle').textContent=yearViewYear;const grid=$('#yearGrid');grid.innerHTML='';
- for(let m=0;m<12;m++){const box=document.createElement('div');box.className='mini-month';box.innerHTML=`<h3>${new Intl.DateTimeFormat('es-AR',{month:'short'}).format(new Date(yearViewYear,m,1))}</h3>`;const days=document.createElement('div');days.className='mini-days';for(let b=0;b<new Date(yearViewYear,m,1).getDay();b++){const blank=document.createElement('i');blank.className='mini-day blank';days.appendChild(blank)}const last=new Date(yearViewYear,m+1,0).getDate();for(let d=1;d<=last;d++){const dt=new Date(yearViewYear,m,d),c=codeFor(activeTurnKey(),dt),el=document.createElement('i');el.className=`mini-day ${c}${agendaForDate(dt).length?' has-event':''}${vacationsAreVisible()&&vacationsForDate(dt).length?' has-vacation':''}`;el.textContent=d;days.appendChild(el)}box.appendChild(days);box.onclick=()=>{viewYear=yearViewYear;viewMonth=m;closeModal('yearModal');renderCalendar()};grid.appendChild(box)}
+ for(let m=0;m<12;m++){const box=document.createElement('div');box.className='mini-month';box.innerHTML=`<h3>${new Intl.DateTimeFormat('es-AR',{month:'short'}).format(new Date(yearViewYear,m,1))}</h3>`;const days=document.createElement('div');days.className='mini-days';for(let b=0;b<new Date(yearViewYear,m,1).getDay();b++){const blank=document.createElement('i');blank.className='mini-day blank';days.appendChild(blank)}const last=new Date(yearViewYear,m+1,0).getDate();for(let d=1;d<=last;d++){const dt=new Date(yearViewYear,m,d),c=codeFor(activeTurnKey(),dt),el=document.createElement('i');el.className=`mini-day ${c}${agendaForDate(dt).length?' has-event':''}${vacationsAreVisible()&&vacationsForDate(dt).length?' has-vacation':''}${licensesForDate(dt,activeTurnKey()).length?' has-license':''}`;el.textContent=d;days.appendChild(el)}box.appendChild(days);box.onclick=()=>{viewYear=yearViewYear;viewMonth=m;closeModal('yearModal');renderCalendar()};grid.appendChild(box)}
 }
 
 function countsForPeriod(turn,y,m=null){const start=m===null?new Date(y,0,1):new Date(y,m,1),end=m===null?new Date(y+1,0,1):new Date(y,m+1,1),r={M:0,N:0,D:0,F:0};for(let d=new Date(start);d<end;d=addDays(d,1))r[codeFor(turn,d)]++;return r}
@@ -8921,7 +9677,7 @@ function renderHolidayWorkStats(year){
 }
 
 function renderStats(){
- const t=activeTurnKey(),m=countsForPeriod(t,viewYear,viewMonth),y=countsForPeriod(t,viewYear),hours=t==='T5LV'?m.D*9:(m.M+m.N)*12,off=nextOffBlock(t,new Date());
+ const t=activeTurnKey(),m=countsForPeriod(t,viewYear,viewMonth),hours=t==='T5LV'?m.D*9:(m.M+m.N)*12,off=nextOffBlock(t,new Date());
  ensureHolidayYear(viewYear);
  renderHolidayWorkStats(viewYear);
  renderWorklogStats();
@@ -8930,7 +9686,6 @@ function renderStats(){
  else if(t==='T5A'||t==='T5B')$('#statsCards').innerHTML=`<div class="stat-card stat-morning"><i>☀</i><small>Mañanas</small><b>${m.M}</b></div><div class="stat-card stat-off"><i>▦</i><small>Francos</small><b>${m.F}</b></div><div class="stat-card stat-hours"><i>◷</i><small>Horas mes</small><b>${hours}</b></div><div class="stat-card stat-cycle"><i>↻</i><small>Ciclo</small><b>4×4</b></div>`;
  else $('#statsCards').innerHTML=`<div class="stat-card stat-morning"><i>☀</i><small>Mañanas</small><b>${m.M}</b></div><div class="stat-card stat-night"><i>◒</i><small>Noches</small><b>${m.N}</b></div><div class="stat-card stat-off"><i>▦</i><small>Francos</small><b>${m.F}</b></div><div class="stat-card stat-hours"><i>◷</i><small>Horas mes</small><b>${hours}</b></div>`;
  renderTurnEndCard(t);
- $('#monthBars').innerHTML=barsHtml(m,t);$('#yearBars').innerHTML=barsHtml(y,t);
  $('#nextOffBox').innerHTML=off?`<div class="off-premium"><small>Comienza</small><b>${cap(shortFmt.format(off.start))}</b><strong>${off.len} días</strong><span>Hasta ${shortDateFmt.format(off.end)}</span></div>`:'<div class="off-premium"><span>No pude calcular el próximo franco.</span></div>';
 
  const salary=salaryCountdown(new Date());
@@ -8972,11 +9727,26 @@ $('#resetSettingsBtn').onclick=()=>{morningColor.value=defaults.morning;offColor
 $('#agendaSaveBtn').onclick=saveAgenda;$('#agendaClearBtn').onclick=clearAgendaForm;$('#agendaNotifyBtn').onclick=requestNotificationPermission;
 $('#workdayOpenBtn').onclick=()=>{
  markWorkdayFeatureSeen();
- openWorkday(selectedDate,activeTurnKey());
+ openWorkday(selectedDate,activeTurnKey(),'work');
 };
 $('#worklogDeleteQuickBtn').onclick=deleteSelectedWorklog;
 $('#workdaySaveBtn').onclick=saveWorkdayRecord;
 $('#workdayDeleteBtn').onclick=deleteWorkdayRecord;
+
+$$('[data-workday-tab]').forEach(btn=>{
+ btn.onclick=()=>setWorkdayTab(btn.dataset.workdayTab);
+});
+
+$('#licenseSaveBtn').onclick=saveLicensePeriod;
+$('#licenseClearBtn').onclick=()=>clearLicenseForm(true);
+
+const licenseDetailBanner=$('#licenseDetailBanner');
+if(licenseDetailBanner){
+ const openLicense=()=>openWorkday(selectedDate,activeTurnKey(),'license');
+ licenseDetailBanner.onclick=openLicense;
+ licenseDetailBanner.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openLicense();}};
+}
+
 
 $$('#workdayShiftChoices [data-work-code]').forEach(btn=>{
  btn.onclick=()=>setWorkdayWorkedCode(btn.dataset.workCode);
@@ -8990,6 +9760,7 @@ $$('.workday-overtime-quick [data-overtime]').forEach(btn=>{
 
 $('#worklogChangesStat').onclick=()=>openWorklogStatsDetail('changes');
 $('#worklogOvertimeStat').onclick=()=>openWorklogStatsDetail('overtime');
+$('#worklogLicensesStat').onclick=()=>openWorklogStatsDetail('licenses');
 
 $('#vacationSaveBtn').onclick=saveVacationPeriod;$('#vacationClearBtn').onclick=()=>clearVacationForm(true);
 
