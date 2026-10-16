@@ -9694,6 +9694,60 @@ body.light #statsModal .close-btn{
   -webkit-text-fill-color:#172536 !important;
 }
 
+
+/* ===== V4.11.1 · REGISTRO LABORAL · TARJETAS SIN DEGRADADO ===== */
+
+/* Las cuatro tarjetas de Registro laboral quedan con fondo liso uniforme. */
+#statsModal .worklog-stat-btn,
+#statsModal .worklog-stat-btn.changes,
+#statsModal .worklog-stat-btn.overtime,
+#statsModal .worklog-stat-btn.licenses,
+#statsModal .worklog-stat-btn.period-holidays{
+  background:#273544 !important;
+  background-color:#273544 !important;
+  background-image:none !important;
+  box-shadow:none !important;
+  border-top-color:#405064 !important;
+  border-left-color:#405064 !important;
+  border-right-color:#405064 !important;
+}
+
+/* Se conservan sólo pequeños acentos en el borde inferior. */
+#statsModal .worklog-stat-btn.changes{
+  border-bottom-color:rgba(240,160,59,.62) !important;
+}
+#statsModal .worklog-stat-btn.overtime{
+  border-bottom-color:rgba(67,168,255,.64) !important;
+}
+#statsModal .worklog-stat-btn.licenses{
+  border-bottom-color:rgba(233,95,158,.62) !important;
+}
+#statsModal .worklog-stat-btn.period-holidays{
+  border-bottom-color:rgba(255,95,114,.64) !important;
+}
+
+#statsModal .worklog-stat-btn::before,
+#statsModal .worklog-stat-btn::after{
+  content:none !important;
+  display:none !important;
+  background:none !important;
+}
+
+/* Modo claro */
+body.light #statsModal .worklog-stat-btn,
+body.light #statsModal .worklog-stat-btn.changes,
+body.light #statsModal .worklog-stat-btn.overtime,
+body.light #statsModal .worklog-stat-btn.licenses,
+body.light #statsModal .worklog-stat-btn.period-holidays{
+  background:#edf1f5 !important;
+  background-color:#edf1f5 !important;
+  background-image:none !important;
+  box-shadow:none !important;
+  border-top-color:#d3dce5 !important;
+  border-left-color:#d3dce5 !important;
+  border-right-color:#d3dce5 !important;
+}
+
 </style>
 </head>
 <body>
@@ -10680,7 +10734,7 @@ body.light #statsModal .close-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.11.0';
+const CURRENT_VERSION='4.11.1';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
