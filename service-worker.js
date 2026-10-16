@@ -1,4 +1,4 @@
-const CACHE='turnos4x4-4.11.3';
+const CACHE='turnos4x4-4.11.4';
 const ASSETS=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
 
 self.addEventListener('install',event=>{
@@ -25,7 +25,6 @@ self.addEventListener('fetch',event=>{
     return;
   }
 
-  // HTML: network-first para recibir versiones nuevas.
   if(
     event.request.mode==='navigate' ||
     url.pathname.endsWith('/index.html') ||
@@ -43,7 +42,6 @@ self.addEventListener('fetch',event=>{
     return;
   }
 
-  // Assets estáticos: cache-first evita trabajo/red innecesarios.
   if(url.origin===self.location.origin){
     event.respondWith(
       caches.match(event.request).then(cached=>cached||fetch(event.request).then(response=>{

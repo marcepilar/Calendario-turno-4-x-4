@@ -9768,6 +9768,145 @@ body.light #statsModal .worklog-stat-btn.period-holidays{
   contain:layout paint;
 }
 
+
+/* ===== V4.11.4 · VISTA CALENDARIO COMÚN ===== */
+
+.calendar-view-setting{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:10px;
+  align-items:center;
+  margin:8px 0 10px;
+  padding:11px 12px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--panel2);
+}
+.calendar-view-setting-copy{
+  min-width:0;
+}
+.calendar-view-setting-copy b{
+  display:block;
+  font-size:11px;
+  line-height:1.2;
+}
+.calendar-view-setting-copy small{
+  display:block;
+  margin-top:3px;
+  color:var(--muted);
+  font-size:8.5px;
+  line-height:1.25;
+}
+.calendar-view-segment{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:4px;
+  padding:4px;
+  border-radius:13px;
+  background:var(--panel3);
+  border:1px solid var(--line);
+}
+.calendar-view-btn{
+  min-width:72px;
+  height:36px;
+  padding:0 11px;
+  border:0;
+  border-radius:9px;
+  background:transparent;
+  color:var(--muted);
+  font-size:9px;
+  font-weight:1000;
+  letter-spacing:.035em;
+  cursor:pointer;
+}
+.calendar-view-btn.active{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;
+  box-shadow:0 5px 14px rgba(0,0,0,.18);
+}
+
+/* En modo común no se muestran el ciclo ni la leyenda M/N/F. */
+body.calendar-common-view .cycle-card,
+body.calendar-common-view #shiftLegend{
+  display:none !important;
+}
+
+/* Calendario mensual común: días laborales lisos, fin de semana diferenciado. */
+body.calendar-common-view .day.common-day{
+  background:#202b38 !important;
+  color:#edf3fa !important;
+}
+body.calendar-common-view .day.common-day.weekend{
+  background:#34495d !important;
+  color:#ffffff !important;
+}
+body.calendar-common-view .day.common-day .date{
+  left:50%;
+  right:auto;
+  top:50%;
+  transform:translate(-50%,-50%);
+  font-size:clamp(17px,4.9vw,22px);
+  line-height:1;
+  font-weight:950;
+  opacity:1;
+  z-index:2;
+}
+body.calendar-common-view .day.common-day .code,
+body.calendar-common-view .day.common-day .label{
+  display:none !important;
+}
+
+/* DOM y SÁB también se distinguen en la cabecera. */
+body.calendar-common-view #calendarCard .weekday:first-child,
+body.calendar-common-view #calendarCard .weekday:last-child{
+  color:#8fc9ff;
+}
+
+/* Vista anual común. */
+body.calendar-common-view .mini-day.common-mini{
+  background:#263240 !important;
+  color:#eef4fa !important;
+}
+body.calendar-common-view .mini-day.common-mini.weekend{
+  background:#435a70 !important;
+  color:#ffffff !important;
+}
+
+/* Modo claro */
+body.light.calendar-common-view .day.common-day{
+  background:#ffffff !important;
+  color:#172536 !important;
+}
+body.light.calendar-common-view .day.common-day.weekend{
+  background:#dbe7f1 !important;
+  color:#173047 !important;
+}
+body.light.calendar-common-view #calendarCard .weekday:first-child,
+body.light.calendar-common-view #calendarCard .weekday:last-child{
+  color:#267fc1;
+}
+body.light.calendar-common-view .mini-day.common-mini{
+  background:#ffffff !important;
+  color:#172536 !important;
+}
+body.light.calendar-common-view .mini-day.common-mini.weekend{
+  background:#d9e6f0 !important;
+  color:#173047 !important;
+}
+
+@media(max-width:430px){
+  .calendar-view-setting{
+    gap:7px;
+    padding:9px 9px;
+  }
+  .calendar-view-btn{
+    min-width:62px;
+    height:34px;
+    padding:0 8px;
+    font-size:8.5px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -9886,6 +10025,17 @@ body.light #statsModal .worklog-stat-btn.period-holidays{
 <!-- Settings -->
 <div id="settingsModal" class="backdrop"><div class="modal glass settings-modal-window">
   <div class="modal-head"><div><h2>⚙️ Configuración</h2><small>Personalizá la aplicación</small></div><button class="close-btn" data-close="settingsModal">×</button></div>
+  <div class="calendar-view-setting">
+    <div class="calendar-view-setting-copy">
+      <b>Vista del calendario</b>
+      <small>Elegí entre turnos o calendario común</small>
+    </div>
+    <div class="calendar-view-segment" role="group" aria-label="Vista del calendario">
+      <button id="calendarViewShiftsBtn" type="button" class="calendar-view-btn active" data-calendar-view="shifts">TURNOS</button>
+      <button id="calendarViewCommonBtn" type="button" class="calendar-view-btn" data-calendar-view="common">COMÚN</button>
+    </div>
+  </div>
+
   <div id="colorProfileNote" class="color-profile-note"><b id="colorProfileTitle">Colores · Turnos 1–4</b><span id="colorProfileText">M / N / F</span></div>
   <div class="settings-list">
     <label id="morningColorRow" class="setting-row color-setting-row"><div><b id="morningColorTitle">Color M — Mañana</b><small id="morningColorNote">06:00 a 18:00</small></div><span class="color-edit-control"><input id="morningColor" class="color-input" type="color" value="#ffd84d" aria-label="Editar color de Mañana"><span class="color-edit-text">EDITAR COLOR ›</span></span></label>
@@ -10070,6 +10220,7 @@ body.light #statsModal .worklog-stat-btn.period-holidays{
           <p><strong>Turno 5:</strong> al elegirlo aparece un segundo selector con T5 FIJO, T5 UNO y T5 DOS.</p>
           <p><strong>T5 FIJO:</strong> lunes a viernes, 07:30–16:30. <strong>T5 UNO / T5 DOS:</strong> ciclo 4×4 de 12 horas, 06:00–18:00.</p>
           <p><strong>HOY:</strong> vuelve al día actual. <strong>AÑO:</strong> abre los 12 meses. Las flechas ‹ › cambian de mes.</p>
+          <p><strong>Vista del calendario:</strong> en Configuración podés elegir <strong>TURNOS</strong> para ver M/N/F o <strong>COMÚN</strong> para mostrar solamente el número del día. En COMÚN, sábados y domingos usan un color diferente y la lógica interna del turno sigue funcionando normalmente.</p>
           <p><strong>Compartir app:</strong> tocá el símbolo de los tres puntos unidos de la cabecera. WhatsApp aparece como opción principal; también podés usar el menú de compartir del teléfono o copiar el enlace.</p>
           <p class="help-tip">La rotación base nunca se altera por Vacaciones, Jornada, Licencias, Agenda o Feriados.</p>
         </div>
@@ -10754,7 +10905,7 @@ body.light #statsModal .worklog-stat-btn.period-holidays{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.11.3';
+const CURRENT_VERSION='4.11.4';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
@@ -10783,6 +10934,7 @@ const agendaSheet=$('#agendaSheet'),agendaDateText=$('#agendaDateText'),agendaSh
 const agendaTitleInput=$('#agendaTitleInput'),agendaTimeInput=$('#agendaTimeInput'),agendaCategoryInput=$('#agendaCategoryInput'),agendaReminderInput=$('#agendaReminderInput'),agendaRepeatInput=$('#agendaRepeatInput'),agendaNotesInput=$('#agendaNotesInput');
 const agendaSearchInput=$('#agendaSearchInput'),agendaFilterInput=$('#agendaFilterInput'),backupStatus=$('#backupStatus');
 const settingsBtn=$('#settingsBtn'),morningColor=$('#morningColor'),nightColor=$('#nightColor'),offColor=$('#offColor'),codeSize=$('#codeSize'),codeSizeValue=$('#codeSizeValue'),showLabels=$('#showLabels'),showHolidays=$('#showHolidays'),hapticsToggle=$('#hapticsToggle');
+const calendarViewShiftsBtn=$('#calendarViewShiftsBtn'),calendarViewCommonBtn=$('#calendarViewCommonBtn');
 const morningColorRow=$('#morningColorRow'),nightColorRow=$('#nightColorRow'),offColorRow=$('#offColorRow'),paletteNightTab=$('#paletteNightTab'),colorProfileTitle=$('#colorProfileTitle'),colorProfileText=$('#colorProfileText'),morningColorTitle=$('#morningColorTitle'),morningColorNote=$('#morningColorNote'),paletteHelp=$('#paletteHelp'),paletteNote=$('#paletteNote');
 const AGENDA_KEY='turno4x4.agenda.v1', NOTIFIED_KEY='turno4x4.agenda.notified.v1', BACKUP_KEY='turno4x4.agenda.lastBackup';
 const VACATION_KEY='turno4x4.vacations.v1';
@@ -10790,6 +10942,8 @@ const WORKLOG_KEY='turno4x4.worklog.v1';
 const LICENSE_KEY='turno4x4.licenses.v1';
 const WORKDAY_SEEN_KEY='turno4x4.workdaySeen.v1';
 const VACATION_COLOR_KEY='turno4x4.vacationColor.v1';
+const CALENDAR_VIEW_KEY='turno4x4.calendarView.v1';
+let calendarViewMode='shifts';
 
 /* ===== V4.11.3 · PERFORMANCE · CACHE DE DATOS ===== */
 const appDataCache={
@@ -11084,6 +11238,42 @@ function loadActiveColorProfile(){
  else nightColor.value=localStorage.getItem('turno4x4.color.night')||defaults.night;
  updateColorSettingsUI();
 }
+function isCommonCalendarView(){
+ return calendarViewMode==='common';
+}
+
+function syncCalendarViewButtons(){
+ if(calendarViewShiftsBtn){
+  calendarViewShiftsBtn.classList.toggle('active',calendarViewMode==='shifts');
+  calendarViewShiftsBtn.setAttribute('aria-pressed',calendarViewMode==='shifts'?'true':'false');
+ }
+ if(calendarViewCommonBtn){
+  calendarViewCommonBtn.classList.toggle('active',calendarViewMode==='common');
+  calendarViewCommonBtn.setAttribute('aria-pressed',calendarViewMode==='common'?'true':'false');
+ }
+}
+
+function applyCalendarViewMode(){
+ document.body.classList.toggle('calendar-common-view',isCommonCalendarView());
+ syncCalendarViewButtons();
+ scheduleViewportLayout();
+}
+
+function setCalendarViewMode(mode,{persist=true,render=true}={}){
+ calendarViewMode=mode==='common'?'common':'shifts';
+
+ if(persist){
+  localStorage.setItem(CALENDAR_VIEW_KEY,calendarViewMode);
+ }
+
+ applyCalendarViewMode();
+
+ if(render){
+  renderAll();
+  renderYearIfOpen();
+ }
+}
+
 function updateColorSettingsUI(){
  const t5=isTurn5Profile();
  $('#settingsModal')?.classList.toggle('t5-profile',t5);
@@ -11116,6 +11306,9 @@ function loadSettings(){
  const storedTurn=localStorage.getItem('turno4x4.turno');if(storedTurn&&['T1','T2','T3','T4','T5'].includes(storedTurn))turnSelect.value=storedTurn;
  const storedT5=localStorage.getItem('turno4x4.turno5');if(storedT5&&['T5LV','T5A','T5B'].includes(storedT5))turn5Select.value=storedT5;
  updateTurn5Visibility();
+ const storedCalendarView=localStorage.getItem(CALENDAR_VIEW_KEY);
+ calendarViewMode=storedCalendarView==='common'?'common':'shifts';
+ applyCalendarViewMode();
  if(localStorage.getItem('turno4x4.theme')==='light')document.body.classList.add('light');
  let size=Number(localStorage.getItem('turno4x4.codeSize')||defaults.codeSize);if(!Number.isFinite(size)||size<14||size>24)size=18;
  let daySize=Number(localStorage.getItem('turno4x4.dayNumberSize')||defaults.dayNumberSize);if(!Number.isFinite(daySize)||daySize<10||daySize>18)daySize=10;
@@ -12612,14 +12805,20 @@ function renderCalendar(){
  localStorage.setItem('turno4x4.turno5',turn5Select.value);
 
  monthName.textContent=monthFmt.format(new Date(viewYear,viewMonth,1)).toUpperCase();
- selectedInfo.textContent=`${scheduleName(turn)} · deslizar para cambiar mes`;
+ selectedInfo.textContent=isCommonCalendarView()
+  ? 'CALENDARIO COMÚN · deslizar para cambiar mes'
+  : `${scheduleName(turn)} · deslizar para cambiar mes`;
 
  const fragment=document.createDocumentFragment();
  const start=new Date(viewYear,viewMonth,1-new Date(viewYear,viewMonth,1).getDay());
 
  for(let i=0;i<42;i++){
   const d=addDays(start,i),c=codeFor(turn,d),cell=document.createElement('div');
-  cell.className=`day ${cls(c)}${d.getMonth()!==viewMonth?' other':''}${sameDate(d,new Date())?' today':''}${sameDate(d,selectedDate)?' selected-day':''}`;
+  const commonView=isCommonCalendarView();
+  const weekend=d.getDay()===0||d.getDay()===6;
+  cell.className=commonView
+   ? `day common-day${weekend?' weekend':''}${d.getMonth()!==viewMonth?' other':''}${sameDate(d,new Date())?' today':''}${sameDate(d,selectedDate)?' selected-day':''}`
+   : `day ${cls(c)}${d.getMonth()!==viewMonth?' other':''}${sameDate(d,new Date())?' today':''}${sameDate(d,selectedDate)?' selected-day':''}`;
   const events=agendaForDate(d);
   const holiday=holidayInfo(d);
   const vacations=vacationsAreVisible()?vacationsForDate(d):[];
@@ -12654,7 +12853,9 @@ function renderCalendar(){
    ? `<span class="worklog-badges">${worklog.workedCode?'<i class="worklog-badge change">C</i>':''}${worklog.overtime>0?`<i class="worklog-badge overtime">+${worklogOvertimeText(worklog.overtime)}h</i>`:''}</span>`
    : '';
 
-  cell.innerHTML=`<span class="date">${d.getDate()}</span><span class="code">${codeText(turn,c)}</span>${showLabels.checked?`<span class="label">${shiftNames[c][0]}</span>`:''}${dots}${holidayBadge}${licenseBadge}${vacationBadge}${worklogBadges}`;
+  cell.innerHTML=commonView
+   ? `<span class="date">${d.getDate()}</span>${dots}${holidayBadge}${licenseBadge}${vacationBadge}${worklogBadges}`
+   : `<span class="date">${d.getDate()}</span><span class="code">${codeText(turn,c)}</span>${showLabels.checked?`<span class="label">${shiftNames[c][0]}</span>`:''}${dots}${holidayBadge}${licenseBadge}${vacationBadge}${worklogBadges}`;
   attachDayGestures(cell,d);
   fragment.appendChild(cell);
  }
@@ -12896,6 +13097,10 @@ cal.addEventListener('pointercancel',ev=>{
 });
 
 function renderLegend(){
+ if(isCommonCalendarView()){
+  shiftLegend.innerHTML='';
+  return;
+ }
  const turn=activeTurnKey();
  if(turn==='T5LV'){
   shiftLegend.innerHTML='<div class="pill"><span class="dot m"></span>T5 · 07:30–16:30</div><div class="pill"><span class="dot f"></span>F · Franco</div>';
@@ -13363,8 +13568,12 @@ function renderYear(){
    const dt=new Date(yearViewYear,m,day);
    const c=codeFor(activeTurn,dt);
    const el=document.createElement('i');
+   const commonView=isCommonCalendarView();
+   const weekend=dt.getDay()===0||dt.getDay()===6;
 
-   el.className=`mini-day ${c}${agendaForDate(dt).length?' has-event':''}${showVacs&&vacationsForDate(dt).length?' has-vacation':''}${licensesForDate(dt,activeTurn).length?' has-license':''}`;
+   el.className=commonView
+    ? `mini-day common-mini${weekend?' weekend':''}${agendaForDate(dt).length?' has-event':''}${showVacs&&vacationsForDate(dt).length?' has-vacation':''}${licensesForDate(dt,activeTurn).length?' has-license':''}`
+    : `mini-day ${c}${agendaForDate(dt).length?' has-event':''}${showVacs&&vacationsForDate(dt).length?' has-vacation':''}${licensesForDate(dt,activeTurn).length?' has-license':''}`;
    el.textContent=day;
    days.appendChild(el);
   }
@@ -13838,11 +14047,30 @@ helpBtn.onclick=()=>{
  },0);
 };
 settingsBtn.onclick=()=>pushAppView('settings');
+
+calendarViewShiftsBtn?.addEventListener('click',()=>setCalendarViewMode('shifts'));
+calendarViewCommonBtn?.addEventListener('click',()=>setCalendarViewMode('common'));
+
 [morningColor,nightColor,offColor].forEach(x=>x.oninput=()=>{saveSettings();renderQuickPalette()});
 codeSize.oninput=()=>{codeSizeValue.textContent=`${codeSize.value} px`;saveSettings()};
 dayNumberSize.oninput=()=>{dayNumberSizeValue.textContent=`${dayNumberSize.value} px`;saveSettings()};
 showLabels.onchange=saveSettings;showHolidays.onchange=saveSettings;hapticsToggle.onchange=saveSettings;
-$('#resetSettingsBtn').onclick=()=>{morningColor.value=defaults.morning;offColor.value=defaults.off;if(!isTurn5Profile())nightColor.value=defaults.night;codeSize.value=18;codeSizeValue.textContent='18 px';dayNumberSize.value=10;dayNumberSizeValue.textContent='10 px';showLabels.checked=true;showHolidays.checked=true;hapticsToggle.checked=true;saveSettings();updateColorSettingsUI();renderQuickPalette()};
+$('#resetSettingsBtn').onclick=()=>{
+ morningColor.value=defaults.morning;
+ offColor.value=defaults.off;
+ if(!isTurn5Profile())nightColor.value=defaults.night;
+ codeSize.value=18;
+ codeSizeValue.textContent='18 px';
+ dayNumberSize.value=10;
+ dayNumberSizeValue.textContent='10 px';
+ showLabels.checked=true;
+ showHolidays.checked=true;
+ hapticsToggle.checked=true;
+ setCalendarViewMode('shifts',{persist:true,render:false});
+ saveSettings();
+ updateColorSettingsUI();
+ renderQuickPalette();
+};
 $('#agendaSaveBtn').onclick=saveAgenda;$('#agendaClearBtn').onclick=clearAgendaForm;$('#agendaNotifyBtn').onclick=requestNotificationPermission;
 $('#workdayOpenBtn').onclick=()=>{
  markWorkdayFeatureSeen();
