@@ -8940,6 +8940,43 @@ body.light #workdayModal .workday-list-panel{
   }
 }
 
+
+/* ===== V4.10.0 · AYUDA · ICONO ANDROID CLÁSICO ===== */
+.help-install-os.android .help-install-os-icon{
+  width:50px;
+  height:50px;
+  border-radius:12px;
+  color:#A4C639;
+  background:#ffffff;
+  border:1px solid rgba(45,58,72,.15);
+  box-shadow:
+    0 5px 14px rgba(22,34,48,.10),
+    inset 0 1px 0 rgba(255,255,255,.98);
+}
+.help-install-os.android .android-svg{
+  width:42px;
+  height:42px;
+}
+body.light #helpModal .help-install-os.android .help-install-os-icon{
+  color:#A4C639;
+  background:#ffffff;
+  border-color:rgba(45,58,72,.17);
+}
+#helpModal .help-install-os.android{
+  border-color:rgba(164,198,57,.28);
+}
+@media(max-width:620px){
+  .help-install-os.android .help-install-os-icon{
+    width:46px;
+    height:46px;
+    border-radius:11px;
+  }
+  .help-install-os.android .android-svg{
+    width:39px;
+    height:39px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -9253,20 +9290,22 @@ body.light #workdayModal .workday-list-panel{
           <div class="help-install-recommend">
             <div class="help-install-os android">
               <span class="help-install-os-icon android-logo" aria-hidden="true">
-                  <svg viewBox="0 0 64 64" class="os-logo-svg android-svg">
-                    <g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round">
-                      <path d="M20 18 15 10M44 18l5-8"/>
+                  <svg viewBox="0 0 96 96" class="os-logo-svg android-svg">
+                    <g fill="#A4C639">
+                      <path d="M24 36c0-13.3 10.7-24 24-24s24 10.7 24 24H24Z"/>
+                      <rect x="24" y="39" width="48" height="35" rx="8"/>
+                      <rect x="14" y="43" width="8" height="27" rx="4"/>
+                      <rect x="74" y="43" width="8" height="27" rx="4"/>
+                      <rect x="31" y="70" width="9" height="18" rx="4.5"/>
+                      <rect x="56" y="70" width="9" height="18" rx="4.5"/>
                     </g>
-                    <g fill="currentColor">
-                      <path d="M17 20h30a5 5 0 0 1 5 5v20a5 5 0 0 1-5 5H17a5 5 0 0 1-5-5V25a5 5 0 0 1 5-5Z"/>
-                      <rect x="20" y="48" width="7" height="12" rx="3.5"/>
-                      <rect x="37" y="48" width="7" height="12" rx="3.5"/>
-                      <rect x="5" y="25" width="7" height="22" rx="3.5"/>
-                      <rect x="52" y="25" width="7" height="22" rx="3.5"/>
+                    <g stroke="#A4C639" stroke-width="4" stroke-linecap="round">
+                      <path d="M31 17 26 8"/>
+                      <path d="M65 17 70 8"/>
                     </g>
                     <g fill="#ffffff">
-                      <circle cx="24" cy="29" r="2.2"/>
-                      <circle cx="40" cy="29" r="2.2"/>
+                      <circle cx="39" cy="25" r="3"/>
+                      <circle cx="57" cy="25" r="3"/>
                     </g>
                   </svg>
                 </span>
@@ -9923,7 +9962,7 @@ body.light #workdayModal .workday-list-panel{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.9.9';
+const CURRENT_VERSION='4.10.0';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
