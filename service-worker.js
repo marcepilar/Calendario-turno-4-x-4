@@ -1,4 +1,4 @@
-const CACHE='turnos4x4-4.10.6';
+const CACHE='turnos4x4-4.10.8';
 const ASSETS=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
 
 self.addEventListener('install', event => {
@@ -13,6 +13,10 @@ self.addEventListener('activate', event => {
   self.clients.claim();
 });
 
+self.addEventListener('message', event => {
+  if(event.data && event.data.type==='SKIP_WAITING') self.skipWaiting();
+});
+
 self.addEventListener('fetch', event => {
   const url=new URL(event.request.url);
   if(url.pathname.endsWith('/version.json')) {
@@ -20,7 +24,7 @@ self.addEventListener('fetch', event => {
     return;
   }
   event.respondWith(
-    fetch(event.request).then(response => {
+    fetch(event.request,{cache:'no-store'}).then(response => {
       const copy=response.clone();
       if(url.origin===self.location.origin){
         caches.open(CACHE).then(cache=>cache.put(event.request,copy));

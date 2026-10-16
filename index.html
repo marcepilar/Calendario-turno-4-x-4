@@ -9451,6 +9451,119 @@ body.light #agendaSheet .agenda-all-delete{
   border-color:rgba(255,95,114,.22);
 }
 
+
+/* ===== V4.10.7 · UNIFICACIÓN REAL DE FONDOS ===== */
+:root{
+  --uniform-window:#151e29;
+  --uniform-card:#202b38;
+  --uniform-control:#263342;
+}
+body.light{
+  --uniform-window:#f2f5f8;
+  --uniform-card:#ffffff;
+  --uniform-control:#eef2f6;
+}
+
+#statsModal .stats-modal-window,
+#agendaSheet .sheet,
+#holidayStatsDetailModal .holiday-stats-detail-window,
+#vacationModal .vacation-modal-window{
+  background:var(--uniform-window) !important;
+  background-image:none !important;
+}
+
+#statsModal .stats-head,
+#agendaSheet .sheet-head,
+#holidayStatsDetailModal .holiday-stats-detail-head,
+#vacationModal .vacation-head{
+  background:var(--uniform-window) !important;
+  background-image:none !important;
+}
+
+#statsModal .stat-card,
+#statsModal .turn-end-card,
+#statsModal .stats-month,
+#statsModal .stats-year,
+#statsModal .stats-holidays,
+#statsModal .stats-worklog,
+#statsModal .stats-off,
+#statsModal .stats-salary,
+#statsModal .off-premium,
+#agendaSheet .agenda-shift,
+#agendaSheet .agenda-item,
+#agendaSheet .agenda-form,
+#agendaSheet .agenda-all-box,
+#agendaSheet .agenda-all-item,
+#agendaSheet .reminder-guide-card,
+#holidayStatsDetailModal .holiday-stats-detail-summary > div,
+#holidayStatsDetailModal .holiday-stat-detail-row,
+#vacationModal .vacation-summary > div,
+#vacationModal .vacation-editor,
+#vacationModal .vacation-saved-panel,
+#vacationModal .vacation-item{
+  background:var(--uniform-card) !important;
+  background-image:none !important;
+}
+
+#statsModal .holiday-work-chip,
+#statsModal .worklog-stat-card,
+#statsModal .turn-end-badge,
+#statsModal .salary-days,
+#statsModal .close-btn,
+#agendaSheet .close-btn,
+#agendaSheet .agenda-actions button,
+#agendaSheet .agenda-all-toggle,
+#agendaSheet .form-field input,
+#agendaSheet .form-field textarea,
+#agendaSheet .form-field select,
+#agendaSheet .search-row input,
+#agendaSheet .search-row select,
+#agendaSheet .upcoming-item,
+#agendaSheet .agenda-total-count,
+#holidayStatsDetailModal .close-btn,
+#holidayStatsDetailModal .holiday-stat-detail-shift,
+#vacationModal .close-btn,
+#vacationModal .vacation-field input,
+#vacationModal .vacation-date-button,
+#vacationModal .vacation-item-actions button,
+#vacationModal .vacation-form-actions button{
+  background:var(--uniform-control) !important;
+  background-image:none !important;
+  box-shadow:none !important;
+}
+
+#statsModal .stats-modal-window::before,
+#statsModal .stats-modal-window::after,
+#agendaSheet .sheet::before,
+#agendaSheet .sheet::after{
+  display:none !important;
+  content:none !important;
+}
+
+#agendaSheet .agenda-fixed-actions .save,
+#vacationModal #vacationSaveBtn{
+  background:var(--accent) !important;
+  color:#fff !important;
+}
+#vacationModal #vacationSaveBtn{
+  background:linear-gradient(180deg,var(--vacation),var(--vacation2)) !important;
+}
+
+body.light #statsModal .stats-modal-window,
+body.light #agendaSheet .sheet,
+body.light #holidayStatsDetailModal .holiday-stats-detail-window,
+body.light #vacationModal .vacation-modal-window{
+  color:#172536 !important;
+}
+
+body.light #statsModal .close-btn,
+body.light #agendaSheet .close-btn,
+body.light #holidayStatsDetailModal .close-btn,
+body.light #vacationModal .close-btn{
+  color:#172536 !important;
+  -webkit-text-fill-color:#172536 !important;
+}
+
 </style>
 </head>
 <body>
@@ -10437,7 +10550,7 @@ body.light #agendaSheet .agenda-all-delete{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.10.6';
+const CURRENT_VERSION='4.10.8';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
@@ -13400,11 +13513,62 @@ bindYearHold($('#yearNext'),1);
 
 
 let latestVersion=CURRENT_VERSION;
+const UPDATE_DISMISS_KEY='turno4x4.updateDismissedVersion';
+
 async function checkUpdate(){
- try{const r=await fetch('./version.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)return;const data=await r.json();if(data.version&&data.version!==CURRENT_VERSION){latestVersion=data.version;$('#updateVersionText').textContent=`Versión ${data.version} disponible.`;$('#updateBanner').classList.add('show');settingsBtn.classList.add('has-update');$('#updateStatusText').textContent=`Nueva versión ${data.version} disponible.`}else{$('#updateStatusText').textContent='Aplicación actualizada.'}}catch{}
+ try{
+  const r=await fetch('./version.json?t='+Date.now(),{cache:'no-store'});
+  if(!r.ok)return;
+  const data=await r.json();
+  const remote=String(data.version||'').trim();
+
+  if(remote&&remote!==CURRENT_VERSION){
+   latestVersion=remote;
+   const dismissed=sessionStorage.getItem(UPDATE_DISMISS_KEY);
+   $('#updateVersionText').textContent=`Versión ${remote} disponible.`;
+   settingsBtn.classList.add('has-update');
+   $('#updateStatusText').textContent=`Nueva versión ${remote} disponible.`;
+
+   // Si el usuario tocó "Más tarde", no volver a mostrar la misma versión
+   // durante esta sesión. Una versión posterior sí volverá a avisar.
+   if(dismissed!==remote){
+    $('#updateBanner').classList.add('show');
+   }
+  }else{
+   $('#updateBanner').classList.remove('show');
+   settingsBtn.classList.remove('has-update');
+   sessionStorage.removeItem(UPDATE_DISMISS_KEY);
+   $('#updateStatusText').textContent='Aplicación actualizada.';
+  }
+ }catch{}
 }
-$('#updateLaterBtn').onclick=()=>$('#updateBanner').classList.remove('show');
-$('#updateNowBtn').onclick=async()=>{const b=$('#updateNowBtn');b.disabled=true;b.textContent='ACTUALIZANDO…';try{const reg=await navigator.serviceWorker?.getRegistration();if(reg)await reg.update()}catch{}setTimeout(()=>location.href='./index.html?v='+encodeURIComponent(latestVersion),650)};
+
+$('#updateLaterBtn').onclick=()=>{
+ if(latestVersion)sessionStorage.setItem(UPDATE_DISMISS_KEY,latestVersion);
+ $('#updateBanner').classList.remove('show');
+};
+
+$('#updateNowBtn').onclick=async()=>{
+ const b=$('#updateNowBtn');
+ b.disabled=true;
+ b.textContent='ACTUALIZANDO…';
+ $('#updateBanner').classList.remove('show');
+ sessionStorage.removeItem(UPDATE_DISMISS_KEY);
+
+ try{
+  const reg=await navigator.serviceWorker?.getRegistration();
+  if(reg){
+   await reg.update();
+   if(reg.waiting)reg.waiting.postMessage({type:'SKIP_WAITING'});
+  }
+ }catch{}
+
+ // Cache-busting fuerte para que el navegador no vuelva a cargar el index viejo.
+ setTimeout(()=>{
+  const target=`./index.html?update=${Date.now()}&v=${encodeURIComponent(latestVersion||'')}`;
+  location.replace(target);
+ },900);
+};
 
 
 function keepDetailBelowInitialFold(){
