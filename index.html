@@ -2847,6 +2847,19 @@ body.light .holiday-badge{
   border-color:rgba(255,255,255,.80);
 }
 
+.holiday-badge.holiday-half{
+  background:linear-gradient(135deg,#ff6676 0 48%,#8f98a5 52% 100%);
+  border-color:rgba(255,255,255,.66);
+  box-shadow:
+    0 2px 7px rgba(0,0,0,.22),
+    inset 0 1px 0 rgba(255,255,255,.20),
+    0 0 8px rgba(255,102,118,.12);
+}
+body.light .holiday-badge.holiday-half{
+  background:linear-gradient(135deg,#f35b6c 0 48%,#a6aebb 52% 100%);
+  border-color:rgba(255,255,255,.88);
+}
+
 .holiday-detail-banner{
   display:none;
   align-items:center;
@@ -3064,6 +3077,19 @@ body.light .holiday-badge.holiday-bridge{
 body.light .holiday-detail-icon.holiday-bridge{
   background:linear-gradient(180deg,#38aee8,#247fc9);
   border-color:rgba(255,255,255,.86);
+}
+
+.holiday-detail-icon.holiday-half{
+  background:linear-gradient(135deg,#ff6676 0 48%,#8f98a5 52% 100%);
+  border:1px solid rgba(255,255,255,.72);
+  box-shadow:
+    0 4px 10px rgba(0,0,0,.16),
+    0 0 9px rgba(255,102,118,.15),
+    inset 0 1px 0 rgba(255,255,255,.22);
+}
+body.light .holiday-detail-icon.holiday-half{
+  background:linear-gradient(135deg,#f35b6c 0 48%,#a6aebb 52% 100%);
+  border-color:rgba(255,255,255,.88);
 }
 
 
@@ -3676,6 +3702,18 @@ body.light .holiday-detail-icon.holiday-bridge{
     0 0 8px rgba(39,174,228,.14),
     inset 0 1px 0 rgba(255,255,255,.22);
 }
+.holiday-list-badge.holiday-half{
+  background:linear-gradient(135deg,#ff6676 0 48%,#8f98a5 52% 100%);
+  border-color:rgba(255,255,255,.58);
+  box-shadow:
+    0 3px 9px rgba(0,0,0,.18),
+    0 0 8px rgba(255,102,118,.12),
+    inset 0 1px 0 rgba(255,255,255,.18);
+}
+body.light #holidayStatsDetailModal .holiday-list-badge.holiday-half{
+  background:linear-gradient(135deg,#f35b6c 0 48%,#a6aebb 52% 100%);
+  border-color:rgba(255,255,255,.88);
+}
 .holiday-list-badge em{
   font-style:normal;
   -webkit-animation:holidayFerPulse 2.15s ease-in-out infinite;
@@ -3767,6 +3805,10 @@ body.light .holiday-detail-icon.holiday-bridge{
 .holiday-legend-dot.blue{
   background:#2d9fe0;
   box-shadow:0 0 7px rgba(45,159,224,.25);
+}
+.holiday-legend-dot.half{
+  background:linear-gradient(135deg,#e94a60 0 48%,#8f98a5 52% 100%);
+  box-shadow:0 0 7px rgba(233,74,96,.18);
 }
 
 @media(max-width:620px){
@@ -8977,6 +9019,95 @@ body.light #helpModal .help-install-os.android .help-install-os-icon{
   }
 }
 
+
+/* ===== V4.10.2 · FERIADOS · FRACCIÓN ½ ===== */
+#statsModal .holiday-work-chip b,
+#holidayStatsDetailModal #holidayStatsDetailCount{
+  font-variant-numeric:tabular-nums;
+}
+.holiday-list-badge{position:relative}
+.holiday-list-badge.holiday-half::after{
+  content:'½';position:absolute;right:-5px;top:-5px;width:14px;height:14px;
+  display:grid;place-items:center;border-radius:50%;background:#f4f6f8;color:#5b6571;
+  border:1px solid rgba(255,255,255,.80);box-shadow:0 2px 5px rgba(0,0,0,.16);
+  font-size:8px;font-weight:1000;line-height:1;
+}
+body.light #holidayStatsDetailModal .holiday-list-badge.holiday-half::after{
+  background:#fff;color:#56616d;border-color:rgba(80,95,110,.20);
+}
+
+
+/* ===== V4.10.3 · MEDIO FERIADO · ICONO 50/50 MÁS VISIBLE ===== */
+
+/* Calendario principal */
+.holiday-badge.holiday-half{
+  background:
+    linear-gradient(135deg,
+      #ff5f72 0%,
+      #e43d55 49%,
+      #929aa5 50%,
+      #6f7884 100%);
+  border-color:rgba(255,255,255,.72);
+}
+
+/* Detalle del día */
+.holiday-detail-icon.holiday-half{
+  background:
+    linear-gradient(135deg,
+      #ff5f72 0%,
+      #e43d55 49%,
+      #929aa5 50%,
+      #6f7884 100%);
+  border-color:rgba(255,255,255,.75);
+}
+
+/* Detalle de feriados por turno: mitad roja / mitad gris exacta */
+#holidayStatsDetailModal .holiday-list-badge.holiday-half{
+  background:
+    linear-gradient(135deg,
+      #ff5f72 0%,
+      #e43d55 49%,
+      #929aa5 50%,
+      #6f7884 100%);
+  border-color:rgba(255,255,255,.72);
+  box-shadow:
+    0 3px 9px rgba(0,0,0,.20),
+    0 0 9px rgba(255,95,114,.15),
+    inset 0 1px 0 rgba(255,255,255,.20);
+}
+
+/* El FER queda siempre blanco y bien legible encima del corte */
+#holidayStatsDetailModal .holiday-list-badge.holiday-half em,
+.holiday-badge.holiday-half em{
+  color:#fff;
+  text-shadow:0 1px 2px rgba(0,0,0,.55);
+}
+
+/* La marca ½ refuerza el significado */
+#holidayStatsDetailModal .holiday-list-badge.holiday-half::after{
+  content:'½';
+  right:-6px;
+  top:-6px;
+  width:16px;
+  height:16px;
+  font-size:9px;
+  background:#eef1f4;
+  color:#4f5964;
+  border:1px solid rgba(255,255,255,.92);
+  box-shadow:0 2px 6px rgba(0,0,0,.22);
+}
+
+body.light #holidayStatsDetailModal .holiday-list-badge.holiday-half,
+body.light .holiday-badge.holiday-half,
+body.light .holiday-detail-icon.holiday-half{
+  background:
+    linear-gradient(135deg,
+      #f14f64 0%,
+      #d93d52 49%,
+      #a6adb7 50%,
+      #858e9a 100%);
+}
+
 </style>
 </head>
 <body>
@@ -9373,7 +9504,7 @@ body.light #helpModal .help-install-os.android .help-install-os-icon{
           </div>
           <p><strong>Tocar un día:</strong> abre su detalle debajo del calendario.</p>
           <p><strong>Mantener 450 ms:</strong> abre rápidamente la Agenda para ese día.</p>
-          <p><strong>FER rojo:</strong> feriado. <strong>FER azul:</strong> puente/no laborable. El 7 de septiembre se incluye como Día del Metalúrgico para todos los turnos.</p>
+          <p><strong>FER rojo:</strong> feriado completo. <strong>FER rojo/gris diagonal:</strong> ½ feriado (6 h). En turno N ocurre cuando el feriado toma sólo 18:00–24:00 de la primera noche o sólo 00:00–06:00 después de la última noche. <strong>FER azul:</strong> puente/no laborable. El 7 de septiembre se incluye como Día del Metalúrgico para todos los turnos.</p>
           <p><strong>Vista anual:</strong> muestra los 12 meses. Mantené pulsados los controles del año para avanzar más rápido.</p>
         </div>
       </section>
@@ -9947,7 +10078,8 @@ body.light #helpModal .help-install-os.android .help-install-os-icon{
     <div id="holidayStatsDetailList" class="holiday-stats-detail-list"></div>
 
     <div class="holiday-stats-detail-legend">
-      <span><i class="holiday-legend-dot red"></i>Feriado</span>
+      <span><i class="holiday-legend-dot red"></i>Feriado completo</span>
+      <span><i class="holiday-legend-dot half"></i>½ feriado · 6 h</span>
       <span><i class="holiday-legend-dot blue"></i>Puente / no laborable</span>
     </div>
   </div>
@@ -9962,7 +10094,7 @@ body.light #helpModal .help-install-os.android .help-install-os-icon{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.10.0';
+const CURRENT_VERSION='4.10.3';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
@@ -11064,8 +11196,10 @@ function payrollHolidayDetails(turn,year,month){
 
   if(!national&&!metalurgico)continue;
 
-  const code=codeFor(turn,d);
-  if(!isWorkCodeForHoliday(turn,code))continue;
+  const workedHours=holidayWorkedHoursForTurnDate(turn,d);
+  if(workedHours<=0)continue;
+
+  const code=holidayDisplayCodeForTurnDate(turn,d);
 
   const names=[];
   if(national)names.push(national.nombre);
@@ -11755,8 +11889,10 @@ function renderCalendar(){
    dots=`<div class="event-dots" title="${events.length} evento${events.length===1?'':'s'}"><i class="event-dot" style="background:${dotBg}"></i><span class="event-count">${events.length}</span></div>`;
   }
 
+  const holidayHalf=holiday&&!isBridgeHoliday(holiday)&&isHalfHolidayForTurnDate(turn,d);
+  const holidayTitle=holiday?`${holiday.custom?'Día del Metalúrgico · Todos los turnos':holiday.nombre}${holidayHalf?' · ½ feriado · 6 h':''}`:'';
   const holidayBadge=holiday
-   ? `<span class="holiday-badge${isBridgeHoliday(holiday)?' holiday-bridge':''}" title="${escapeHtml(holiday.custom?'Día del Metalúrgico · Todos los turnos':holiday.nombre)}"><em>FER</em></span>`
+   ? `<span class="holiday-badge${isBridgeHoliday(holiday)?' holiday-bridge':''}${holidayHalf?' holiday-half':''}" title="${escapeHtml(holidayTitle)}"><em>FER</em></span>`
    : '';
 
   const vacationBadge=vacations.length
@@ -12031,13 +12167,16 @@ function showDetail(d){
   holidayBanner.classList.toggle('show',Boolean(holiday));
 
   if(holidayIcon){
+   const halfHoliday=Boolean(holiday&&!isBridgeHoliday(holiday)&&isHalfHolidayForTurnDate(active,d));
    holidayIcon.classList.toggle('holiday-bridge',Boolean(holiday&&isBridgeHoliday(holiday)));
+   holidayIcon.classList.toggle('holiday-half',halfHoliday);
   }
 
   if(holiday){
-   holidayType.textContent=holiday.custom
+   const halfHoliday=Boolean(!isBridgeHoliday(holiday)&&isHalfHolidayForTurnDate(active,d));
+   holidayType.textContent=(holiday.custom
     ? 'Feriado gremial · Todos los turnos'
-    : 'Feriado nacional · Argentina';
+    : 'Feriado nacional · Argentina') + (halfHoliday?' · ½ feriado · 6 h':'');
    holidayName.textContent=`(${holiday.nombre})`;
   }else{
    holidayType.textContent='Feriado nacional · Argentina';
@@ -12395,6 +12534,52 @@ function isWorkCodeForHoliday(turn,code){
  return turn==='T5LV' ? code==='D' : (code==='M'||code==='N');
 }
 
+function holidayWorkedHoursForTurnDate(turn,d){
+ const code=codeFor(turn,d);
+
+ if(turn==='T5LV'){
+  return code==='D' ? 9 : 0;
+ }
+
+ if(turn==='T5A'||turn==='T5B'){
+  return code==='M' ? 12 : 0;
+ }
+
+ if(code==='M')return 12;
+
+ let hours=0;
+
+ // Una noche asignada a la fecha trabaja 18:00–24:00 de ese día.
+ if(code==='N')hours+=6;
+
+ // Si la fecha anterior era N, esta fecha recibe 00:00–06:00
+ // correspondientes a esa noche.
+ if(codeFor(turn,addDays(d,-1))==='N')hours+=6;
+
+ return hours;
+}
+
+function isHalfHolidayForTurnDate(turn,d){
+ return holidayWorkedHoursForTurnDate(turn,d)===6;
+}
+
+function holidayDisplayCodeForTurnDate(turn,d){
+ const code=codeFor(turn,d);
+
+ // Si el feriado sólo toma 00:00–06:00 después de la última noche,
+ // visualmente sigue correspondiendo al turno N.
+ if(
+  (turn==='T1'||turn==='T2'||turn==='T3'||turn==='T4') &&
+  code!=='N' &&
+  codeFor(turn,addDays(d,-1))==='N' &&
+  holidayWorkedHoursForTurnDate(turn,d)>0
+ ){
+  return 'N';
+ }
+
+ return code;
+}
+
 function holidayExistsForTurnOnDate(d,turn){
  const key=dateKey(d);
  const national=Boolean(loadHolidayYear(d.getFullYear())[key]);
@@ -12430,16 +12615,19 @@ function holidayWorkDetailsForTurn(year,turn){
   if(national)names.push(national.nombre);
   if(metalurgico)names.push('Día del Metalúrgico');
 
+  const bridge=Boolean(national&&isBridgeHoliday(national));
   details.push({
    date:new Date(d),
    key,
    code,
-   bridge:Boolean(national&&isBridgeHoliday(national)),
+   bridge,
+   workedHours,
+   half:!bridge&&workedHours===6,
    metalurgico,
    national:Boolean(national),
    name:names.join(' · '),
    type: national
-    ? (isBridgeHoliday(national)?'Puente / no laborable':'Feriado nacional')
+    ? (bridge?'Puente / no laborable':'Feriado nacional')
     : 'Feriado gremial'
   });
  }
@@ -12447,10 +12635,26 @@ function holidayWorkDetailsForTurn(year,turn){
  return details;
 }
 
+function holidayWorkValue(details){
+ return details.reduce((sum,item)=>sum+(item.half?0.5:1),0);
+}
+
+function formatHolidayFraction(value){
+ const whole=Math.floor(value);
+ const hasHalf=Math.abs(value-whole-0.5)<0.001;
+ if(hasHalf){
+  return whole>0 ? `${whole} ½` : '½';
+ }
+ return String(whole);
+}
+
 function holidayWorkCountsAllTurns(year){
  const turns=['T1','T2','T3','T4','T5LV','T5B','T5A'];
  return Object.fromEntries(
-  turns.map(turn=>[turn,holidayWorkDetailsForTurn(year,turn).length])
+  turns.map(turn=>{
+   const details=holidayWorkDetailsForTurn(year,turn);
+   return [turn,holidayWorkValue(details)];
+  })
  );
 }
 
@@ -12469,7 +12673,7 @@ function renderHolidayStatsDetail(turn,year){
  $('#holidayStatsDetailSubtitle').textContent=`${turnName} · Feriados que coinciden con día de trabajo`;
  $('#holidayStatsDetailTurn').textContent=turnName;
  $('#holidayStatsDetailYear').textContent=year;
- $('#holidayStatsDetailCount').textContent=details.length;
+ $('#holidayStatsDetailCount').textContent=formatHolidayFraction(holidayWorkValue(details));
 
  const list=$('#holidayStatsDetailList');
 
@@ -12481,13 +12685,14 @@ function renderHolidayStatsDetail(turn,year){
  list.innerHTML=details.map(item=>{
   const codeLabel=codeText(turn,item.code);
   const codeClass=cls(item.code);
-  const typeText=item.metalurgico&&!item.national
+  const baseTypeText=item.metalurgico&&!item.national
    ?'Feriado gremial · Todos los turnos'
    :item.type;
+  const typeText=item.half?`${baseTypeText} · ½ feriado · 6 h`:baseTypeText;
 
   return `
    <div class="holiday-stat-detail-row">
-    <span class="holiday-list-badge${item.bridge?' bridge':''}"><em>FER</em></span>
+    <span class="holiday-list-badge${item.bridge?' bridge':''}${item.half?' holiday-half':''}"><em>FER</em></span>
     <div class="holiday-stat-detail-date">
       <b>${escapeHtml(cap(holidayStatsDateFmt.format(item.date)))}</b>
       <small>${escapeHtml(holidayStatsFullDateFmt.format(item.date))}</small>
@@ -12519,9 +12724,11 @@ function renderHolidayWorkStats(year){
  ];
 
  $('#holidayStatsYear').textContent=year;
- $('#holidayWorkStats').innerHTML=items.map(([key,label,kind])=>
-  `<button type="button" class="holiday-work-chip ${kind}" data-holiday-turn="${key}" aria-label="Ver feriados de ${scheduleName(key)} en ${year}" title="${scheduleName(key)} · ${counts[key]||0} feriados en día de trabajo"><span>${label}</span><b>${counts[key]||0}</b></button>`
- ).join('');
+ $('#holidayWorkStats').innerHTML=items.map(([key,label,kind])=>{
+  const value=counts[key]||0;
+  const valueText=formatHolidayFraction(value);
+  return `<button type="button" class="holiday-work-chip ${kind}" data-holiday-turn="${key}" aria-label="Ver feriados de ${scheduleName(key)} en ${year}" title="${scheduleName(key)} · ${valueText} feriados equivalentes en día de trabajo"><span>${label}</span><b>${valueText}</b></button>`;
+ }).join('');
 
  $$('#holidayWorkStats .holiday-work-chip').forEach(btn=>{
   btn.onclick=()=>openHolidayStatsDetail(btn.dataset.holidayTurn,year);
