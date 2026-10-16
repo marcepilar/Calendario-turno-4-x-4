@@ -10734,7 +10734,7 @@ body.light #statsModal .worklog-stat-btn.period-holidays{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.11.1';
+const CURRENT_VERSION='4.11.2';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
@@ -12920,24 +12920,88 @@ function clearAgendaForm(){
  $('#agendaSaveBtn').textContent='GUARDAR';
  if(agendaFormMode){agendaFormMode.textContent='NUEVO EVENTO';agendaFormMode.classList.remove('editing')}
 }
-function openAgenda(d){agendaSelectedDate=new Date(d.getFullYear(),d.getMonth(),d.getDate());agendaAllExpanded=false;clearAgendaForm();renderAgenda();agendaSheet.classList.add('open');document.body.style.overflow='hidden';agendaSheet.querySelector('.sheet')?.scrollTo({top:0,behavior:'instant'})}
+function openAgenda(d){
+ agendaSelectedDate=new Date(d.getFullYear(),d.getMonth(),d.getDate());
+ agendaAllExpanded=false;
+ clearAgendaForm();
+ renderAgenda();
+ agendaSheet.classList.add('open');
+ document.body.style.overflow='hidden';
+ agendaSheet.querySelector('.sheet')?.scrollTo({top:0,behavior:'instant'});
+ if(!appHistoryApplying)rememberAppView('agenda');
+}
 function closeAgenda(){agendaSheet.classList.remove('open');document.body.style.overflow=''}
 
 const APP_NAV_STATE_KEY='turno4x4View';
 let appHistoryApplying=false;
 
+const APP_VIEW_TO_MODAL={
+ settings:'settingsModal',
+ share:'shareModal',
+ help:'helpModal',
+ workday:'workdayModal',
+ vacations:'vacationModal',
+ year:'yearModal',
+ stats:'statsModal',
+ worklogDetail:'worklogStatsDetailModal',
+ holidayDetail:'holidayStatsDetailModal'
+};
+
+const MODAL_TO_APP_VIEW=Object.fromEntries(
+ Object.entries(APP_VIEW_TO_MODAL).map(([view,id])=>[id,view])
+);
+
 function currentAppView(){
  return history.state?.[APP_NAV_STATE_KEY]||'main';
 }
 
+function rememberAppView(view){
+ if(appHistoryApplying)return;
+ if(currentAppView()===view)return;
+ history.pushState(
+  {...(history.state||{}),[APP_NAV_STATE_KEY]:view},
+  '',
+  location.href
+ );
+}
+
 function closeAppNavigationViews(){
  setPaletteDropdown(false);
+
+ const workdayWasOpen=$('#workdayModal')?.classList.contains('open');
+
  agendaSheet.classList.remove('open');
- ['settingsModal','vacationModal','statsModal'].forEach(id=>{
+
+ [
+  'settingsModal',
+  'shareModal',
+  'helpModal',
+  'workdayModal',
+  'vacationModal',
+  'yearModal',
+  'statsModal',
+  'worklogStatsDetailModal',
+  'holidayStatsDetailModal'
+ ].forEach(id=>{
   const el=$('#'+id);
   if(el)el.classList.remove('open');
  });
+
  document.body.style.overflow='';
+
+ if(workdayWasOpen){
+  restoreMainAfterWorkday();
+ }else{
+  scheduleMainViewportFit();
+  scheduleBelowFoldLayout();
+ }
+}
+
+function openModalWithoutHistory(id){
+ const el=$('#'+id);
+ if(!el)return;
+ el.classList.add('open');
+ document.body.style.overflow='hidden';
 }
 
 function showAppViewFromHistory(view){
@@ -12947,14 +13011,39 @@ function showAppViewFromHistory(view){
  if(view==='settings'){
   updateColorSettingsUI();
   renderQuickPalette();
-  openModal('settingsModal');
- }else if(view==='agenda'){
+  openModalWithoutHistory('settingsModal');
+ }
+ else if(view==='share'){
+  openModalWithoutHistory('shareModal');
+ }
+ else if(view==='help'){
+  openModalWithoutHistory('helpModal');
+ }
+ else if(view==='workday'){
+  openModalWithoutHistory('workdayModal');
+ }
+ else if(view==='agenda'){
   openAgenda(selectedDate);
- }else if(view==='vacations'){
+ }
+ else if(view==='vacations'){
   openVacations();
- }else if(view==='stats'){
+ }
+ else if(view==='year'){
+  openModalWithoutHistory('yearModal');
+ }
+ else if(view==='stats'){
   renderStats();
-  openModal('statsModal');
+  openModalWithoutHistory('statsModal');
+ }
+ else if(view==='worklogDetail'){
+  renderStats();
+  openModalWithoutHistory('statsModal');
+  openModalWithoutHistory('worklogStatsDetailModal');
+ }
+ else if(view==='holidayDetail'){
+  renderStats();
+  openModalWithoutHistory('statsModal');
+  openModalWithoutHistory('holidayStatsDetailModal');
  }
 
  appHistoryApplying=false;
@@ -12962,11 +13051,12 @@ function showAppViewFromHistory(view){
 
 function pushAppView(view){
  if(appHistoryApplying)return;
- const current=currentAppView();
- if(current===view){
+
+ if(currentAppView()===view){
   showAppViewFromHistory(view);
   return;
  }
+
  history.pushState(
   {...(history.state||{}),[APP_NAV_STATE_KEY]:view},
   '',
@@ -12976,17 +13066,13 @@ function pushAppView(view){
 }
 
 function returnFromAppView(){
- const view=currentAppView();
- if(view==='agenda'||view==='vacations'||view==='stats'||view==='settings'){
-  history.back();
-  return true;
- }
- return false;
+ if(currentAppView()==='main')return false;
+ history.back();
+ return true;
 }
 
 window.addEventListener('popstate',()=>{
- const view=currentAppView();
- showAppViewFromHistory(view);
+ showAppViewFromHistory(currentAppView());
 });
 function renderAgenda(){
  const turn=activeTurnKey(),c=codeFor(turn,agendaSelectedDate);agendaDateText.textContent=cap(longFmt.format(agendaSelectedDate));agendaShift.textContent=`${scheduleName(turn)} · ${codeText(turn,c)} — ${shiftNames[c][0]} · ${shiftNames[c][1]}`;
@@ -13464,15 +13550,39 @@ function renderStats(){
    :'Último día hábil (lunes a viernes) del mes.';
 }
 
-function openModal(id){$('#'+id).classList.add('open');document.body.style.overflow='hidden'}
+function openModal(id){
+ const modal=$('#'+id);
+ if(!modal)return;
+
+ modal.classList.add('open');
+ document.body.style.overflow='hidden';
+
+ const view=MODAL_TO_APP_VIEW[id];
+ if(view&&!appHistoryApplying){
+  rememberAppView(view);
+ }
+}
+
 function closeModal(id){
  const modal=$('#'+id);
  if(!modal)return;
+
+ const view=MODAL_TO_APP_VIEW[id];
+
+ // Toda ventana/subventana registrada vuelve a la anterior
+ // mediante el historial del teléfono.
+ if(
+  !appHistoryApplying &&
+  view &&
+  currentAppView()===view
+ ){
+  returnFromAppView();
+  return;
+ }
+
  modal.classList.remove('open');
  document.body.style.overflow=$$('.backdrop.open').length?'hidden':'';
 
- // Jornada siempre vuelve a la pantalla principal.
- // Se hace también al cerrar con X o tocando fuera del modal.
  if(id==='workdayModal'){
   restoreMainAfterWorkday();
  }
@@ -13480,36 +13590,21 @@ function closeModal(id){
 $$('[data-close]').forEach(b=>b.onclick=()=>{
  const id=b.dataset.close;
 
- if(
-  (id==='agendaSheet'&&currentAppView()==='agenda')||
-  (id==='vacationModal'&&currentAppView()==='vacations')||
-  (id==='statsModal'&&currentAppView()==='stats')||
-  (id==='settingsModal'&&currentAppView()==='settings')
- ){
-  returnFromAppView();
+ if(id==='agendaSheet'){
+  if(currentAppView()==='agenda')returnFromAppView();
+  else closeAgenda();
   return;
  }
 
- if(id==='agendaSheet')closeAgenda();
- else{
-  if(id==='settingsModal')setPaletteDropdown(false);
-  closeModal(id);
- }
+ if(id==='settingsModal')setPaletteDropdown(false);
+ closeModal(id);
 });
+
 $$('.backdrop').forEach(b=>b.addEventListener('click',e=>{
  if(e.target!==b)return;
- const view=currentAppView();
- const expected={
-  settings:'settingsModal',
-  vacations:'vacationModal',
-  stats:'statsModal'
- }[view];
- if(expected===b.id){
-  returnFromAppView();
-  return;
- }
  closeModal(b.id);
 }));
+
 agendaSheet.addEventListener('click',e=>{
  if(e.target!==agendaSheet)return;
  if(currentAppView()==='agenda')returnFromAppView();
