@@ -8483,6 +8483,156 @@ body.light .top-actions .icon-btn:active{
   }
 }
 
+
+/* ===== V4.9.8 · JORNADA · BOTONES Y TEXTOS MÁS GRANDES ===== */
+
+/* Pestañas JORNADA / LICENCIAS */
+#workdayModal .workday-tabs button{
+  min-height:40px;
+  font-size:9.4px;
+  letter-spacing:.035em;
+}
+
+/* Botones de cambio de turno */
+#workdayModal .workday-shift-choices{
+  gap:5px;
+}
+#workdayModal .workday-shift-choices button{
+  min-height:48px;
+  padding:5px 3px;
+  font-size:8.8px;
+  border-radius:11px;
+}
+
+/* Botones + / - de horas extra */
+#workdayModal .workday-overtime-control{
+  grid-template-columns:56px 1fr 56px;
+  gap:7px;
+}
+#workdayModal .workday-overtime-control > button{
+  min-height:58px;
+  font-size:27px;
+  border-radius:13px;
+}
+#workdayModal .workday-overtime-display{
+  min-height:58px;
+}
+#workdayModal .workday-overtime-display strong{
+  font-size:28px;
+}
+#workdayModal .workday-overtime-display span{
+  font-size:10.5px;
+}
+
+/* Accesos rápidos 6 / 8 / 10 / 12 hs */
+#workdayModal .workday-overtime-quick{
+  gap:5px;
+  margin-top:6px;
+}
+#workdayModal .workday-overtime-quick button{
+  min-height:35px;
+  font-size:9.2px;
+  border-radius:9px;
+}
+
+/* Botones inferiores */
+#workdayModal .workday-actions{
+  gap:8px;
+}
+#workdayModal .workday-actions button{
+  min-height:49px;
+  font-size:10.7px;
+  border-radius:12px;
+}
+
+/* Estados tipo SIN CAMBIO / 0 h */
+#workdayModal .workday-section-head > span{
+  padding:5px 9px;
+  font-size:8.2px;
+}
+
+/* Duración automática */
+#workdayModal .workday-change-duration{
+  min-height:28px;
+  padding:4px 8px;
+}
+#workdayModal .workday-change-duration span{
+  font-size:7.6px;
+}
+#workdayModal .workday-change-duration b{
+  font-size:10px;
+}
+#workdayModal .workday-change-duration small{
+  font-size:6.2px;
+}
+
+/* En móviles mantenemos el aumento sin desbordar */
+@media(max-width:620px){
+  #workdayModal .workday-tabs button{
+    min-height:37px;
+    font-size:8.6px;
+  }
+  #workdayModal .workday-shift-choices button{
+    min-height:44px;
+    font-size:8.1px;
+  }
+  #workdayModal .workday-overtime-control{
+    grid-template-columns:51px 1fr 51px;
+    gap:6px;
+  }
+  #workdayModal .workday-overtime-control > button,
+  #workdayModal .workday-overtime-display{
+    min-height:54px;
+  }
+  #workdayModal .workday-overtime-control > button{
+    font-size:25px;
+  }
+  #workdayModal .workday-overtime-display strong{
+    font-size:26px;
+  }
+  #workdayModal .workday-overtime-quick button{
+    min-height:32px;
+    font-size:8.6px;
+  }
+  #workdayModal .workday-actions button{
+    min-height:46px;
+    font-size:10px;
+  }
+}
+
+/* Pantallas de poca altura: siguen siendo más grandes que antes */
+@media(max-height:760px){
+  #workdayModal .workday-tabs button{
+    min-height:32px;
+    font-size:7.9px;
+  }
+  #workdayModal .workday-shift-choices button{
+    min-height:37px;
+    font-size:7.5px;
+  }
+  #workdayModal .workday-overtime-control{
+    grid-template-columns:47px 1fr 47px;
+  }
+  #workdayModal .workday-overtime-control > button,
+  #workdayModal .workday-overtime-display{
+    min-height:46px;
+  }
+  #workdayModal .workday-overtime-control > button{
+    font-size:23px;
+  }
+  #workdayModal .workday-overtime-display strong{
+    font-size:22px;
+  }
+  #workdayModal .workday-overtime-quick button{
+    min-height:28px;
+    font-size:7.9px;
+  }
+  #workdayModal .workday-actions button{
+    min-height:39px;
+    font-size:9px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -9458,7 +9608,7 @@ body.light .top-actions .icon-btn:active{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.9.7';
+const CURRENT_VERSION='4.9.8';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
