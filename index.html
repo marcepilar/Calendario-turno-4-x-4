@@ -10094,7 +10094,7 @@ body.light .holiday-detail-icon.holiday-half{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.10.3';
+const CURRENT_VERSION='4.10.4';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
@@ -12158,6 +12158,7 @@ function renderLegend(){
 function showDetail(d){
  detailTitle.textContent=cap(longFmt.format(d));detailGrid.innerHTML='';
 
+ const active=activeTurnKey();
  const holiday=holidayInfo(d);
  const holidayBanner=$('#holidayDetailBanner');
  const holidayIcon=holidayBanner?.querySelector('.holiday-detail-icon');
@@ -12200,7 +12201,6 @@ function showDetail(d){
   }
  }
 
- const active=activeTurnKey();
  const licenses=licensesForDate(d,active);
  const licenseBanner=$('#licenseDetailBanner');
  const licenseTitle=$('#licenseDetailTitle');
@@ -12608,8 +12608,10 @@ function holidayWorkDetailsForTurn(year,turn){
 
   if(!national&&!metalurgico)continue;
 
-  const code=codeFor(turn,d);
-  if(!isWorkCodeForHoliday(turn,code))continue;
+  const workedHours=holidayWorkedHoursForTurnDate(turn,d);
+  if(workedHours<=0)continue;
+
+  const code=holidayDisplayCodeForTurnDate(turn,d);
 
   const names=[];
   if(national)names.push(national.nombre);
