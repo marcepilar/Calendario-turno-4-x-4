@@ -10680,7 +10680,7 @@ body.light #statsModal .close-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.10.9';
+const CURRENT_VERSION='4.11.0';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
@@ -12868,6 +12868,72 @@ function clearAgendaForm(){
 }
 function openAgenda(d){agendaSelectedDate=new Date(d.getFullYear(),d.getMonth(),d.getDate());agendaAllExpanded=false;clearAgendaForm();renderAgenda();agendaSheet.classList.add('open');document.body.style.overflow='hidden';agendaSheet.querySelector('.sheet')?.scrollTo({top:0,behavior:'instant'})}
 function closeAgenda(){agendaSheet.classList.remove('open');document.body.style.overflow=''}
+
+const APP_NAV_STATE_KEY='turno4x4View';
+let appHistoryApplying=false;
+
+function currentAppView(){
+ return history.state?.[APP_NAV_STATE_KEY]||'main';
+}
+
+function closeAppNavigationViews(){
+ setPaletteDropdown(false);
+ agendaSheet.classList.remove('open');
+ ['settingsModal','vacationModal','statsModal'].forEach(id=>{
+  const el=$('#'+id);
+  if(el)el.classList.remove('open');
+ });
+ document.body.style.overflow='';
+}
+
+function showAppViewFromHistory(view){
+ appHistoryApplying=true;
+ closeAppNavigationViews();
+
+ if(view==='settings'){
+  updateColorSettingsUI();
+  renderQuickPalette();
+  openModal('settingsModal');
+ }else if(view==='agenda'){
+  openAgenda(selectedDate);
+ }else if(view==='vacations'){
+  openVacations();
+ }else if(view==='stats'){
+  renderStats();
+  openModal('statsModal');
+ }
+
+ appHistoryApplying=false;
+}
+
+function pushAppView(view){
+ if(appHistoryApplying)return;
+ const current=currentAppView();
+ if(current===view){
+  showAppViewFromHistory(view);
+  return;
+ }
+ history.pushState(
+  {...(history.state||{}),[APP_NAV_STATE_KEY]:view},
+  '',
+  location.href
+ );
+ showAppViewFromHistory(view);
+}
+
+function returnFromAppView(){
+ const view=currentAppView();
+ if(view==='agenda'||view==='vacations'||view==='stats'||view==='settings'){
+  history.back();
+  return true;
+ }
+ return false;
+}
+
+window.addEventListener('popstate',()=>{
+ const view=currentAppView();
+ showAppViewFromHistory(view);
+});
 function renderAgenda(){
  const turn=activeTurnKey(),c=codeFor(turn,agendaSelectedDate);agendaDateText.textContent=cap(longFmt.format(agendaSelectedDate));agendaShift.textContent=`${scheduleName(turn)} · ${codeText(turn,c)} — ${shiftNames[c][0]} · ${shiftNames[c][1]}`;
  const items=agendaForDate(agendaSelectedDate),storedTotal=loadAgendaData().length;agendaDayList.innerHTML='';
@@ -13357,8 +13423,44 @@ function closeModal(id){
   restoreMainAfterWorkday();
  }
 }
-$$('[data-close]').forEach(b=>b.onclick=()=>{const id=b.dataset.close;if(id==='agendaSheet')closeAgenda();else{if(id==='settingsModal')setPaletteDropdown(false);closeModal(id)}});
-$$('.backdrop').forEach(b=>b.addEventListener('click',e=>{if(e.target===b)closeModal(b.id)}));agendaSheet.addEventListener('click',e=>{if(e.target===agendaSheet)closeAgenda()});
+$$('[data-close]').forEach(b=>b.onclick=()=>{
+ const id=b.dataset.close;
+
+ if(
+  (id==='agendaSheet'&&currentAppView()==='agenda')||
+  (id==='vacationModal'&&currentAppView()==='vacations')||
+  (id==='statsModal'&&currentAppView()==='stats')||
+  (id==='settingsModal'&&currentAppView()==='settings')
+ ){
+  returnFromAppView();
+  return;
+ }
+
+ if(id==='agendaSheet')closeAgenda();
+ else{
+  if(id==='settingsModal')setPaletteDropdown(false);
+  closeModal(id);
+ }
+});
+$$('.backdrop').forEach(b=>b.addEventListener('click',e=>{
+ if(e.target!==b)return;
+ const view=currentAppView();
+ const expected={
+  settings:'settingsModal',
+  vacations:'vacationModal',
+  stats:'statsModal'
+ }[view];
+ if(expected===b.id){
+  returnFromAppView();
+  return;
+ }
+ closeModal(b.id);
+}));
+agendaSheet.addEventListener('click',e=>{
+ if(e.target!==agendaSheet)return;
+ if(currentAppView()==='agenda')returnFromAppView();
+ else closeAgenda();
+});
 
 $('#prevBtn').onclick=()=>animateMonthButton(-1);$('#nextBtn').onclick=()=>animateMonthButton(1);
 $('#todayBtn').onclick=()=>{const d=new Date();viewYear=d.getFullYear();viewMonth=d.getMonth();selectedDate=new Date(d.getFullYear(),d.getMonth(),d.getDate());renderAll();scheduleBelowFoldLayout()};
@@ -13378,7 +13480,7 @@ helpBtn.onclick=()=>{
   if(modal)modal.scrollTop=0;
  },0);
 };
-settingsBtn.onclick=()=>{setPaletteDropdown(false);updateColorSettingsUI();renderQuickPalette();openModal('settingsModal')};
+settingsBtn.onclick=()=>pushAppView('settings');
 [morningColor,nightColor,offColor].forEach(x=>x.oninput=()=>{saveSettings();renderQuickPalette()});
 codeSize.oninput=()=>{codeSizeValue.textContent=`${codeSize.value} px`;saveSettings()};
 dayNumberSize.oninput=()=>{dayNumberSizeValue.textContent=`${dayNumberSize.value} px`;saveSettings()};
@@ -13540,9 +13642,9 @@ $('#helpTopBtn').onclick=()=>{
  catch{modal.scrollTop=0}
 };
 
-$('#settingsAgendaBtn').onclick=()=>{setPaletteDropdown(false);closeModal('settingsModal');setTimeout(()=>openAgenda(selectedDate),80)};
-$('#settingsVacationBtn').onclick=()=>{setPaletteDropdown(false);closeModal('settingsModal');setTimeout(openVacations,80)};
-$('#settingsStatsBtn').onclick=()=>{setPaletteDropdown(false);closeModal('settingsModal');renderStats();setTimeout(()=>openModal('statsModal'),80)};
+$('#settingsAgendaBtn').onclick=()=>pushAppView('agenda');
+$('#settingsVacationBtn').onclick=()=>pushAppView('vacations');
+$('#settingsStatsBtn').onclick=()=>pushAppView('stats');
 
 let yearHoldDelayTimer=null;
 let yearHoldRepeatTimer=null;
@@ -13772,6 +13874,9 @@ document.addEventListener('dragstart',ev=>{
  if(ev.target.closest?.('button,[role="button"]'))ev.preventDefault();
 });
 
+if(!history.state?.[APP_NAV_STATE_KEY]){
+ history.replaceState({...history.state,[APP_NAV_STATE_KEY]:'main'},'',location.href);
+}
 loadSettings();loadVacationColor();loadVacationVisibility();updateWorkdayNewState();syncTurnPulseText();syncTurn5PulseText();ensurePersistentTurnPulses();renderQuickPalette();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();fitMainCalendarViewport();keepDetailBelowInitialFold();setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},260);setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},700);initSplash();checkUpdate();checkReminders();
 window.addEventListener('resize',()=>{scheduleMainViewportFit();scheduleBelowFoldLayout()});
 window.addEventListener('orientationchange',()=>{scheduleMainViewportFit();scheduleBelowFoldLayout()});
