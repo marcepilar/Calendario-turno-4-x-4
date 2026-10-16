@@ -9564,6 +9564,136 @@ body.light #vacationModal .close-btn{
   -webkit-text-fill-color:#172536 !important;
 }
 
+
+/* ===== V4.10.9 · ESTADÍSTICAS · FONDO LISO DEFINITIVO ===== */
+
+/*
+   Objetivo: que Estadísticas luzca como Jornada.
+   Una sola base visual oscura, sin degradados/halos detrás.
+*/
+#statsModal{
+  background:rgba(3,7,12,.66) !important;
+}
+
+#statsModal .stats-modal-window{
+  background:#1b2633 !important;
+  background-color:#1b2633 !important;
+  background-image:none !important;
+  border:1px solid #334152 !important;
+  box-shadow:0 20px 50px rgba(0,0,0,.38) !important;
+}
+
+/* Cabecera: exactamente el mismo fondo que la ventana */
+#statsModal .stats-head{
+  background:#1b2633 !important;
+  background-image:none !important;
+  border-bottom:1px solid #334152 !important;
+}
+
+/* Todas las tarjetas comparten el mismo color */
+#statsModal .stat-card,
+#statsModal .turn-end-card,
+#statsModal .stats-holidays,
+#statsModal .stats-worklog,
+#statsModal .stats-off,
+#statsModal .stats-salary{
+  background:#202c39 !important;
+  background-color:#202c39 !important;
+  background-image:none !important;
+  border:1px solid #394858 !important;
+  box-shadow:none !important;
+}
+
+/* Eliminar capas decorativas internas que seguían dando brillo/azul */
+#statsModal .stat-card::before,
+#statsModal .stat-card::after,
+#statsModal .turn-end-card::before,
+#statsModal .turn-end-card::after,
+#statsModal .stats-holidays::before,
+#statsModal .stats-holidays::after,
+#statsModal .stats-worklog::before,
+#statsModal .stats-worklog::after,
+#statsModal .stats-off::before,
+#statsModal .stats-off::after,
+#statsModal .stats-salary::before,
+#statsModal .stats-salary::after{
+  content:none !important;
+  display:none !important;
+  background:none !important;
+}
+
+/* Subtarjetas y botones internos */
+#statsModal .holiday-work-chip,
+#statsModal .worklog-stat-card,
+#statsModal .turn-end-badge,
+#statsModal .salary-days,
+#statsModal .off-premium,
+#statsModal .close-btn{
+  background:#273544 !important;
+  background-color:#273544 !important;
+  background-image:none !important;
+  border:1px solid #405064 !important;
+  box-shadow:none !important;
+}
+
+/* Colores funcionales: solamente bordes/textos, no fondos grandes */
+#statsModal .stat-card{
+  border-bottom:3px solid var(--stat-accent,var(--line)) !important;
+}
+#statsModal .stats-holidays{
+  border-color:rgba(255,95,114,.28) !important;
+}
+#statsModal .stats-worklog{
+  border-color:rgba(233,154,36,.30) !important;
+}
+
+/* Próximo sueldo: caja interna uniforme */
+#statsModal .salary-card{
+  background:transparent !important;
+  background-image:none !important;
+}
+
+/* Modo claro: misma lógica, fondo liso */
+body.light #statsModal .stats-modal-window{
+  background:#f1f4f7 !important;
+  background-color:#f1f4f7 !important;
+  background-image:none !important;
+  border-color:#d2dae3 !important;
+}
+
+body.light #statsModal .stats-head{
+  background:#f1f4f7 !important;
+  background-image:none !important;
+  border-bottom-color:#d2dae3 !important;
+}
+
+body.light #statsModal .stat-card,
+body.light #statsModal .turn-end-card,
+body.light #statsModal .stats-holidays,
+body.light #statsModal .stats-worklog,
+body.light #statsModal .stats-off,
+body.light #statsModal .stats-salary{
+  background:#ffffff !important;
+  background-color:#ffffff !important;
+  background-image:none !important;
+  border-color:#d8e0e8 !important;
+  box-shadow:none !important;
+}
+
+body.light #statsModal .holiday-work-chip,
+body.light #statsModal .worklog-stat-card,
+body.light #statsModal .turn-end-badge,
+body.light #statsModal .salary-days,
+body.light #statsModal .off-premium,
+body.light #statsModal .close-btn{
+  background:#edf1f5 !important;
+  background-color:#edf1f5 !important;
+  background-image:none !important;
+  border-color:#d3dce5 !important;
+  color:#172536 !important;
+  -webkit-text-fill-color:#172536 !important;
+}
+
 </style>
 </head>
 <body>
@@ -10550,7 +10680,7 @@ body.light #vacationModal .close-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.10.8';
+const CURRENT_VERSION='4.10.9';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
