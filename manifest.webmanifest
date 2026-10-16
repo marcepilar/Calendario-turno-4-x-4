@@ -1,12 +1,12 @@
 {
   "name": "Calendario de Turnos 4x4",
   "short_name": "Turnos 4x4",
-  "description": "Calendario de turnos 4x4 de 12 horas.",
-  "start_url": "./index.html",
+  "description": "Calendario 4x4 de 12 horas con agenda, recordatorios, vista anual, estadísticas y Turno 5.",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#0e131a",
-  "theme_color": "#0e131a",
+  "background_color": "#0a0f16",
+  "theme_color": "#0a0f16",
   "orientation": "portrait",
   "icons": [
     {
