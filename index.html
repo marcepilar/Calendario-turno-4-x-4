@@ -9231,6 +9231,226 @@ body.light #vacationModal #vacationSaveBtn{
   border-color:rgba(153,124,255,.30);
 }
 
+
+/* ===== V4.10.6 · AGENDA + ESTADÍSTICAS + FERIADOS · FONDO UNIFORME ===== */
+
+/* ---------------------------------------------------------
+   BASE UNIFORME OSCURA
+   --------------------------------------------------------- */
+#agendaSheet .sheet,
+#statsModal .stats-modal-window,
+#holidayStatsDetailModal .holiday-stats-detail-window{
+  background:var(--panel);
+  border:1px solid var(--line);
+  box-shadow:0 22px 60px rgba(0,0,0,.42);
+}
+
+/* Quitar halos decorativos grandes del fondo */
+#agendaSheet .sheet::before{
+  display:none;
+}
+
+/* Cabeceras uniformes */
+#agendaSheet .sheet-head,
+#statsModal .stats-head,
+#holidayStatsDetailModal .holiday-stats-detail-head{
+  background:var(--panel);
+  border-bottom:1px solid var(--line);
+  box-shadow:none;
+}
+
+/* Cajas y tarjetas internas */
+#agendaSheet .agenda-shift,
+#agendaSheet .agenda-overview-card,
+#agendaSheet .agenda-panel,
+#agendaSheet .agenda-form,
+#agendaSheet .agenda-all-box,
+#agendaSheet .agenda-item,
+#agendaSheet .agenda-all-item,
+#agendaSheet .reminder-guide-card,
+#statsModal .stat-card,
+#statsModal .turn-end-card,
+#statsModal .stats-month,
+#statsModal .stats-year,
+#statsModal .stats-holidays,
+#statsModal .stats-worklog,
+#statsModal .stats-off,
+#statsModal .stats-salary,
+#statsModal .off-premium,
+#holidayStatsDetailModal .holiday-stats-detail-summary > div,
+#holidayStatsDetailModal .holiday-stat-detail-row{
+  background:var(--panel2);
+  border-color:var(--line);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
+}
+
+/* Subcajas, campos y controles */
+#agendaSheet .form-field input,
+#agendaSheet .form-field textarea,
+#agendaSheet .form-field select,
+#agendaSheet .agenda-search-shell input,
+#agendaSheet .agenda-search-shell select,
+#agendaSheet .agenda-total-count,
+#statsModal .holiday-work-chip,
+#statsModal .worklog-stat-card,
+#statsModal .turn-end-badge,
+#statsModal .salary-days,
+#holidayStatsDetailModal .holiday-stat-detail-shift{
+  background:var(--panel3);
+  border-color:var(--line);
+  box-shadow:none;
+}
+
+/* Todos los botones secundarios con el mismo aspecto */
+#agendaSheet button:not(.save):not(.danger):not(.agenda-all-delete),
+#statsModal button:not(.close-btn),
+#holidayStatsDetailModal button:not(.close-btn){
+  background:var(--panel3);
+  color:var(--text);
+  border-color:var(--line);
+  box-shadow:none;
+}
+
+/* Cerrar: igual a las demás ventanas */
+#agendaSheet .close-btn,
+#statsModal .close-btn,
+#holidayStatsDetailModal .close-btn{
+  background:var(--panel2);
+  color:var(--text);
+  border:1px solid var(--line);
+  box-shadow:none;
+}
+
+/* Mantener acciones con significado propio */
+#agendaSheet .agenda-fixed-actions .save{
+  background:var(--accent);
+  color:#fff;
+  border-color:color-mix(in srgb,var(--accent) 65%,white 35%);
+}
+#agendaSheet .agenda-actions .danger,
+#agendaSheet .agenda-all-delete{
+  background:rgba(255,95,114,.08);
+  color:#ff7181;
+  border-color:rgba(255,95,114,.28);
+}
+
+/* En Estadísticas, conservar solo los acentos mínimos */
+#statsModal .stat-card{
+  border-bottom-color:var(--stat-accent,var(--line));
+}
+#statsModal .stats-holidays{
+  border-color:rgba(255,95,114,.18);
+}
+#statsModal .stats-worklog{
+  border-color:rgba(233,154,36,.20);
+}
+
+/* Feriados: badge rojo/azul/½ se mantiene, el resto uniforme */
+#holidayStatsDetailModal .holiday-list-badge{
+  box-shadow:none;
+}
+
+/* ---------------------------------------------------------
+   MODO CLARO UNIFORME
+   --------------------------------------------------------- */
+body.light #agendaSheet .sheet,
+body.light #statsModal .stats-modal-window,
+body.light #holidayStatsDetailModal .holiday-stats-detail-window{
+  background:#f2f5f8;
+  color:#172536;
+  border-color:rgba(62,82,106,.16);
+  box-shadow:0 18px 50px rgba(34,48,68,.10);
+}
+
+body.light #agendaSheet .sheet-head,
+body.light #statsModal .stats-head,
+body.light #holidayStatsDetailModal .holiday-stats-detail-head{
+  background:#f2f5f8;
+  border-bottom-color:rgba(62,82,106,.14);
+}
+
+body.light #agendaSheet .agenda-shift,
+body.light #agendaSheet .agenda-overview-card,
+body.light #agendaSheet .agenda-panel,
+body.light #agendaSheet .agenda-form,
+body.light #agendaSheet .agenda-all-box,
+body.light #agendaSheet .agenda-item,
+body.light #agendaSheet .agenda-all-item,
+body.light #agendaSheet .reminder-guide-card,
+body.light #statsModal .stat-card,
+body.light #statsModal .turn-end-card,
+body.light #statsModal .stats-month,
+body.light #statsModal .stats-year,
+body.light #statsModal .stats-holidays,
+body.light #statsModal .stats-worklog,
+body.light #statsModal .stats-off,
+body.light #statsModal .stats-salary,
+body.light #statsModal .off-premium,
+body.light #holidayStatsDetailModal .holiday-stats-detail-summary > div,
+body.light #holidayStatsDetailModal .holiday-stat-detail-row{
+  background:#ffffff;
+  color:#172536;
+  border-color:rgba(62,82,106,.14);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.85);
+}
+
+body.light #agendaSheet .form-field input,
+body.light #agendaSheet .form-field textarea,
+body.light #agendaSheet .form-field select,
+body.light #agendaSheet .agenda-search-shell input,
+body.light #agendaSheet .agenda-search-shell select,
+body.light #agendaSheet .agenda-total-count,
+body.light #statsModal .holiday-work-chip,
+body.light #statsModal .worklog-stat-card,
+body.light #statsModal .turn-end-badge,
+body.light #statsModal .salary-days,
+body.light #holidayStatsDetailModal .holiday-stat-detail-shift{
+  background:#eef2f6;
+  color:#172536;
+  border-color:rgba(62,82,106,.14);
+}
+
+body.light #agendaSheet button:not(.save):not(.danger):not(.agenda-all-delete),
+body.light #statsModal button:not(.close-btn),
+body.light #holidayStatsDetailModal button:not(.close-btn),
+body.light #agendaSheet .close-btn,
+body.light #statsModal .close-btn,
+body.light #holidayStatsDetailModal .close-btn{
+  background:#eef2f6;
+  color:#172536;
+  -webkit-text-fill-color:#172536;
+  border-color:rgba(62,82,106,.15);
+  box-shadow:none;
+}
+
+/* Textos secundarios claros coherentes */
+body.light #agendaSheet .sheet-head small,
+body.light #agendaSheet .agenda-item-notes,
+body.light #agendaSheet .agenda-item-meta,
+body.light #agendaSheet .agenda-all-meta,
+body.light #agendaSheet .agenda-all-notes,
+body.light #agendaSheet .agenda-footer-note,
+body.light #agendaSheet .form-field label,
+body.light #statsModal .holiday-work-note,
+body.light #holidayStatsDetailModal small,
+body.light #holidayStatsDetailModal .holiday-stats-detail-legend{
+  color:#64758a;
+}
+
+/* Acciones de color preservadas */
+body.light #agendaSheet .agenda-fixed-actions .save{
+  background:var(--accent);
+  color:#fff;
+  -webkit-text-fill-color:#fff;
+}
+body.light #agendaSheet .agenda-actions .danger,
+body.light #agendaSheet .agenda-all-delete{
+  background:#fff0f3;
+  color:#bd465f;
+  -webkit-text-fill-color:#bd465f;
+  border-color:rgba(255,95,114,.22);
+}
+
 </style>
 </head>
 <body>
@@ -10217,7 +10437,7 @@ body.light #vacationModal #vacationSaveBtn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.10.5';
+const CURRENT_VERSION='4.10.6';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
