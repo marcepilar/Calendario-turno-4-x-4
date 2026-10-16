@@ -9748,6 +9748,26 @@ body.light #statsModal .worklog-stat-btn.period-holidays{
   border-right-color:#d3dce5 !important;
 }
 
+
+/* ===== V4.11.3 · PERFORMANCE · SIN CAMBIOS VISUALES ===== */
+
+/* Las ventanas ocultas quedan completamente fuera de layout/pintura. */
+.backdrop:not(.open),
+#agendaSheet:not(.open){
+  visibility:hidden;
+}
+
+/* Aislar áreas complejas reduce el costo de repintado sin cambiar su aspecto. */
+.calendar-card,
+.detail,
+#statsModal .stats-modal-window,
+#agendaSheet .sheet,
+#workdayModal .workday-modal-window,
+#vacationModal .vacation-modal-window,
+#helpModal .help-modal-window{
+  contain:layout paint;
+}
+
 </style>
 </head>
 <body>
@@ -10734,7 +10754,7 @@ body.light #statsModal .worklog-stat-btn.period-holidays{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.11.2';
+const CURRENT_VERSION='4.11.3';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
@@ -10770,6 +10790,52 @@ const WORKLOG_KEY='turno4x4.worklog.v1';
 const LICENSE_KEY='turno4x4.licenses.v1';
 const WORKDAY_SEEN_KEY='turno4x4.workdaySeen.v1';
 const VACATION_COLOR_KEY='turno4x4.vacationColor.v1';
+
+/* ===== V4.11.3 · PERFORMANCE · CACHE DE DATOS ===== */
+const appDataCache={
+ agenda:null,
+ worklog:null,
+ licenses:null,
+ vacations:null
+};
+
+const agendaDateCache=new Map();
+const worklogDateCache=new Map();
+const licenseDateCache=new Map();
+const vacationDateCache=new Map();
+
+function parseStoredArray(storageKey){
+ try{
+  const data=JSON.parse(localStorage.getItem(storageKey)||'[]');
+  return Array.isArray(data)?data:[];
+ }catch{
+  return [];
+ }
+}
+
+function clearAgendaQueryCache(){agendaDateCache.clear()}
+function clearWorklogQueryCache(){worklogDateCache.clear()}
+function clearLicenseQueryCache(){licenseDateCache.clear()}
+function clearVacationQueryCache(){vacationDateCache.clear()}
+
+window.addEventListener('storage',event=>{
+ if(event.key===AGENDA_KEY){
+  appDataCache.agenda=null;
+  clearAgendaQueryCache();
+ }
+ if(event.key===WORKLOG_KEY){
+  appDataCache.worklog=null;
+  clearWorklogQueryCache();
+ }
+ if(event.key===LICENSE_KEY){
+  appDataCache.licenses=null;
+  clearLicenseQueryCache();
+ }
+ if(event.key===VACATION_KEY){
+  appDataCache.vacations=null;
+  clearVacationQueryCache();
+ }
+});
 const SHOW_VACATIONS_KEY='turno4x4.showVacations.v1';
 
 let now=new Date(),viewYear=now.getFullYear(),viewMonth=now.getMonth(),selectedDate=new Date(now.getFullYear(),now.getMonth(),now.getDate());
@@ -10809,6 +10875,7 @@ const monthFmt=new Intl.DateTimeFormat('es-AR',{month:'long',year:'numeric'});
 const longFmt=new Intl.DateTimeFormat('es-AR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 const shortFmt=new Intl.DateTimeFormat('es-AR',{day:'2-digit',month:'short'});
 const shortDateFmt=new Intl.DateTimeFormat('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'});
+const miniMonthFmt=new Intl.DateTimeFormat('es-AR',{month:'short'});
 
 function pad2(n){return String(n).padStart(2,'0')}
 function dateKey(d){return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`}
@@ -10819,11 +10886,29 @@ function sameDate(a,b){return a.getFullYear()===b.getFullYear()&&a.getMonth()===
 function addDays(d,n){const x=new Date(d.getFullYear(),d.getMonth(),d.getDate());x.setDate(x.getDate()+n);return x}
 function activeTurnKey(){return turnSelect.value==='T5'?turn5Select.value:turnSelect.value}
 function scheduleName(turn){return scheduleNames[turn]||turn}
+const scheduleCodeCache=new Map();
+const SCHEDULE_CODE_CACHE_LIMIT=24000;
+
 function codeFor(turn,d){
- if(turn==='T5LV'){const wd=d.getDay();return wd>=1&&wd<=5?'D':'F'}
- if(turn==='T5A')return T5_4X4_CYCLE[mod(diffDays(d,T5A_ANCHOR),8)]
- if(turn==='T5B')return T5_4X4_CYCLE[mod(diffDays(d,T5B_ANCHOR),8)]
- return cycles[turn][mod(diffDays(d,ANCHOR),16)]
+ const key=`${turn}|${dateKey(d)}`;
+ const cached=scheduleCodeCache.get(key);
+ if(cached!==undefined)return cached;
+
+ let code;
+ if(turn==='T5LV'){
+  const wd=d.getDay();
+  code=wd>=1&&wd<=5?'D':'F';
+ }else if(turn==='T5A'){
+  code=T5_4X4_CYCLE[mod(diffDays(d,T5A_ANCHOR),8)];
+ }else if(turn==='T5B'){
+  code=T5_4X4_CYCLE[mod(diffDays(d,T5B_ANCHOR),8)];
+ }else{
+  code=cycles[turn][mod(diffDays(d,ANCHOR),16)];
+ }
+
+ if(scheduleCodeCache.size>=SCHEDULE_CODE_CACHE_LIMIT)scheduleCodeCache.clear();
+ scheduleCodeCache.set(key,code);
+ return code;
 }
 function cls(code){return code==='M'?'morning':code==='N'?'night':code==='D'?'daytime':'off'}
 function codeText(turn,code){return turn==='T5LV'&&code==='D'?'T5':code}
@@ -10879,8 +10964,13 @@ function fitMainCalendarViewport(){
  });
 }
 
+let mainViewportScheduleRaf=0;
 function scheduleMainViewportFit(){
- requestAnimationFrame(fitMainCalendarViewport);
+ if(mainViewportScheduleRaf)return;
+ mainViewportScheduleRaf=requestAnimationFrame(()=>{
+  mainViewportScheduleRaf=0;
+  fitMainCalendarViewport();
+ });
 }
 
 function restoreMainAfterWorkday(){
@@ -11496,12 +11586,8 @@ const worklogDateFmt=new Intl.DateTimeFormat('es-AR',{weekday:'short',day:'2-dig
 const worklogFullDateFmt=new Intl.DateTimeFormat('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'});
 
 function loadWorklogData(){
- try{
-  const data=JSON.parse(localStorage.getItem(WORKLOG_KEY)||'[]');
-  return Array.isArray(data)?data:[];
- }catch{
-  return [];
- }
+ if(appDataCache.worklog===null)appDataCache.worklog=parseStoredArray(WORKLOG_KEY);
+ return appDataCache.worklog;
 }
 
 function updateWorkdayNewState(){
@@ -11555,7 +11641,9 @@ function deleteSelectedWorklog(){
 
 
 function saveWorklogData(items){
- localStorage.setItem(WORKLOG_KEY,JSON.stringify(items));
+ appDataCache.worklog=Array.isArray(items)?items:[];
+ clearWorklogQueryCache();
+ localStorage.setItem(WORKLOG_KEY,JSON.stringify(appDataCache.worklog));
 }
 
 function normalizeWorklog(item){
@@ -11576,8 +11664,11 @@ function worklogIdFor(date,turn){
 
 function worklogForDate(date,turn=activeTurnKey()){
  const id=worklogIdFor(date,turn);
- const found=loadWorklogData().map(normalizeWorklog).find(x=>x.id===id);
- return found||null;
+ if(worklogDateCache.has(id))return worklogDateCache.get(id);
+
+ const found=loadWorklogData().map(normalizeWorklog).find(x=>x.id===id)||null;
+ worklogDateCache.set(id,found);
+ return found;
 }
 
 function worklogCodeLabel(code){
@@ -12048,16 +12139,14 @@ function openWorklogStatsDetail(mode){
 const licenseDateFmt=new Intl.DateTimeFormat('es-AR',{day:'2-digit',month:'short',year:'numeric'});
 
 function loadLicenseData(){
- try{
-  const data=JSON.parse(localStorage.getItem(LICENSE_KEY)||'[]');
-  return Array.isArray(data)?data:[];
- }catch{
-  return [];
- }
+ if(appDataCache.licenses===null)appDataCache.licenses=parseStoredArray(LICENSE_KEY);
+ return appDataCache.licenses;
 }
 
 function saveLicenseData(items){
- localStorage.setItem(LICENSE_KEY,JSON.stringify(items));
+ appDataCache.licenses=Array.isArray(items)?items:[];
+ clearLicenseQueryCache();
+ localStorage.setItem(LICENSE_KEY,JSON.stringify(appDataCache.licenses));
 }
 
 function normalizeLicense(item){
@@ -12075,10 +12164,17 @@ function normalizeLicense(item){
 
 function licensesForDate(d,turn=activeTurnKey()){
  const key=dateKey(d);
- return loadLicenseData()
+ const cacheKey=`${turn}|${key}`;
+ const cached=licenseDateCache.get(cacheKey);
+ if(cached)return cached;
+
+ const result=loadLicenseData()
   .map(normalizeLicense)
   .filter(l=>l.turn===turn&&l.start&&l.end&&key>=l.start&&key<=l.end)
   .sort((a,b)=>a.start.localeCompare(b.start));
+
+ licenseDateCache.set(cacheKey,result);
+ return result;
 }
 
 function licenseRangeText(l){
@@ -12202,8 +12298,8 @@ function saveLicensePeriod(){
  }
  saveLicenseData(items);
  renderAll();
- renderYear();
- renderStats();
+ renderYearIfOpen();
+ renderStatsIfOpen();
  closeModal('workdayModal');
  vibrate(14);
 }
@@ -12215,8 +12311,8 @@ function deleteLicenseById(id,{closeWorkday=false,ask=true}={}){
  saveLicenseData(loadLicenseData().filter(x=>normalizeLicense(x).id!==id));
  if(licenseEditingId===id)licenseEditingId=null;
  renderAll();
- renderYear();
- renderStats();
+ renderYearIfOpen();
+ renderStatsIfOpen();
  if(closeWorkday)closeModal('workdayModal');
  else renderLicenseList();
  const statsDetail=$('#worklogStatsDetailModal');
@@ -12312,7 +12408,7 @@ function saveVacationVisibility(){
  if(!toggle)return;
  localStorage.setItem(SHOW_VACATIONS_KEY,toggle.checked?'true':'false');
  renderAll();
- renderYear();
+ renderYearIfOpen();
  showDetail(selectedDate);
 }
 
@@ -12324,16 +12420,14 @@ function openVacationColorPicker(){
 }
 
 function loadVacationData(){
- try{
-  const data=JSON.parse(localStorage.getItem(VACATION_KEY)||'[]');
-  return Array.isArray(data)?data:[];
- }catch{
-  return [];
- }
+ if(appDataCache.vacations===null)appDataCache.vacations=parseStoredArray(VACATION_KEY);
+ return appDataCache.vacations;
 }
 
 function saveVacationData(items){
- localStorage.setItem(VACATION_KEY,JSON.stringify(items));
+ appDataCache.vacations=Array.isArray(items)?items:[];
+ clearVacationQueryCache();
+ localStorage.setItem(VACATION_KEY,JSON.stringify(appDataCache.vacations));
 }
 
 function normalizeVacation(item){
@@ -12348,10 +12442,16 @@ function normalizeVacation(item){
 
 function vacationsForDate(d){
  const key=dateKey(d);
- return loadVacationData()
+ const cached=vacationDateCache.get(key);
+ if(cached)return cached;
+
+ const result=loadVacationData()
   .map(normalizeVacation)
   .filter(v=>v.start&&v.end&&key>=v.start&&key<=v.end)
   .sort((a,b)=>a.start.localeCompare(b.start));
+
+ vacationDateCache.set(key,result);
+ return result;
 }
 
 function vacationDaysCount(v){
@@ -12481,7 +12581,7 @@ function saveVacationPeriod(){
  clearVacationForm();
  renderVacationList();
  renderAll();
- renderYear();
+ renderYearIfOpen();
  vibrate(14);
 }
 
@@ -12507,9 +12607,16 @@ function eventDotBackground(events){
 }
 
 function renderCalendar(){
- const turn=activeTurnKey();localStorage.setItem('turno4x4.turno',turnSelect.value);localStorage.setItem('turno4x4.turno5',turn5Select.value);
- monthName.textContent=monthFmt.format(new Date(viewYear,viewMonth,1)).toUpperCase();selectedInfo.textContent=`${scheduleName(turn)} · deslizar para cambiar mes`;cal.innerHTML='';
+ const turn=activeTurnKey();
+ localStorage.setItem('turno4x4.turno',turnSelect.value);
+ localStorage.setItem('turno4x4.turno5',turn5Select.value);
+
+ monthName.textContent=monthFmt.format(new Date(viewYear,viewMonth,1)).toUpperCase();
+ selectedInfo.textContent=`${scheduleName(turn)} · deslizar para cambiar mes`;
+
+ const fragment=document.createDocumentFragment();
  const start=new Date(viewYear,viewMonth,1-new Date(viewYear,viewMonth,1).getDay());
+
  for(let i=0;i<42;i++){
   const d=addDays(start,i),c=codeFor(turn,d),cell=document.createElement('div');
   cell.className=`day ${cls(c)}${d.getMonth()!==viewMonth?' other':''}${sameDate(d,new Date())?' today':''}${sameDate(d,selectedDate)?' selected-day':''}`;
@@ -12548,8 +12655,11 @@ function renderCalendar(){
    : '';
 
   cell.innerHTML=`<span class="date">${d.getDate()}</span><span class="code">${codeText(turn,c)}</span>${showLabels.checked?`<span class="label">${shiftNames[c][0]}</span>`:''}${dots}${holidayBadge}${licenseBadge}${vacationBadge}${worklogBadges}`;
-  attachDayGestures(cell,d);cal.appendChild(cell);
+  attachDayGestures(cell,d);
+  fragment.appendChild(cell);
  }
+
+ cal.replaceChildren(fragment);
  startHolidayBadgePulses();
  ensureHolidaysForCurrentView();
 }
@@ -12894,8 +13004,29 @@ function renderAll(){
  scheduleMainViewportFit();
 }
 
-function loadAgendaData(){try{const a=JSON.parse(localStorage.getItem(AGENDA_KEY)||'[]');return Array.isArray(a)?a:[]}catch{return[]}}
-function saveAgendaData(a){localStorage.setItem(AGENDA_KEY,JSON.stringify(a))}
+function renderYearIfOpen(){
+ if($('#yearModal')?.classList.contains('open'))renderYear();
+}
+
+function renderStatsIfOpen(){
+ if(
+  $('#statsModal')?.classList.contains('open') ||
+  $('#worklogStatsDetailModal')?.classList.contains('open') ||
+  $('#holidayStatsDetailModal')?.classList.contains('open')
+ ){
+  renderStats();
+ }
+}
+
+function loadAgendaData(){
+ if(appDataCache.agenda===null)appDataCache.agenda=parseStoredArray(AGENDA_KEY);
+ return appDataCache.agenda;
+}
+function saveAgendaData(a){
+ appDataCache.agenda=Array.isArray(a)?a:[];
+ clearAgendaQueryCache();
+ localStorage.setItem(AGENDA_KEY,JSON.stringify(appDataCache.agenda));
+}
 function normalizedItem(x){return{category:'personal',repeat:'none',turn:activeTurnKey(),...x}}
 function eventOccurs(item,d){
  item=normalizedItem(item);const start=parseDateKey(item.date);if(d<start)return false;
@@ -12910,7 +13041,19 @@ function eventOccurs(item,d){
  return sameDate(start,d)
 }
 function agendaForDate(d){
- return loadAgendaData().map(normalizedItem).filter(x=>eventOccurs(x,d)).map(x=>({...x,_occurrenceDate:dateKey(d)})).sort((a,b)=>(a.time||'99:99').localeCompare(b.time||'99:99'))
+ const dayKey=dateKey(d);
+ const cacheKey=`${activeTurnKey()}|${dayKey}`;
+ const cached=agendaDateCache.get(cacheKey);
+ if(cached)return cached;
+
+ const result=loadAgendaData()
+  .map(normalizedItem)
+  .filter(x=>eventOccurs(x,d))
+  .map(x=>({...x,_occurrenceDate:dayKey}))
+  .sort((a,b)=>(a.time||'99:99').localeCompare(b.time||'99:99'));
+
+ agendaDateCache.set(cacheKey,result);
+ return result;
 }
 function repeatLabel(r){return({none:'Una vez',daily:'Todos los días',weekly:'Semanal',yearly:'Anual',shiftM:'Todos mis días M',shiftN:'Todos mis días N',shiftD:'Todos mis días T5 FIJO',shiftF:'Todos mis francos'})[r]||'Una vez'}
 function reminderLabel(r){return({none:'Sin recordatorio','0':'A la hora','15':'15 min antes','60':'1 hora antes','1440':'1 día antes'})[String(r)]||'Sin recordatorio'}
@@ -13188,13 +13331,56 @@ function downloadICS(id,occ){const item=normalizedItem(loadAgendaData().find(x=>
  const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=`agenda-${occ}-${item.title.replace(/[^\wáéíóúñ-]+/gi,'_')}.ics`;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)
 }
 function exportBackup(){const payload={app:'Turnos 4x4',format:6,version:CURRENT_VERSION,exportedAt:new Date().toISOString(),agenda:loadAgendaData(),vacations:loadVacationData(),vacationColor:localStorage.getItem(VACATION_COLOR_KEY)||DEFAULT_VACATION_COLOR,showVacations:localStorage.getItem(SHOW_VACATIONS_KEY)!=='false',worklog:loadWorklogData(),licenses:loadLicenseData()};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=`turnos4x4-backup-${dateKey(new Date())}.json`;a.click();localStorage.setItem(BACKUP_KEY,new Date().toISOString());renderBackupStatus();setTimeout(()=>URL.revokeObjectURL(u),1000)}
-async function importBackup(file){if(!file)return;try{const data=JSON.parse(await file.text()),arr=Array.isArray(data)?data:data.agenda,vacs=Array.isArray(data?.vacations)?data.vacations:null,vacColor=typeof data?.vacationColor==='string'?data.vacationColor:null,showVacs=typeof data?.showVacations==='boolean'?data.showVacations:null,worklog=Array.isArray(data?.worklog)?data.worklog:null,licenses=Array.isArray(data?.licenses)?data.licenses:null;if(!Array.isArray(arr))throw 0;const extraV=vacs?` · ${vacs.length} período${vacs.length===1?'':'s'} de vacaciones`:'';const extraW=worklog?` · ${worklog.length} registro${worklog.length===1?'':'s'} laborales`:'';const extraL=licenses?` · ${licenses.length} licencia${licenses.length===1?'':'s'}`:'';if(!confirm(`Se encontraron ${arr.length} eventos${extraV}${extraW}${extraL}. ¿Reemplazar los datos incluidos en la copia?`))return;saveAgendaData(arr);if(vacs)saveVacationData(vacs);if(vacColor)applyVacationColor(vacColor,true);if(showVacs!==null)localStorage.setItem(SHOW_VACATIONS_KEY,showVacs?'true':'false');if(worklog)saveWorklogData(worklog);if(licenses)saveLicenseData(licenses);loadVacationVisibility();renderAgenda();renderVacationList();renderAll();renderYear();renderStats()}catch{alert('No pude leer esa copia de seguridad.')}finally{$('#agendaImportInput').value=''}}
+async function importBackup(file){if(!file)return;try{const data=JSON.parse(await file.text()),arr=Array.isArray(data)?data:data.agenda,vacs=Array.isArray(data?.vacations)?data.vacations:null,vacColor=typeof data?.vacationColor==='string'?data.vacationColor:null,showVacs=typeof data?.showVacations==='boolean'?data.showVacations:null,worklog=Array.isArray(data?.worklog)?data.worklog:null,licenses=Array.isArray(data?.licenses)?data.licenses:null;if(!Array.isArray(arr))throw 0;const extraV=vacs?` · ${vacs.length} período${vacs.length===1?'':'s'} de vacaciones`:'';const extraW=worklog?` · ${worklog.length} registro${worklog.length===1?'':'s'} laborales`:'';const extraL=licenses?` · ${licenses.length} licencia${licenses.length===1?'':'s'}`:'';if(!confirm(`Se encontraron ${arr.length} eventos${extraV}${extraW}${extraL}. ¿Reemplazar los datos incluidos en la copia?`))return;saveAgendaData(arr);if(vacs)saveVacationData(vacs);if(vacColor)applyVacationColor(vacColor,true);if(showVacs!==null)localStorage.setItem(SHOW_VACATIONS_KEY,showVacs?'true':'false');if(worklog)saveWorklogData(worklog);if(licenses)saveLicenseData(licenses);loadVacationVisibility();renderAgenda();renderVacationList();renderAll();renderYearIfOpen();renderStatsIfOpen()}catch{alert('No pude leer esa copia de seguridad.')}finally{$('#agendaImportInput').value=''}}
 function renderBackupStatus(){const x=localStorage.getItem(BACKUP_KEY);backupStatus.textContent=x?`Última copia: ${new Intl.DateTimeFormat('es-AR',{dateStyle:'medium',timeStyle:'short'}).format(new Date(x))}`:'Todavía no hiciste una copia de seguridad.'}
 
 function renderYear(){
  if(!showHolidays||showHolidays.checked)ensureHolidayYear(yearViewYear);
- $('#yearTitle').textContent=yearViewYear;const grid=$('#yearGrid');grid.innerHTML='';
- for(let m=0;m<12;m++){const box=document.createElement('div');box.className='mini-month';box.innerHTML=`<h3>${new Intl.DateTimeFormat('es-AR',{month:'short'}).format(new Date(yearViewYear,m,1))}</h3>`;const days=document.createElement('div');days.className='mini-days';for(let b=0;b<new Date(yearViewYear,m,1).getDay();b++){const blank=document.createElement('i');blank.className='mini-day blank';days.appendChild(blank)}const last=new Date(yearViewYear,m+1,0).getDate();for(let d=1;d<=last;d++){const dt=new Date(yearViewYear,m,d),c=codeFor(activeTurnKey(),dt),el=document.createElement('i');el.className=`mini-day ${c}${agendaForDate(dt).length?' has-event':''}${vacationsAreVisible()&&vacationsForDate(dt).length?' has-vacation':''}${licensesForDate(dt,activeTurnKey()).length?' has-license':''}`;el.textContent=d;days.appendChild(el)}box.appendChild(days);box.onclick=()=>{viewYear=yearViewYear;viewMonth=m;closeModal('yearModal');renderCalendar()};grid.appendChild(box)}
+
+ $('#yearTitle').textContent=yearViewYear;
+ const grid=$('#yearGrid');
+ const fragment=document.createDocumentFragment();
+ const activeTurn=activeTurnKey();
+ const showVacs=vacationsAreVisible();
+
+ for(let m=0;m<12;m++){
+  const box=document.createElement('div');
+  box.className='mini-month';
+  box.innerHTML=`<h3>${miniMonthFmt.format(new Date(yearViewYear,m,1))}</h3>`;
+
+  const days=document.createElement('div');
+  days.className='mini-days';
+
+  const firstDay=new Date(yearViewYear,m,1).getDay();
+  for(let b=0;b<firstDay;b++){
+   const blank=document.createElement('i');
+   blank.className='mini-day blank';
+   days.appendChild(blank);
+  }
+
+  const last=new Date(yearViewYear,m+1,0).getDate();
+  for(let day=1;day<=last;day++){
+   const dt=new Date(yearViewYear,m,day);
+   const c=codeFor(activeTurn,dt);
+   const el=document.createElement('i');
+
+   el.className=`mini-day ${c}${agendaForDate(dt).length?' has-event':''}${showVacs&&vacationsForDate(dt).length?' has-vacation':''}${licensesForDate(dt,activeTurn).length?' has-license':''}`;
+   el.textContent=day;
+   days.appendChild(el);
+  }
+
+  box.appendChild(days);
+  box.onclick=()=>{
+   viewYear=yearViewYear;
+   viewMonth=m;
+   closeModal('yearModal');
+   renderCalendar();
+  };
+
+  fragment.appendChild(box);
+ }
+
+ grid.replaceChildren(fragment);
 }
 
 function countsForPeriod(turn,y,m=null){const start=m===null?new Date(y,0,1):new Date(y,m,1),end=m===null?new Date(y+1,0,1):new Date(y,m+1,1),r={M:0,N:0,D:0,F:0};for(let d=new Date(start);d<end;d=addDays(d,1))r[codeFor(turn,d)]++;return r}
@@ -13613,8 +13799,30 @@ agendaSheet.addEventListener('click',e=>{
 
 $('#prevBtn').onclick=()=>animateMonthButton(-1);$('#nextBtn').onclick=()=>animateMonthButton(1);
 $('#todayBtn').onclick=()=>{const d=new Date();viewYear=d.getFullYear();viewMonth=d.getMonth();selectedDate=new Date(d.getFullYear(),d.getMonth(),d.getDate());renderAll();scheduleBelowFoldLayout()};
-turnSelect.onchange=()=>{updateTurn5Visibility();syncTurnPulseText();ensurePersistentTurnPulses();localStorage.setItem('turno4x4.turno',turnSelect.value);switchActiveColorProfile();renderAll();renderYear();renderStats();scheduleMainViewportFit();scheduleBelowFoldLayout()};
-turn5Select.onchange=()=>{syncTurn5PulseText();ensurePersistentTurnPulses();localStorage.setItem('turno4x4.turno5',turn5Select.value);updateColorSettingsUI();renderQuickPalette();renderAll();renderYear();renderStats();scheduleMainViewportFit();scheduleBelowFoldLayout()};
+turnSelect.onchange=()=>{
+ updateTurn5Visibility();
+ syncTurnPulseText();
+ ensurePersistentTurnPulses();
+ localStorage.setItem('turno4x4.turno',turnSelect.value);
+ switchActiveColorProfile();
+ clearAgendaQueryCache();
+ renderAll();
+ renderYearIfOpen();
+ renderStatsIfOpen();
+ scheduleBelowFoldLayout();
+};
+turn5Select.onchange=()=>{
+ syncTurn5PulseText();
+ ensurePersistentTurnPulses();
+ localStorage.setItem('turno4x4.turno5',turn5Select.value);
+ updateColorSettingsUI();
+ renderQuickPalette();
+ clearAgendaQueryCache();
+ renderAll();
+ renderYearIfOpen();
+ renderStatsIfOpen();
+ scheduleBelowFoldLayout();
+};
 themeBtn.onclick=()=>{document.body.classList.toggle('light');localStorage.setItem('turno4x4.theme',document.body.classList.contains('light')?'light':'dark');themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️'};
 shareBtn.onclick=openShareModal;
 $('#shareWhatsAppBtn').onclick=shareByWhatsApp;
@@ -13982,6 +14190,16 @@ function scheduleBelowFoldLayout(){
  belowFoldResizeTimer=setTimeout(keepDetailBelowInitialFold,90);
 }
 
+let viewportLayoutRaf=0;
+function scheduleViewportLayout(){
+ if(viewportLayoutRaf)return;
+ viewportLayoutRaf=requestAnimationFrame(()=>{
+  viewportLayoutRaf=0;
+  scheduleMainViewportFit();
+  scheduleBelowFoldLayout();
+ });
+}
+
 function initSplash(){const s=$('#splash');if(sessionStorage.getItem('turno4x4.splash.seen')){s.classList.add('hide');return}sessionStorage.setItem('turno4x4.splash.seen','1');setTimeout(()=>s.classList.add('hide'),850)}
 
 
@@ -14027,28 +14245,45 @@ if(!history.state?.[APP_NAV_STATE_KEY]){
  history.replaceState({...history.state,[APP_NAV_STATE_KEY]:'main'},'',location.href);
 }
 loadSettings();loadVacationColor();loadVacationVisibility();updateWorkdayNewState();syncTurnPulseText();syncTurn5PulseText();ensurePersistentTurnPulses();renderQuickPalette();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();fitMainCalendarViewport();keepDetailBelowInitialFold();setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},260);setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},700);initSplash();checkUpdate();checkReminders();
-window.addEventListener('resize',()=>{scheduleMainViewportFit();scheduleBelowFoldLayout()});
-window.addEventListener('orientationchange',()=>{scheduleMainViewportFit();scheduleBelowFoldLayout()});
+window.addEventListener('resize',scheduleViewportLayout,{passive:true});
+window.addEventListener('orientationchange',scheduleViewportLayout,{passive:true});
+
 window.addEventListener('focus',()=>{
  ensurePersistentTurnPulses();
  startHolidayBadgePulses();
  ensureHolidaysForCurrentView();
+ checkUpdate();
+ checkReminders();
+ if($('#statsModal')?.classList.contains('open'))renderTurnEndCard(activeTurnKey());
 });
+
 document.addEventListener('visibilitychange',()=>{
  if(!document.hidden){
   ensurePersistentTurnPulses();
   startHolidayBadgePulses();
   ensureHolidaysForCurrentView();
+  checkReminders();
+  scheduleViewportLayout();
  }
 });
-if(window.visualViewport)window.visualViewport.addEventListener('resize',()=>{scheduleMainViewportFit();scheduleBelowFoldLayout()});
-setInterval(checkUpdate,5*60*1000);
-setInterval(checkReminders,30000);
+
+if(window.visualViewport){
+ window.visualViewport.addEventListener('resize',scheduleViewportLayout,{passive:true});
+}
+
 setInterval(()=>{
+ if(!document.hidden)checkUpdate();
+},5*60*1000);
+
+setInterval(()=>{
+ if(!document.hidden)checkReminders();
+},30000);
+
+setInterval(()=>{
+ if(document.hidden)return;
  const stats=$('#statsModal');
  if(stats?.classList.contains('open'))renderTurnEndCard(activeTurnKey());
 },1000);
-window.addEventListener('focus',()=>{checkUpdate();checkReminders();if($('#statsModal')?.classList.contains('open'))renderTurnEndCard(activeTurnKey())});
 if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));
 })();
 </script>
