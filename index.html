@@ -8633,6 +8633,313 @@ body.light .top-actions .icon-btn:active{
   }
 }
 
+
+/* ===== V4.9.9 · LICENCIAS MÁS GRANDES + JORNADAS GUARDADAS ===== */
+
+/* ---------- LICENCIAS GUARDADAS: más grandes y legibles ---------- */
+#workdayModal .license-list-head b{
+  font-size:12px;
+}
+#workdayModal .license-list-head > span{
+  font-size:9px;
+}
+#workdayModal .license-item{
+  min-height:72px;
+  gap:9px;
+  padding:9px;
+  margin-bottom:6px;
+  border-radius:13px;
+}
+#workdayModal .license-item-icon{
+  width:43px;
+  height:43px;
+  border-radius:12px;
+  font-size:17px;
+}
+#workdayModal .license-item-copy b{
+  font-size:11.8px;
+}
+#workdayModal .license-item-copy span{
+  margin-top:4px;
+  font-size:9px;
+}
+#workdayModal .license-item-copy small{
+  margin-top:4px;
+  font-size:8px;
+}
+#workdayModal .license-item-actions{
+  gap:5px;
+}
+#workdayModal .license-item-actions button{
+  min-width:74px;
+  min-height:37px;
+  padding:0 8px;
+  border-radius:9px;
+  font-size:8.5px;
+}
+#workdayModal .license-item-actions button.delete{
+  font-size:8.2px;
+}
+
+/* Formulario de licencia: botones principales también un poco más grandes */
+#workdayModal .license-form-actions button{
+  min-height:40px;
+  font-size:8.8px;
+}
+#workdayModal .license-form-head b{
+  font-size:11px;
+}
+#workdayModal .license-form-head span{
+  font-size:8px;
+}
+
+/* ---------- JORNADAS GUARDADAS ---------- */
+
+/* La pestaña Jornada puede desplazarse porque ahora contiene historial */
+#workdayModal #workdayPane{
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  padding-right:2px;
+}
+
+/* La nota ya no absorbe todo el espacio: deja lugar al historial */
+#workdayModal #workdayPane .workday-note-section{
+  flex:0 0 auto;
+  min-height:88px;
+}
+#workdayModal #workdayPane .workday-note-section textarea{
+  min-height:68px;
+  height:68px;
+  flex:0 0 auto;
+}
+
+.workday-list-panel{
+  flex:0 0 auto;
+  margin-top:8px;
+  padding:8px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--panel2);
+}
+.workday-list-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:6px;
+}
+.workday-list-head b{
+  font-size:11px;
+}
+.workday-list-head > span{
+  color:var(--muted);
+  font-size:8px;
+  font-weight:950;
+}
+.workday-saved-list{
+  display:grid;
+  gap:5px;
+  max-height:220px;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+}
+.workday-saved-empty{
+  min-height:64px;
+  display:grid;
+  place-items:center;
+  padding:12px;
+  color:var(--muted);
+  text-align:center;
+  font-size:8.5px;
+}
+.workday-saved-item{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  gap:8px;
+  align-items:center;
+  min-height:68px;
+  padding:8px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:color-mix(in srgb,var(--panel3) 72%,transparent);
+}
+.workday-saved-icon{
+  width:40px;
+  height:40px;
+  display:grid;
+  place-items:center;
+  border-radius:11px;
+  background:linear-gradient(180deg,var(--worklog),var(--worklog2));
+  color:#271808;
+  font-size:15px;
+  font-weight:1000;
+}
+.workday-saved-copy{
+  min-width:0;
+}
+.workday-saved-copy b{
+  display:block;
+  font-size:10.8px;
+  line-height:1.05;
+}
+.workday-saved-copy span{
+  display:block;
+  margin-top:4px;
+  color:var(--muted);
+  font-size:8.2px;
+  line-height:1.15;
+}
+.workday-saved-copy small{
+  display:block;
+  margin-top:4px;
+  color:var(--muted);
+  font-size:7.4px;
+  line-height:1.18;
+  white-space:normal;
+}
+.workday-saved-actions{
+  display:grid;
+  gap:5px;
+}
+.workday-saved-actions button{
+  min-width:70px;
+  min-height:34px;
+  padding:0 7px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  background:var(--panel3);
+  color:var(--text);
+  font-size:8px;
+  font-weight:950;
+}
+.workday-saved-actions button.delete{
+  color:#ff7181;
+  border-color:rgba(255,95,114,.28);
+}
+
+body.light #workdayModal .workday-list-panel,
+body.light #workdayModal .workday-saved-item,
+body.light #workdayModal .workday-saved-actions button{
+  background:#f7f9fc;
+  color:#172536;
+  border-color:rgba(62,82,106,.16);
+}
+body.light #workdayModal .workday-list-panel{
+  background:linear-gradient(180deg,#f8fafc,#eef2f6);
+}
+
+/* Teléfonos */
+@media(max-width:620px){
+  #workdayModal .license-item{
+    min-height:66px;
+    padding:8px;
+  }
+  #workdayModal .license-item-icon{
+    width:39px;
+    height:39px;
+    font-size:15px;
+  }
+  #workdayModal .license-item-copy b{
+    font-size:10.8px;
+  }
+  #workdayModal .license-item-copy span{
+    font-size:8.4px;
+  }
+  #workdayModal .license-item-copy small{
+    font-size:7.4px;
+  }
+  #workdayModal .license-item-actions button{
+    min-width:67px;
+    min-height:34px;
+    font-size:7.8px;
+  }
+
+  .workday-list-panel{
+    padding:7px;
+  }
+  .workday-list-head b{
+    font-size:10px;
+  }
+  .workday-saved-item{
+    min-height:62px;
+    padding:7px;
+    gap:7px;
+  }
+  .workday-saved-icon{
+    width:37px;
+    height:37px;
+    font-size:14px;
+  }
+  .workday-saved-copy b{
+    font-size:10px;
+  }
+  .workday-saved-copy span{
+    font-size:7.7px;
+  }
+  .workday-saved-copy small{
+    font-size:7px;
+  }
+  .workday-saved-actions button{
+    min-width:64px;
+    min-height:31px;
+    font-size:7.3px;
+  }
+}
+
+/* Pantallas bajas: conserva botones cómodos, con scroll interno */
+@media(max-height:760px){
+  #workdayModal .license-item{
+    min-height:58px;
+    padding:6px;
+  }
+  #workdayModal .license-item-icon{
+    width:34px;
+    height:34px;
+    font-size:13px;
+  }
+  #workdayModal .license-item-copy b{font-size:9.8px}
+  #workdayModal .license-item-copy span{font-size:7.6px}
+  #workdayModal .license-item-copy small{font-size:6.8px}
+  #workdayModal .license-item-actions button{
+    min-width:60px;
+    min-height:30px;
+    font-size:7px;
+  }
+
+  #workdayModal #workdayPane .workday-note-section{
+    min-height:65px;
+  }
+  #workdayModal #workdayPane .workday-note-section textarea{
+    min-height:48px;
+    height:48px;
+  }
+  .workday-list-panel{
+    margin-top:6px;
+    padding:6px;
+  }
+  .workday-saved-list{
+    max-height:160px;
+  }
+  .workday-saved-item{
+    min-height:56px;
+    padding:6px;
+  }
+  .workday-saved-icon{
+    width:32px;
+    height:32px;
+    font-size:12px;
+  }
+  .workday-saved-copy b{font-size:9px}
+  .workday-saved-copy span{font-size:7px}
+  .workday-saved-copy small{font-size:6.4px}
+  .workday-saved-actions button{
+    min-width:58px;
+    min-height:28px;
+    font-size:6.8px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -9212,7 +9519,15 @@ body.light .top-actions .icon-btn:active{
         <button id="workdaySaveBtn" class="workday-save-btn" type="button">GUARDAR</button>
       </div>
 
-      <div class="workday-footnote">El cambio de turno calcula su duración automáticamente. Horas extra queda exclusivamente para tiempo adicional real.</div>
+      <div class="workday-list-panel">
+        <div class="workday-list-head">
+          <b>Jornadas guardadas · <span id="workdayListTurn">—</span></b>
+          <span id="workdaySavedCount">0</span>
+        </div>
+        <div id="workdaySavedList" class="workday-saved-list"></div>
+      </div>
+
+      <div class="workday-footnote">Los cambios de turno, horas extra y notas quedan guardados por fecha. El ciclo original nunca se modifica.</div>
     </div>
 
     <div id="licensePane" class="workday-pane license-pane">
@@ -9608,7 +9923,7 @@ body.light .top-actions .icon-btn:active{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.9.8';
+const CURRENT_VERSION='4.9.9';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
@@ -10412,6 +10727,9 @@ function deleteWorklogById(id,{closeWorkday=false,returnMain=false,ask=true}={})
  if(returnMain&&!closeWorkday){
   restoreMainAfterWorkday();
  }else if(!closeWorkday){
+  if($('#workdayModal')?.classList.contains('open')&&workdayActiveTab==='work'){
+   renderWorkdaySavedList();
+  }
   scheduleMainViewportFit();
  }
 
@@ -10464,6 +10782,85 @@ function worklogOvertimeText(value){
  return Number.isInteger(n)?String(n):n.toFixed(1).replace('.',',');
 }
 
+function worklogSummaryParts(record){
+ const parts=[];
+ if(record.workedCode){
+  parts.push(`Cambio: ${worklogCodeLabel(record.workedCode)}`);
+ }
+ if(Number(record.overtime)>0){
+  parts.push(`Horas extra: ${worklogOvertimeText(record.overtime)} h`);
+ }
+ if(record.note){
+  parts.push(`Nota: ${record.note}`);
+ }
+ return parts;
+}
+
+function renderWorkdaySavedList(){
+ const turn=workdayEditingTurn||activeTurnKey();
+ const list=$('#workdaySavedList');
+ if(!list)return;
+
+ const items=loadWorklogData()
+  .map(normalizeWorklog)
+  .filter(r=>r.turn===turn&&r.date&&(r.workedCode||r.overtime>0||r.note))
+  .sort((a,b)=>b.date.localeCompare(a.date));
+
+ $('#workdayListTurn').textContent=scheduleName(turn);
+ $('#workdaySavedCount').textContent=items.length;
+
+ if(!items.length){
+  list.innerHTML='<div class="workday-saved-empty">Todavía no hay jornadas guardadas para este turno.</div>';
+  return;
+ }
+
+ list.innerHTML=items.map(r=>{
+  const d=parseDateKey(r.date);
+  const planned=codeFor(turn,d);
+  const summary=worklogSummaryParts(r);
+  return `
+   <div class="workday-saved-item">
+    <span class="workday-saved-icon">J</span>
+    <div class="workday-saved-copy">
+      <b>${escapeHtml(cap(worklogDateFmt.format(d)))}</b>
+      <span>Programado: ${escapeHtml(codeText(turn,planned))}${r.workedCode?` · Trabajado: ${escapeHtml(codeText(turn,r.workedCode))}`:''}</span>
+      <small>${summary.map(escapeHtml).join(' · ')}</small>
+    </div>
+    <div class="workday-saved-actions">
+      <button type="button" data-workday-edit="${escapeHtml(r.id)}">EDITAR</button>
+      <button type="button" class="delete" data-workday-delete="${escapeHtml(r.id)}">ELIMINAR</button>
+    </div>
+   </div>`;
+ }).join('');
+
+ $$('[data-workday-edit]').forEach(btn=>{
+  btn.onclick=()=>{
+   const r=items.find(x=>x.id===btn.dataset.workdayEdit);
+   if(!r)return;
+   const d=parseDateKey(r.date);
+   renderWorkdayModal(d,turn);
+   setWorkdayTab('work');
+   const modal=$('#workdayModal .workday-modal-window');
+   if(modal)modal.scrollTop=0;
+  };
+ });
+
+ $$('[data-workday-delete]').forEach(btn=>{
+  btn.onclick=()=>{
+   const id=btn.dataset.workdayDelete;
+   const currentId=worklogIdFor(workdayEditingDate,workdayEditingTurn);
+   if(!deleteWorklogById(id,{ask:true}))return;
+   if(id===currentId){
+    renderWorkdayModal(workdayEditingDate,workdayEditingTurn);
+    setWorkdayTab('work');
+   }else{
+    renderWorkdaySavedList();
+   }
+  };
+ });
+}
+
+
 function setWorkdayWorkedCode(code){
  const planned=codeFor(workdayEditingTurn,workdayEditingDate);
  let normalized=['M','N','F','D'].includes(code)?code:'';
@@ -10508,6 +10905,7 @@ function renderWorkdayModal(date,turn){
  $('#workdayDeleteBtn').disabled=!existing;
  clearLicenseForm(true);
  renderLicenseList();
+ renderWorkdaySavedList();
 }
 
 function openWorkday(date=selectedDate,turn=activeTurnKey(),tab='work'){
@@ -11022,6 +11420,7 @@ function setWorkdayTab(tab){
  $('#workdayHeadIcon').classList.toggle('license',workdayActiveTab==='license');
  $('#workdayTitleText').textContent=workdayActiveTab==='license'?'Licencias':'Jornada';
  if(workdayActiveTab==='license')renderLicenseList();
+ else renderWorkdaySavedList();
 }
 
 function workdayChangeHours(code){
