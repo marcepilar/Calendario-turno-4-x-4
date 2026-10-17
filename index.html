@@ -132,8 +132,8 @@ select,.field{width:100%;border:1px solid var(--line);background:var(--panel2);c
   animation:turnSelectedPulse 2.4s ease-in-out infinite;
 }
 @keyframes turnSelectedPulse{
-  0%,100%{transform:scale(.93)}
-  50%{transform:scale(1.15)}
+  0%,100%{transform:scale(.92)}
+  50%{transform:scale(1.16)}
 }
 @media (prefers-reduced-motion:reduce){
   .turn-pulse-text{animation:none !important}
@@ -157,8 +157,8 @@ select,.field{width:100%;border:1px solid var(--line);background:var(--panel2);c
   animation:turn5SelectedPulse 2.4s ease-in-out infinite;
 }
 @keyframes turn5SelectedPulse{
-  0%,100%{transform:scale(.96)}
-  50%{transform:scale(1.10)}
+  0%,100%{transform:scale(.95)}
+  50%{transform:scale(1.11)}
 }
 .turn5-select-wrap::after{content:"";position:absolute;right:16px;top:50%;width:9px;height:9px;border-right:2px solid var(--text);border-bottom:2px solid var(--text);transform:translateY(-64%) rotate(45deg);opacity:.82;pointer-events:none}
 @media (prefers-reduced-motion:reduce){
@@ -10242,6 +10242,10 @@ body.light.calendar-common-view .mini-day.common-mini.weekend{
   display:none !important;
 }
 
+
+/* ===== V4.11.9 · PULSO SELECTOR TURNOS +1 PUNTO ===== */
+/* Principal: 0.92 ↔ 1.16 · T5: 0.95 ↔ 1.11 */
+
 </style>
 </head>
 <body>
@@ -11247,7 +11251,7 @@ body.light.calendar-common-view .mini-day.common-mini.weekend{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.11.8';
+const CURRENT_VERSION='4.11.9';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
@@ -11717,8 +11721,8 @@ function startPersistentTurnPulse(el,type){
 
  const isMain=type==='main';
  const cssName=isMain?'turnSelectedPulse':'turn5SelectedPulse';
- const minScale=isMain?.93:.96;
- const maxScale=isMain?1.15:1.10;
+ const minScale=isMain?.92:.95;
+ const maxScale=isMain?1.16:1.11;
 
  // Preferimos Web Animations API porque no queda afectada por las reglas
  // CSS globales de "reducir movimiento" de algunos Samsung/One UI.
