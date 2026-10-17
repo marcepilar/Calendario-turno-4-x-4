@@ -10246,6 +10246,109 @@ body.light.calendar-common-view .mini-day.common-mini.weekend{
 /* ===== V4.11.9 · PULSO SELECTOR TURNOS +1 PUNTO ===== */
 /* Principal: 0.92 ↔ 1.16 · T5: 0.95 ↔ 1.11 */
 
+
+/* ===== V4.12.0 · ESTADÍSTICAS · TURNO ACTIVO MÁS LEGIBLE ===== */
+
+/* Agrandar suavemente textos y contenido de la tarjeta de turno activo. */
+#statsModal .stats-turn-end > h3{
+  font-size:10.2px !important;
+}
+
+#statsModal .turn-end-card{
+  padding:8px 11px !important;
+}
+
+#statsModal .turn-end-top{
+  gap:11px !important;
+}
+
+#statsModal .turn-end-copy small{
+  font-size:7.7px !important;
+  line-height:1.15 !important;
+}
+
+#statsModal .turn-end-copy b,
+#statsModal .turn-end-card.is-inactive .turn-end-copy b{
+  font-size:clamp(21px,3.4vw,26px) !important;
+  line-height:1.02 !important;
+  margin-top:4px !important;
+}
+
+#statsModal .turn-end-copy span{
+  font-size:8.7px !important;
+  line-height:1.24 !important;
+  margin-top:5px !important;
+}
+
+#statsModal .turn-end-badge{
+  min-width:62px !important;
+  min-height:56px !important;
+  padding:7px 9px !important;
+  font-size:21px !important;
+  border-radius:14px !important;
+}
+
+/* En teléfonos se mantiene el aumento sin comprometer el encaje general. */
+@media(max-width:620px){
+  #statsModal .stats-turn-end > h3{
+    font-size:9.8px !important;
+  }
+
+  #statsModal .turn-end-card{
+    padding:7px 9px !important;
+  }
+
+  #statsModal .turn-end-copy small{
+    font-size:7.5px !important;
+  }
+
+  #statsModal .turn-end-copy b,
+  #statsModal .turn-end-card.is-inactive .turn-end-copy b{
+    font-size:22px !important;
+  }
+
+  #statsModal .turn-end-copy span{
+    font-size:8.2px !important;
+  }
+
+  #statsModal .turn-end-badge{
+    min-width:59px !important;
+    min-height:53px !important;
+    font-size:20px !important;
+  }
+}
+
+/* Pantallas bajas: aumento moderado, pero sigue entrando en una pantalla. */
+@media(max-height:760px){
+  #statsModal .stats-turn-end > h3{
+    font-size:8.2px !important;
+  }
+
+  #statsModal .turn-end-card{
+    padding:5px 7px !important;
+  }
+
+  #statsModal .turn-end-copy small{
+    font-size:6.9px !important;
+  }
+
+  #statsModal .turn-end-copy b,
+  #statsModal .turn-end-card.is-inactive .turn-end-copy b{
+    font-size:19px !important;
+  }
+
+  #statsModal .turn-end-copy span{
+    font-size:7.1px !important;
+    margin-top:3px !important;
+  }
+
+  #statsModal .turn-end-badge{
+    min-width:50px !important;
+    min-height:45px !important;
+    font-size:18px !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -11251,7 +11354,7 @@ body.light.calendar-common-view .mini-day.common-mini.weekend{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.11.9';
+const CURRENT_VERSION='4.12.0';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
