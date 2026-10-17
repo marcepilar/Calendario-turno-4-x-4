@@ -10124,18 +10124,18 @@ body.light.calendar-common-view .mini-day.common-mini.weekend{
   }
 
   #settingsModal .settings-preview{
-    flex:0 0 66px !important;
-    min-height:66px !important;
-    max-height:66px !important;
+    flex:0 0 62px !important;
+    min-height:62px !important;
+    max-height:62px !important;
     margin-top:2px !important;
-    padding-top:3px !important;
-    padding-bottom:4px !important;
+    padding-top:2px !important;
+    padding-bottom:3px !important;
   }
 
   #settingsModal.t5-profile .settings-preview{
-    flex:0 0 66px !important;
-    min-height:66px !important;
-    max-height:66px !important;
+    flex:0 0 62px !important;
+    min-height:62px !important;
+    max-height:62px !important;
   }
 
   #settingsModal .settings-preview-head{
@@ -10143,8 +10143,8 @@ body.light.calendar-common-view .mini-day.common-mini.weekend{
   }
 
   #settingsModal .settings-preview-day{
-    padding-top:3px !important;
-    padding-bottom:4px !important;
+    padding-top:2px !important;
+    padding-bottom:3px !important;
   }
 
   #settingsModal .action-row{
@@ -10155,8 +10155,8 @@ body.light.calendar-common-view .mini-day.common-mini.weekend{
 
   #settingsModal .action-row button,
   #settingsModal .action-row label{
-    min-height:38px !important;
-    height:38px !important;
+    min-height:42px !important;
+    height:42px !important;
     padding-top:0 !important;
     padding-bottom:0 !important;
   }
@@ -10171,25 +10171,25 @@ body.light.calendar-common-view .mini-day.common-mini.weekend{
   }
 }
 
-/* Pantallas de altura muy justa: liberar unos píxeles extra. */
+/* Pantallas de altura muy justa: mantener el equilibrio sin recortar. */
 @media(max-width:620px) and (max-height:820px){
 
   #settingsModal .settings-preview{
-    flex-basis:62px !important;
-    min-height:62px !important;
-    max-height:62px !important;
+    flex-basis:58px !important;
+    min-height:58px !important;
+    max-height:58px !important;
   }
 
   #settingsModal.t5-profile .settings-preview{
-    flex-basis:62px !important;
-    min-height:62px !important;
-    max-height:62px !important;
+    flex-basis:58px !important;
+    min-height:58px !important;
+    max-height:58px !important;
   }
 
   #settingsModal .action-row button,
   #settingsModal .action-row label{
-    min-height:36px !important;
-    height:36px !important;
+    min-height:40px !important;
+    height:40px !important;
   }
 }
 
@@ -11787,93 +11787,6 @@ body.light .plant-select-btn{
   }
 }
 
-
-/* ===== V5.0.5 · VISTA PREVIA RESPONSIVA · SIN ESPACIO DESPERDICIADO ===== */
-/* La V5.0.4 fijaba la vista previa en 50–62 px con !important.
-   Ahora es el único bloque elástico del modal; el resto de controles
-   conserva su posición y los botones quedan debajo de la vista previa. */
-#settingsModal .settings-modal-window{
-  min-height:0 !important;
-}
-#settingsModal .settings-preview,
-#settingsModal.t5-profile .settings-preview{
-  flex:1 1 82px !important;
-  min-height:72px !important;
-  max-height:none !important;
-  margin-top:5px !important;
-  padding:8px 9px !important;
-  box-sizing:border-box !important;
-}
-#settingsModal .settings-preview-grid{
-  min-height:0 !important;
-  height:100% !important;
-}
-#settingsModal .settings-preview-day,
-#settingsModal.t5-profile .settings-preview-day{
-  min-height:0 !important;
-  height:100% !important;
-  padding:6px 5px !important;
-}
-#settingsModal .settings-preview-head,
-#settingsModal.t5-profile .settings-preview-head{
-  margin-bottom:5px !important;
-}
-/* En teléfonos altos los controles eran excesivamente grandes,
-   lo que aplastaba otra vez la vista previa antes de los 1000 px. */
-@media(max-width:620px) and (min-height:901px) and (max-height:1050px){
-  #settingsModal .color-setting-row{
-    min-height:61px !important;
-    padding-top:5px !important;
-    padding-bottom:5px !important;
-  }
-  #settingsModal .color-edit-control{
-    height:53px !important;
-  }
-  #settingsModal .color-input{
-    height:39px !important;
-  }
-  #settingsModal .setting-range-row{
-    min-height:61px !important;
-    padding-top:5px !important;
-    padding-bottom:5px !important;
-  }
-  #settingsModal .range-value{
-    height:39px !important;
-  }
-  #settingsModal .settings-preview,
-  #settingsModal.t5-profile .settings-preview{
-    min-height:88px !important;
-  }
-}
-/* Escritorio y tablet: se evita que los botones queden fuera del área visible. */
-@media(min-width:621px){
-  #settingsModal .settings-modal-window{
-    overflow-x:hidden !important;
-    overflow-y:auto !important;
-    -webkit-overflow-scrolling:touch !important;
-  }
-  #settingsModal .settings-preview,
-  #settingsModal.t5-profile .settings-preview{
-    flex:0 0 136px !important;
-    min-height:136px !important;
-  }
-}
-/* En pantallas realmente bajas, el desplazamiento es una salvaguarda
-   para que ninguna opción ni el botón LISTO queden inaccesibles. */
-@media(max-width:620px) and (max-height:690px){
-  #settingsModal .settings-modal-window{
-    overflow-x:hidden !important;
-    overflow-y:auto !important;
-    -webkit-overflow-scrolling:touch !important;
-  }
-  #settingsModal.open{touch-action:pan-y !important;}
-  #settingsModal .settings-preview,
-  #settingsModal.t5-profile .settings-preview{
-    flex:0 0 85px !important;
-    min-height:85px !important;
-  }
-}
-
 </style>
 </head>
 <body class="notranslate">
@@ -12490,7 +12403,7 @@ body.light .plant-select-btn{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.0.4</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.0.5</span></span>
             </div>
           </div>
 
@@ -13005,7 +12918,7 @@ body.light .plant-select-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.0.6';
+const CURRENT_VERSION='5.0.5';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -16827,74 +16740,35 @@ bindYearHold($('#yearPrev'),-1);
 bindYearHold($('#yearNext'),1);
 
 
-/* ===== V5.0.6 · ACTUALIZACIONES VERIFICADAS SIN FALSOS AVISOS ===== */
 let latestVersion=CURRENT_VERSION;
-let updateInProgress=false;
-let checkUpdateInProgress=false;
 const UPDATE_DISMISS_KEY='turno4x4.updateDismissedVersion';
 
-function compareAppVersions(a,b){
- const parts=s=>String(s||'').trim().replace(/^v/i,'').split('.').map(x=>/^\d+$/.test(x)?Number(x):NaN);
- const av=parts(a), bv=parts(b);
- if(av.length!==3||bv.length!==3||av.some(Number.isNaN)||bv.some(Number.isNaN))return null;
- for(let i=0;i<3;i++)if(av[i]!==bv[i])return av[i]>bv[i]?1:-1;
- return 0;
-}
-
-function hideUpdateNotice(){
- $('#updateBanner').classList.remove('show');
- settingsBtn.classList.remove('has-update');
-}
-
-async function readPublishedAppVersion(){
- /* Se usa la raíz del sitio (no index.html) para no recibir una copia
-    antigua de index.html servida por un service worker anterior. */
- const u=new URL('./',location.href);
- u.searchParams.set('check_release',String(Date.now()));
- const r=await fetch(u.href,{cache:'no-store'});
- if(!r.ok)throw new Error('El servidor no respondió correctamente.');
- const html=await r.text();
- const m=html.match(/const\s+CURRENT_VERSION\s*=\s*['"](\d+\.\d+\.\d+)['"]/);
- if(!m)throw new Error('No se pudo comprobar la versión publicada.');
- return m[1];
-}
-
 async function checkUpdate(){
- if(updateInProgress||checkUpdateInProgress)return;
- checkUpdateInProgress=true;
  try{
   const r=await fetch('./version.json?t='+Date.now(),{cache:'no-store'});
   if(!r.ok)return;
   const data=await r.json();
   const remote=String(data.version||'').trim();
-  const newer=compareAppVersions(remote,CURRENT_VERSION);
-  if(newer!==1){
-   /* Una versión IGUAL o ANTERIOR jamás debe generar un aviso. */
-   hideUpdateNotice();
+
+  if(remote&&remote!==CURRENT_VERSION){
+   latestVersion=remote;
+   const dismissed=sessionStorage.getItem(UPDATE_DISMISS_KEY);
+   $('#updateVersionText').textContent=`Versión ${remote} disponible.`;
+   settingsBtn.classList.add('has-update');
+   $('#updateStatusText').textContent=`Nueva versión ${remote} disponible.`;
+
+   // Si el usuario tocó "Más tarde", no volver a mostrar la misma versión
+   // durante esta sesión. Una versión posterior sí volverá a avisar.
+   if(dismissed!==remote){
+    $('#updateBanner').classList.add('show');
+   }
+  }else{
+   $('#updateBanner').classList.remove('show');
+   settingsBtn.classList.remove('has-update');
    sessionStorage.removeItem(UPDATE_DISMISS_KEY);
    $('#updateStatusText').textContent='Aplicación actualizada.';
-   return;
   }
-
-  /* Verificar también que GitHub Pages ya publicó index.html.
-     version.json puede subirse antes que el resto de archivos. */
-  const published=await readPublishedAppVersion();
-  if(compareAppVersions(published,remote)!==0){
-   hideUpdateNotice();
-   $('#updateStatusText').textContent='Publicación de la nueva versión en curso.';
-   return;
-  }
-
-  latestVersion=remote;
-  $('#updateVersionText').textContent=`Versión ${remote} disponible.`;
-  $('#updateStatusText').textContent=`Nueva versión ${remote} disponible.`;
-  settingsBtn.classList.add('has-update');
-  if(sessionStorage.getItem(UPDATE_DISMISS_KEY)!==remote){
-   $('#updateBanner').classList.add('show');
-  }
- }catch{
-  /* Sin conexión no se anuncia una actualización que no pudimos verificar. */
- }finally{checkUpdateInProgress=false;}
+ }catch{}
 }
 
 $('#updateLaterBtn').onclick=()=>{
@@ -16903,57 +16777,27 @@ $('#updateLaterBtn').onclick=()=>{
 };
 
 $('#updateNowBtn').onclick=async()=>{
- if(updateInProgress)return;
- const btn=$('#updateNowBtn');
- const caption=$('#updateBanner .update-copy b');
- updateInProgress=true;
- btn.disabled=true;
- btn.textContent='VERIFICANDO…';
- try{
-  const published=await readPublishedAppVersion();
-  if(compareAppVersions(published,CURRENT_VERSION)!==1){
-   throw new Error('GitHub todavía no publicó una versión más reciente. Probá nuevamente en unos minutos.');
-  }
-  if(compareAppVersions(published,latestVersion)!==0){
-   throw new Error('Los archivos del sitio todavía se están publicando. Probá en unos minutos.');
-  }
+ const b=$('#updateNowBtn');
+ b.disabled=true;
+ b.textContent='ACTUALIZANDO…';
+ $('#updateBanner').classList.remove('show');
+ sessionStorage.removeItem(UPDATE_DISMISS_KEY);
 
-  btn.textContent='ACTUALIZANDO…';
-  if('serviceWorker' in navigator){
-   const reg=await navigator.serviceWorker.getRegistration();
-   if(reg){
-    await reg.update();
-    if(reg.waiting)reg.waiting.postMessage({type:'SKIP_WAITING'});
-    /* Dar tiempo al nuevo service worker para tomar control.
-       La navegación posterior usa una URL distinta de index.html para
-       evitar caches antiguas que ignoraban el parámetro ?update. */
-    if(reg.installing){
-     await Promise.race([
-      new Promise(resolve=>{
-       const worker=reg.installing;
-       worker.addEventListener('statechange',()=>{
-        if(worker.state==='activated'||worker.state==='redundant')resolve();
-        if(worker.state==='installed')worker.postMessage({type:'SKIP_WAITING'});
-       });
-      }),
-      new Promise(resolve=>setTimeout(resolve,3500))
-     ]);
-    }
-   }
+ try{
+  const reg=await navigator.serviceWorker?.getRegistration();
+  if(reg){
+   await reg.update();
+   if(reg.waiting)reg.waiting.postMessage({type:'SKIP_WAITING'});
   }
-  const target=new URL('./',location.href);
-  target.searchParams.set('app_updated',published);
-  target.searchParams.set('t',String(Date.now()));
-  location.replace(target.href);
- }catch(err){
-  caption.textContent='Actualización pendiente';
-  $('#updateVersionText').textContent=err?.message||'No se pudo actualizar. Revisá tu conexión e intentá nuevamente.';
-  $('#updateBanner').classList.add('show');
-  btn.disabled=false;
-  btn.textContent='REINTENTAR';
-  updateInProgress=false;
- }
+ }catch{}
+
+ // Cache-busting fuerte para que el navegador no vuelva a cargar el index viejo.
+ setTimeout(()=>{
+  const target=`./index.html?update=${Date.now()}&v=${encodeURIComponent(latestVersion||'')}`;
+  location.replace(target);
+ },900);
 };
+
 
 function keepDetailBelowInitialFold(){
  const spacer=$('#belowFoldSpacer');
