@@ -11352,6 +11352,325 @@ body.light .language-cycle-btn{background:#eef3f8;color:#1d2b3b;border-color:rgb
 
 /* ===== V5.0.1 · DERECHOS DE AUTOR ===== */
 
+
+/* ===== V5.0.2 · MULTI-PLANTA ===== */
+
+.plant-setting{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;
+  gap:9px;
+  margin:0 0 6px;
+  padding:7px 9px;
+  min-height:43px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:var(--panel2);
+}
+.plant-setting-copy{min-width:0}
+.plant-setting-copy b{display:block;font-size:10.7px;line-height:1.1}
+.plant-setting-copy small{
+  display:block;
+  margin-top:2px;
+  color:var(--muted);
+  font-size:7.8px;
+  line-height:1.1;
+}
+.plant-select-btn{
+  min-width:150px;
+  height:34px;
+  padding:0 9px;
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:6px;
+  border:1px solid rgba(66,214,176,.24);
+  border-radius:10px;
+  background:linear-gradient(180deg,var(--panel3),var(--panel2));
+  color:var(--text);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 5px 12px rgba(0,0,0,.12);
+  cursor:pointer;
+  touch-action:manipulation;
+}
+.plant-select-btn:active{transform:scale(.98);background:var(--panel3)}
+.plant-flag{font-size:15px;line-height:1}
+.plant-select-btn strong{
+  min-width:0;
+  flex:1;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:8.7px;
+  font-weight:950;
+  letter-spacing:.01em;
+  text-align:left;
+}
+.plant-chevron{
+  color:var(--muted);
+  font-size:17px;
+  line-height:1;
+  transform:translateY(-1px);
+}
+body.light .plant-select-btn{
+  background:#eef3f8;
+  color:#1d2b3b;
+  border-color:rgba(10,167,133,.22);
+}
+
+#plantModal{
+  padding:
+    max(6px,env(safe-area-inset-top,0px))
+    max(6px,env(safe-area-inset-right,0px))
+    max(6px,env(safe-area-inset-bottom,0px))
+    max(6px,env(safe-area-inset-left,0px));
+}
+#plantModal .plant-modal-window{
+  width:min(720px,calc(100vw - 12px));
+  max-height:calc(100dvh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px) - 12px);
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  scrollbar-width:none;
+  padding:10px;
+}
+#plantModal .plant-modal-window::-webkit-scrollbar{display:none}
+#plantModal .plant-head{margin-bottom:8px}
+#plantModal .plant-head-icon{margin-right:4px}
+#plantModal .plant-active-summary{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:center;
+  gap:9px;
+  padding:10px;
+  border:1px solid rgba(66,214,176,.22);
+  border-radius:15px;
+  background:
+    radial-gradient(circle at 0 100%,rgba(66,214,176,.09),transparent 45%),
+    var(--panel2);
+}
+.plant-active-flag{
+  width:40px;
+  height:40px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:var(--panel3);
+  border:1px solid var(--line);
+  font-size:21px;
+}
+.plant-active-summary small,
+.plant-active-summary span{
+  display:block;
+  color:var(--muted);
+  font-size:8px;
+  line-height:1.25;
+}
+.plant-active-summary b{
+  display:block;
+  margin:2px 0;
+  font-size:12px;
+}
+.plant-status-active{
+  padding:5px 7px;
+  border-radius:999px;
+  background:rgba(66,214,176,.12);
+  border:1px solid rgba(66,214,176,.24);
+  color:var(--accent)!important;
+  font-size:7.5px!important;
+  font-weight:1000;
+  letter-spacing:.05em;
+}
+.plant-info-card{
+  margin-top:8px;
+  padding:9px 10px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:var(--panel2);
+}
+.plant-info-card b{display:block;font-size:10.5px}
+.plant-info-card span{
+  display:block;
+  margin-top:3px;
+  color:var(--muted);
+  font-size:8.2px;
+  line-height:1.35;
+}
+.plant-country-list{
+  display:grid;
+  gap:8px;
+  margin-top:8px;
+}
+.plant-country-card{
+  padding:8px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:var(--panel2);
+}
+.plant-country-head{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:1px 2px 7px;
+}
+.plant-country-flag{font-size:21px}
+.plant-country-head b{display:block;font-size:11px}
+.plant-country-head small{
+  display:block;
+  margin-top:1px;
+  color:var(--muted);
+  font-size:7.7px;
+}
+.plant-profile-btn{
+  width:100%;
+  min-height:48px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;
+  gap:8px;
+  margin-top:5px;
+  padding:7px 9px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--panel3);
+  color:var(--text);
+  text-align:left;
+}
+.plant-profile-btn.active{
+  border-color:rgba(66,214,176,.28);
+  background:linear-gradient(135deg,rgba(66,214,176,.08),rgba(67,168,255,.05)),var(--panel3);
+}
+.plant-profile-btn.upcoming{
+  opacity:.72;
+  cursor:not-allowed;
+}
+.plant-profile-copy b{display:block;font-size:10px}
+.plant-profile-copy small{
+  display:block;
+  margin-top:2px;
+  color:var(--muted);
+  font-size:7.7px;
+}
+.plant-profile-badge{
+  padding:5px 7px;
+  border-radius:999px;
+  border:1px solid rgba(149,163,181,.18);
+  background:rgba(149,163,181,.08);
+  color:var(--muted);
+  font-size:6.9px;
+  font-weight:1000;
+  letter-spacing:.035em;
+}
+.plant-profile-badge.active{
+  color:var(--accent);
+  border-color:rgba(66,214,176,.22);
+  background:rgba(66,214,176,.09);
+}
+.plant-modal-note{
+  margin:8px 2px 2px;
+  padding:8px 9px;
+  border-left:3px solid var(--accent2);
+  border-radius:9px;
+  background:rgba(67,168,255,.06);
+  color:var(--muted);
+  font-size:7.8px;
+  line-height:1.35;
+}
+
+/* Mantener Configuración completa y fija aun con la nueva fila Planta. */
+@media(max-width:620px) and (max-height:900px){
+  #settingsModal .plant-setting,
+  #settingsModal .language-setting{
+    min-height:33px!important;
+    margin:0 0 2px!important;
+    padding:3px 7px!important;
+  }
+  #settingsModal .calendar-view-setting{
+    min-height:35px!important;
+    margin:0 0 3px!important;
+    padding:3px 7px!important;
+  }
+  #settingsModal .plant-setting-copy b,
+  #settingsModal .language-setting-copy b{font-size:9.6px!important}
+  #settingsModal .plant-setting-copy small,
+  #settingsModal .language-setting-copy small,
+  #settingsModal .calendar-view-setting-copy small{font-size:6.7px!important}
+  #settingsModal .plant-select-btn{
+    min-width:134px!important;
+    height:27px!important;
+    padding:0 6px!important;
+  }
+  #settingsModal .plant-select-btn strong{font-size:7.8px!important}
+  #settingsModal .plant-flag{font-size:12px!important}
+  #settingsModal .language-cycle-btn{height:27px!important}
+  #settingsModal .calendar-view-btn{height:27px!important}
+
+  #settingsModal .color-profile-note{
+    min-height:22px!important;
+    margin-bottom:2px!important;
+    padding:2px 7px!important;
+  }
+  #settingsModal .settings-list{gap:2px!important}
+  #settingsModal .color-setting-row{
+    min-height:50px!important;
+    padding-top:4px!important;
+    padding-bottom:4px!important;
+  }
+  #settingsModal .color-edit-control{height:43px!important}
+  #settingsModal .palette-setting{min-height:31px!important}
+  #settingsModal .setting-range-row{
+    min-height:42px!important;
+    padding-top:2px!important;
+    padding-bottom:2px!important;
+  }
+  #settingsModal .settings-preview{
+    flex-basis:52px!important;
+    min-height:52px!important;
+    max-height:52px!important;
+    margin-top:2px!important;
+    padding-top:3px!important;
+    padding-bottom:4px!important;
+  }
+  #settingsModal .settings-preview-head{margin-bottom:1px!important}
+  #settingsModal .settings-main-actions{margin-top:2px!important}
+  #settingsModal .action-row{margin-top:2px!important}
+  #settingsModal .action-row button,
+  #settingsModal .action-row label{
+    min-height:33px!important;
+    height:33px!important;
+  }
+
+  #settingsModal.t5-profile .color-setting-row{min-height:54px!important}
+  #settingsModal.t5-profile .color-edit-control{height:47px!important}
+  #settingsModal.t5-profile .settings-preview{
+    flex-basis:56px!important;
+    min-height:56px!important;
+    max-height:56px!important;
+  }
+}
+
+@media(max-width:620px) and (max-height:760px){
+  #settingsModal .plant-setting,
+  #settingsModal .language-setting{min-height:30px!important}
+  #settingsModal .calendar-view-setting{min-height:32px!important}
+  #settingsModal .plant-select-btn,
+  #settingsModal .language-cycle-btn{height:25px!important}
+  #settingsModal .calendar-view-btn{height:25px!important}
+  #settingsModal .settings-preview{
+    flex-basis:46px!important;
+    min-height:46px!important;
+    max-height:46px!important;
+  }
+  #settingsModal.t5-profile .settings-preview{
+    flex-basis:48px!important;
+    min-height:48px!important;
+    max-height:48px!important;
+  }
+  #settingsModal .action-row button,
+  #settingsModal .action-row label{
+    min-height:30px!important;
+    height:30px!important;
+  }
+}
+
 </style>
 </head>
 <body class="notranslate">
@@ -11471,6 +11790,18 @@ body.light .language-cycle-btn{background:#eef3f8;color:#1d2b3b;border-color:rgb
 <!-- Settings -->
 <div id="settingsModal" class="backdrop"><div class="modal glass settings-modal-window">
   <div class="modal-head"><div><h2>⚙️ Configuración</h2><small>Personalizá la aplicación</small></div><button class="close-btn" data-close="settingsModal">×</button></div>
+  <div class="plant-setting">
+    <div class="plant-setting-copy">
+      <b>Planta / Ubicación</b>
+      <small>Perfil de calendario activo</small>
+    </div>
+    <button id="plantSelectBtn" class="plant-select-btn" type="button" aria-label="Seleccionar planta">
+      <span class="plant-flag" aria-hidden="true">🇦🇷</span>
+      <strong id="plantSelectLabel" data-no-i18n>Argentina · Pilar</strong>
+      <span class="plant-chevron" aria-hidden="true">›</span>
+    </button>
+  </div>
+
   <div class="language-setting">
     <div class="language-setting-copy">
       <b>Idioma</b>
@@ -11568,6 +11899,93 @@ body.light .language-cycle-btn{background:#eef3f8;color:#1d2b3b;border-color:rgb
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
 </div></div>
 
+
+<!-- Planta / Ubicación -->
+<div id="plantModal" class="backdrop plant-backdrop">
+  <div class="modal glass plant-modal-window">
+    <div class="modal-head plant-head">
+      <div>
+        <h2><span class="plant-head-icon">🌎</span> Planta / Ubicación</h2>
+        <small>Perfiles de calendario por planta</small>
+      </div>
+      <button class="close-btn" data-close="plantModal" aria-label="Cerrar selección de planta">×</button>
+    </div>
+
+    <div class="plant-active-summary">
+      <div class="plant-active-flag" aria-hidden="true">🇦🇷</div>
+      <div>
+        <small>Perfil activo</small>
+        <b data-no-i18n>Argentina · Pilar</b>
+        <span>Calendario actual · disponible</span>
+      </div>
+      <span class="plant-status-active">ACTIVA</span>
+    </div>
+
+    <div class="plant-info-card">
+      <b>Arquitectura multi-planta</b>
+      <span>La aplicación está preparada para incorporar calendarios y ciclos diferentes por ubicación sin modificar el perfil activo de Pilar.</span>
+    </div>
+
+    <div class="plant-country-list">
+      <section class="plant-country-card">
+        <div class="plant-country-head">
+          <span class="plant-country-flag" aria-hidden="true">🇦🇷</span>
+          <div><b>Argentina</b><small>2 perfiles</small></div>
+        </div>
+
+        <button class="plant-profile-btn active" type="button" data-plant-profile="ar-pilar">
+          <span class="plant-profile-copy">
+            <b data-no-i18n>Pilar</b>
+            <small>Perfil actual</small>
+          </span>
+          <span class="plant-profile-badge active">ACTIVA</span>
+        </button>
+
+        <button class="plant-profile-btn upcoming" type="button" disabled aria-disabled="true">
+          <span class="plant-profile-copy">
+            <b data-no-i18n>Puerto Madryn</b>
+            <small>Horario y ciclo por confirmar</small>
+          </span>
+          <span class="plant-profile-badge">PRÓXIMAMENTE</span>
+        </button>
+      </section>
+
+      <section class="plant-country-card">
+        <div class="plant-country-head">
+          <span class="plant-country-flag" aria-hidden="true">🇧🇷</span>
+          <div><b>Brasil</b><small>Perfil pendiente</small></div>
+        </div>
+
+        <button class="plant-profile-btn upcoming" type="button" disabled aria-disabled="true">
+          <span class="plant-profile-copy">
+            <b>Planta por confirmar</b>
+            <small>Horario y ciclo por confirmar</small>
+          </span>
+          <span class="plant-profile-badge">PRÓXIMAMENTE</span>
+        </button>
+      </section>
+
+      <section class="plant-country-card">
+        <div class="plant-country-head">
+          <span class="plant-country-flag" aria-hidden="true">🇺🇸</span>
+          <div><b>Estados Unidos</b><small>Perfil pendiente</small></div>
+        </div>
+
+        <button class="plant-profile-btn upcoming" type="button" disabled aria-disabled="true">
+          <span class="plant-profile-copy">
+            <b>Planta por confirmar</b>
+            <small>Horario y ciclo por confirmar</small>
+          </span>
+          <span class="plant-profile-badge">PRÓXIMAMENTE</span>
+        </button>
+      </section>
+    </div>
+
+    <div class="plant-modal-note">
+      Los perfiles marcados como “Próximamente” se habilitarán solamente después de validar sus horarios y ciclos reales.
+    </div>
+  </div>
+</div>
 
 
 
@@ -11845,10 +12263,12 @@ body.light .language-cycle-btn{background:#eef3f8;color:#1d2b3b;border-color:rgb
         <div class="help-section-title"><span>9</span><div><b>Configuración</b><small>Aspecto y comportamiento</small></div></div>
         <div class="help-card">
           <p>Desde ⚙️ personalizá colores, tamaños, paletas rápidas y la vista previa.</p>
+          <p><strong>Planta / Ubicación:</strong> permite trabajar con perfiles de calendario diferentes según la planta. Argentina · Pilar es el perfil activo actual.</p>
+          <p>Puerto Madryn, Brasil y Estados Unidos aparecen como perfiles preparados para futuras incorporaciones; no se habilitan hasta validar sus horarios y ciclos reales.</p>
           <p>Podés mostrar/ocultar descripciones, feriados y activar/desactivar vibración.</p>
           <p><strong>Restaurar:</strong> devuelve la configuración visual a sus valores originales.</p>
           <p>El botón ☀️/🌙 cambia entre modo claro y oscuro.</p>
-          <p class="help-tip">Los cambios visuales no alteran la lógica de los turnos.</p>
+          <p class="help-tip">Los cambios visuales y los perfiles aún no habilitados no alteran la lógica de los turnos de Pilar.</p>
         </div>
       </section>
 
@@ -11886,7 +12306,7 @@ body.light .language-cycle-btn{background:#eef3f8;color:#1d2b3b;border-color:rgb
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.0.1</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.0.2</span></span>
             </div>
           </div>
 
@@ -12401,7 +12821,7 @@ body.light .language-cycle-btn{background:#eef3f8;color:#1d2b3b;border-color:rgb
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.0.1';
+const CURRENT_VERSION='5.0.2';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -12432,6 +12852,7 @@ const agendaTitleInput=$('#agendaTitleInput'),agendaTimeInput=$('#agendaTimeInpu
 const agendaSearchInput=$('#agendaSearchInput'),agendaFilterInput=$('#agendaFilterInput'),backupStatus=$('#backupStatus');
 const settingsBtn=$('#settingsBtn'),morningColor=$('#morningColor'),nightColor=$('#nightColor'),offColor=$('#offColor'),codeSize=$('#codeSize'),codeSizeValue=$('#codeSizeValue'),showLabels=$('#showLabels'),showHolidays=$('#showHolidays'),hapticsToggle=$('#hapticsToggle');
 const calendarViewShiftsBtn=$('#calendarViewShiftsBtn'),calendarViewCommonBtn=$('#calendarViewCommonBtn'),languageCycleBtn=$('#languageCycleBtn');
+const plantSelectBtn=$('#plantSelectBtn'),plantSelectLabel=$('#plantSelectLabel');
 const morningColorRow=$('#morningColorRow'),nightColorRow=$('#nightColorRow'),offColorRow=$('#offColorRow'),paletteNightTab=$('#paletteNightTab'),colorProfileTitle=$('#colorProfileTitle'),colorProfileText=$('#colorProfileText'),morningColorTitle=$('#morningColorTitle'),morningColorNote=$('#morningColorNote'),paletteHelp=$('#paletteHelp'),paletteNote=$('#paletteNote');
 const AGENDA_KEY='turno4x4.agenda.v1', NOTIFIED_KEY='turno4x4.agenda.notified.v1', BACKUP_KEY='turno4x4.agenda.lastBackup';
 const VACATION_KEY='turno4x4.vacations.v1';
@@ -12441,6 +12862,43 @@ const WORKDAY_SEEN_KEY='turno4x4.workdaySeen.v1';
 const VACATION_COLOR_KEY='turno4x4.vacationColor.v1';
 const CALENDAR_VIEW_KEY='turno4x4.calendarView.v1';
 const LANGUAGE_KEY='turno4x4.language.v1';
+const PLANT_KEY='turno4x4.plant.v1';
+
+const PLANT_PROFILES={
+ 'ar-pilar':{
+  id:'ar-pilar',
+  country:'Argentina',
+  plant:'Pilar',
+  flag:'🇦🇷',
+  enabled:true
+ },
+ 'ar-puerto-madryn':{
+  id:'ar-puerto-madryn',
+  country:'Argentina',
+  plant:'Puerto Madryn',
+  flag:'🇦🇷',
+  enabled:false
+ },
+ 'br-pending':{
+  id:'br-pending',
+  country:'Brasil',
+  plant:'Planta por confirmar',
+  flag:'🇧🇷',
+  enabled:false
+ },
+ 'us-pending':{
+  id:'us-pending',
+  country:'Estados Unidos',
+  plant:'Planta por confirmar',
+  flag:'🇺🇸',
+  enabled:false
+ }
+};
+
+let plantProfile='ar-pilar';
+const storedPlantProfile=localStorage.getItem(PLANT_KEY);
+if(PLANT_PROFILES[storedPlantProfile]?.enabled)plantProfile=storedPlantProfile;
+
 let calendarViewMode='shifts';
 let appLanguage=['es','en','pt'].includes(localStorage.getItem(LANGUAGE_KEY))?localStorage.getItem(LANGUAGE_KEY):'es';
 
@@ -12492,6 +12950,84 @@ Object.assign(I18N.pt,{
  'La instalación o utilización de esta aplicación no implica cesión de derechos de propiedad intelectual.':'A instalação ou utilização deste aplicativo não implica cessão de direitos de propriedade intelectual.',
  '· Todos los derechos reservados.':'· Todos os direitos reservados.'
 });
+
+/* ===== V5.0.2 · I18N MULTI-PLANTA ===== */
+Object.assign(I18N.en,{
+ 'Planta / Ubicación':'Plant / Location',
+ 'Perfil de calendario activo':'Active calendar profile',
+ 'Seleccionar planta':'Select plant',
+ 'Perfiles de calendario por planta':'Calendar profiles by plant',
+ 'Cerrar selección de planta':'Close plant selection',
+ 'Perfil activo':'Active profile',
+ 'Calendario actual · disponible':'Current calendar · available',
+ 'ACTIVA':'ACTIVE',
+ 'Arquitectura multi-planta':'Multi-plant architecture',
+ 'La aplicación está preparada para incorporar calendarios y ciclos diferentes por ubicación sin modificar el perfil activo de Pilar.':'The app is prepared to add different calendars and cycles by location without changing Pilar’s active profile.',
+ '2 perfiles':'2 profiles',
+ 'Perfil actual':'Current profile',
+ 'Horario y ciclo por confirmar':'Schedule and cycle to be confirmed',
+ 'PRÓXIMAMENTE':'COMING SOON',
+ 'Brasil':'Brazil',
+ 'Perfil pendiente':'Pending profile',
+ 'Planta por confirmar':'Plant to be confirmed',
+ 'Estados Unidos':'United States',
+ 'Los perfiles marcados como “Próximamente” se habilitarán solamente después de validar sus horarios y ciclos reales.':'Profiles marked “Coming soon” will only be enabled after their actual schedules and cycles are validated.',
+ 'Planta / Ubicación:':'Plant / Location:',
+ ' permite trabajar con perfiles de calendario diferentes según la planta. Argentina · Pilar es el perfil activo actual.':' lets you work with different calendar profiles depending on the plant. Argentina · Pilar is the current active profile.',
+ 'Puerto Madryn, Brasil y Estados Unidos aparecen como perfiles preparados para futuras incorporaciones; no se habilitan hasta validar sus horarios y ciclos reales.':'Puerto Madryn, Brazil and the United States appear as profiles prepared for future additions; they remain disabled until their actual schedules and cycles are validated.',
+ 'Los cambios visuales y los perfiles aún no habilitados no alteran la lógica de los turnos de Pilar.':'Visual changes and profiles that are not yet enabled do not alter Pilar’s shift logic.'
+});
+
+Object.assign(I18N.pt,{
+ 'Planta / Ubicación':'Planta / Localização',
+ 'Perfil de calendario activo':'Perfil de calendário ativo',
+ 'Seleccionar planta':'Selecionar planta',
+ 'Perfiles de calendario por planta':'Perfis de calendário por planta',
+ 'Cerrar selección de planta':'Fechar seleção de planta',
+ 'Perfil activo':'Perfil ativo',
+ 'Calendario actual · disponible':'Calendário atual · disponível',
+ 'ACTIVA':'ATIVA',
+ 'Arquitectura multi-planta':'Arquitetura multiplanta',
+ 'La aplicación está preparada para incorporar calendarios y ciclos diferentes por ubicación sin modificar el perfil activo de Pilar.':'O aplicativo está preparado para incorporar calendários e ciclos diferentes por localização sem alterar o perfil ativo de Pilar.',
+ '2 perfiles':'2 perfis',
+ 'Perfil actual':'Perfil atual',
+ 'Horario y ciclo por confirmar':'Horário e ciclo a confirmar',
+ 'PRÓXIMAMENTE':'EM BREVE',
+ 'Brasil':'Brasil',
+ 'Perfil pendiente':'Perfil pendente',
+ 'Planta por confirmar':'Planta a confirmar',
+ 'Estados Unidos':'Estados Unidos',
+ 'Los perfiles marcados como “Próximamente” se habilitarán solamente después de validar sus horarios y ciclos reales.':'Os perfis marcados como “Em breve” só serão habilitados depois da validação dos horários e ciclos reais.',
+ 'Planta / Ubicación:':'Planta / Localização:',
+ ' permite trabajar con perfiles de calendario diferentes según la planta. Argentina · Pilar es el perfil activo actual.':' permite trabalhar com perfis de calendário diferentes conforme a planta. Argentina · Pilar é o perfil ativo atual.',
+ 'Puerto Madryn, Brasil y Estados Unidos aparecen como perfiles preparados para futuras incorporaciones; no se habilitan hasta validar sus horarios y ciclos reales.':'Puerto Madryn, Brasil e Estados Unidos aparecem como perfis preparados para futuras incorporações; permanecem desabilitados até a validação dos horários e ciclos reais.',
+ 'Los cambios visuales y los perfiles aún no habilitados no alteran la lógica de los turnos de Pilar.':'As mudanças visuais e os perfis ainda não habilitados não alteram a lógica dos turnos de Pilar.'
+});
+
+function syncPlantUI(){
+ const profile=PLANT_PROFILES[plantProfile]||PLANT_PROFILES['ar-pilar'];
+ if(plantSelectLabel)plantSelectLabel.textContent=`${profile.country} · ${profile.plant}`;
+
+ const flag=plantSelectBtn?.querySelector('.plant-flag');
+ if(flag)flag.textContent=profile.flag;
+
+ $$('.plant-profile-btn[data-plant-profile]').forEach(btn=>{
+  const active=btn.dataset.plantProfile===plantProfile;
+  btn.classList.toggle('active',active);
+  const badge=btn.querySelector('.plant-profile-badge');
+  if(badge&&active)badge.textContent=appLanguage==='en'?'ACTIVE':appLanguage==='pt'?'ATIVA':'ACTIVA';
+ });
+}
+
+function setPlantProfile(id,{persist=true}={}){
+ const profile=PLANT_PROFILES[id];
+ if(!profile?.enabled)return false;
+
+ plantProfile=id;
+ if(persist)localStorage.setItem(PLANT_KEY,id);
+ syncPlantUI();
+ return true;
+}
 
 const LANGUAGE_LABELS={es:'ESPAÑOL',en:'ENGLISH',pt:'PORTUGUÊS'};
 const LANGUAGE_LOCALES={es:'es-AR',en:'en-US',pt:'pt-BR'};
@@ -12619,6 +13155,7 @@ function applyLanguage(lang,{persist=true,rerender=true}={}){
  document.body?.classList.add('notranslate');
  document.title=appLanguage==='en'?'4×4 Shift Calendar':appLanguage==='pt'?'Calendário de Turnos 4×4':'Calendario de Turnos 4×4';
  updateLanguageButton();
+ syncPlantUI();
 
  if(typeof paletteDropdown!=='undefined'&&paletteDropdown){
   setPaletteDropdown(paletteDropdown.classList.contains('open'));
@@ -15133,6 +15670,7 @@ let appHistoryApplying=false;
 
 const APP_VIEW_TO_MODAL={
  settings:'settingsModal',
+ plant:'plantModal',
  share:'shareModal',
  help:'helpModal',
  workday:'workdayModal',
@@ -15170,6 +15708,7 @@ function closeAppNavigationViews(){
 
  [
   'settingsModal',
+  'plantModal',
   'shareModal',
   'helpModal',
   'workdayModal',
@@ -15207,7 +15746,12 @@ function showAppViewFromHistory(view){
  if(view==='settings'){
   updateColorSettingsUI();
   renderQuickPalette();
+  syncPlantUI();
   openModalWithoutHistory('settingsModal');
+ }
+ else if(view==='plant'){
+  syncPlantUI();
+  openModalWithoutHistory('plantModal');
  }
  else if(view==='share'){
   openModalWithoutHistory('shareModal');
@@ -15901,6 +16445,14 @@ helpBtn.onclick=()=>{
  },0);
 };
 settingsBtn.onclick=()=>pushAppView('settings');
+plantSelectBtn?.addEventListener('click',()=>pushAppView('plant'));
+
+$$('.plant-profile-btn[data-plant-profile]').forEach(btn=>{
+ btn.onclick=()=>{
+  if(!setPlantProfile(btn.dataset.plantProfile))return;
+  returnFromAppView();
+ };
+});
 
 calendarViewShiftsBtn?.addEventListener('click',()=>setCalendarViewMode('shifts'));
 calendarViewCommonBtn?.addEventListener('click',()=>setCalendarViewMode('common'));
@@ -15911,8 +16463,9 @@ codeSize.oninput=()=>{codeSizeValue.textContent=`${codeSize.value} px`;saveSetti
 dayNumberSize.oninput=()=>{dayNumberSizeValue.textContent=`${dayNumberSize.value} px`;saveSettings()};
 showLabels.onchange=saveSettings;showHolidays.onchange=saveSettings;hapticsToggle.onchange=saveSettings;
 $('#resetSettingsBtn').onclick=()=>{
- // RESTAURAR devuelve también el idioma de la app al español.
+ // RESTAURAR devuelve también el idioma y la planta a sus valores por defecto.
  applyLanguage('es',{persist:true,rerender:false});
+ setPlantProfile('ar-pilar',{persist:true});
 
  morningColor.value=defaults.morning;
  offColor.value=defaults.off;
@@ -16356,7 +16909,7 @@ document.addEventListener('dragstart',ev=>{
 if(!history.state?.[APP_NAV_STATE_KEY]){
  history.replaceState({...history.state,[APP_NAV_STATE_KEY]:'main'},'',location.href);
 }
-loadSettings();loadVacationColor();loadVacationVisibility();updateWorkdayNewState();syncTurnPulseText();syncTurn5PulseText();ensurePersistentTurnPulses();renderQuickPalette();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;if($('#copyrightVersionLabel'))$('#copyrightVersionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();applyLanguage(appLanguage,{persist:false,rerender:false});initSplash();i18nObserver.observe(document.body,{subtree:true,childList:true,characterData:true});fitMainCalendarViewport();keepDetailBelowInitialFold();setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},260);setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},700);checkUpdate();checkReminders();
+loadSettings();loadVacationColor();loadVacationVisibility();syncPlantUI();updateWorkdayNewState();syncTurnPulseText();syncTurn5PulseText();ensurePersistentTurnPulses();renderQuickPalette();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;if($('#copyrightVersionLabel'))$('#copyrightVersionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();applyLanguage(appLanguage,{persist:false,rerender:false});initSplash();i18nObserver.observe(document.body,{subtree:true,childList:true,characterData:true});fitMainCalendarViewport();keepDetailBelowInitialFold();setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},260);setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},700);checkUpdate();checkReminders();
 window.addEventListener('resize',scheduleViewportLayout,{passive:true});
 window.addEventListener('orientationchange',scheduleViewportLayout,{passive:true});
 
