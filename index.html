@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" translate="no" class="notranslate">
 <head>
 <meta charset="UTF-8">
+<meta name="google" content="notranslate">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0b1017">
 <title>Calendario de Turnos 4x4</title>
@@ -11240,9 +11241,17 @@ body.light .language-cycle-btn{background:#eef3f8;color:#1d2b3b;border-color:rgb
   pointer-events:none !important;
 }
 
+
+/* ===== V4.13.4 · FIX DOBLE TRADUCCIÓN DEL NAVEGADOR ===== */
+/*
+  La app gestiona Español / English / Português internamente.
+  Se bloquea la traducción automática externa del navegador para evitar
+  aberraciones como SUN→SOL, WED→CASARSE, SAT→SE SENTÓ o M→METRO.
+*/
+
 </style>
 </head>
-<body>
+<body class="notranslate">
 <div id="splash" class="splash">
   <div class="splash-inner"><div class="splash-logo">4×4</div><b>Calendario de Turnos</b><span>Tu ciclo, agenda y francos en un solo lugar</span><span class="splash-sign">Made By Goma E.</span></div>
 </div>
@@ -12257,7 +12266,7 @@ body.light .language-cycle-btn{background:#eef3f8;color:#1d2b3b;border-color:rgb
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.13.3';
+const CURRENT_VERSION='4.13.4';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -12422,6 +12431,9 @@ function applyLanguage(lang,{persist=true,rerender=true}={}){
  appLanguage=['es','en','pt'].includes(lang)?lang:'es';
  if(persist)localStorage.setItem(LANGUAGE_KEY,appLanguage);
  document.documentElement.lang=appLanguage==='pt'?'pt-BR':appLanguage==='en'?'en':'es';
+ document.documentElement.setAttribute('translate','no');
+ document.documentElement.classList.add('notranslate');
+ document.body?.classList.add('notranslate');
  document.title=appLanguage==='en'?'4×4 Shift Calendar':appLanguage==='pt'?'Calendário de Turnos 4×4':'Calendario de Turnos 4×4';
  updateLanguageButton();
  if(rerender){
