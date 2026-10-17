@@ -1,25 +1,32 @@
 {
-  "name": "Calendario de Turnos 4x4",
-  "short_name": "Turnos 4x4",
-  "description": "Calendario 4x4 de 12 horas con agenda, recordatorios, vista anual, estadísticas y Turno 5.",
-  "start_url": "./",
+  "id": "./",
+  "name": "Calendario de Turnos 4×4",
+  "short_name": "Turnos 4×4",
+  "description": "Calendario de turnos, francos, agenda, vacaciones, jornada y estadísticas.",
+  "lang": "es-AR",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0a0f16",
-  "theme_color": "#0a0f16",
-  "orientation": "portrait",
+  "theme_color": "#0b1017",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "./icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "icon-512.png",
+      "src": "./icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }
