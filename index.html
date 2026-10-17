@@ -12118,6 +12118,9 @@ body.light .plant-select-btn{
   }
 }
 
+
+/* ===== V5.0.9 · NAVEGACIÓN · X / LISTO / BACK JERÁRQUICOS ===== */
+
 </style>
 </head>
 <body class="notranslate">
@@ -12734,7 +12737,7 @@ body.light .plant-select-btn{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.0.8</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.0.9</span></span>
             </div>
           </div>
 
@@ -13249,7 +13252,7 @@ body.light .plant-select-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.0.8';
+const CURRENT_VERSION='5.0.9';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -16700,28 +16703,42 @@ function closeModal(id){
   restoreMainAfterWorkday();
  }
 }
-$$('[data-close]').forEach(b=>b.onclick=()=>{
- const id=b.dataset.close;
+function closeAppWindow(id){
+ if(!id)return;
 
+ // Agenda usa un sheet, pero respeta exactamente la misma jerarquía:
+ // X, LISTO, fondo y botón Atrás vuelven a la ventana anterior.
  if(id==='agendaSheet'){
-  if(currentAppView()==='agenda')returnFromAppView();
-  else closeAgenda();
+  if(currentAppView()==='agenda'){
+   returnFromAppView();
+  }else{
+   closeAgenda();
+  }
   return;
  }
 
- if(id==='settingsModal')
+ // Todos los modales registrados pasan por closeModal().
+ // closeModal() usa history.back() cuando corresponde, por lo que
+ // vuelve a la ventana anterior en lugar de saltar directamente al inicio.
  closeModal(id);
+}
+
+$$('[data-close]').forEach(btn=>{
+ btn.onclick=()=>{
+  closeAppWindow(btn.dataset.close);
+ };
 });
 
-$$('.backdrop').forEach(b=>b.addEventListener('click',e=>{
- if(e.target!==b)return;
- closeModal(b.id);
-}));
+$$('.backdrop').forEach(backdrop=>{
+ backdrop.addEventListener('click',e=>{
+  if(e.target!==backdrop)return;
+  closeAppWindow(backdrop.id);
+ });
+});
 
 agendaSheet.addEventListener('click',e=>{
  if(e.target!==agendaSheet)return;
- if(currentAppView()==='agenda')returnFromAppView();
- else closeAgenda();
+ closeAppWindow('agendaSheet');
 });
 
 $('#prevBtn').onclick=()=>animateMonthButton(-1);$('#nextBtn').onclick=()=>animateMonthButton(1);
