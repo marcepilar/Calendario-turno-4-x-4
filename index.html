@@ -10192,6 +10192,56 @@ body.light.calendar-common-view .mini-day.common-mini.weekend{
   }
 }
 
+
+/* ===== V4.11.8 · VERSIÓN MOVIDA A AYUDA ===== */
+
+#helpModal .help-version-box{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:8px 0 10px;
+  padding:10px 12px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:var(--panel2);
+  color:var(--text);
+}
+
+#helpModal .help-version-icon{
+  flex:0 0 42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;
+  font-size:13px;
+  font-weight:1000;
+}
+
+#helpModal .help-version-copy{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+
+#helpModal .help-version-copy b{
+  font-size:11px;
+  line-height:1.2;
+}
+
+#helpModal .help-version-copy span{
+  color:var(--muted);
+  font-size:9.5px;
+  line-height:1.3;
+}
+
+/* Configuración ya no reserva espacio para la tarjeta de versión. */
+#settingsModal .version-box{
+  display:none !important;
+}
+
 </style>
 </head>
 <body>
@@ -10394,7 +10444,6 @@ body.light.calendar-common-view .mini-day.common-mini.weekend{
     <button id="settingsStatsBtn" class="btn-secondary">◔ Estadísticas</button>
   </div>
   <div class="action-row"><button id="resetSettingsBtn" class="btn-secondary">Restaurar</button><button class="btn-primary" data-close="settingsModal">LISTO</button></div>
-  <div class="version-box"><b>Versión <span id="versionLabel">4.9.5</span></b><br><span id="updateStatusText">Aplicación actualizada.</span></div>
 </div></div>
 
 
@@ -10482,6 +10531,14 @@ body.light.calendar-common-view .mini-day.common-mini.weekend{
       <div>
         <b>Cómo usar la aplicación</b>
         <span>Turnos, calendario, instalación, Agenda, Vacaciones, Jornada, Licencias, Estadísticas y Configuración.</span>
+      </div>
+    </div>
+
+    <div class="help-version-box">
+      <div class="help-version-icon">4×4</div>
+      <div class="help-version-copy">
+        <b>Versión de la aplicación</b>
+        <span>V<span id="versionLabel">4.11.8</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -11190,7 +11247,7 @@ body.light.calendar-common-view .mini-day.common-mini.weekend{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.11.7';
+const CURRENT_VERSION='4.11.8';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
