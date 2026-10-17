@@ -10108,6 +10108,90 @@ body.light.calendar-common-view .mini-day.common-mini.weekend{
   touch-action:pan-x !important;
 }
 
+
+/* ===== V4.11.7 · CONFIGURACIÓN · AJUSTE INFERIOR FINO ===== */
+
+/*
+  Ajuste mínimo: mantener la ventana fija y sin scroll,
+  pero ganar unos píxeles verticales para que Restaurar/LISTO
+  no queden recortados por la barra inferior del teléfono.
+*/
+@media(max-width:620px) and (max-height:900px){
+
+  #settingsModal .settings-modal-window{
+    padding-bottom:4px !important;
+  }
+
+  #settingsModal .settings-preview{
+    flex:0 0 66px !important;
+    min-height:66px !important;
+    max-height:66px !important;
+    margin-top:2px !important;
+    padding-top:3px !important;
+    padding-bottom:4px !important;
+  }
+
+  #settingsModal.t5-profile .settings-preview{
+    flex:0 0 66px !important;
+    min-height:66px !important;
+    max-height:66px !important;
+  }
+
+  #settingsModal .settings-preview-head{
+    margin-bottom:1px !important;
+  }
+
+  #settingsModal .settings-preview-day{
+    padding-top:3px !important;
+    padding-bottom:4px !important;
+  }
+
+  #settingsModal .action-row{
+    margin-top:2px !important;
+    margin-bottom:0 !important;
+    gap:6px !important;
+  }
+
+  #settingsModal .action-row button,
+  #settingsModal .action-row label{
+    min-height:38px !important;
+    height:38px !important;
+    padding-top:0 !important;
+    padding-bottom:0 !important;
+  }
+
+  #settingsModal .version-box{
+    min-height:28px !important;
+    height:28px !important;
+    margin-top:2px !important;
+    margin-bottom:0 !important;
+    padding-top:2px !important;
+    padding-bottom:2px !important;
+  }
+}
+
+/* Pantallas de altura muy justa: liberar unos píxeles extra. */
+@media(max-width:620px) and (max-height:820px){
+
+  #settingsModal .settings-preview{
+    flex-basis:62px !important;
+    min-height:62px !important;
+    max-height:62px !important;
+  }
+
+  #settingsModal.t5-profile .settings-preview{
+    flex-basis:62px !important;
+    min-height:62px !important;
+    max-height:62px !important;
+  }
+
+  #settingsModal .action-row button,
+  #settingsModal .action-row label{
+    min-height:36px !important;
+    height:36px !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -11106,7 +11190,7 @@ body.light.calendar-common-view .mini-day.common-mini.weekend{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.11.6';
+const CURRENT_VERSION='4.11.7';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
