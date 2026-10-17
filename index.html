@@ -11984,6 +11984,114 @@ body.light .plant-select-btn{
   }
 }
 
+
+/* ===== V5.0.7 · CONFIGURACIÓN · DISTRIBUCIÓN VERTICAL CORRECTA ===== */
+
+/*
+  FIX:
+  settings-list es CSS Grid.
+  El espacio vertical se reparte con align-content, no justify-content.
+  Así desaparece el hueco grande entre los toggles y Vista previa.
+*/
+@media(max-width:620px){
+
+  #settingsModal .settings-list{
+    flex:1 1 auto !important;
+    min-height:0 !important;
+    align-content:space-between !important;
+    justify-content:stretch !important;
+    row-gap:4px !important;
+  }
+
+  /* Vista previa compacta, pero legible. */
+  #settingsModal .settings-preview{
+    flex:0 0 56px !important;
+    min-height:56px !important;
+    max-height:56px !important;
+    margin-top:5px !important;
+    padding-top:3px !important;
+    padding-bottom:4px !important;
+  }
+
+  #settingsModal .settings-preview-head{
+    margin-bottom:1px !important;
+  }
+
+  #settingsModal .settings-preview-day{
+    min-height:0 !important;
+    height:100% !important;
+    padding-top:2px !important;
+    padding-bottom:3px !important;
+  }
+
+  /* Agenda / Vacaciones / Estadísticas con más cuerpo. */
+  #settingsModal .settings-main-actions{
+    flex:0 0 50px !important;
+    min-height:50px !important;
+    margin-top:5px !important;
+    gap:7px !important;
+  }
+
+  #settingsModal .settings-main-actions button{
+    height:50px !important;
+    min-height:50px !important;
+    border-radius:15px !important;
+    font-size:10.8px !important;
+  }
+
+  /* Restaurar / LISTO: fila principal más alta. */
+  #settingsModal .action-row:not(.settings-main-actions){
+    flex:0 0 56px !important;
+    min-height:56px !important;
+    margin-top:6px !important;
+    gap:8px !important;
+  }
+
+  #settingsModal .action-row:not(.settings-main-actions) button,
+  #settingsModal .action-row:not(.settings-main-actions) label{
+    height:56px !important;
+    min-height:56px !important;
+    border-radius:16px !important;
+    font-size:13.2px !important;
+  }
+}
+
+/* Pantallas algo más bajas: mismo diseño, con reducción mínima y controlada. */
+@media(max-width:620px) and (max-height:820px){
+
+  #settingsModal .settings-list{
+    align-content:space-between !important;
+    row-gap:3px !important;
+  }
+
+  #settingsModal .settings-preview{
+    flex-basis:53px !important;
+    min-height:53px !important;
+    max-height:53px !important;
+  }
+
+  #settingsModal .settings-main-actions{
+    flex-basis:47px !important;
+    min-height:47px !important;
+  }
+
+  #settingsModal .settings-main-actions button{
+    height:47px !important;
+    min-height:47px !important;
+  }
+
+  #settingsModal .action-row:not(.settings-main-actions){
+    flex-basis:53px !important;
+    min-height:53px !important;
+  }
+
+  #settingsModal .action-row:not(.settings-main-actions) button,
+  #settingsModal .action-row:not(.settings-main-actions) label{
+    height:53px !important;
+    min-height:53px !important;
+  }
+}
+
 </style>
 </head>
 <body class="notranslate">
@@ -12600,7 +12708,7 @@ body.light .plant-select-btn{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.0.6</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.0.7</span></span>
             </div>
           </div>
 
@@ -13115,7 +13223,7 @@ body.light .plant-select-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.0.6';
+const CURRENT_VERSION='5.0.7';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
