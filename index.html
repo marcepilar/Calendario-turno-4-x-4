@@ -11743,6 +11743,50 @@ body.light .plant-select-btn{
   }
 }
 
+
+/* ===== V5.0.4 · FIX ESTRUCTURAL CONFIGURACIÓN ===== */
+
+/*
+  Corrección del DOM luego de retirar Paleta rápida:
+  Vista previa y los botones inferiores vuelven a quedar DENTRO
+  de settings-modal-window, en flujo vertical normal.
+*/
+#settingsModal .settings-modal-window{
+  display:flex !important;
+  flex-direction:column !important;
+}
+
+#settingsModal .settings-preview,
+#settingsModal .settings-main-actions,
+#settingsModal .action-row{
+  width:100% !important;
+  max-width:100% !important;
+  box-sizing:border-box !important;
+}
+
+#settingsModal .settings-main-actions{
+  display:grid !important;
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+}
+
+#settingsModal .action-row:not(.settings-main-actions){
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+}
+
+#settingsModal .settings-main-actions button,
+#settingsModal .action-row button{
+  min-width:0 !important;
+}
+
+@media(max-width:620px){
+  #settingsModal .settings-main-actions button{
+    font-size:10px !important;
+    padding-left:4px !important;
+    padding-right:4px !important;
+  }
+}
+
 </style>
 </head>
 <body class="notranslate">
@@ -11901,7 +11945,6 @@ body.light .plant-select-btn{
     <label id="morningColorRow" class="setting-row color-setting-row"><div><b id="morningColorTitle">Color M — Mañana</b><small id="morningColorNote">06:00 a 18:00</small></div><span class="color-edit-control"><input id="morningColor" class="color-input" type="color" value="#ffd84d" aria-label="Editar color de Mañana"><span class="color-edit-text">EDITAR COLOR ›</span></span></label>
     <label id="nightColorRow" class="setting-row color-setting-row"><div><b>Color N — Noche</b><small>18:00 a 06:00</small></div><span class="color-edit-control"><input id="nightColor" class="color-input" type="color" value="#27aee4" aria-label="Editar color de Noche"><span class="color-edit-text">EDITAR COLOR ›</span></span></label>
     <label id="offColorRow" class="setting-row color-setting-row"><div><b>Color F — Franco</b><small>Día libre</small></div><span class="color-edit-control"><input id="offColor" class="color-input" type="color" value="#3fbe62" aria-label="Editar color de Franco"><span class="color-edit-text">EDITAR COLOR ›</span></span></label>
-    </div>
 
     <div class="setting-row setting-range-row"><div><b>Tamaño M / N / F</b><small>Rango 14 a 24 px</small></div><div class="range-wrap"><input id="codeSize" type="range" min="14" max="24" value="18"><span id="codeSizeValue" class="range-value">18 px</span></div></div>
     <div class="setting-row setting-range-row"><div><b>Tamaño número del día</b><small>Rango 10 a 18 px</small></div><div class="range-wrap"><input id="dayNumberSize" type="range" min="10" max="18" value="10"><span id="dayNumberSizeValue" class="range-value">10 px</span></div></div>
@@ -12360,7 +12403,7 @@ body.light .plant-select-btn{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.0.3</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.0.4</span></span>
             </div>
           </div>
 
@@ -12875,7 +12918,7 @@ body.light .plant-select-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.0.3';
+const CURRENT_VERSION='5.0.4';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -13210,10 +13253,6 @@ function applyLanguage(lang,{persist=true,rerender=true}={}){
  document.title=appLanguage==='en'?'4×4 Shift Calendar':appLanguage==='pt'?'Calendário de Turnos 4×4':'Calendario de Turnos 4×4';
  updateLanguageButton();
  syncPlantUI();
-
- if(typeof paletteDropdown!=='undefined'&&paletteDropdown){
-  setPaletteDropdown(paletteDropdown.classList.contains('open'));
- }
 
  if(rerender){
   refreshLocaleFormatters();
@@ -13679,7 +13718,7 @@ function saveSettings(){
 function switchActiveColorProfile(){
  loadActiveColorProfile();
  applySettings();
- renderQuickPalette();
+ 
 }
 
 function syncTurnPulseText(){
@@ -13748,103 +13787,7 @@ function ensurePersistentTurnPulses(){
 
 
 
-// Paleta propia de la app: igual en Android, iOS y PC.
-// Incluye siempre los 3 colores originales usados por Restaurar.
-const quickPaletteColors=[
- '#ffd84d', // Mañana original
- '#f4c542','#ffb52e','#ff8a3d','#ff6b4a','#ef5350',
- '#ff5f72','#ff5f9e','#e35dff','#b66cff','#8d6cff','#675cff',
- '#4e8cff','#27aee4', // Noche original
- '#28c7e8','#24d2c1','#25b89a','#2ea66f',
- '#3fbe62', // Franco original
- '#56c95b','#78c850','#9dcc45','#c4d94c','#dbe45a',
- '#c8d0da','#8e9aa8','#66717f','#475361','#2f3945','#1f2730'
-];
-
-let paletteTarget='morning';
-
-function paletteInput(){
- return paletteTarget==='morning'?morningColor:(paletteTarget==='night'?nightColor:offColor);
-}
-const paletteToggleBtn=$('#paletteToggleBtn');
-const paletteDropdown=$('#paletteDropdown');
-
-function setPaletteDropdown(open){
- if(!paletteToggleBtn||!paletteDropdown)return;
- paletteDropdown.classList.toggle('open',open);
- paletteDropdown.setAttribute('aria-hidden',open?'false':'true');
- paletteToggleBtn.setAttribute('aria-expanded',open?'true':'false');
-
- const rawLabel=open?'🎨 CERRAR':'🎨 COLORES';
- paletteToggleBtn.querySelector('span').textContent=
-  appLanguage==='es'?rawLabel:translateRuntimeText(rawLabel);
-}
-
-paletteToggleBtn?.addEventListener('click',e=>{
- e.stopPropagation();
- setPaletteDropdown(!paletteDropdown.classList.contains('open'));
- if(!paletteDropdown.classList.contains('open'))return;
- renderQuickPalette();
-});
-
-paletteDropdown?.addEventListener('click',e=>e.stopPropagation());
-
-document.addEventListener('pointerdown',e=>{
- if(!paletteDropdown?.classList.contains('open'))return;
- if(paletteDropdown.contains(e.target)||paletteToggleBtn.contains(e.target))return;
- setPaletteDropdown(false);
-},{capture:true});
-
-
-function renderQuickPalette(){
- const box=$('#quickPalette');
- if(!box)return;
-
- const input=paletteInput();
- const current=String(input.value||'').toLowerCase();
- const originalSet=new Set([defaults.morning,defaults.night,defaults.off].map(x=>x.toLowerCase()));
-
- $$('.palette-tab').forEach(btn=>{
-  btn.classList.toggle('active',btn.dataset.paletteTarget===paletteTarget);
- });
-
- box.innerHTML='';
- quickPaletteColors.forEach(color=>{
-  const b=document.createElement('button');
-  b.type='button';
-  b.className='palette-swatch';
-  b.style.background=color;
-  b.dataset.color=color;
-  b.title=color.toUpperCase();
-  b.setAttribute('aria-label',`Color ${color.toUpperCase()}`);
-
-  if(color.toLowerCase()===current)b.classList.add('active');
-  if(originalSet.has(color.toLowerCase()))b.classList.add('default-color');
-
-  b.addEventListener('click',()=>{
-   input.value=color;
-   saveSettings();
-   renderQuickPalette();
-   vibrate(8);
-  });
-
-  box.appendChild(b);
- });
-}
-
-$$('.palette-tab').forEach(btn=>{
- btn.addEventListener('click',()=>{
-  paletteTarget=btn.dataset.paletteTarget;
-  renderQuickPalette();
- });
-});
-
-// Si se toca el selector de color nativo, la paleta rápida queda
-// apuntando automáticamente al mismo turno.
-morningColor.addEventListener('pointerdown',()=>{paletteTarget='morning';renderQuickPalette()});
-nightColor.addEventListener('pointerdown',()=>{paletteTarget='night';renderQuickPalette()});
-offColor.addEventListener('pointerdown',()=>{paletteTarget='off';renderQuickPalette()});
-
+// Paleta rápida retirada desde V5.0.3. Los colores se editan con EDITAR COLOR.
 
 function nextDifferentCode(turn,d){
  const current=codeFor(turn,d);for(let i=1;i<=20;i++){const x=addDays(d,i);const c=codeFor(turn,x);if(c!==current)return{x,code:c,days:i}}return null
@@ -15748,7 +15691,7 @@ function rememberAppView(view){
 }
 
 function closeAppNavigationViews(){
- setPaletteDropdown(false);
+ 
 
  const workdayWasOpen=$('#workdayModal')?.classList.contains('open');
 
@@ -15793,7 +15736,7 @@ function showAppViewFromHistory(view){
 
  if(view==='settings'){
   updateColorSettingsUI();
-  renderQuickPalette();
+  
   syncPlantUI();
   openModalWithoutHistory('settingsModal');
  }
@@ -16435,7 +16378,7 @@ $$('[data-close]').forEach(b=>b.onclick=()=>{
   return;
  }
 
- if(id==='settingsModal')setPaletteDropdown(false);
+ if(id==='settingsModal')
  closeModal(id);
 });
 
@@ -16469,7 +16412,7 @@ turn5Select.onchange=()=>{
  ensurePersistentTurnPulses();
  localStorage.setItem('turno4x4.turno5',turn5Select.value);
  updateColorSettingsUI();
- renderQuickPalette();
+ 
  clearAgendaQueryCache();
  renderAll();
  renderYearIfOpen();
@@ -16529,8 +16472,8 @@ $('#resetSettingsBtn').onclick=()=>{
 
  saveSettings();
  updateColorSettingsUI();
- renderQuickPalette();
- setPaletteDropdown(false);
+ 
+ 
  translateTree(document.body);
  scheduleViewportLayout();
 };
@@ -16957,7 +16900,7 @@ document.addEventListener('dragstart',ev=>{
 if(!history.state?.[APP_NAV_STATE_KEY]){
  history.replaceState({...history.state,[APP_NAV_STATE_KEY]:'main'},'',location.href);
 }
-loadSettings();loadVacationColor();loadVacationVisibility();syncPlantUI();updateWorkdayNewState();syncTurnPulseText();syncTurn5PulseText();ensurePersistentTurnPulses();renderQuickPalette();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;if($('#copyrightVersionLabel'))$('#copyrightVersionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();applyLanguage(appLanguage,{persist:false,rerender:false});initSplash();i18nObserver.observe(document.body,{subtree:true,childList:true,characterData:true});fitMainCalendarViewport();keepDetailBelowInitialFold();setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},260);setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},700);checkUpdate();checkReminders();
+loadSettings();loadVacationColor();loadVacationVisibility();syncPlantUI();updateWorkdayNewState();syncTurnPulseText();syncTurn5PulseText();ensurePersistentTurnPulses();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;if($('#copyrightVersionLabel'))$('#copyrightVersionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();applyLanguage(appLanguage,{persist:false,rerender:false});initSplash();i18nObserver.observe(document.body,{subtree:true,childList:true,characterData:true});fitMainCalendarViewport();keepDetailBelowInitialFold();setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},260);setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},700);checkUpdate();checkReminders();
 window.addEventListener('resize',scheduleViewportLayout,{passive:true});
 window.addEventListener('orientationchange',scheduleViewportLayout,{passive:true});
 
