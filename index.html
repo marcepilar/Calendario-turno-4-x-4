@@ -11018,6 +11018,44 @@ body.light .workday-top-btn{
   }
 }
 
+
+/* ===== V4.13.0 · LICENCIAS · TEXTO DE NOTA MÁS GRANDE ===== */
+
+/* Texto real y placeholder más legibles dentro de Nota opcional. */
+#workdayModal .license-note-field textarea{
+  font-size:10.8px !important;
+  font-weight:600 !important;
+  letter-spacing:.005em !important;
+}
+
+#workdayModal .license-note-field textarea::placeholder{
+  font-size:10.2px !important;
+  font-weight:500 !important;
+  opacity:.72 !important;
+}
+
+/* En teléfonos mantener el mismo aumento. */
+@media(max-width:620px){
+  #workdayModal .license-note-field textarea{
+    font-size:10.6px !important;
+  }
+
+  #workdayModal .license-note-field textarea::placeholder{
+    font-size:10px !important;
+  }
+}
+
+/* En pantallas bajas sólo baja levemente para no comprometer el encaje. */
+@media(max-height:760px){
+  #workdayModal .license-note-field textarea{
+    font-size:9.6px !important;
+  }
+
+  #workdayModal .license-note-field textarea::placeholder{
+    font-size:9.2px !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -12024,7 +12062,7 @@ body.light .workday-top-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.12.9';
+const CURRENT_VERSION='4.13.0';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
