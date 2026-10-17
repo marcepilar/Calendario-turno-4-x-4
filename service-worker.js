@@ -1,50 +1,14 @@
-const CACHE='turnos4x4-4.13.0';
+const CACHE='turnos4x4-4.13.1';
 const ASSETS=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
-
-self.addEventListener('install',event=>{
-  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)));
-  self.skipWaiting();
-});
-
-self.addEventListener('activate',event=>{
-  event.waitUntil(caches.keys().then(keys=>
-    Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))
-  ));
-  self.clients.claim();
-});
-
-self.addEventListener('message',event=>{
-  if(event.data&&event.data.type==='SKIP_WAITING')self.skipWaiting();
-});
-
+self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)));self.skipWaiting();});
+self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))));self.clients.claim();});
+self.addEventListener('message',event=>{if(event.data&&event.data.type==='SKIP_WAITING')self.skipWaiting();});
 self.addEventListener('fetch',event=>{
   const url=new URL(event.request.url);
-
-  if(url.pathname.endsWith('/version.json')){
-    event.respondWith(fetch(event.request,{cache:'no-store'}));
-    return;
-  }
-
+  if(url.pathname.endsWith('/version.json')){event.respondWith(fetch(event.request,{cache:'no-store'}));return;}
   if(event.request.mode==='navigate'||url.pathname.endsWith('/index.html')||url.pathname.endsWith('/')){
-    event.respondWith(
-      fetch(event.request,{cache:'no-store'}).then(response=>{
-        const copy=response.clone();
-        if(url.origin===self.location.origin){
-          caches.open(CACHE).then(cache=>cache.put(event.request,copy));
-        }
-        return response;
-      }).catch(()=>caches.match(event.request).then(c=>c||caches.match('./index.html')))
-    );
+    event.respondWith(fetch(event.request,{cache:'no-store'}).then(response=>{const copy=response.clone();if(url.origin===self.location.origin){caches.open(CACHE).then(cache=>cache.put(event.request,copy));}return response;}).catch(()=>caches.match(event.request).then(c=>c||caches.match('./index.html'))));
     return;
   }
-
-  if(url.origin===self.location.origin){
-    event.respondWith(
-      caches.match(event.request).then(cached=>cached||fetch(event.request).then(response=>{
-        const copy=response.clone();
-        caches.open(CACHE).then(cache=>cache.put(event.request,copy));
-        return response;
-      }))
-    );
-  }
+  if(url.origin===self.location.origin){event.respondWith(caches.match(event.request).then(cached=>cached||fetch(event.request).then(response=>{const copy=response.clone();caches.open(CACHE).then(cache=>cache.put(event.request,copy));return response;})));}
 });

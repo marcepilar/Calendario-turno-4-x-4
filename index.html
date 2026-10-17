@@ -11056,6 +11056,93 @@ body.light .workday-top-btn{
   }
 }
 
+
+/* ===== V4.13.1 · CALENDARIO COMÚN · HÁBILES CLAROS / FINDE OSCURO ===== */
+
+/* Lunes a viernes: más claros. */
+body.calendar-common-view .day.common-day{
+  background:#2b3b4c !important;
+  color:#f4f8fc !important;
+  border-right:1px solid rgba(145,166,190,.20) !important;
+  border-bottom:1px solid rgba(145,166,190,.20) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.035),
+    inset 0 0 0 1px rgba(255,255,255,.018) !important;
+}
+
+/* Sábado y domingo: gris muy oscuro / casi negro. */
+body.calendar-common-view .day.common-day.weekend{
+  background:#151f2a !important;
+  color:#f5f7fb !important;
+  border-right:1px solid rgba(105,126,149,.19) !important;
+  border-bottom:1px solid rgba(105,126,149,.19) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.018),
+    inset 0 0 0 1px rgba(255,255,255,.012) !important;
+}
+
+/* Días de otros meses: siguen secundarios. */
+body.calendar-common-view .day.common-day.other{
+  background:#1b2632 !important;
+  color:#667587 !important;
+  opacity:1 !important;
+  filter:none !important;
+}
+
+body.calendar-common-view .day.common-day.other.weekend{
+  background:#101821 !important;
+  color:#586777 !important;
+}
+
+body.calendar-common-view .day.common-day .date{
+  color:inherit !important;
+  text-shadow:0 1px 0 rgba(0,0,0,.20) !important;
+}
+
+/* Vista anual común con la misma lógica. */
+body.calendar-common-view .mini-day.common-mini{
+  background:#34485b !important;
+  color:#f2f7fb !important;
+  box-shadow:inset 0 0 0 1px rgba(146,168,193,.17) !important;
+}
+
+body.calendar-common-view .mini-day.common-mini.weekend{
+  background:#18232f !important;
+  color:#ffffff !important;
+  box-shadow:inset 0 0 0 1px rgba(106,127,150,.17) !important;
+}
+
+/* Modo claro equivalente. */
+body.light.calendar-common-view .day.common-day{
+  background:#ffffff !important;
+  color:#152638 !important;
+}
+
+body.light.calendar-common-view .day.common-day.weekend{
+  background:#d4dde6 !important;
+  color:#1a2a3a !important;
+}
+
+body.light.calendar-common-view .day.common-day.other{
+  background:#eef2f6 !important;
+  color:#97a3af !important;
+}
+
+body.light.calendar-common-view .day.common-day.other.weekend{
+  background:#e0e6ec !important;
+  color:#8c99a6 !important;
+}
+
+body.light.calendar-common-view .mini-day.common-mini{
+  background:#ffffff !important;
+  color:#172536 !important;
+}
+
+body.light.calendar-common-view .mini-day.common-mini.weekend{
+  background:#d7e0e8 !important;
+  color:#1b2d3d !important;
+}
+
 </style>
 </head>
 <body>
@@ -12062,7 +12149,7 @@ body.light .workday-top-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.13.0';
+const CURRENT_VERSION='4.13.1';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
