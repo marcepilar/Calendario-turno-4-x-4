@@ -11787,6 +11787,203 @@ body.light .plant-select-btn{
   }
 }
 
+
+/* ===== V5.0.6 · CONFIGURACIÓN · APROVECHAMIENTO VERTICAL FINAL ===== */
+
+/*
+  Objetivo:
+  - eliminar el espacio muerto inferior;
+  - dar más presencia a los botones inferiores;
+  - mantener Vista previa compacta;
+  - repartir el alto disponible entre controles útiles.
+*/
+
+@media(max-width:620px) and (min-height:761px){
+
+  #settingsModal .settings-modal-window{
+    height:calc(100dvh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px) - 8px) !important;
+    padding-bottom:7px !important;
+  }
+
+  /* Bloques superiores: apenas más aire, sin desperdiciar altura. */
+  #settingsModal .plant-setting,
+  #settingsModal .language-setting{
+    min-height:38px !important;
+    margin-bottom:4px !important;
+    padding-top:5px !important;
+    padding-bottom:5px !important;
+  }
+
+  #settingsModal .calendar-view-setting{
+    min-height:41px !important;
+    margin-bottom:4px !important;
+    padding-top:5px !important;
+    padding-bottom:5px !important;
+  }
+
+  #settingsModal .plant-select-btn,
+  #settingsModal .language-cycle-btn,
+  #settingsModal .calendar-view-btn{
+    height:31px !important;
+  }
+
+  #settingsModal .color-profile-note{
+    min-height:27px !important;
+    margin-bottom:4px !important;
+    padding-top:4px !important;
+    padding-bottom:4px !important;
+  }
+
+  /* El bloque central absorbe el espacio sobrante de forma útil. */
+  #settingsModal .settings-list{
+    flex:1 1 auto !important;
+    min-height:0 !important;
+    justify-content:space-between !important;
+    gap:5px !important;
+  }
+
+  #settingsModal .color-setting-row{
+    min-height:58px !important;
+    padding-top:6px !important;
+    padding-bottom:6px !important;
+  }
+
+  #settingsModal .color-edit-control{
+    height:50px !important;
+  }
+
+  #settingsModal .setting-range-row{
+    min-height:50px !important;
+    padding-top:5px !important;
+    padding-bottom:5px !important;
+  }
+
+  #settingsModal .settings-toggle-trio .toggle-mini{
+    min-height:56px !important;
+    padding-top:5px !important;
+    padding-bottom:5px !important;
+  }
+
+  /*
+    Vista previa queda deliberadamente compacta:
+    sólo lo necesario para leer M / N / F.
+  */
+  #settingsModal .settings-preview{
+    flex:0 0 58px !important;
+    min-height:58px !important;
+    max-height:58px !important;
+    margin-top:5px !important;
+    padding-top:3px !important;
+    padding-bottom:4px !important;
+  }
+
+  #settingsModal .settings-preview-day{
+    padding-top:2px !important;
+    padding-bottom:3px !important;
+  }
+
+  /* Botones secundarios: claramente más altos y cómodos. */
+  #settingsModal .settings-main-actions{
+    margin-top:5px !important;
+    gap:7px !important;
+  }
+
+  #settingsModal .settings-main-actions button{
+    height:48px !important;
+    min-height:48px !important;
+    border-radius:15px !important;
+    font-size:10.6px !important;
+  }
+
+  /* Restaurar / LISTO: fila principal, todavía un poco más alta. */
+  #settingsModal .action-row:not(.settings-main-actions){
+    margin-top:6px !important;
+    gap:8px !important;
+  }
+
+  #settingsModal .action-row:not(.settings-main-actions) button,
+  #settingsModal .action-row:not(.settings-main-actions) label{
+    height:52px !important;
+    min-height:52px !important;
+    border-radius:16px !important;
+    font-size:13px !important;
+  }
+}
+
+/* Samsung / móviles con viewport alrededor de 760–820 px */
+@media(max-width:620px) and (min-height:761px) and (max-height:820px){
+
+  #settingsModal .plant-setting,
+  #settingsModal .language-setting{
+    min-height:35px !important;
+    margin-bottom:3px !important;
+    padding-top:4px !important;
+    padding-bottom:4px !important;
+  }
+
+  #settingsModal .calendar-view-setting{
+    min-height:38px !important;
+    margin-bottom:3px !important;
+    padding-top:4px !important;
+    padding-bottom:4px !important;
+  }
+
+  #settingsModal .color-setting-row{
+    min-height:56px !important;
+  }
+
+  #settingsModal .setting-range-row{
+    min-height:48px !important;
+  }
+
+  #settingsModal .settings-toggle-trio .toggle-mini{
+    min-height:53px !important;
+  }
+
+  #settingsModal .settings-preview{
+    flex-basis:55px !important;
+    min-height:55px !important;
+    max-height:55px !important;
+  }
+
+  #settingsModal .settings-main-actions button{
+    height:46px !important;
+    min-height:46px !important;
+  }
+
+  #settingsModal .action-row:not(.settings-main-actions) button,
+  #settingsModal .action-row:not(.settings-main-actions) label{
+    height:50px !important;
+    min-height:50px !important;
+  }
+}
+
+/* Equipos realmente bajos: no recortar. */
+@media(max-width:620px) and (max-height:760px){
+
+  #settingsModal .settings-list{
+    flex:1 1 auto !important;
+    justify-content:space-between !important;
+  }
+
+  #settingsModal .settings-preview{
+    flex-basis:48px !important;
+    min-height:48px !important;
+    max-height:48px !important;
+  }
+
+  #settingsModal .settings-main-actions button{
+    height:40px !important;
+    min-height:40px !important;
+  }
+
+  #settingsModal .action-row:not(.settings-main-actions) button,
+  #settingsModal .action-row:not(.settings-main-actions) label{
+    height:44px !important;
+    min-height:44px !important;
+  }
+}
+
 </style>
 </head>
 <body class="notranslate">
@@ -12403,7 +12600,7 @@ body.light .plant-select-btn{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.0.5</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.0.6</span></span>
             </div>
           </div>
 
@@ -12918,7 +13115,7 @@ body.light .plant-select-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.0.5';
+const CURRENT_VERSION='5.0.6';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
