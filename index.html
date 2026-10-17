@@ -11249,6 +11249,9 @@ body.light .language-cycle-btn{background:#eef3f8;color:#1d2b3b;border-color:rgb
   aberraciones como SUN→SOL, WED→CASARSE, SAT→SE SENTÓ o M→METRO.
 */
 
+
+/* ===== V4.13.5 · FERIADOS I18N + ORDEN CONFIGURACIÓN ===== */
+
 </style>
 </head>
 <body class="notranslate">
@@ -11368,17 +11371,6 @@ body.light .language-cycle-btn{background:#eef3f8;color:#1d2b3b;border-color:rgb
 <!-- Settings -->
 <div id="settingsModal" class="backdrop"><div class="modal glass settings-modal-window">
   <div class="modal-head"><div><h2>⚙️ Configuración</h2><small>Personalizá la aplicación</small></div><button class="close-btn" data-close="settingsModal">×</button></div>
-  <div class="calendar-view-setting">
-    <div class="calendar-view-setting-copy">
-      <b>Vista del calendario</b>
-      <small>Elegí entre turnos o calendario común</small>
-    </div>
-    <div class="calendar-view-segment" role="group" aria-label="Vista del calendario">
-      <button id="calendarViewShiftsBtn" type="button" class="calendar-view-btn active" data-calendar-view="shifts">TURNOS</button>
-      <button id="calendarViewCommonBtn" type="button" class="calendar-view-btn" data-calendar-view="common">COMÚN</button>
-    </div>
-  </div>
-
   <div class="language-setting">
     <div class="language-setting-copy">
       <b>Idioma</b>
@@ -11388,6 +11380,17 @@ body.light .language-cycle-btn{background:#eef3f8;color:#1d2b3b;border-color:rgb
       <span class="language-globe">🌐</span>
       <strong id="languageCycleLabel">ESPAÑOL</strong>
     </button>
+  </div>
+
+  <div class="calendar-view-setting">
+    <div class="calendar-view-setting-copy">
+      <b>Vista del calendario</b>
+      <small>Elegí entre turnos o calendario común</small>
+    </div>
+    <div class="calendar-view-segment" role="group" aria-label="Vista del calendario">
+      <button id="calendarViewShiftsBtn" type="button" class="calendar-view-btn active" data-calendar-view="shifts">TURNOS</button>
+      <button id="calendarViewCommonBtn" type="button" class="calendar-view-btn" data-calendar-view="common">COMÚN</button>
+    </div>
   </div>
 
   <div id="colorProfileNote" class="color-profile-note"><b id="colorProfileTitle">Colores · Turnos 1–4</b><span id="colorProfileText">M / N / F</span></div>
@@ -12266,7 +12269,7 @@ body.light .language-cycle-btn{background:#eef3f8;color:#1d2b3b;border-color:rgb
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.13.4';
+const CURRENT_VERSION='4.13.5';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -12444,6 +12447,13 @@ function applyLanguage(lang,{persist=true,rerender=true}={}){
   renderStatsIfOpen();
   if(document.querySelector('#agendaSheet')?.classList.contains('open'))renderAgenda();
   if(document.querySelector('#vacationModal')?.classList.contains('open'))renderVacationList();
+  if(
+   document.querySelector('#holidayStatsDetailModal')?.classList.contains('open') &&
+   holidayStatsDetailTurn &&
+   holidayStatsDetailYear
+  ){
+   renderHolidayStatsDetail(holidayStatsDetailTurn,holidayStatsDetailYear);
+  }
   renderBackupStatus();
  }
  translateTree(document.body);
@@ -13135,6 +13145,105 @@ const HOLIDAY_FALLBACK_2026=[
  {fecha:'2026-12-08',tipo:'inamovible',nombre:'Día de la Inmaculada Concepción de María'},
  {fecha:'2026-12-25',tipo:'inamovible',nombre:'Navidad'}
 ];
+
+
+/* ===== V4.13.5 · I18N DE FERIADOS DINÁMICOS ===== */
+
+const HOLIDAY_NAME_I18N={
+ en:{
+  'año nuevo':"New Year's Day",
+  'carnaval':'Carnival',
+  'puente turístico no laborable':'Tourism bridge / non-working day',
+  'día nacional de la memoria por la verdad y la justicia':'National Day of Remembrance for Truth and Justice',
+  'día de la memoria por la verdad y la justicia':'Day of Remembrance for Truth and Justice',
+  'día del veterano y de los caídos en la guerra de malvinas':'Veterans and Fallen of the Malvinas War',
+  'viernes santo':'Good Friday',
+  'día del trabajador':'Labour Day',
+  'día de la revolución de mayo':'May Revolution Day',
+  'paso a la inmortalidad del general martín güemes (17/6)':'Passing to Immortality of General Martín Güemes (17/6)',
+  'paso a la inmortalidad del general don martín miguel de güemes':'Passing to Immortality of General Martín Miguel de Güemes',
+  'paso a la inmortalidad del general manuel belgrano':'Passing to Immortality of General Manuel Belgrano',
+  'día de la independencia':'Independence Day',
+  'paso a la inmortalidad del gral. josé de san martín':'Passing to Immortality of General José de San Martín',
+  'paso a la inmortalidad del general josé de san martín':'Passing to Immortality of General José de San Martín',
+  'día del respeto a la diversidad cultural':'Day of Respect for Cultural Diversity',
+  'visita del papa león xiv':'Visit of Pope Leo XIV',
+  'día de la soberanía nacional (20/11)':'National Sovereignty Day (20/11)',
+  'día de la soberanía nacional':'National Sovereignty Day',
+  'día de la inmaculada concepción de maría':'Immaculate Conception Day',
+  'navidad':'Christmas',
+  'día del metalúrgico':"Metalworkers' Day"
+ },
+ pt:{
+  'año nuevo':'Ano-Novo',
+  'carnaval':'Carnaval',
+  'puente turístico no laborable':'Ponte turística / dia não útil',
+  'día nacional de la memoria por la verdad y la justicia':'Dia Nacional da Memória pela Verdade e Justiça',
+  'día de la memoria por la verdad y la justicia':'Dia da Memória pela Verdade e Justiça',
+  'día del veterano y de los caídos en la guerra de malvinas':'Dia dos Veteranos e dos Mortos na Guerra das Malvinas',
+  'viernes santo':'Sexta-feira Santa',
+  'día del trabajador':'Dia do Trabalhador',
+  'día de la revolución de mayo':'Dia da Revolução de Maio',
+  'paso a la inmortalidad del general martín güemes (17/6)':'Passagem à Imortalidade do General Martín Güemes (17/6)',
+  'paso a la inmortalidad del general don martín miguel de güemes':'Passagem à Imortalidade do General Martín Miguel de Güemes',
+  'paso a la inmortalidad del general manuel belgrano':'Passagem à Imortalidade do General Manuel Belgrano',
+  'día de la independencia':'Dia da Independência',
+  'paso a la inmortalidad del gral. josé de san martín':'Passagem à Imortalidade do General José de San Martín',
+  'paso a la inmortalidad del general josé de san martín':'Passagem à Imortalidade do General José de San Martín',
+  'día del respeto a la diversidad cultural':'Dia do Respeito à Diversidade Cultural',
+  'visita del papa león xiv':'Visita do Papa Leão XIV',
+  'día de la soberanía nacional (20/11)':'Dia da Soberania Nacional (20/11)',
+  'día de la soberanía nacional':'Dia da Soberania Nacional',
+  'día de la inmaculada concepción de maría':'Dia da Imaculada Conceição de Maria',
+  'navidad':'Natal',
+  'día del metalúrgico':'Dia do Metalúrgico'
+ }
+};
+
+function holidayNameForLanguage(name){
+ const raw=String(name||'');
+ if(appLanguage==='es'||!raw)return raw;
+
+ return raw
+  .split(' · ')
+  .map(part=>{
+   const key=part.trim().toLocaleLowerCase('es-AR');
+   return HOLIDAY_NAME_I18N[appLanguage]?.[key] || part.trim();
+  })
+  .join(' · ');
+}
+
+function holidayTypeForLanguage(typeText){
+ const raw=String(typeText||'');
+ if(appLanguage==='es')return raw;
+
+ if(appLanguage==='en'){
+  return raw
+   .replace('Feriado gremial · Todos los turnos','Union holiday · All shifts')
+   .replace('Puente / no laborable','Bridge / non-working day')
+   .replace('Feriado nacional','National holiday')
+   .replace('Feriado gremial','Union holiday')
+   .replace('½ feriado','½ holiday');
+ }
+
+ return raw
+  .replace('Feriado gremial · Todos los turnos','Feriado sindical · Todos os turnos')
+  .replace('Puente / no laborable','Ponte / dia não útil')
+  .replace('Feriado gremial','Feriado sindical')
+  .replace('½ feriado','½ feriado');
+}
+
+function holidayDetailSubtitleForLanguage(turnName){
+ if(appLanguage==='en')return `${turnName} · Holidays that fall on a workday`;
+ if(appLanguage==='pt')return `${turnName} · Feriados que coincidem com dia de trabalho`;
+ return `${turnName} · Feriados que coinciden con día de trabajo`;
+}
+
+function holidayEmptyTextForLanguage(turnName,year){
+ if(appLanguage==='en')return `There are no holidays that fall on workdays for ${turnName} in ${year}.`;
+ if(appLanguage==='pt')return `Não há feriados que coincidam com dias de trabalho para ${turnName} em ${year}.`;
+ return `No hay feriados que coincidan con días de trabajo para ${turnName} en ${year}.`;
+}
 
 const holidayMemory={};
 const holidayPending=new Map();
@@ -15397,9 +15506,10 @@ function renderHolidayStatsDetail(turn,year){
  holidayStatsDetailYear=year;
 
  const details=holidayWorkDetailsForTurn(year,turn);
- const turnName=scheduleName(turn);
+ const rawTurnName=scheduleName(turn);
+ const turnName=appLanguage==='es'?rawTurnName:translateRuntimeText(rawTurnName);
 
- $('#holidayStatsDetailSubtitle').textContent=`${turnName} · Feriados que coinciden con día de trabajo`;
+ $('#holidayStatsDetailSubtitle').textContent=holidayDetailSubtitleForLanguage(turnName);
  $('#holidayStatsDetailTurn').textContent=turnName;
  $('#holidayStatsDetailYear').textContent=year;
  $('#holidayStatsDetailCount').textContent=formatHolidayFraction(holidayWorkValue(details));
@@ -15407,17 +15517,20 @@ function renderHolidayStatsDetail(turn,year){
  const list=$('#holidayStatsDetailList');
 
  if(!details.length){
-  list.innerHTML=`<div class="holiday-stats-detail-empty">No hay feriados que coincidan con días de trabajo para ${escapeHtml(turnName)} en ${year}.</div>`;
+  list.innerHTML=`<div class="holiday-stats-detail-empty">${escapeHtml(holidayEmptyTextForLanguage(turnName,year))}</div>`;
   return;
  }
 
  list.innerHTML=details.map(item=>{
-  const codeLabel=codeText(turn,item.code);
+  const rawCodeLabel=codeText(turn,item.code);
+  const codeLabel=appLanguage==='es'?rawCodeLabel:translateRuntimeText(rawCodeLabel);
   const codeClass=cls(item.code);
   const baseTypeText=item.metalurgico&&!item.national
    ?'Feriado gremial · Todos los turnos'
    :item.type;
-  const typeText=item.half?`${baseTypeText} · ½ feriado · 6 h`:baseTypeText;
+  const rawTypeText=item.half?`${baseTypeText} · ½ feriado · 6 h`:baseTypeText;
+  const typeText=holidayTypeForLanguage(rawTypeText);
+  const holidayName=holidayNameForLanguage(item.name);
 
   return `
    <div class="holiday-stat-detail-row">
@@ -15427,7 +15540,7 @@ function renderHolidayStatsDetail(turn,year){
       <small>${escapeHtml(holidayStatsFullDateFmt.format(item.date))}</small>
     </div>
     <div class="holiday-stat-detail-copy">
-      <b>${escapeHtml(item.name)}</b>
+      <b>${escapeHtml(holidayName)}</b>
       <small>${escapeHtml(typeText)}</small>
     </div>
     <span class="holiday-stat-detail-shift ${codeClass}">${escapeHtml(codeLabel)}</span>
