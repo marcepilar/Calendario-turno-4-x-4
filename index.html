@@ -10874,6 +10874,107 @@ body.light .workday-top-btn{
   }
 }
 
+
+/* ===== V4.12.7 · CANDIDATA · CONFIGURACIÓN T5 MEJOR APROVECHADA ===== */
+
+/*
+  En T5 quedaba espacio libre abajo porque hay una tarjeta de color menos.
+  Se redistribuye ese espacio dentro de la propia ventana, sin scroll.
+*/
+@media(max-width:620px) and (max-height:900px){
+
+  #settingsModal.t5-profile .settings-modal-window{
+    padding-bottom:8px !important;
+  }
+
+  #settingsModal.t5-profile .color-setting-row{
+    min-height:74px !important;
+    padding-top:6px !important;
+    padding-bottom:6px !important;
+  }
+
+  #settingsModal.t5-profile .color-edit-control{
+    height:63px !important;
+    width:148px !important;
+  }
+
+  #settingsModal.t5-profile .color-input{
+    width:42px !important;
+    height:44px !important;
+  }
+
+  #settingsModal.t5-profile .palette-setting{
+    min-height:42px !important;
+  }
+
+  #settingsModal.t5-profile .setting-range-row{
+    min-height:56px !important;
+    padding-top:5px !important;
+    padding-bottom:5px !important;
+  }
+
+  #settingsModal.t5-profile .settings-preview{
+    flex:0 0 88px !important;
+    min-height:88px !important;
+    max-height:88px !important;
+    margin-top:5px !important;
+    padding:5px 8px 7px !important;
+  }
+
+  #settingsModal.t5-profile .settings-preview-head{
+    margin-bottom:3px !important;
+  }
+
+  #settingsModal.t5-profile .settings-preview-day{
+    padding:5px 5px 7px !important;
+  }
+
+  #settingsModal.t5-profile .settings-preview-day strong{
+    font-size:calc(var(--code-size) * 1.08) !important;
+  }
+
+  #settingsModal.t5-profile .settings-preview-day small{
+    font-size:8px !important;
+  }
+
+  #settingsModal.t5-profile .settings-main-actions{
+    margin-top:6px !important;
+  }
+
+  #settingsModal.t5-profile .action-row{
+    margin-top:5px !important;
+  }
+
+  #settingsModal.t5-profile .action-row button,
+  #settingsModal.t5-profile .action-row label{
+    min-height:43px !important;
+    height:43px !important;
+  }
+}
+
+/* En pantallas realmente bajas, conservar el ajuste compacto anterior. */
+@media(max-width:620px) and (max-height:760px){
+  #settingsModal.t5-profile .color-setting-row{
+    min-height:68px !important;
+  }
+
+  #settingsModal.t5-profile .color-edit-control{
+    height:58px !important;
+  }
+
+  #settingsModal.t5-profile .settings-preview{
+    flex-basis:72px !important;
+    min-height:72px !important;
+    max-height:72px !important;
+  }
+
+  #settingsModal.t5-profile .action-row button,
+  #settingsModal.t5-profile .action-row label{
+    min-height:38px !important;
+    height:38px !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -11880,7 +11981,7 @@ body.light .workday-top-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.12.6';
+const CURRENT_VERSION='4.12.7';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
