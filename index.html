@@ -11255,6 +11255,103 @@ body.light .language-cycle-btn{background:#eef3f8;color:#1d2b3b;border-color:rgb
 
 /* ===== V5.0.0 · NUEVA RAMA · I18N + RESTAURAR ESPAÑOL ===== */
 
+
+/* ===== V5.0.1 · AYUDA · PROPIEDAD INTELECTUAL ===== */
+#helpModal .help-ip-card{
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 96% 6%,rgba(67,168,255,.10),transparent 38%),
+    radial-gradient(circle at 4% 96%,rgba(66,214,176,.08),transparent 42%),
+    var(--panel2);
+}
+
+#helpModal .help-ip-owner{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  margin-bottom:10px;
+  padding:10px 11px;
+  border:1px solid color-mix(in srgb,var(--accent2) 24%,var(--line));
+  border-radius:14px;
+  background:color-mix(in srgb,var(--panel3) 74%,transparent);
+}
+
+#helpModal .help-ip-mark{
+  flex:0 0 42px;
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  border-radius:13px;
+  background:linear-gradient(145deg,var(--accent),var(--accent2));
+  color:#fff;
+  font-size:23px;
+  line-height:1;
+  font-weight:1000;
+  box-shadow:0 8px 20px rgba(0,0,0,.16);
+}
+
+#helpModal .help-ip-owner-copy{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+
+#helpModal .help-ip-owner-copy small{
+  color:var(--muted);
+  font-size:8.5px;
+  font-weight:850;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+
+#helpModal .help-ip-owner-copy b{
+  color:var(--text);
+  font-size:12.2px;
+  line-height:1.25;
+}
+
+#helpModal .help-ip-owner-copy span{
+  color:var(--muted);
+  font-size:8.8px;
+  line-height:1.3;
+}
+
+#helpModal .help-copyright-footer{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  margin:2px 0 8px;
+  padding:8px 10px;
+  color:var(--muted);
+  font-size:8.2px;
+  line-height:1.25;
+  text-align:center;
+}
+
+#helpModal .help-copyright-footer b{
+  color:var(--text);
+  font-size:8.4px;
+}
+
+@media(max-width:620px){
+  #helpModal .help-ip-owner{
+    padding:9px 10px;
+  }
+  #helpModal .help-ip-mark{
+    flex-basis:38px;
+    width:38px;
+    height:38px;
+    font-size:21px;
+  }
+}
+
+/* ===== V5.0.1 · DERECHOS DE AUTOR ===== */
+
 </style>
 </head>
 <body class="notranslate">
@@ -11577,6 +11674,7 @@ body.light .language-cycle-btn{background:#eef3f8;color:#1d2b3b;border-color:rgb
       <button type="button" data-help-go="help-licenses">Licencias</button>
       <button type="button" data-help-go="help-stats">Estadísticas</button>
       <button type="button" data-help-go="help-settings">Configuración</button>
+      <button type="button" data-help-go="help-ip">Autor</button>
     </div>
 
     <div class="help-content">
@@ -11772,6 +11870,37 @@ body.light .language-cycle-btn{background:#eef3f8;color:#1d2b3b;border-color:rgb
           <p class="help-tip">Si una marca no aparece, revisá el turno seleccionado y los controles de visibilidad de Configuración/Vacaciones.</p>
         </div>
       </section>
+
+      <section id="help-ip" class="help-section help-ip-section">
+        <div class="help-section-title">
+          <span>12</span>
+          <div>
+            <b>Propiedad intelectual</b>
+            <small>Autor y derechos de la aplicación</small>
+          </div>
+        </div>
+
+        <div class="help-card help-ip-card">
+          <div class="help-ip-owner">
+            <div class="help-ip-mark" aria-hidden="true">©</div>
+            <div class="help-ip-owner-copy">
+              <small>Autor</small>
+              <b data-no-i18n>Marcelo Adrian Rodriguez</b>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.0.1</span></span>
+            </div>
+          </div>
+
+          <p>© 2026 Marcelo Adrian Rodriguez. Todos los derechos reservados.</p>
+          <p>La reproducción, modificación, redistribución o explotación comercial del código fuente o de esta aplicación requiere autorización expresa del autor o titular de los derechos, salvo los usos permitidos por la legislación aplicable.</p>
+          <p class="help-tip">La instalación o utilización de esta aplicación no implica cesión de derechos de propiedad intelectual.</p>
+        </div>
+      </section>
+
+      <div class="help-copyright-footer">
+        <span>© 2026</span>
+        <b data-no-i18n>Marcelo Adrian Rodriguez</b>
+        <span>· Todos los derechos reservados.</span>
+      </div>
 
     </div>
 
@@ -12272,7 +12401,7 @@ body.light .language-cycle-btn{background:#eef3f8;color:#1d2b3b;border-color:rgb
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.0.0';
+const CURRENT_VERSION='5.0.1';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -12341,6 +12470,27 @@ Object.assign(I18N.pt,{
  'M / F · perfil Turno 5':'M / F · perfil do Turno 5',
  '🎨 CERRAR':'🎨 FECHAR',
  '🎨 COLORES':'🎨 CORES'
+});
+
+/* ===== V5.0.1 · I18N PROPIEDAD INTELECTUAL ===== */
+Object.assign(I18N.en,{
+ 'Autor':'Author',
+ 'Propiedad intelectual':'Intellectual property',
+ 'Autor y derechos de la aplicación':'Author and application rights',
+ '© 2026 Marcelo Adrian Rodriguez. Todos los derechos reservados.':'© 2026 Marcelo Adrian Rodriguez. All rights reserved.',
+ 'La reproducción, modificación, redistribución o explotación comercial del código fuente o de esta aplicación requiere autorización expresa del autor o titular de los derechos, salvo los usos permitidos por la legislación aplicable.':'Reproduction, modification, redistribution, or commercial exploitation of the source code or this application requires the express authorization of the author or rights holder, except for uses permitted by applicable law.',
+ 'La instalación o utilización de esta aplicación no implica cesión de derechos de propiedad intelectual.':'Installing or using this application does not imply any transfer of intellectual property rights.',
+ '· Todos los derechos reservados.':'· All rights reserved.'
+});
+
+Object.assign(I18N.pt,{
+ 'Autor':'Autor',
+ 'Propiedad intelectual':'Propriedade intelectual',
+ 'Autor y derechos de la aplicación':'Autor e direitos do aplicativo',
+ '© 2026 Marcelo Adrian Rodriguez. Todos los derechos reservados.':'© 2026 Marcelo Adrian Rodriguez. Todos os direitos reservados.',
+ 'La reproducción, modificación, redistribución o explotación comercial del código fuente o de esta aplicación requiere autorización expresa del autor o titular de los derechos, salvo los usos permitidos por la legislación aplicable.':'A reprodução, modificação, redistribuição ou exploração comercial do código-fonte ou deste aplicativo requer autorização expressa do autor ou titular dos direitos, exceto nos usos permitidos pela legislação aplicável.',
+ 'La instalación o utilización de esta aplicación no implica cesión de derechos de propiedad intelectual.':'A instalação ou utilização deste aplicativo não implica cessão de direitos de propriedade intelectual.',
+ '· Todos los derechos reservados.':'· Todos os direitos reservados.'
 });
 
 const LANGUAGE_LABELS={es:'ESPAÑOL',en:'ENGLISH',pt:'PORTUGUÊS'};
@@ -15742,6 +15892,8 @@ $('#shareCopyBtn').onclick=copyShareLink;
 helpBtn.onclick=()=>{
  const hv=$('#helpVersionLabel');
  if(hv)hv.textContent=CURRENT_VERSION;
+ const cv=$('#copyrightVersionLabel');
+ if(cv)cv.textContent=CURRENT_VERSION;
  openModal('helpModal');
  setTimeout(()=>{
   const modal=$('#helpModal .help-modal-window');
@@ -16204,7 +16356,7 @@ document.addEventListener('dragstart',ev=>{
 if(!history.state?.[APP_NAV_STATE_KEY]){
  history.replaceState({...history.state,[APP_NAV_STATE_KEY]:'main'},'',location.href);
 }
-loadSettings();loadVacationColor();loadVacationVisibility();updateWorkdayNewState();syncTurnPulseText();syncTurn5PulseText();ensurePersistentTurnPulses();renderQuickPalette();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();applyLanguage(appLanguage,{persist:false,rerender:false});initSplash();i18nObserver.observe(document.body,{subtree:true,childList:true,characterData:true});fitMainCalendarViewport();keepDetailBelowInitialFold();setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},260);setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},700);checkUpdate();checkReminders();
+loadSettings();loadVacationColor();loadVacationVisibility();updateWorkdayNewState();syncTurnPulseText();syncTurn5PulseText();ensurePersistentTurnPulses();renderQuickPalette();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;if($('#copyrightVersionLabel'))$('#copyrightVersionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();applyLanguage(appLanguage,{persist:false,rerender:false});initSplash();i18nObserver.observe(document.body,{subtree:true,childList:true,characterData:true});fitMainCalendarViewport();keepDetailBelowInitialFold();setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},260);setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},700);checkUpdate();checkReminders();
 window.addEventListener('resize',scheduleViewportLayout,{passive:true});
 window.addEventListener('orientationchange',scheduleViewportLayout,{passive:true});
 
