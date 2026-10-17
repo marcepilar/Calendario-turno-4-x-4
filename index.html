@@ -11234,6 +11234,12 @@ body.light .language-cycle-btn{background:#eef3f8;color:#1d2b3b;border-color:rgb
   .language-cycle-btn{min-width:100px}
 }
 
+
+/* ===== V4.13.3 · FIX MULTIIDIOMA · SPLASH NO BLOQUEANTE ===== */
+#splash.hide{
+  pointer-events:none !important;
+}
+
 </style>
 </head>
 <body>
@@ -12251,7 +12257,7 @@ body.light .language-cycle-btn{background:#eef3f8;color:#1d2b3b;border-color:rgb
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.13.2';
+const CURRENT_VERSION='4.13.3';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -12358,7 +12364,11 @@ function translateTextNode(node){
  if(!core)return;
  const translated=appLanguage==='es'?core:translateRuntimeText(core);
  const start=original.indexOf(core);
- node.nodeValue=original.slice(0,start)+translated+original.slice(start+core.length);
+ const nextValue=original.slice(0,start)+translated+original.slice(start+core.length);
+
+ // IMPORTANTE: no escribir si el valor ya es el mismo.
+ // Evita que MutationObserver vuelva a dispararse sobre su propio cambio.
+ if(node.nodeValue!==nextValue)node.nodeValue=nextValue;
 }
 
 function translateElementAttrs(el){
@@ -12369,7 +12379,8 @@ function translateElementAttrs(el){
   if(!el.hasAttribute(attr))continue;
   if(!(attr in originals))originals[attr]=el.getAttribute(attr);
   const original=originals[attr];
-  el.setAttribute(attr,appLanguage==='es'?original:translateRuntimeText(original));
+  const nextValue=appLanguage==='es'?original:translateRuntimeText(original);
+  if(el.getAttribute(attr)!==nextValue)el.setAttribute(attr,nextValue);
  }
 }
 
@@ -12443,12 +12454,18 @@ window.confirm=(message)=>nativeConfirm(appLanguage==='es'?String(message):trans
 
 const i18nObserver=new MutationObserver(mutations=>{
  if(i18nApplying||appLanguage==='es')return;
- for(const m of mutations){
-  if(m.type==='characterData')translateTextNode(m.target);
-  m.addedNodes?.forEach(node=>{
-   if(node.nodeType===Node.TEXT_NODE)translateTextNode(node);
-   else if(node.nodeType===Node.ELEMENT_NODE)translateTree(node);
-  });
+
+ i18nApplying=true;
+ try{
+  for(const m of mutations){
+   if(m.type==='characterData')translateTextNode(m.target);
+   m.addedNodes?.forEach(node=>{
+    if(node.nodeType===Node.TEXT_NODE)translateTextNode(node);
+    else if(node.nodeType===Node.ELEMENT_NODE)translateTree(node);
+   });
+  }
+ }finally{
+  i18nApplying=false;
  }
 });
 
@@ -15945,7 +15962,24 @@ function scheduleViewportLayout(){
  });
 }
 
-function initSplash(){const s=$('#splash');if(sessionStorage.getItem('turno4x4.splash.seen')){s.classList.add('hide');return}sessionStorage.setItem('turno4x4.splash.seen','1');setTimeout(()=>s.classList.add('hide'),850)}
+function initSplash(){
+ const s=$('#splash');
+ if(!s)return;
+
+ if(sessionStorage.getItem('turno4x4.splash.seen')){
+  s.classList.add('hide');
+  return;
+ }
+
+ sessionStorage.setItem('turno4x4.splash.seen','1');
+ setTimeout(()=>s.classList.add('hide'),850);
+
+ // Fallback de seguridad: nunca permitir que el splash bloquee la app.
+ setTimeout(()=>{
+  s.classList.add('hide');
+  s.style.pointerEvents='none';
+ },1400);
+}
 
 
 // Efecto físico universal: funciona también en botones creados dinámicamente.
@@ -15989,7 +16023,7 @@ document.addEventListener('dragstart',ev=>{
 if(!history.state?.[APP_NAV_STATE_KEY]){
  history.replaceState({...history.state,[APP_NAV_STATE_KEY]:'main'},'',location.href);
 }
-loadSettings();loadVacationColor();loadVacationVisibility();updateWorkdayNewState();syncTurnPulseText();syncTurn5PulseText();ensurePersistentTurnPulses();renderQuickPalette();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();applyLanguage(appLanguage,{persist:false,rerender:false});i18nObserver.observe(document.body,{subtree:true,childList:true,characterData:true});fitMainCalendarViewport();keepDetailBelowInitialFold();setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},260);setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},700);initSplash();checkUpdate();checkReminders();
+loadSettings();loadVacationColor();loadVacationVisibility();updateWorkdayNewState();syncTurnPulseText();syncTurn5PulseText();ensurePersistentTurnPulses();renderQuickPalette();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();applyLanguage(appLanguage,{persist:false,rerender:false});initSplash();i18nObserver.observe(document.body,{subtree:true,childList:true,characterData:true});fitMainCalendarViewport();keepDetailBelowInitialFold();setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},260);setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},700);checkUpdate();checkReminders();
 window.addEventListener('resize',scheduleViewportLayout,{passive:true});
 window.addEventListener('orientationchange',scheduleViewportLayout,{passive:true});
 
