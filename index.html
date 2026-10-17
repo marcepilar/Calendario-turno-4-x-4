@@ -13005,7 +13005,7 @@ body.light .plant-select-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.0.5';
+const CURRENT_VERSION='5.0.6';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -16827,35 +16827,74 @@ bindYearHold($('#yearPrev'),-1);
 bindYearHold($('#yearNext'),1);
 
 
+/* ===== V5.0.6 · ACTUALIZACIONES VERIFICADAS SIN FALSOS AVISOS ===== */
 let latestVersion=CURRENT_VERSION;
+let updateInProgress=false;
+let checkUpdateInProgress=false;
 const UPDATE_DISMISS_KEY='turno4x4.updateDismissedVersion';
 
+function compareAppVersions(a,b){
+ const parts=s=>String(s||'').trim().replace(/^v/i,'').split('.').map(x=>/^\d+$/.test(x)?Number(x):NaN);
+ const av=parts(a), bv=parts(b);
+ if(av.length!==3||bv.length!==3||av.some(Number.isNaN)||bv.some(Number.isNaN))return null;
+ for(let i=0;i<3;i++)if(av[i]!==bv[i])return av[i]>bv[i]?1:-1;
+ return 0;
+}
+
+function hideUpdateNotice(){
+ $('#updateBanner').classList.remove('show');
+ settingsBtn.classList.remove('has-update');
+}
+
+async function readPublishedAppVersion(){
+ /* Se usa la raíz del sitio (no index.html) para no recibir una copia
+    antigua de index.html servida por un service worker anterior. */
+ const u=new URL('./',location.href);
+ u.searchParams.set('check_release',String(Date.now()));
+ const r=await fetch(u.href,{cache:'no-store'});
+ if(!r.ok)throw new Error('El servidor no respondió correctamente.');
+ const html=await r.text();
+ const m=html.match(/const\s+CURRENT_VERSION\s*=\s*['"](\d+\.\d+\.\d+)['"]/);
+ if(!m)throw new Error('No se pudo comprobar la versión publicada.');
+ return m[1];
+}
+
 async function checkUpdate(){
+ if(updateInProgress||checkUpdateInProgress)return;
+ checkUpdateInProgress=true;
  try{
   const r=await fetch('./version.json?t='+Date.now(),{cache:'no-store'});
   if(!r.ok)return;
   const data=await r.json();
   const remote=String(data.version||'').trim();
-
-  if(remote&&remote!==CURRENT_VERSION){
-   latestVersion=remote;
-   const dismissed=sessionStorage.getItem(UPDATE_DISMISS_KEY);
-   $('#updateVersionText').textContent=`Versión ${remote} disponible.`;
-   settingsBtn.classList.add('has-update');
-   $('#updateStatusText').textContent=`Nueva versión ${remote} disponible.`;
-
-   // Si el usuario tocó "Más tarde", no volver a mostrar la misma versión
-   // durante esta sesión. Una versión posterior sí volverá a avisar.
-   if(dismissed!==remote){
-    $('#updateBanner').classList.add('show');
-   }
-  }else{
-   $('#updateBanner').classList.remove('show');
-   settingsBtn.classList.remove('has-update');
+  const newer=compareAppVersions(remote,CURRENT_VERSION);
+  if(newer!==1){
+   /* Una versión IGUAL o ANTERIOR jamás debe generar un aviso. */
+   hideUpdateNotice();
    sessionStorage.removeItem(UPDATE_DISMISS_KEY);
    $('#updateStatusText').textContent='Aplicación actualizada.';
+   return;
   }
- }catch{}
+
+  /* Verificar también que GitHub Pages ya publicó index.html.
+     version.json puede subirse antes que el resto de archivos. */
+  const published=await readPublishedAppVersion();
+  if(compareAppVersions(published,remote)!==0){
+   hideUpdateNotice();
+   $('#updateStatusText').textContent='Publicación de la nueva versión en curso.';
+   return;
+  }
+
+  latestVersion=remote;
+  $('#updateVersionText').textContent=`Versión ${remote} disponible.`;
+  $('#updateStatusText').textContent=`Nueva versión ${remote} disponible.`;
+  settingsBtn.classList.add('has-update');
+  if(sessionStorage.getItem(UPDATE_DISMISS_KEY)!==remote){
+   $('#updateBanner').classList.add('show');
+  }
+ }catch{
+  /* Sin conexión no se anuncia una actualización que no pudimos verificar. */
+ }finally{checkUpdateInProgress=false;}
 }
 
 $('#updateLaterBtn').onclick=()=>{
@@ -16864,27 +16903,57 @@ $('#updateLaterBtn').onclick=()=>{
 };
 
 $('#updateNowBtn').onclick=async()=>{
- const b=$('#updateNowBtn');
- b.disabled=true;
- b.textContent='ACTUALIZANDO…';
- $('#updateBanner').classList.remove('show');
- sessionStorage.removeItem(UPDATE_DISMISS_KEY);
-
+ if(updateInProgress)return;
+ const btn=$('#updateNowBtn');
+ const caption=$('#updateBanner .update-copy b');
+ updateInProgress=true;
+ btn.disabled=true;
+ btn.textContent='VERIFICANDO…';
  try{
-  const reg=await navigator.serviceWorker?.getRegistration();
-  if(reg){
-   await reg.update();
-   if(reg.waiting)reg.waiting.postMessage({type:'SKIP_WAITING'});
+  const published=await readPublishedAppVersion();
+  if(compareAppVersions(published,CURRENT_VERSION)!==1){
+   throw new Error('GitHub todavía no publicó una versión más reciente. Probá nuevamente en unos minutos.');
   }
- }catch{}
+  if(compareAppVersions(published,latestVersion)!==0){
+   throw new Error('Los archivos del sitio todavía se están publicando. Probá en unos minutos.');
+  }
 
- // Cache-busting fuerte para que el navegador no vuelva a cargar el index viejo.
- setTimeout(()=>{
-  const target=`./index.html?update=${Date.now()}&v=${encodeURIComponent(latestVersion||'')}`;
-  location.replace(target);
- },900);
+  btn.textContent='ACTUALIZANDO…';
+  if('serviceWorker' in navigator){
+   const reg=await navigator.serviceWorker.getRegistration();
+   if(reg){
+    await reg.update();
+    if(reg.waiting)reg.waiting.postMessage({type:'SKIP_WAITING'});
+    /* Dar tiempo al nuevo service worker para tomar control.
+       La navegación posterior usa una URL distinta de index.html para
+       evitar caches antiguas que ignoraban el parámetro ?update. */
+    if(reg.installing){
+     await Promise.race([
+      new Promise(resolve=>{
+       const worker=reg.installing;
+       worker.addEventListener('statechange',()=>{
+        if(worker.state==='activated'||worker.state==='redundant')resolve();
+        if(worker.state==='installed')worker.postMessage({type:'SKIP_WAITING'});
+       });
+      }),
+      new Promise(resolve=>setTimeout(resolve,3500))
+     ]);
+    }
+   }
+  }
+  const target=new URL('./',location.href);
+  target.searchParams.set('app_updated',published);
+  target.searchParams.set('t',String(Date.now()));
+  location.replace(target.href);
+ }catch(err){
+  caption.textContent='Actualización pendiente';
+  $('#updateVersionText').textContent=err?.message||'No se pudo actualizar. Revisá tu conexión e intentá nuevamente.';
+  $('#updateBanner').classList.add('show');
+  btn.disabled=false;
+  btn.textContent='REINTENTAR';
+  updateInProgress=false;
+ }
 };
-
 
 function keepDetailBelowInitialFold(){
  const spacer=$('#belowFoldSpacer');
