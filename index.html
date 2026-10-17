@@ -10496,6 +10496,111 @@ body.light.calendar-common-view .mini-day.common-mini.weekend{
   }
 }
 
+
+/* ===== V4.12.2 · BOTÓN JORNADA · MISMO ESTILO GENERAL ===== */
+
+/*
+  JORNADA vuelve al lenguaje visual general de la app:
+  mismo fondo, borde, radio y comportamiento que los demás botones.
+  Se elimina el naranja/relieve 3D de V4.12.1.
+*/
+.workday-open-btn{
+  min-width:116px !important;
+  min-height:43px !important;
+  padding:0 13px !important;
+
+  border:1px solid var(--line) !important;
+  border-bottom-width:1px !important;
+  border-radius:13px !important;
+
+  background:var(--panel2) !important;
+  background-image:none !important;
+  color:var(--text) !important;
+  text-shadow:none !important;
+
+  box-shadow:var(--shadow2) !important;
+  filter:none !important;
+
+  cursor:pointer;
+  transition:transform .12s ease,background .12s ease,border-color .12s ease !important;
+}
+
+.workday-open-label{
+  gap:6px !important;
+  font-size:10px !important;
+  font-weight:1000 !important;
+  letter-spacing:.025em !important;
+}
+
+@media(hover:hover){
+  .workday-open-btn:hover{
+    background:var(--panel3) !important;
+    border-color:color-mix(in srgb,var(--accent2) 35%,var(--line)) !important;
+    transform:translateY(-1px) !important;
+    box-shadow:var(--shadow2) !important;
+    filter:none !important;
+  }
+}
+
+.workday-open-btn:active{
+  transform:scale(.97) !important;
+  background:var(--panel3) !important;
+  box-shadow:none !important;
+  filter:none !important;
+}
+
+/* Mantener NUEVO, pero con pulso sobrio y sin naranja. */
+.workday-open-btn.is-new{
+  animation:workdayNeutralPulse 2.35s ease-in-out infinite !important;
+}
+
+@keyframes workdayNeutralPulse{
+  0%,100%{
+    transform:scale(1);
+    box-shadow:var(--shadow2),0 0 0 0 rgba(67,168,255,0) !important;
+  }
+  50%{
+    transform:scale(1.025);
+    box-shadow:var(--shadow2),0 0 0 4px rgba(67,168,255,.09) !important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .workday-open-btn.is-new{
+    animation:none !important;
+  }
+}
+
+body.light .workday-open-btn{
+  background:var(--panel2) !important;
+  color:var(--text) !important;
+  border-color:var(--line) !important;
+}
+
+@media(max-width:620px){
+  .workday-open-btn{
+    min-width:108px !important;
+    min-height:40px !important;
+    padding:0 10px !important;
+  }
+  .workday-open-label{
+    font-size:9.4px !important;
+  }
+}
+
+@media(max-width:390px){
+  .workday-open-btn{
+    min-width:102px !important;
+    min-height:38px !important;
+  }
+}
+
+@media(max-height:760px){
+  .workday-open-btn{
+    min-height:36px !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -11501,7 +11606,7 @@ body.light.calendar-common-view .mini-day.common-mini.weekend{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.12.1';
+const CURRENT_VERSION='4.12.2';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
