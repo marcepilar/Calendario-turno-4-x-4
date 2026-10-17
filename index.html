@@ -10753,6 +10753,127 @@ body.light .workday-top-btn{
   border-color:rgba(93,108,123,.22);
 }
 
+
+/* ===== V4.12.5 · CANDIDATA · CABECERA COMPACTA PREMIUM ===== */
+
+/*
+  Optimización visual de la cabecera con 5 acciones:
+  - título completo en una sola línea
+  - firma en una sola línea
+  - botones más compactos y parejos
+  - tamaños fluidos según ancho de pantalla
+*/
+@media(max-width:620px){
+  .topbar{
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) auto !important;
+    align-items:center !important;
+    gap:clamp(4px,1.3vw,7px) !important;
+    margin-bottom:10px !important;
+  }
+
+  .brand{
+    min-width:0 !important;
+    gap:clamp(5px,1.5vw,8px) !important;
+  }
+
+  .brand > div:last-child{
+    min-width:0 !important;
+  }
+
+  .logo{
+    width:clamp(33px,9vw,40px) !important;
+    height:clamp(33px,9vw,40px) !important;
+    border-radius:clamp(11px,3vw,13px) !important;
+    font-size:clamp(13px,3.8vw,16px) !important;
+    flex:0 0 auto !important;
+  }
+
+  .brand h1{
+    margin:0 !important;
+    font-size:clamp(13.2px,3.65vw,16px) !important;
+    line-height:1.05 !important;
+    letter-spacing:-.035em !important;
+    white-space:nowrap !important;
+  }
+
+  .author-signature{
+    display:block !important;
+    margin-top:3px !important;
+    font-size:clamp(9.3px,2.75vw,11px) !important;
+    line-height:1.05 !important;
+    letter-spacing:.025em !important;
+    white-space:nowrap !important;
+  }
+
+  .top-actions{
+    display:flex !important;
+    flex-wrap:nowrap !important;
+    align-items:center !important;
+    justify-content:flex-end !important;
+    gap:clamp(2px,.75vw,4px) !important;
+    flex:0 0 auto !important;
+  }
+
+  .top-actions .icon-btn{
+    display:grid !important;
+    place-items:center !important;
+    width:clamp(31px,8.5vw,37px) !important;
+    height:clamp(33px,8.8vw,38px) !important;
+    flex:0 0 clamp(31px,8.5vw,37px) !important;
+    padding:0 !important;
+    border-radius:clamp(10px,2.8vw,12px) !important;
+    font-size:clamp(16px,4.5vw,19px) !important;
+    line-height:1 !important;
+  }
+
+  .workday-top-btn{
+    font-size:clamp(13px,3.8vw,15px) !important;
+  }
+
+  .share-top-btn .share-symbol{
+    width:clamp(16px,4.7vw,19px) !important;
+    height:clamp(16px,4.7vw,19px) !important;
+  }
+
+  .help-top-btn{
+    font-size:clamp(17px,4.8vw,20px) !important;
+  }
+
+  #settingsBtn,
+  #themeBtn{
+    font-size:clamp(17px,4.8vw,20px) !important;
+  }
+}
+
+/* Ajuste extra para teléfonos muy angostos: sigue todo en una sola fila. */
+@media(max-width:355px){
+  .topbar{
+    gap:3px !important;
+  }
+  .brand{
+    gap:4px !important;
+  }
+  .logo{
+    width:31px !important;
+    height:31px !important;
+  }
+  .brand h1{
+    font-size:12.4px !important;
+  }
+  .author-signature{
+    font-size:8.8px !important;
+  }
+  .top-actions{
+    gap:2px !important;
+  }
+  .top-actions .icon-btn{
+    width:29px !important;
+    height:32px !important;
+    flex-basis:29px !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -11759,7 +11880,7 @@ body.light .workday-top-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.12.4';
+const CURRENT_VERSION='4.12.5';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
