@@ -10601,6 +10601,97 @@ body.light .workday-open-btn{
   }
 }
 
+
+/* ===== V4.12.3 · CALENDARIO COMÚN · MÁS CONTRASTE ===== */
+/*
+   Se mejora la separación visual de los recuadros del calendario común:
+   - fondos más contrastados
+   - bordes internos más visibles
+   - fin de semana más distinguible
+   - días de otros meses más legibles, pero secundarios
+*/
+body.calendar-common-view .day.common-day{
+  background:#233242 !important;
+  color:#f2f7fc !important;
+  border-right:1px solid rgba(129,153,181,.18) !important;
+  border-bottom:1px solid rgba(129,153,181,.18) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.03), inset 0 0 0 1px rgba(255,255,255,.02) !important;
+}
+body.calendar-common-view .day.common-day.weekend{
+  background:#3f556d !important;
+  color:#ffffff !important;
+  border-right:1px solid rgba(176,200,224,.22) !important;
+  border-bottom:1px solid rgba(176,200,224,.22) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05), inset 0 0 0 1px rgba(255,255,255,.03) !important;
+}
+body.calendar-common-view .day.common-day.other{
+  background:#1a2430 !important;
+  color:#697789 !important;
+  opacity:1 !important;
+  filter:none !important;
+}
+body.calendar-common-view .day.common-day.other.weekend{
+  background:#2a3949 !important;
+  color:#7f90a3 !important;
+}
+body.calendar-common-view .day.common-day .date{
+  color:inherit !important;
+  text-shadow:0 1px 0 rgba(0,0,0,.16) !important;
+}
+body.calendar-common-view .day.common-day.today::after{
+  inset:4px !important;
+  border-radius:10px !important;
+}
+body.calendar-common-view .mini-day.common-mini{
+  background:#2a3948 !important;
+  color:#eef4fa !important;
+  box-shadow:inset 0 0 0 1px rgba(138,160,186,.16) !important;
+}
+body.calendar-common-view .mini-day.common-mini.weekend{
+  background:#4a627a !important;
+  color:#ffffff !important;
+  box-shadow:inset 0 0 0 1px rgba(172,194,218,.20) !important;
+}
+body.calendar-common-view .mini-day.common-mini.other,
+body.calendar-common-view .mini-day.common-mini.is-other{
+  background:#202a35 !important;
+  color:#738193 !important;
+}
+
+body.light.calendar-common-view .day.common-day{
+  background:#ffffff !important;
+  color:#162739 !important;
+  border-right:1px solid rgba(77,103,132,.20) !important;
+  border-bottom:1px solid rgba(77,103,132,.20) !important;
+  box-shadow:inset 0 0 0 1px rgba(114,138,167,.08) !important;
+}
+body.light.calendar-common-view .day.common-day.weekend{
+  background:#d7e5f3 !important;
+  color:#163047 !important;
+  border-right:1px solid rgba(62,110,154,.22) !important;
+  border-bottom:1px solid rgba(62,110,154,.22) !important;
+}
+body.light.calendar-common-view .day.common-day.other{
+  background:#eef3f8 !important;
+  color:#95a1ae !important;
+  opacity:1 !important;
+  filter:none !important;
+}
+body.light.calendar-common-view .day.common-day.other.weekend{
+  background:#dce8f2 !important;
+  color:#8798aa !important;
+}
+body.light.calendar-common-view .mini-day.common-mini{
+  background:#ffffff !important;
+  color:#172536 !important;
+  box-shadow:inset 0 0 0 1px rgba(89,116,147,.10) !important;
+}
+body.light.calendar-common-view .mini-day.common-mini.weekend{
+  background:#d9e6f0 !important;
+  color:#173047 !important;
+  box-shadow:inset 0 0 0 1px rgba(69,114,153,.14) !important;
+}
+
 </style>
 </head>
 <body>
@@ -11606,7 +11697,7 @@ body.light .workday-open-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.12.2';
+const CURRENT_VERSION='4.12.3';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
