@@ -10074,6 +10074,40 @@ body.light.calendar-common-view .mini-day.common-mini.weekend{
   }
 }
 
+
+/* ===== V4.11.6 · CONFIGURACIÓN FIJA · SIN DESPLAZAMIENTO ===== */
+
+/*
+  La V4.11.5 ya entra completa en pantalla.
+  Ahora se bloquea el desplazamiento vertical para que Configuración
+  quede completamente fija y centrada.
+*/
+#settingsModal{
+  overflow:hidden !important;
+  overscroll-behavior:none !important;
+}
+
+#settingsModal .settings-modal-window{
+  overflow:hidden !important;
+  overflow-y:hidden !important;
+  overflow-x:hidden !important;
+  overscroll-behavior:none !important;
+  -webkit-overflow-scrolling:auto !important;
+  scrollbar-width:none !important;
+  box-sizing:border-box !important;
+}
+
+#settingsModal .settings-modal-window::-webkit-scrollbar{
+  display:none !important;
+  width:0 !important;
+  height:0 !important;
+}
+
+/* Evitar el pequeño rebote vertical del navegador/PWA */
+#settingsModal.open{
+  touch-action:pan-x !important;
+}
+
 </style>
 </head>
 <body>
@@ -11072,7 +11106,7 @@ body.light.calendar-common-view .mini-day.common-mini.weekend{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.11.5';
+const CURRENT_VERSION='4.11.6';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
