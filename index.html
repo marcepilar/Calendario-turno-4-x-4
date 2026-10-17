@@ -11297,7 +11297,7 @@ body.light .workday-top-btn{
           <p><strong>T5 FIJO:</strong> lunes a viernes, 07:30–16:30. <strong>T5 UNO / T5 DOS:</strong> ciclo 4×4 de 12 horas, 06:00–18:00.</p>
           <p><strong>HOY:</strong> vuelve al día actual. <strong>AÑO:</strong> abre los 12 meses. Las flechas ‹ › cambian de mes.</p>
           <p><strong>Vista del calendario:</strong> en Configuración podés elegir <strong>TURNOS</strong> para ver M/N/F o <strong>COMÚN</strong> para mostrar solamente el número del día. En COMÚN, sábados y domingos usan un color diferente y la lógica interna del turno sigue funcionando normalmente.</p>
-          <p><strong>Compartir app:</strong> tocá el símbolo de los tres puntos unidos de la cabecera. WhatsApp aparece como opción principal; también podés usar el menú de compartir del teléfono o copiar el enlace.</p>
+          <p><strong>Compartir app:</strong> tocá el símbolo de los tres puntos unidos de la cabecera. <strong>Compartir por WhatsApp</strong> intenta abrir directamente la aplicación de WhatsApp, sin pasar por una página web intermedia. También podés usar el menú de compartir del teléfono o copiar el enlace.</p>
           <p class="help-tip">La rotación base nunca se altera por Vacaciones, Jornada, Licencias, Agenda o Feriados.</p>
         </div>
       </section>
@@ -11981,7 +11981,7 @@ body.light .workday-top-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='4.12.7';
+const CURRENT_VERSION='4.12.8';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXT='Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.';
@@ -12247,13 +12247,16 @@ function openShareModal(){
 
 function shareByWhatsApp(){
  const message=`${APP_SHARE_TEXT}\n\n${APP_SHARE_URL}`;
- const url=`https://wa.me/?text=${encodeURIComponent(message)}`;
+ const directUrl=`whatsapp://send?text=${encodeURIComponent(message)}`;
+
+ // Abrir WhatsApp directamente. No usar wa.me/api.whatsapp.com,
+ // así se evita la pantalla web intermedia de "Compartir en WhatsApp".
  setShareStatus('Abriendo WhatsApp…','ok');
+
  try{
-  const opened=window.open(url,'_blank','noopener,noreferrer');
-  if(!opened)window.location.href=url;
+  window.location.href=directUrl;
  }catch{
-  window.location.href=url;
+  setShareStatus('No se pudo abrir WhatsApp. Usá “Compartir…” o “Copiar enlace”.','error');
  }
 }
 
