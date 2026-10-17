@@ -11671,6 +11671,78 @@ body.light .plant-select-btn{
   }
 }
 
+
+/* ===== V5.0.3 · CONFIGURACIÓN · SIN PALETA RÁPIDA / FIT COMPLETO ===== */
+
+/*
+  Se elimina la tarjeta "Paleta rápida" para recuperar altura.
+  Los tres colores continúan siendo totalmente editables desde
+  EDITAR COLOR, que abre el selector nativo del dispositivo.
+*/
+
+#settingsModal .settings-list{
+  gap:4px;
+}
+
+#settingsModal .settings-preview{
+  margin-top:4px;
+}
+
+#settingsModal .settings-main-actions,
+#settingsModal .action-row{
+  flex-shrink:0;
+}
+
+@media(max-width:620px) and (max-height:900px){
+  #settingsModal .settings-list{gap:3px!important}
+
+  #settingsModal .color-setting-row{
+    min-height:53px!important;
+  }
+
+  #settingsModal .color-edit-control{
+    height:46px!important;
+  }
+
+  #settingsModal .setting-range-row{
+    min-height:45px!important;
+  }
+
+  #settingsModal .settings-preview{
+    flex-basis:58px!important;
+    min-height:58px!important;
+    max-height:58px!important;
+  }
+
+  #settingsModal.t5-profile .color-setting-row{
+    min-height:57px!important;
+  }
+
+  #settingsModal.t5-profile .color-edit-control{
+    height:50px!important;
+  }
+
+  #settingsModal.t5-profile .settings-preview{
+    flex-basis:62px!important;
+    min-height:62px!important;
+    max-height:62px!important;
+  }
+}
+
+@media(max-width:620px) and (max-height:760px){
+  #settingsModal .settings-preview{
+    flex-basis:50px!important;
+    min-height:50px!important;
+    max-height:50px!important;
+  }
+
+  #settingsModal.t5-profile .settings-preview{
+    flex-basis:52px!important;
+    min-height:52px!important;
+    max-height:52px!important;
+  }
+}
+
 </style>
 </head>
 <body class="notranslate">
@@ -11829,24 +11901,6 @@ body.light .plant-select-btn{
     <label id="morningColorRow" class="setting-row color-setting-row"><div><b id="morningColorTitle">Color M — Mañana</b><small id="morningColorNote">06:00 a 18:00</small></div><span class="color-edit-control"><input id="morningColor" class="color-input" type="color" value="#ffd84d" aria-label="Editar color de Mañana"><span class="color-edit-text">EDITAR COLOR ›</span></span></label>
     <label id="nightColorRow" class="setting-row color-setting-row"><div><b>Color N — Noche</b><small>18:00 a 06:00</small></div><span class="color-edit-control"><input id="nightColor" class="color-input" type="color" value="#27aee4" aria-label="Editar color de Noche"><span class="color-edit-text">EDITAR COLOR ›</span></span></label>
     <label id="offColorRow" class="setting-row color-setting-row"><div><b>Color F — Franco</b><small>Día libre</small></div><span class="color-edit-control"><input id="offColor" class="color-input" type="color" value="#3fbe62" aria-label="Editar color de Franco"><span class="color-edit-text">EDITAR COLOR ›</span></span></label>
-
-    <div class="setting-row palette-setting">
-      <div>
-        <b>Paleta rápida</b>
-        <small id="paletteHelp">Elegí M, N o F y después tocá un color</small>
-      </div>
-      <button id="paletteToggleBtn" type="button" class="palette-toggle-btn" aria-expanded="false">
-        <span>🎨 COLORES</span><i aria-hidden="true"></i>
-      </button>
-      <div id="paletteDropdown" class="palette-dropdown" aria-hidden="true">
-        <div class="palette-tabs" aria-label="Seleccionar turno para cambiar color">
-          <button type="button" class="palette-tab active" data-palette-target="morning">M</button>
-          <button id="paletteNightTab" type="button" class="palette-tab" data-palette-target="night">N</button>
-          <button type="button" class="palette-tab" data-palette-target="off">F</button>
-        </div>
-        <div id="quickPalette" class="quick-palette" aria-label="Paleta de colores"></div>
-        <div id="paletteNote" class="palette-note">Incluye los colores originales: Mañana, Noche y Franco.</div>
-      </div>
     </div>
 
     <div class="setting-row setting-range-row"><div><b>Tamaño M / N / F</b><small>Rango 14 a 24 px</small></div><div class="range-wrap"><input id="codeSize" type="range" min="14" max="24" value="18"><span id="codeSizeValue" class="range-value">18 px</span></div></div>
@@ -12262,7 +12316,7 @@ body.light .plant-select-btn{
       <section id="help-settings" class="help-section">
         <div class="help-section-title"><span>9</span><div><b>Configuración</b><small>Aspecto y comportamiento</small></div></div>
         <div class="help-card">
-          <p>Desde ⚙️ personalizá colores, tamaños, paletas rápidas y la vista previa.</p>
+          <p>Desde ⚙️ personalizá colores, tamaños y la vista previa.</p>
           <p><strong>Planta / Ubicación:</strong> permite trabajar con perfiles de calendario diferentes según la planta. Argentina · Pilar es el perfil activo actual.</p>
           <p>Puerto Madryn, Brasil y Estados Unidos aparecen como perfiles preparados para futuras incorporaciones; no se habilitan hasta validar sus horarios y ciclos reales.</p>
           <p>Podés mostrar/ocultar descripciones, feriados y activar/desactivar vibración.</p>
@@ -12306,7 +12360,7 @@ body.light .plant-select-btn{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.0.2</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.0.3</span></span>
             </div>
           </div>
 
@@ -12821,7 +12875,7 @@ body.light .plant-select-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.0.2';
+const CURRENT_VERSION='5.0.3';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -12853,7 +12907,7 @@ const agendaSearchInput=$('#agendaSearchInput'),agendaFilterInput=$('#agendaFilt
 const settingsBtn=$('#settingsBtn'),morningColor=$('#morningColor'),nightColor=$('#nightColor'),offColor=$('#offColor'),codeSize=$('#codeSize'),codeSizeValue=$('#codeSizeValue'),showLabels=$('#showLabels'),showHolidays=$('#showHolidays'),hapticsToggle=$('#hapticsToggle');
 const calendarViewShiftsBtn=$('#calendarViewShiftsBtn'),calendarViewCommonBtn=$('#calendarViewCommonBtn'),languageCycleBtn=$('#languageCycleBtn');
 const plantSelectBtn=$('#plantSelectBtn'),plantSelectLabel=$('#plantSelectLabel');
-const morningColorRow=$('#morningColorRow'),nightColorRow=$('#nightColorRow'),offColorRow=$('#offColorRow'),paletteNightTab=$('#paletteNightTab'),colorProfileTitle=$('#colorProfileTitle'),colorProfileText=$('#colorProfileText'),morningColorTitle=$('#morningColorTitle'),morningColorNote=$('#morningColorNote'),paletteHelp=$('#paletteHelp'),paletteNote=$('#paletteNote');
+const morningColorRow=$('#morningColorRow'),nightColorRow=$('#nightColorRow'),offColorRow=$('#offColorRow'),colorProfileTitle=$('#colorProfileTitle'),colorProfileText=$('#colorProfileText'),morningColorTitle=$('#morningColorTitle'),morningColorNote=$('#morningColorNote');
 const AGENDA_KEY='turno4x4.agenda.v1', NOTIFIED_KEY='turno4x4.agenda.notified.v1', BACKUP_KEY='turno4x4.agenda.lastBackup';
 const VACATION_KEY='turno4x4.vacations.v1';
 const WORKLOG_KEY='turno4x4.worklog.v1';
@@ -13552,9 +13606,7 @@ function updateColorSettingsUI(){
 
  $('#settingsModal')?.classList.toggle('t5-profile',t5);
  nightColorRow.classList.toggle('settings-hidden',t5);
- paletteNightTab.classList.toggle('settings-hidden',t5);
  $('#settingsPreviewNight')?.classList.toggle('settings-hidden',t5);
- if(t5&&paletteTarget==='night')paletteTarget='morning';
 
  if(t5){
   const name=scheduleName(activeTurnKey());
@@ -13562,8 +13614,6 @@ function updateColorSettingsUI(){
   colorProfileText.textContent=localize('M / F · perfil Turno 5');
   morningColorTitle.textContent=localize(activeTurnKey()==='T5LV'?'Color M / T5 — Mañana':'Color M — Mañana');
   morningColorNote.textContent=localize(activeTurnKey()==='T5LV'?'07:30 a 16:30':'06:00 a 18:00');
-  paletteHelp.textContent=localize('Elegí M o F y después tocá un color');
-  paletteNote.textContent=localize('Perfil propio del Turno 5. No modifica los colores de T1, T2, T3 o T4.');
   if($('#settingsPreviewMCode'))$('#settingsPreviewMCode').textContent=activeTurnKey()==='T5LV'?'T5':'M';
   if($('#settingsPreviewMLabel'))$('#settingsPreviewMLabel').textContent=activeTurnKey()==='T5LV'?'07:30–16:30':'06:00–18:00';
  }else{
@@ -13571,8 +13621,6 @@ function updateColorSettingsUI(){
   colorProfileText.textContent='M / N / F';
   morningColorTitle.textContent=localize('Color M — Mañana');
   morningColorNote.textContent=localize('06:00 a 18:00');
-  paletteHelp.textContent=localize('Elegí M, N o F y después tocá un color');
-  paletteNote.textContent=localize('Perfil de colores de T1, T2, T3 y T4.');
   if($('#settingsPreviewMCode'))$('#settingsPreviewMCode').textContent='M';
   if($('#settingsPreviewMLabel'))$('#settingsPreviewMLabel').textContent='06:00–18:00';
  }
