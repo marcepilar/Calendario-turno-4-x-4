@@ -12123,6 +12123,7 @@ body.light .plant-select-btn{
 
 /* ===== V5.1.0 · FINAL DNDA · EJEMPLAR ESTABLE OFICIAL ===== */
 
+/* ===== V5.1.1 · FIX CONTEO FERIADOS · PUENTES AZULES = 0 ===== */
 </style>
 </head>
 <body class="notranslate">
@@ -12684,10 +12685,10 @@ body.light .plant-select-btn{
         <div class="help-card">
           <p>Las tarjetas superiores muestran Mañanas, Noches, Francos y Horas del mes según el turno seleccionado.</p>
           <p><strong>Tu turno termina en:</strong> muestra el estado actual y el próximo ingreso.</p>
-          <p><strong>Feriados que caen en turno:</strong> muestra cuántos feriados del año coinciden con jornadas programadas de cada turno. Cada botón abre su detalle.</p>
+          <p><strong>Feriados que caen en turno:</strong> suma sólo los FER rojos que coinciden con jornadas de trabajo. Un medio feriado de 6 h vale ½. Los puentes azules se muestran en el detalle, pero no suman al total.</p>
           <p><strong>Registro laboral:</strong> Cambios de turno, Horas extra, Licencias laborales y Feriados del período.</p>
           <p><strong>Horas extra:</strong> el total principal usa el período desde el día 23 del mes anterior hasta el día 23 del mes mostrado, ambos inclusive.</p>
-          <p><strong>Feriados del período:</strong> usa el mismo 23→23 y cuenta sólo los que coinciden con un día programado de trabajo del turno seleccionado.</p>
+          <p><strong>Feriados del período:</strong> usa el mismo 23→23. Aplica la misma regla: FER rojo completo = 1, medio feriado = ½ y puente azul = 0.</p>
           <p>También se muestran Próximo descanso y fecha estimada del Próximo sueldo.</p>
         </div>
       </section>
@@ -12739,7 +12740,7 @@ body.light .plant-select-btn{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.1.0</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.1.1</span></span>
             </div>
           </div>
 
@@ -13130,7 +13131,7 @@ body.light .plant-select-btn{
   <div class="stats-section stats-holidays">
     <h3><span class="stats-title-mark">FER</span>Feriados que caen en turno · <span id="holidayStatsYear"></span></h3>
     <div id="holidayWorkStats" class="holiday-work-grid"></div>
-    <small class="holiday-work-note">Incluye feriados nacionales y puentes · 7 Sep. Metalúrgico · todos los turnos</small>
+    <small class="holiday-work-note">Suman FER rojos · ½ = 6 h · puentes azules se muestran pero no suman · 7 Sep. Metalúrgico</small>
   </div>
 
   <div class="stats-section stats-worklog">
@@ -13254,7 +13255,7 @@ body.light .plant-select-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.1.0';
+const CURRENT_VERSION='5.1.1';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -13461,6 +13462,23 @@ function setPlantProfile(id,{persist=true}={}){
  syncPlantUI();
  return true;
 }
+
+/* ===== V5.1.1 · I18N REGLA DE FERIADOS ===== */
+Object.assign(I18N.en,{
+ 'Suman FER rojos · ½ = 6 h · puentes azules se muestran pero no suman · 7 Sep. Metalúrgico':'Red HOL days count · ½ = 6 h · blue bridge days are shown but do not count · Sep 7 Metalworkers',
+ 'Feriados que caen en turno:':'Holidays that fall on a work shift:',
+ ' suma sólo los FER rojos que coinciden con jornadas de trabajo. Un medio feriado de 6 h vale ½. Los puentes azules se muestran en el detalle, pero no suman al total.':' only counts red HOL days that fall on workdays. A 6 h half holiday counts as ½. Blue bridge days remain visible in the detail but do not count toward the total.',
+ 'Feriados del período:':'Period holidays:',
+ ' usa el mismo 23→23. Aplica la misma regla: FER rojo completo = 1, medio feriado = ½ y puente azul = 0.':' uses the same 23→23 period. The same rule applies: full red HOL = 1, half holiday = ½, blue bridge = 0.'
+});
+
+Object.assign(I18N.pt,{
+ 'Suman FER rojos · ½ = 6 h · puentes azules se muestran pero no suman · 7 Sep. Metalúrgico':'Somam os FER vermelhos · ½ = 6 h · pontes azuis aparecem mas não somam · 7 Set. Metalúrgico',
+ 'Feriados que caen en turno:':'Feriados que coincidem com o turno:',
+ ' suma sólo los FER rojos que coinciden con jornadas de trabajo. Un medio feriado de 6 h vale ½. Los puentes azules se muestran en el detalle, pero no suman al total.':' soma apenas os FER vermelhos que coincidem com dias de trabalho. Um meio feriado de 6 h vale ½. As pontes azuis continuam visíveis no detalhe, mas não entram no total.',
+ 'Feriados del período:':'Feriados do período:',
+ ' usa el mismo 23→23. Aplica la misma regla: FER rojo completo = 1, medio feriado = ½ y puente azul = 0.':' usa o mesmo período 23→23. A mesma regra se aplica: FER vermelho completo = 1, meio feriado = ½ e ponte azul = 0.'
+});
 
 const LANGUAGE_LABELS={es:'ESPAÑOL',en:'ENGLISH',pt:'PORTUGUÊS'};
 const LANGUAGE_LOCALES={es:'es-AR',en:'en-US',pt:'pt-BR'};
@@ -14841,16 +14859,20 @@ function payrollHolidayDetails(turn,year,month){
   if(national)names.push(national.nombre);
   if(metalurgico)names.push('Día del Metalúrgico');
 
+  const bridge=Boolean(national&&isBridgeHoliday(national));
+
   details.push({
    date:new Date(d),
    key,
    code,
-   bridge:Boolean(national&&isBridgeHoliday(national)),
+   bridge,
+   workedHours,
+   half:!bridge&&workedHours===6,
    metalurgico,
    national:Boolean(national),
    name:names.join(' · '),
    type:national
-    ?(isBridgeHoliday(national)?'Puente / no laborable':'Feriado nacional')
+    ?(bridge?'Puente / no laborable':'Feriado nacional')
     :'Feriado gremial'
   });
  }
@@ -14858,7 +14880,7 @@ function payrollHolidayDetails(turn,year,month){
  return {
   ...period,
   details,
-  count:details.length
+  count:holidayWorkValue(details)
  };
 }
 
@@ -14884,7 +14906,7 @@ function renderWorklogStats(){
  $('#worklogLicensesMonth').textContent=monthLicenses.workDays;
  $('#worklogLicensesYear').textContent=yearLicenses.workDays;
 
- $('#worklogHolidaysPeriod').textContent=payrollHolidays.count;
+ $('#worklogHolidaysPeriod').textContent=formatHolidayFraction(payrollHolidays.count);
  $('#worklogHolidaysRange').textContent=`${overtimePayrollPeriodLabel(viewYear,viewMonth)} · en tu turno`;
 }
 
@@ -14910,7 +14932,7 @@ function renderWorklogStatsDetail(mode){
   titleIcon.classList.add('holiday-period');
   titleText.textContent='Feriados del período';
   $('#worklogStatsDetailMetricLabel').textContent='Feriados en tu turno';
-  $('#worklogStatsDetailMetric').textContent=hs.count;
+  $('#worklogStatsDetailMetric').textContent=formatHolidayFraction(hs.count);
 
   if(!hs.details.length){
    list.innerHTML=`<div class="worklog-stats-empty">No hay feriados que coincidan con un día programado de trabajo entre ${overtimePeriodLabel}, inclusive.</div>`;
@@ -14928,7 +14950,7 @@ function renderWorklogStatsDetail(mode){
      </div>
      <div class="worklog-stat-row-copy">
        <b>${escapeHtml(item.name)}</b>
-       <small>${escapeHtml(item.type)} · ${escapeHtml(codeLabel)}</small>
+       <small>${escapeHtml(item.half?`${item.type} · ½ feriado · 6 h`:item.type)} · ${escapeHtml(codeLabel)}</small>
      </div>
      <div class="worklog-stat-row-actions">
        <span class="worklog-stat-row-value">${escapeHtml(codeLabel)}</span>
@@ -16544,7 +16566,15 @@ function holidayWorkDetailsForTurn(year,turn){
 }
 
 function holidayWorkValue(details){
- return details.reduce((sum,item)=>sum+(item.half?0.5:1),0);
+ // Regla de Estadísticas:
+ // - FER rojo completo = 1
+ // - FER rojo 1/2 (6 h) = 0.5
+ // - FER azul / puente no laborable = 0
+ // Los puentes azules siguen visibles en el detalle, pero no suman.
+ return details.reduce((sum,item)=>{
+  if(item.bridge)return sum;
+  return sum+(item.half?0.5:1);
+ },0);
 }
 
 function formatHolidayFraction(value){
