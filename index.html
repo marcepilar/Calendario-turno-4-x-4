@@ -26,6 +26,20 @@ body.light{
   --panel3:#eef2f6;--text:#15202d;--muted:#6a7787;--line:rgba(54,70,90,.14);
   --accent:#0aa785;--accent2:#278ee6;--shadow:0 16px 40px rgba(30,45,65,.13);--shadow2:0 8px 20px rgba(30,45,65,.10);
 }
+body.dark-blue{
+  --bg:#061326;
+  --bg2:#0a1c34;
+  --panel:rgba(10,31,56,.93);
+  --panel2:rgba(13,40,70,.91);
+  --panel3:#163a61;
+  --text:#f4f8ff;
+  --muted:#9eb6d0;
+  --line:rgba(103,165,225,.22);
+  --accent:#42d6b0;
+  --accent2:#4ca9ff;
+  --shadow:0 18px 55px rgba(0,5,18,.46);
+  --shadow2:0 9px 25px rgba(0,5,18,.34);
+}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;min-height:100%;overflow-x:hidden;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
 body{background:
@@ -33,6 +47,12 @@ body{background:
   radial-gradient(circle at 95% 5%,rgba(67,168,255,.08),transparent 30%),
   var(--bg);
   transition:background .25s ease,color .25s ease;
+}
+body.dark-blue{
+  background:
+    radial-gradient(circle at 18% -8%,rgba(25,117,210,.24),transparent 38%),
+    radial-gradient(circle at 96% 7%,rgba(43,128,230,.20),transparent 33%),
+    linear-gradient(180deg,#07162b 0%,#061326 48%,#050f1e 100%);
 }
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
@@ -7970,6 +7990,14 @@ body.light #themeBtn{
   border-color:rgba(201,159,35,.26);
   box-shadow:0 10px 24px rgba(30,45,65,.09),inset 0 1px 0 rgba(255,255,255,.96);
 }
+body.dark-blue #themeBtn{
+  color:#dceeff;
+  background:
+    radial-gradient(circle at 72% 18%,rgba(80,170,255,.20),transparent 46%),
+    linear-gradient(180deg,#163a65,#0b2849);
+  border-color:rgba(92,170,245,.34);
+  box-shadow:0 10px 24px rgba(0,8,28,.28),inset 0 1px 0 rgba(255,255,255,.08);
+}
 body.light .share-top-btn .share-symbol circle{
   fill:#fbfffd;
 }
@@ -12283,6 +12311,648 @@ body.haptics-off [role="button"]{
 }
 
 /* ===== V5.1.6 · FIX HÁPTICA OFF + CONTROLES GLOBALES ===== */
+
+/* ===== V5.1.7 · TEMA DARK BLUE EXPERIMENTAL ===== */
+body.dark-blue .glass{
+  border-color:rgba(93,157,218,.22);
+}
+body.dark-blue .logo{
+  background:linear-gradient(145deg,#2fbda9,#287bd7);
+  box-shadow:0 8px 25px rgba(33,119,215,.28);
+}
+body.dark-blue .controls,
+body.dark-blue .calendar-card,
+body.dark-blue .detail-card{
+  background:
+    radial-gradient(circle at 92% 0%,rgba(55,135,225,.08),transparent 34%),
+    var(--panel);
+}
+
+/* ===== V5.1.7 · TERCER TEMA DARK BLUE ===== */
+
+/* =====================================================================
+   V5.1.7 · DARK BLUE · ESTADÍSTICAS + VACACIONES · PREMIUM POLISH
+   Sólo se aplica al tercer tema. Oscuro y Claro permanecen intactos.
+   ===================================================================== */
+
+/* ---------- Ventanas principales ---------- */
+body.dark-blue #statsModal .stats-modal-window,
+body.dark-blue #vacationModal .vacation-modal-window,
+body.dark-blue #holidayStatsDetailModal .holiday-stats-detail-window,
+body.dark-blue #worklogStatsDetailModal .worklog-stats-detail-window{
+  color:#f3f8ff;
+  background:
+    radial-gradient(circle at 88% 3%,rgba(66,157,255,.16),transparent 30%),
+    radial-gradient(circle at 7% 92%,rgba(27,97,177,.12),transparent 34%),
+    linear-gradient(180deg,rgba(8,28,52,.985),rgba(5,20,39,.99));
+  border:1px solid rgba(102,170,236,.24);
+  box-shadow:
+    0 26px 72px rgba(0,5,18,.56),
+    0 0 0 1px rgba(38,111,183,.08),
+    inset 0 1px 0 rgba(255,255,255,.055);
+}
+
+/* Cabeceras */
+body.dark-blue #statsModal .stats-head,
+body.dark-blue #vacationModal .vacation-head,
+body.dark-blue #holidayStatsDetailModal .holiday-stats-detail-head,
+body.dark-blue #worklogStatsDetailModal .worklog-stats-detail-head{
+  border-bottom-color:rgba(92,161,228,.18);
+}
+
+body.dark-blue #statsModal .stats-head-copy h2,
+body.dark-blue #vacationModal .vacation-head h2,
+body.dark-blue #holidayStatsDetailModal h2,
+body.dark-blue #worklogStatsDetailModal h2{
+  color:#f5f9ff;
+  text-shadow:0 1px 12px rgba(62,151,245,.12);
+}
+
+body.dark-blue #statsModal .stats-head small,
+body.dark-blue #vacationModal .vacation-head small,
+body.dark-blue #holidayStatsDetailModal .holiday-stats-detail-head small,
+body.dark-blue #worklogStatsDetailModal .worklog-stats-detail-head small{
+  color:#98b6d5;
+}
+
+/* Iconos de cabecera */
+body.dark-blue #statsModal .stats-head-icon{
+  color:#e9f5ff;
+  background:
+    linear-gradient(145deg,rgba(66,169,255,.98),rgba(42,103,210,.96));
+  border:1px solid rgba(130,198,255,.32);
+  box-shadow:
+    0 7px 18px rgba(30,103,205,.26),
+    inset 0 1px 0 rgba(255,255,255,.20);
+}
+
+body.dark-blue #vacationModal .vacation-head-icon{
+  color:#fff;
+  background:
+    linear-gradient(145deg,#a58cff,#7159e7);
+  border:1px solid rgba(190,171,255,.30);
+  box-shadow:
+    0 7px 18px rgba(108,82,226,.24),
+    inset 0 1px 0 rgba(255,255,255,.18);
+}
+
+/* X coherente con Dark Blue */
+body.dark-blue #statsModal .close-btn,
+body.dark-blue #vacationModal .close-btn,
+body.dark-blue #holidayStatsDetailModal .close-btn,
+body.dark-blue #worklogStatsDetailModal .close-btn{
+  color:#eaf5ff;
+  background:
+    linear-gradient(180deg,rgba(30,77,121,.96),rgba(18,53,88,.98));
+  border-color:rgba(115,183,246,.24);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.08),
+    0 5px 14px rgba(0,7,22,.22);
+}
+
+/* ---------- ESTADÍSTICAS ---------- */
+
+/* Cuatro tarjetas superiores */
+body.dark-blue #statsModal .stat-card{
+  background:
+    radial-gradient(circle at 92% 8%,rgba(74,162,255,.10),transparent 42%),
+    linear-gradient(180deg,rgba(17,50,83,.94),rgba(10,34,61,.96));
+  border-color:rgba(102,168,232,.19);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.045),
+    0 7px 18px rgba(0,7,24,.17);
+}
+
+body.dark-blue #statsModal .stat-card small{
+  color:#94b1ce;
+}
+body.dark-blue #statsModal .stat-card b{
+  color:#f8fbff;
+  text-shadow:0 1px 10px rgba(60,155,255,.10);
+}
+
+/* Secciones */
+body.dark-blue #statsModal .stats-turn-end,
+body.dark-blue #statsModal .stats-holidays,
+body.dark-blue #statsModal .stats-worklog,
+body.dark-blue #statsModal .stats-off,
+body.dark-blue #statsModal .stats-salary{
+  border-color:rgba(89,153,218,.18);
+}
+
+body.dark-blue #statsModal .turn-end-card,
+body.dark-blue #statsModal .next-off,
+body.dark-blue #statsModal .salary-card{
+  background:
+    radial-gradient(circle at 91% 8%,rgba(55,142,230,.09),transparent 40%),
+    linear-gradient(180deg,rgba(14,43,73,.95),rgba(9,31,55,.97));
+  border-color:rgba(90,157,222,.19);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.04),
+    0 7px 18px rgba(0,7,22,.14);
+}
+
+/* Títulos internos */
+body.dark-blue #statsModal .stats-section h3{
+  color:#dcecff;
+}
+body.dark-blue #statsModal .stats-title-dot{
+  background:#55b1ff;
+  box-shadow:0 0 12px rgba(67,168,255,.46);
+}
+body.dark-blue #statsModal .stats-title-mark{
+  color:#eef7ff;
+  border-color:rgba(116,183,247,.24);
+  background:linear-gradient(180deg,#286cae,#194c80);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.10);
+}
+
+/* Feriados: conservar identidad roja pero integrada al azul */
+body.dark-blue #statsModal .stats-holidays{
+  background:
+    radial-gradient(circle at 93% 8%,rgba(255,95,114,.085),transparent 36%),
+    linear-gradient(180deg,rgba(17,43,70,.94),rgba(10,31,54,.97));
+  border-color:rgba(222,105,128,.18);
+}
+
+body.dark-blue #statsModal .holiday-work-chip{
+  background:
+    linear-gradient(180deg,rgba(21,52,84,.98),rgba(12,36,63,.98));
+  border-color:rgba(105,168,228,.18);
+  color:#eef7ff;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+}
+body.dark-blue #statsModal .holiday-work-chip:hover,
+body.dark-blue #statsModal .holiday-work-chip:active{
+  border-color:rgba(120,190,255,.34);
+  background:
+    linear-gradient(180deg,rgba(27,65,104,.98),rgba(16,44,76,.98));
+}
+body.dark-blue #statsModal .holiday-work-note{
+  color:#8faccc;
+}
+
+/* Registro laboral */
+body.dark-blue #statsModal .stats-worklog{
+  background:
+    radial-gradient(circle at 6% 90%,rgba(66,214,176,.055),transparent 31%),
+    linear-gradient(180deg,rgba(16,44,72,.95),rgba(9,31,54,.97));
+}
+
+body.dark-blue #statsModal .worklog-stat-btn{
+  color:#f0f7ff;
+  background:
+    linear-gradient(180deg,rgba(21,55,89,.98),rgba(12,37,64,.98));
+  border-color:rgba(103,168,231,.18);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.045),
+    0 5px 13px rgba(0,7,22,.12);
+}
+body.dark-blue #statsModal .worklog-stat-btn small,
+body.dark-blue #statsModal .worklog-stat-btn>span{
+  color:#93b0cd;
+}
+body.dark-blue #statsModal .worklog-stat-btn b{
+  color:#f8fbff;
+}
+
+/* Próximo franco / cobro */
+body.dark-blue #statsModal .stats-off,
+body.dark-blue #statsModal .stats-salary{
+  background:
+    linear-gradient(180deg,rgba(15,42,69,.95),rgba(9,29,51,.98));
+}
+
+/* ---------- DETALLES DE ESTADÍSTICAS ---------- */
+body.dark-blue #holidayStatsDetailModal .holiday-stats-detail-summary,
+body.dark-blue #worklogStatsDetailModal .worklog-detail-summary{
+  background:
+    linear-gradient(180deg,rgba(20,53,86,.96),rgba(11,36,62,.98));
+  border-color:rgba(99,163,225,.19);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+body.dark-blue #holidayStatsDetailModal .holiday-stats-detail-summary small,
+body.dark-blue #worklogStatsDetailModal .worklog-detail-summary small{
+  color:#91afcc;
+}
+
+body.dark-blue #holidayStatsDetailModal .holiday-stats-detail-summary b,
+body.dark-blue #worklogStatsDetailModal .worklog-detail-summary b{
+  color:#f6faff;
+}
+
+body.dark-blue #holidayStatsDetailModal .holiday-list-row,
+body.dark-blue #worklogStatsDetailModal .worklog-stat-row{
+  background:
+    linear-gradient(180deg,rgba(18,48,79,.96),rgba(10,34,59,.98));
+  border-color:rgba(94,157,218,.17);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+}
+
+body.dark-blue #holidayStatsDetailModal .holiday-stats-detail-legend{
+  color:#9db7d1;
+  border-color:rgba(91,153,213,.16);
+  background:rgba(8,29,52,.72);
+}
+
+/* ---------- VACACIONES ---------- */
+
+/* Resumen superior */
+body.dark-blue #vacationModal .vacation-summary>div{
+  background:
+    radial-gradient(circle at 91% 7%,rgba(99,157,244,.08),transparent 42%),
+    linear-gradient(180deg,rgba(18,49,80,.96),rgba(10,34,59,.98));
+  border-color:rgba(101,164,226,.19);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.045),
+    0 6px 16px rgba(0,7,22,.13);
+}
+
+body.dark-blue #vacationModal .vacation-summary small{
+  color:#93b0cd;
+}
+body.dark-blue #vacationModal .vacation-summary b{
+  color:#f5f9ff;
+}
+
+/* Tarjeta Color V conserva el violeta como identidad */
+body.dark-blue #vacationModal .vacation-summary-accent{
+  background:
+    radial-gradient(circle at 90% 8%,rgba(170,145,255,.14),transparent 42%),
+    linear-gradient(180deg,rgba(41,46,103,.96),rgba(27,35,80,.98));
+  border-color:rgba(158,132,255,.27);
+}
+body.dark-blue #vacationModal .vacation-summary-v{
+  box-shadow:
+    0 5px 14px rgba(118,82,231,.22),
+    inset 0 1px 0 rgba(255,255,255,.16);
+}
+
+/* Mostrar vacaciones */
+body.dark-blue #vacationModal .vacation-visibility-row{
+  background:
+    linear-gradient(180deg,rgba(16,46,76,.96),rgba(9,32,56,.98));
+  border-color:rgba(99,161,222,.18);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+}
+body.dark-blue #vacationModal .vacation-visibility-copy b{
+  color:#edf6ff;
+}
+body.dark-blue #vacationModal .vacation-visibility-copy small{
+  color:#8faecc;
+}
+
+/* Editor */
+body.dark-blue #vacationModal .vacation-editor{
+  background:
+    radial-gradient(circle at 93% 5%,rgba(155,124,255,.065),transparent 34%),
+    linear-gradient(180deg,rgba(15,43,72,.97),rgba(8,30,53,.985));
+  border-color:rgba(96,158,220,.19);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.045),
+    0 8px 20px rgba(0,7,22,.14);
+}
+
+body.dark-blue #vacationModal .vacation-section-title b{
+  color:#eef7ff;
+}
+body.dark-blue #vacationModal .vacation-section-title span{
+  color:#b4a3ff;
+  background:rgba(155,124,255,.10);
+  border-color:rgba(155,124,255,.22);
+}
+
+/* Campos */
+body.dark-blue #vacationModal .vacation-field>span{
+  color:#9bb7d2;
+}
+body.dark-blue #vacationModal .vacation-date-button,
+body.dark-blue #vacationModal .vacation-field input{
+  color:#edf6ff;
+  background:
+    linear-gradient(180deg,rgba(18,52,85,.98),rgba(10,35,61,.99));
+  border-color:rgba(102,166,228,.20);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.035);
+}
+body.dark-blue #vacationModal .vacation-date-button:focus-within,
+body.dark-blue #vacationModal .vacation-field input:focus{
+  border-color:rgba(107,181,255,.47);
+  box-shadow:
+    0 0 0 2px rgba(67,168,255,.10),
+    inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+/* Botones del editor */
+body.dark-blue #vacationModal .vacation-form-actions .btn-secondary{
+  color:#dcecff;
+  background:linear-gradient(180deg,#173f68,#0d2d4e);
+  border-color:rgba(106,171,232,.22);
+}
+body.dark-blue #vacationModal .vacation-form-actions .btn-primary{
+  color:#fff;
+  background:linear-gradient(180deg,#8f75f0,#6d55d9);
+  border-color:rgba(178,155,255,.28);
+  box-shadow:
+    0 7px 16px rgba(95,70,210,.18),
+    inset 0 1px 0 rgba(255,255,255,.15);
+}
+
+/* Períodos guardados */
+body.dark-blue #vacationModal .vacation-saved-panel{
+  background:
+    linear-gradient(180deg,rgba(14,41,69,.96),rgba(8,29,51,.985));
+  border-color:rgba(94,156,216,.18);
+}
+
+body.dark-blue #vacationModal .vacation-item{
+  background:
+    radial-gradient(circle at 94% 8%,rgba(155,124,255,.055),transparent 40%),
+    linear-gradient(180deg,rgba(20,51,82,.98),rgba(11,35,61,.99));
+  border-color:rgba(101,162,223,.18);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.035),
+    0 5px 14px rgba(0,7,22,.12);
+}
+
+body.dark-blue #vacationModal .vacation-item-copy b{
+  color:#f2f8ff;
+}
+body.dark-blue #vacationModal .vacation-item-copy small{
+  color:#94b0cc;
+}
+
+/* Leyenda inferior */
+body.dark-blue #vacationModal .vacation-legend{
+  color:#9db7d1;
+  background:rgba(9,31,54,.76);
+  border-color:rgba(96,158,217,.15);
+}
+body.dark-blue #vacationModal .vacation-legend-v{
+  box-shadow:
+    0 4px 12px rgba(114,82,225,.18),
+    inset 0 1px 0 rgba(255,255,255,.14);
+}
+
+/* Scrollbars sutiles, sólo en estas ventanas */
+body.dark-blue #vacationModal .vacation-list,
+body.dark-blue #holidayStatsDetailModal .holiday-stats-detail-list,
+body.dark-blue #worklogStatsDetailModal .worklog-stats-detail-list{
+  scrollbar-color:rgba(73,139,205,.62) rgba(7,27,49,.44);
+}
+
+/* Micro-feedback visual sobrio */
+body.dark-blue #statsModal button,
+body.dark-blue #vacationModal button,
+body.dark-blue #holidayStatsDetailModal button,
+body.dark-blue #worklogStatsDetailModal button{
+  transition:
+    transform .10s ease,
+    border-color .16s ease,
+    background .16s ease,
+    box-shadow .16s ease;
+}
+
+body.dark-blue #statsModal button:active,
+body.dark-blue #vacationModal button:active,
+body.dark-blue #holidayStatsDetailModal button:active,
+body.dark-blue #worklogStatsDetailModal button:active{
+  transform:scale(.975);
+}
+
+/* ===== V5.1.7 · DARK BLUE · STATS + VACACIONES FINAL POLISH ===== */
+
+/* ===== V5.1.7 · DARK BLUE · CAPA FINAL COHERENTE =====
+   Sólo tema dark-blue; no cambia geometría ni los datos. */
+body.dark-blue #statsModal,
+body.dark-blue #vacationModal{--db-surface:#0b2542;--db-raised:#123554;--db-line:rgba(112,177,241,.24);--db-copy:#eef7ff;--db-secondary:#a3c1de}
+body.dark-blue #statsModal .stats-modal-window,
+body.dark-blue #vacationModal .vacation-modal-window{
+ background:linear-gradient(160deg,#0d2b4c 0%,#081b33 58%,#06152b 100%) !important;
+ color:var(--db-copy) !important;
+ border:1px solid var(--db-line) !important;
+ box-shadow:0 24px 65px rgba(0,7,25,.58),inset 0 1px rgba(255,255,255,.06) !important;
+}
+/* La estructura de Estadísticas usa .stats-month/.stats-year, no sólo las
+   clases de versiones anteriores. Revestimos las secciones reales. */
+body.dark-blue #statsModal :is(.stat-card,.stats-month,.stats-year,.stats-off,.stats-salary,.stats-holidays,.stats-worklog,.stats-turn-end,.turn-end-card,.next-off,.salary-card,.holiday-work-chip,.worklog-stat-btn),
+body.dark-blue #vacationModal :is(.vacation-summary > div,.vacation-visibility-row,.vacation-editor,.vacation-saved-panel,.vacation-item,.vacation-date-button,.vacation-field input,.vacation-legend){
+ background:linear-gradient(180deg,rgba(23,61,99,.97),rgba(11,37,68,.99)) !important;
+ border-color:var(--db-line) !important;
+ color:var(--db-copy);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.055),0 5px 14px rgba(0,9,29,.16);
+}
+/* Las tarjetas internas que no deben dibujar un recuadro adicional mantienen
+   su estructura original. */
+body.dark-blue #statsModal :is(.next-off,.salary-card){background:transparent !important;border-color:transparent !important;box-shadow:none !important}
+body.dark-blue #statsModal :is(.stats-head,.stats-head-copy,.stats-section h3,.stats-month h3,.stats-year h3),
+body.dark-blue #vacationModal :is(.vacation-head,.vacation-head h2,.vacation-section-title b){color:var(--db-copy) !important}
+body.dark-blue #statsModal :is(small,.stats-head small,.turn-end-copy span,.bar-row span,.holiday-work-note),
+body.dark-blue #vacationModal :is(small,.vacation-field > span,.vacation-visibility-copy small,.vacation-item-copy small){color:var(--db-secondary) !important}
+body.dark-blue #statsModal :is(.bar-track,.stats-bar-track){background:rgba(4,19,38,.88) !important}
+body.dark-blue #statsModal :is(.close-btn,.stats-head .close-btn),
+body.dark-blue #vacationModal .close-btn{
+ background:linear-gradient(180deg,#24527f,#13385e) !important;
+ border:1px solid var(--db-line) !important;
+ color:#f3f9ff !important;
+ -webkit-text-fill-color:#f3f9ff !important;
+}
+body.dark-blue #vacationModal .vacation-summary-accent{
+ background:linear-gradient(155deg,#383b83,#23285d) !important;
+ border-color:rgba(179,149,255,.32) !important;
+}
+body.dark-blue #vacationModal :is(.vacation-form-actions .btn-primary,.vacation-save-btn){
+ background:linear-gradient(180deg,#947af4,#6650ce) !important;
+ color:#fff !important;
+ border-color:rgba(180,158,255,.32) !important;
+}
+body.dark-blue #vacationModal :is(.vacation-form-actions .btn-secondary,.vacation-date-button){color:#eaf5ff !important}
+/* No alterar las insignias M/N/F, V, colores de barras o iconos de eventos. */
+
+
+
+/* =====================================================================
+   V5.1.7 · DARK BLUE · ESTADÍSTICAS + VACACIONES + DETALLES · FINAL
+   Capa final única. Sólo modifica apariencia en Dark Blue.
+   No altera datos, agenda, vacaciones guardadas ni lógica funcional.
+   ===================================================================== */
+body.dark-blue{
+  --db10-window:#071a30;
+  --db10-window-top:#0b2848;
+  --db10-card:#0e2d4b;
+  --db10-card-2:#123756;
+  --db10-control:#163d5f;
+  --db10-control-2:#1a466b;
+  --db10-line:rgba(113,183,247,.23);
+  --db10-line-soft:rgba(113,183,247,.14);
+  --db10-text:#f3f8ff;
+  --db10-muted:#9ab7d2;
+}
+
+body.dark-blue #statsModal,
+body.dark-blue #vacationModal,
+body.dark-blue #holidayStatsDetailModal,
+body.dark-blue #worklogStatsDetailModal{
+  background:rgba(1,8,21,.80) !important;
+  backdrop-filter:blur(8px) saturate(1.05) !important;
+  -webkit-backdrop-filter:blur(8px) saturate(1.05) !important;
+}
+
+body.dark-blue #statsModal .stats-modal-window,
+body.dark-blue #vacationModal .vacation-modal-window,
+body.dark-blue #holidayStatsDetailModal .holiday-stats-detail-window,
+body.dark-blue #worklogStatsDetailModal .worklog-stats-detail-window{
+  background:
+    radial-gradient(circle at 92% 0%,rgba(63,148,233,.10),transparent 32%),
+    linear-gradient(180deg,var(--db10-window-top),var(--db10-window)) !important;
+  background-color:var(--db10-window) !important;
+  border:1px solid var(--db10-line) !important;
+  color:var(--db10-text) !important;
+  box-shadow:0 24px 68px rgba(0,5,18,.62),inset 0 1px 0 rgba(255,255,255,.055) !important;
+}
+
+body.dark-blue #statsModal .stats-head,
+body.dark-blue #vacationModal .vacation-head,
+body.dark-blue #holidayStatsDetailModal .holiday-stats-detail-head,
+body.dark-blue #worklogStatsDetailModal .worklog-stats-detail-head{
+  background:transparent !important;
+  background-image:none !important;
+  border-bottom-color:var(--db10-line-soft) !important;
+  color:var(--db10-text) !important;
+}
+
+body.dark-blue #statsModal :is(.stats-head h2,.stats-section h3,.turn-end-copy b,.bar-row b,.off-premium b,.off-premium strong,.salary-copy b,.salary-days strong),
+body.dark-blue #vacationModal :is(.vacation-head h2,.vacation-section-title b,.vacation-summary b,.vacation-item-copy b),
+body.dark-blue #holidayStatsDetailModal :is(h2,b,strong),
+body.dark-blue #worklogStatsDetailModal :is(h2,b,strong){
+  color:var(--db10-text) !important;
+  -webkit-text-fill-color:var(--db10-text) !important;
+}
+
+body.dark-blue #statsModal :is(.stats-head small,.stat-card small,.turn-end-copy small,.turn-end-copy span,.bar-row span,.holiday-work-note,.worklog-stat-btn small,.worklog-stat-btn>span,.salary-copy small,.salary-copy span),
+body.dark-blue #vacationModal :is(.vacation-head small,.vacation-summary small,.vacation-field>span,.vacation-section-title span,.vacation-visibility-copy small,.vacation-item-copy span,.vacation-item-copy small,.vacation-legend),
+body.dark-blue #holidayStatsDetailModal :is(small,.holiday-stats-detail-legend),
+body.dark-blue #worklogStatsDetailModal :is(small,.worklog-stat-detail-meta){
+  color:var(--db10-muted) !important;
+  -webkit-text-fill-color:var(--db10-muted) !important;
+}
+
+/* Estadísticas: superficies reales */
+body.dark-blue #statsModal .stat-card,
+body.dark-blue #statsModal .turn-end-card,
+body.dark-blue #statsModal .stats-holidays,
+body.dark-blue #statsModal .stats-worklog,
+body.dark-blue #statsModal .stats-off,
+body.dark-blue #statsModal .stats-salary{
+  background:linear-gradient(180deg,var(--db10-card-2),var(--db10-card)) !important;
+  background-color:var(--db10-card) !important;
+  background-image:linear-gradient(180deg,var(--db10-card-2),var(--db10-card)) !important;
+  border-color:var(--db10-line-soft) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 5px 16px rgba(0,7,23,.15) !important;
+}
+body.dark-blue #statsModal .stat-card{
+  border-bottom:3px solid var(--stat-accent,var(--db10-line)) !important;
+}
+body.dark-blue #statsModal .stats-holidays{border-color:rgba(255,100,123,.26) !important}
+body.dark-blue #statsModal .stats-worklog{border-color:rgba(240,160,59,.27) !important}
+
+body.dark-blue #statsModal :is(.holiday-work-chip,.worklog-stat-btn,.turn-end-badge,.salary-days,.off-premium),
+body.dark-blue #holidayStatsDetailModal :is(.holiday-stats-detail-summary>div,.holiday-stat-detail-row,.holiday-stat-detail-shift),
+body.dark-blue #worklogStatsDetailModal :is(.worklog-detail-summary>div,.worklog-stat-detail-row){
+  background:linear-gradient(180deg,var(--db10-control-2),var(--db10-control)) !important;
+  background-color:var(--db10-control) !important;
+  background-image:linear-gradient(180deg,var(--db10-control-2),var(--db10-control)) !important;
+  border-color:var(--db10-line-soft) !important;
+  color:var(--db10-text) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035) !important;
+}
+body.dark-blue #statsModal :is(.next-off,.salary-card){
+  background:transparent !important;
+  background-image:none !important;
+  border-color:transparent !important;
+  box-shadow:none !important;
+}
+body.dark-blue #statsModal :is(.bar-track,.stats-bar-track){background:#06172b !important}
+
+/* Vacaciones: misma familia visual, sin cajas grises heredadas */
+body.dark-blue #vacationModal :is(.vacation-summary>div,.vacation-visibility-row,.vacation-editor,.vacation-saved-panel,.vacation-item){
+  background:linear-gradient(180deg,var(--db10-card-2),var(--db10-card)) !important;
+  background-color:var(--db10-card) !important;
+  background-image:linear-gradient(180deg,var(--db10-card-2),var(--db10-card)) !important;
+  border-color:var(--db10-line-soft) !important;
+  color:var(--db10-text) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.045) !important;
+}
+body.dark-blue #vacationModal :is(.vacation-field input,.vacation-date-button,.vacation-item-actions button){
+  background:linear-gradient(180deg,var(--db10-control-2),var(--db10-control)) !important;
+  background-color:var(--db10-control) !important;
+  background-image:linear-gradient(180deg,var(--db10-control-2),var(--db10-control)) !important;
+  border-color:var(--db10-line-soft) !important;
+  color:var(--db10-text) !important;
+  -webkit-text-fill-color:var(--db10-text) !important;
+  box-shadow:none !important;
+}
+body.dark-blue #vacationModal .vacation-summary-accent{
+  background:linear-gradient(155deg,#3c3b84,#292961) !important;
+  background-image:linear-gradient(155deg,#3c3b84,#292961) !important;
+  border-color:rgba(184,154,255,.34) !important;
+}
+body.dark-blue #vacationModal #vacationSaveBtn{
+  background:linear-gradient(180deg,#987cf5,#6852cf) !important;
+  background-image:linear-gradient(180deg,#987cf5,#6852cf) !important;
+  color:#fff !important;
+  -webkit-text-fill-color:#fff !important;
+  border-color:rgba(190,169,255,.36) !important;
+}
+body.dark-blue #vacationModal .vacation-item-actions button.delete{
+  color:#ff7e8d !important;
+  -webkit-text-fill-color:#ff7e8d !important;
+  border-color:rgba(255,103,125,.28) !important;
+}
+
+/* Cierres y controles secundarios */
+body.dark-blue #statsModal .close-btn,
+body.dark-blue #vacationModal .close-btn,
+body.dark-blue #holidayStatsDetailModal .close-btn,
+body.dark-blue #worklogStatsDetailModal .close-btn{
+  background:linear-gradient(180deg,#24537f,#14395f) !important;
+  background-image:linear-gradient(180deg,#24537f,#14395f) !important;
+  color:#f4f9ff !important;
+  -webkit-text-fill-color:#f4f9ff !important;
+  border:1px solid var(--db10-line) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.045) !important;
+}
+
+/* Teléfono: uso completo del ancho/alto sin dejar huecos visuales. */
+@media(max-width:620px){
+  body.dark-blue #statsModal,
+  body.dark-blue #vacationModal{
+    padding:
+      calc(env(safe-area-inset-top) + 5px)
+      5px
+      calc(env(safe-area-inset-bottom) + 5px) !important;
+  }
+  body.dark-blue #statsModal .stats-modal-window,
+  body.dark-blue #vacationModal .vacation-modal-window{
+    width:calc(100vw - 10px) !important;
+    height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 10px) !important;
+    max-height:none !important;
+    border-radius:21px !important;
+  }
+  body.dark-blue #statsModal .worklog-stats-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    grid-template-rows:repeat(2,minmax(0,1fr)) !important;
+  }
+}
+
+@media(max-width:380px){
+  body.dark-blue #statsModal .stats-head-copy h2,
+  body.dark-blue #vacationModal .vacation-head h2{font-size:15px !important}
+  body.dark-blue #statsModal .stats-grid{gap:4px !important}
+  body.dark-blue #statsModal .stat-card{padding-left:5px !important;padding-right:5px !important}
+}
+
 </style>
 </head>
 <body class="notranslate">
@@ -12864,7 +13534,7 @@ body.haptics-off [role="button"]{
           <p>Puerto Madryn, Brasil y Estados Unidos aparecen como perfiles preparados para futuras incorporaciones; no se habilitan hasta validar sus horarios y ciclos reales.</p>
           <p>Podés mostrar/ocultar descripciones, feriados y activar/desactivar vibración. Con <strong>Vibración · Háptica</strong> activa, botones, menús, opciones y cierres generan un pulso táctil. Al apagarla, la app cancela sus vibraciones, incluida la pulsación de 450 ms sobre un día. Al volver a activarla se siente una confirmación más marcada.</p>
           <p><strong>Restaurar:</strong> devuelve la configuración visual a sus valores originales.</p>
-          <p>El botón ☀️/🌙 cambia entre modo claro y oscuro.</p>
+          <p>El botón de tema tiene tres estados: <strong>Oscuro</strong>, <strong>Claro</strong> y <strong>Dark Blue</strong>. Cada pulsación avanza al siguiente estado; 🔵 identifica Dark Blue. Este tema también se aplica a Estadísticas, sus detalles y Vacaciones.</p>
           <p class="help-tip">Los cambios visuales y los perfiles aún no habilitados no alteran la lógica de los turnos de Pilar.</p>
         </div>
       </section>
@@ -12903,7 +13573,7 @@ body.haptics-off [role="button"]{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.1.6</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.1.7</span></span>
             </div>
           </div>
 
@@ -13418,7 +14088,7 @@ body.haptics-off [role="button"]{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.1.6';
+const CURRENT_VERSION='5.1.7';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -13700,6 +14370,23 @@ Object.assign(I18N.pt,{
  'Para recibir el aviso aunque Turnos 4×4 esté cerrada: guardá el evento y tocá ':'Para receber o aviso mesmo com Turnos 4×4 fechado: salve o evento e toque em ',
  '. Se abrirá el evento ya preparado; revisá la notificación y confirmá ':'. O evento preparado será aberto; revise a notificação e confirme ',
  '. Como alternativa podés descargar el archivo .ICS.':'. Como alternativa, você pode baixar o arquivo .ICS.'
+});
+
+/* ===== V5.1.7 · I18N TEMA DARK BLUE ===== */
+Object.assign(I18N.en,{
+ 'El botón de tema ahora tiene tres estados de prueba: ':'The theme button now has three test states: ',
+ 'Oscuro':'Dark',
+ 'Claro':'Light',
+ ' y ':' and ',
+ '. Cada pulsación avanza al siguiente estado; 🔵 identifica el modo Dark Blue.':'. Each tap advances to the next state; 🔵 identifies Dark Blue mode.'
+});
+
+Object.assign(I18N.pt,{
+ 'El botón de tema ahora tiene tres estados de prueba: ':'O botão de tema agora tem três estados de teste: ',
+ 'Oscuro':'Escuro',
+ 'Claro':'Claro',
+ ' y ':' e ',
+ '. Cada pulsación avanza al siguiente estado; 🔵 identifica el modo Dark Blue.':'. Cada toque avança para o próximo estado; 🔵 identifica o modo Dark Blue.'
 });
 
 const LANGUAGE_LABELS={es:'ESPAÑOL',en:'ENGLISH',pt:'PORTUGUÊS'};
@@ -14011,28 +14698,51 @@ function updateTurn5Visibility(){
 }
 
 let mainViewportFitRaf=0;
+let mainViewportAnchorWidth=0;
+let mainViewportAnchorHeight=0;
+
+function resetMainViewportAnchor(){
+ mainViewportAnchorWidth=0;
+ mainViewportAnchorHeight=0;
+}
+
 function fitMainCalendarViewport(){
- const isMobile=window.innerWidth<=620;
+ const width=Math.round(window.innerWidth||document.documentElement.clientWidth||0);
+ const isMobile=width<=620;
  document.body.classList.toggle('main-calendar-fit',isMobile);
 
  if(!isMobile){
+  resetMainViewportAnchor();
   document.documentElement.style.removeProperty('--main-day-height');
   return;
  }
 
  // Mientras hay una ventana modal abierta no recalculamos el calendario
- // de fondo. Esto evita que el teclado/visualViewport altere sus alturas.
+ // de fondo. Esto evita que el teclado altere sus alturas.
  if(document.querySelector('.backdrop.open'))return;
 
  cancelAnimationFrame(mainViewportFitRaf);
  mainViewportFitRaf=requestAnimationFrame(()=>{
-  const vv=window.visualViewport;
-  const viewportHeight=vv?vv.height:window.innerHeight;
+  /*
+    V5.1.7 · BLOQUEO REAL DEL VIEWPORT PRINCIPAL
+    Android/Chrome modifica innerHeight y visualViewport.height cuando la barra
+    del navegador aparece o desaparece al hacer scroll. Esa variación NO debe
+    modificar el calendario. Congelamos la altura útil al entrar y sólo la
+    renovamos ante un cambio real de ancho (rotación/cambio de dispositivo).
+  */
+  if(!mainViewportAnchorHeight || Math.abs(width-mainViewportAnchorWidth)>24){
+   mainViewportAnchorWidth=width;
+   mainViewportAnchorHeight=Math.round(
+    window.innerHeight ||
+    document.documentElement.clientHeight ||
+    window.visualViewport?.height ||
+    0
+   );
+  }
 
-  // IMPORTANTE: usamos la posición real del calendario dentro del documento,
-  // no su posición relativa al scroll actual. Antes, si Jornada se abría desde
-  // el detalle inferior, calendarTop podía ser negativo y las 6 filas se
-  // agrandaban artificialmente al guardar un registro.
+  const viewportHeight=mainViewportAnchorHeight;
+
+  // Posición real dentro del documento: permanece estable aunque se haga scroll.
   const scrollY=window.scrollY||window.pageYOffset||0;
   const calendarTopDocument=calendarCard.getBoundingClientRect().top+scrollY;
 
@@ -14341,6 +15051,79 @@ function updateColorSettingsUI(){
  const previewOff=$('#settingsModal .settings-preview-day.off small');
  if(previewOff)previewOff.textContent=localize('Franco');
 }
+const THEME_KEY='turno4x4.theme';
+const THEME_ORDER=['dark','light','darkblue'];
+
+function normalizeTheme(theme){
+ return THEME_ORDER.includes(theme)?theme:'dark';
+}
+
+function currentTheme(){
+ if(document.body.classList.contains('light'))return 'light';
+ if(document.body.classList.contains('dark-blue'))return 'darkblue';
+ return 'dark';
+}
+
+function updateThemeButton(){
+ if(!themeBtn)return;
+
+ const theme=currentTheme();
+
+ // Conservamos la apariencia conocida del botón Día/Noche
+ // y agregamos el tercer estado azul.
+ if(theme==='light'){
+  themeBtn.textContent='🌙';
+  themeBtn.setAttribute('aria-label','Tema claro · cambiar a Dark Blue');
+  themeBtn.title='Tema claro · siguiente: Dark Blue';
+ }else if(theme==='darkblue'){
+  themeBtn.textContent='🔵';
+  themeBtn.setAttribute('aria-label','Tema Dark Blue · cambiar a oscuro');
+  themeBtn.title='Tema Dark Blue · siguiente: Oscuro';
+ }else{
+  themeBtn.textContent='☀️';
+  themeBtn.setAttribute('aria-label','Tema oscuro · cambiar a claro');
+  themeBtn.title='Tema oscuro · siguiente: Claro';
+ }
+}
+
+function updateBrowserThemeColor(theme){
+ const meta=document.querySelector('meta[name="theme-color"]');
+ if(!meta)return;
+
+ const color=
+  theme==='light' ? '#eef2f6' :
+  theme==='darkblue' ? '#061326' :
+  '#0b1017';
+
+ meta.setAttribute('content',color);
+}
+
+function applyTheme(theme,{persist=true}={}){
+ const next=normalizeTheme(theme);
+
+ document.body.classList.remove('light','dark-blue');
+
+ if(next==='light'){
+  document.body.classList.add('light');
+ }else if(next==='darkblue'){
+  document.body.classList.add('dark-blue');
+ }
+
+ if(persist){
+  localStorage.setItem(THEME_KEY,next);
+ }
+
+ updateThemeButton();
+ updateBrowserThemeColor(next);
+}
+
+function cycleTheme(){
+ const now=currentTheme();
+ const index=THEME_ORDER.indexOf(now);
+ const next=THEME_ORDER[(index+1)%THEME_ORDER.length];
+ applyTheme(next,{persist:true});
+}
+
 function loadSettings(){
  const storedTurn=localStorage.getItem('turno4x4.turno');if(storedTurn&&['T1','T2','T3','T4','T5'].includes(storedTurn))turnSelect.value=storedTurn;
  const storedT5=localStorage.getItem('turno4x4.turno5');if(storedT5&&['T5LV','T5A','T5B'].includes(storedT5))turn5Select.value=storedT5;
@@ -14348,7 +15131,7 @@ function loadSettings(){
  const storedCalendarView=localStorage.getItem(CALENDAR_VIEW_KEY);
  calendarViewMode=storedCalendarView==='common'?'common':'shifts';
  applyCalendarViewMode();
- if(localStorage.getItem('turno4x4.theme')==='light')document.body.classList.add('light');
+ applyTheme(localStorage.getItem(THEME_KEY)||'dark',{persist:false});
  let size=Number(localStorage.getItem('turno4x4.codeSize')||defaults.codeSize);if(!Number.isFinite(size)||size<14||size>24)size=18;
  let daySize=Number(localStorage.getItem('turno4x4.dayNumberSize')||defaults.dayNumberSize);if(!Number.isFinite(daySize)||daySize<10||daySize>18)daySize=10;
  loadActiveColorProfile();
@@ -17321,7 +18104,7 @@ turn5Select.onchange=()=>{
  renderStatsIfOpen();
  scheduleBelowFoldLayout();
 };
-themeBtn.onclick=()=>{document.body.classList.toggle('light');localStorage.setItem('turno4x4.theme',document.body.classList.contains('light')?'light':'dark');themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️'};
+themeBtn.onclick=cycleTheme;
 shareBtn.onclick=openShareModal;
 $('#shareWhatsAppBtn').onclick=shareByWhatsApp;
 $('#shareNativeBtn').onclick=shareWithSystem;
@@ -17701,27 +18484,49 @@ $('#updateNowBtn').onclick=async()=>{
 };
 
 
+let belowFoldAnchorWidth=0;
+let belowFoldAnchorHeight=0;
+
+function resetBelowFoldAnchor(){
+ belowFoldAnchorWidth=0;
+ belowFoldAnchorHeight=0;
+}
+
 function keepDetailBelowInitialFold(){
  const spacer=$('#belowFoldSpacer');
  const detail=document.querySelector('.detail');
  if(!spacer||!detail)return;
 
- // El detalle no debe "asomar" cortado detrás de la barra inferior del teléfono.
- // Se calcula el borde inferior realmente visible y se agrega una zona segura.
- spacer.style.height='0px';
-
  requestAnimationFrame(()=>{
-  const vv=window.visualViewport;
-  const visibleBottom=window.scrollY+(vv?(vv.offsetTop+vv.height):window.innerHeight);
+  const width=Math.round(window.innerWidth||document.documentElement.clientWidth||0);
 
-  // Margen extra pensado para barras de navegación Android / PWA.
-  // Así la siguiente tarjeta recién aparece cuando el usuario comienza a desplazarse.
+  /*
+    V5.1.7: la referencia vertical de la primera pantalla queda congelada.
+    En Android la barra del navegador cambia visualViewport.height mientras se
+    desliza la página. Si usáramos esa altura en cada resize, el spacer volvería
+    a crecer/achicarse y el bloque de otros turnos parecería separarse del
+    calendario. Sólo renovamos la referencia cuando cambia realmente el ancho
+    (rotación/cambio de dispositivo), no durante el scroll normal.
+  */
+  if(!belowFoldAnchorHeight || Math.abs(width-belowFoldAnchorWidth)>24){
+   belowFoldAnchorWidth=width;
+   belowFoldAnchorHeight=Math.round(
+    window.innerHeight ||
+    document.documentElement.clientHeight ||
+    window.visualViewport?.height ||
+    0
+   );
+  }
+
   const bottomSafety=72;
-  const naturalTop=detail.getBoundingClientRect().top+window.scrollY;
-  const desiredTop=visibleBottom+bottomSafety;
+  const spacerHeight=spacer.getBoundingClientRect().height;
+  const naturalTop=detail.getBoundingClientRect().top+window.scrollY-spacerHeight;
+  const desiredTop=belowFoldAnchorHeight+bottomSafety;
   const needed=Math.max(0,Math.ceil(desiredTop-naturalTop));
 
-  spacer.style.height=needed+'px';
+  if(Math.abs(spacerHeight-needed)>1){
+   spacer.style.height=needed+'px';
+  }
  });
 }
 
@@ -17837,9 +18642,9 @@ document.addEventListener('dragstart',ev=>{
 if(!history.state?.[APP_NAV_STATE_KEY]){
  history.replaceState({...history.state,[APP_NAV_STATE_KEY]:'main'},'',location.href);
 }
-loadSettings();loadVacationColor();loadVacationVisibility();syncPlantUI();updateWorkdayNewState();syncTurnPulseText();syncTurn5PulseText();ensurePersistentTurnPulses();themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';$('#versionLabel').textContent=CURRENT_VERSION;if($('#copyrightVersionLabel'))$('#copyrightVersionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();applyLanguage(appLanguage,{persist:false,rerender:false});initSplash();i18nObserver.observe(document.body,{subtree:true,childList:true,characterData:true});fitMainCalendarViewport();keepDetailBelowInitialFold();setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},260);setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},700);checkUpdate();checkReminders();
+loadSettings();loadVacationColor();loadVacationVisibility();syncPlantUI();updateWorkdayNewState();syncTurnPulseText();syncTurn5PulseText();ensurePersistentTurnPulses();updateThemeButton();$('#versionLabel').textContent=CURRENT_VERSION;if($('#copyrightVersionLabel'))$('#copyrightVersionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();applyLanguage(appLanguage,{persist:false,rerender:false});initSplash();i18nObserver.observe(document.body,{subtree:true,childList:true,characterData:true});fitMainCalendarViewport();keepDetailBelowInitialFold();setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},260);setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},700);checkUpdate();checkReminders();
 window.addEventListener('resize',scheduleViewportLayout,{passive:true});
-window.addEventListener('orientationchange',scheduleViewportLayout,{passive:true});
+window.addEventListener('orientationchange',()=>{resetMainViewportAnchor();resetBelowFoldAnchor();scheduleViewportLayout()},{passive:true});
 
 window.addEventListener('focus',()=>{
  ensurePersistentTurnPulses();
