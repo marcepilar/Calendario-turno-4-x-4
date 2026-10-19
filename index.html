@@ -12265,14 +12265,24 @@ body.light .plant-select-btn{
 
 /* ===== V5.1.4 · CALENDARIO EXTERNO DIRECTO ===== */
 
-/* ===== V5.1.5 · HÁPTICA CONTROLADA POR LA APP ===== */
+/* ===== V5.1.6 · HÁPTICA GLOBAL + LONG PRESS CONTROLADO ===== */
 .day{
   -webkit-touch-callout:none !important;
   -webkit-user-select:none !important;
   user-select:none !important;
+  -webkit-tap-highlight-color:transparent !important;
+  touch-action:pan-y;
 }
 
-/* ===== V5.1.5 · FIX HÁPTICA OFF + PULSOS PERCEPTIBLES ===== */
+/* Con Háptica OFF eliminamos cualquier decoración táctil del navegador.
+   La navegación/scroll vertical se conserva con pan-y. */
+body.haptics-off .day,
+body.haptics-off button,
+body.haptics-off [role="button"]{
+  -webkit-tap-highlight-color:transparent !important;
+}
+
+/* ===== V5.1.6 · FIX HÁPTICA OFF + CONTROLES GLOBALES ===== */
 </style>
 </head>
 <body class="notranslate">
@@ -12852,7 +12862,7 @@ body.light .plant-select-btn{
           <p>Desde ⚙️ personalizá colores, tamaños y la vista previa.</p>
           <p><strong>Planta / Ubicación:</strong> permite trabajar con perfiles de calendario diferentes según la planta. Argentina · Pilar es el perfil activo actual.</p>
           <p>Puerto Madryn, Brasil y Estados Unidos aparecen como perfiles preparados para futuras incorporaciones; no se habilitan hasta validar sus horarios y ciclos reales.</p>
-          <p>Podés mostrar/ocultar descripciones, feriados y activar/desactivar vibración. Al apagar <strong>Vibración · Háptica</strong>, la app no debe generar pulsos al tocar ni al mantener un día 450 ms. Al volver a activarla se siente un pulso corto de confirmación.</p>
+          <p>Podés mostrar/ocultar descripciones, feriados y activar/desactivar vibración. Con <strong>Vibración · Háptica</strong> activa, botones, menús, opciones y cierres generan un pulso táctil. Al apagarla, la app cancela sus vibraciones, incluida la pulsación de 450 ms sobre un día. Al volver a activarla se siente una confirmación más marcada.</p>
           <p><strong>Restaurar:</strong> devuelve la configuración visual a sus valores originales.</p>
           <p>El botón ☀️/🌙 cambia entre modo claro y oscuro.</p>
           <p class="help-tip">Los cambios visuales y los perfiles aún no habilitados no alteran la lógica de los turnos de Pilar.</p>
@@ -12893,7 +12903,7 @@ body.light .plant-select-btn{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.1.5</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.1.6</span></span>
             </div>
           </div>
 
@@ -13408,7 +13418,7 @@ body.light .plant-select-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.1.5';
+const CURRENT_VERSION='5.1.6';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -14082,28 +14092,53 @@ function restoreMainAfterWorkday(){
 
 const HAPTICS_KEY='turno4x4.haptics';
 let hapticsEnabledState=true;
+let lastHapticAt=0;
+
+function applyHapticsVisualState(){
+ document.body?.classList.toggle('haptics-off',!hapticsEnabledState);
+ document.body?.classList.toggle('haptics-on',hapticsEnabledState);
+}
 
 function hapticsEnabled(){
- return hapticsEnabledState===true &&
-        hapticsToggle?.checked===true &&
-        localStorage.getItem(HAPTICS_KEY)!=='false';
+ return hapticsEnabledState===true;
 }
 
 function stopVibration(){
  try{
-  if(navigator.vibrate)navigator.vibrate(0);
+  if(!navigator.vibrate)return;
+  // Distintas implementaciones Android responden mejor a una u otra forma.
+  navigator.vibrate(0);
+  navigator.vibrate([]);
+  navigator.vibrate([0]);
  }catch{}
 }
 
-function vibrate(pattern){
+function normalizeHapticPattern(pattern){
+ if(Array.isArray(pattern)){
+  return pattern.map((v,i)=>{
+   const n=Math.max(0,Number(v)||0);
+   // Las posiciones pares son vibración; garantizamos un pulso perceptible.
+   return i%2===0 && n>0 ? Math.max(32,n) : n;
+  });
+ }
+ const n=Math.max(0,Number(pattern)||0);
+ return n>0?Math.max(32,n):0;
+}
+
+function vibrate(pattern=38,{force=false}={}){
  if(!hapticsEnabled()){
   stopVibration();
   return false;
  }
 
+ const now=performance.now();
+ // Evita dobles pulsos cuando una acción tiene handler propio + handler global.
+ if(!force && now-lastHapticAt<85)return false;
+ lastHapticAt=now;
+
  try{
   if(!navigator.vibrate)return false;
-  return navigator.vibrate(pattern);
+  return navigator.vibrate(normalizeHapticPattern(pattern));
  }catch{
   return false;
  }
@@ -14113,25 +14148,40 @@ function syncHapticsStateFromStorage(){
  const enabled=localStorage.getItem(HAPTICS_KEY)!=='false';
  hapticsEnabledState=enabled;
  if(hapticsToggle)hapticsToggle.checked=enabled;
+ applyHapticsVisualState();
  if(!enabled)stopVibration();
 }
 
-function onHapticsToggleChange(){
- const enabled=Boolean(hapticsToggle?.checked);
- hapticsEnabledState=enabled;
- localStorage.setItem(HAPTICS_KEY,enabled?'true':'false');
+function setHapticsEnabled(enabled,{confirm=false,persist=true}={}){
+ hapticsEnabledState=Boolean(enabled);
 
- if(!enabled){
-  // Corta cualquier patrón activo inmediatamente.
-  stopVibration();
- }else{
-  // Confirmación háptica perceptible al activar.
-  // No se agrega botón de prueba.
-  try{
-   if(navigator.vibrate)navigator.vibrate(36);
-  }catch{}
+ if(hapticsToggle){
+  hapticsToggle.checked=hapticsEnabledState;
  }
 
+ if(persist){
+  localStorage.setItem(HAPTICS_KEY,hapticsEnabledState?'true':'false');
+ }
+
+ applyHapticsVisualState();
+
+ if(!hapticsEnabledState){
+  stopVibration();
+  return;
+ }
+
+ if(confirm){
+  // Confirmación claramente perceptible, sin botón adicional.
+  lastHapticAt=0;
+  vibrate([70,35,70],{force:true});
+ }
+}
+
+function onHapticsToggleChange(){
+ setHapticsEnabled(Boolean(hapticsToggle?.checked),{
+  confirm:Boolean(hapticsToggle?.checked),
+  persist:true
+ });
  saveSettings();
 }
 function cap(s){return s?s.charAt(0).toUpperCase()+s.slice(1):s}
@@ -14331,7 +14381,7 @@ function saveSettings(){
  localStorage.setItem(activeColorStorageKey('morning'),morningColor.value);
  localStorage.setItem(activeColorStorageKey('off'),offColor.value);
  if(!isTurn5Profile())localStorage.setItem(activeColorStorageKey('night'),nightColor.value);
- localStorage.setItem('turno4x4.codeSize',codeSize.value);localStorage.setItem('turno4x4.dayNumberSize',dayNumberSize.value);localStorage.setItem('turno4x4.showLabels',showLabels.checked?'true':'false');localStorage.setItem('turno4x4.showHolidays',showHolidays.checked?'true':'false');localStorage.setItem(HAPTICS_KEY,hapticsToggle.checked?'true':'false');hapticsEnabledState=hapticsToggle.checked;
+ localStorage.setItem('turno4x4.codeSize',codeSize.value);localStorage.setItem('turno4x4.dayNumberSize',dayNumberSize.value);localStorage.setItem('turno4x4.showLabels',showLabels.checked?'true':'false');localStorage.setItem('turno4x4.showHolidays',showHolidays.checked?'true':'false');localStorage.setItem(HAPTICS_KEY,hapticsEnabledState?'true':'false');
  applySettings();renderAll();
 }
 function switchActiveColorProfile(){
@@ -15949,7 +15999,14 @@ function attachDayGestures(cell,d){
    agendaHoldTimer=null;
    agendaHoldOpened=true;
    cell.classList.remove('pending-open');
-   vibrate(40);
+
+   if(hapticsEnabled()){
+    vibrate(58,{force:true});
+   }else{
+    // Guardia dura: jamás generar vibración propia con Háptica OFF.
+    stopVibration();
+   }
+
    openAgenda(d);
   },450);
  });
@@ -16008,7 +16065,11 @@ function attachDayGestures(cell,d){
   }
  });
 
- cell.addEventListener('contextmenu',ev=>ev.preventDefault());
+ cell.addEventListener('contextmenu',ev=>{
+  ev.preventDefault();
+  ev.stopPropagation();
+  if(!hapticsEnabled())stopVibration();
+ },{capture:true});
 }
 
 function shiftViewMonth(delta){
@@ -17308,9 +17369,7 @@ $('#resetSettingsBtn').onclick=()=>{
  dayNumberSizeValue.textContent='10 px';
  showLabels.checked=true;
  showHolidays.checked=true;
- hapticsToggle.checked=true;
- hapticsEnabledState=true;
- localStorage.setItem(HAPTICS_KEY,'true');
+ setHapticsEnabled(true,{confirm:false,persist:true});
  setCalendarViewMode('shifts',{persist:true,render:false});
 
  saveSettings();
@@ -17719,14 +17778,49 @@ document.addEventListener('pointerdown',ev=>{
  releasePressedButton();
  pressedButton=btn;
  btn.classList.add('is-pressed');
-
- // Golpecito háptico corto para que la pulsación también se sienta.
- vibrate(12);
 },{passive:true});
 
 document.addEventListener('pointerup',releasePressedButton,{passive:true});
 document.addEventListener('pointercancel',releasePressedButton,{passive:true});
 window.addEventListener('blur',releasePressedButton);
+
+// HÁPTICA GLOBAL REAL.
+// Se dispara en "click", que en Android/PWA es más fiable que hacerlo
+// demasiado temprano en pointerdown. Cubre botones, X, LISTO, menús,
+// acciones dinámicas, enlaces y controles interactivos.
+document.addEventListener('click',ev=>{
+ const control=ev.target.closest?.(
+  'button,[role="button"],a[href],summary,label.switch'
+ );
+ if(!control)return;
+
+ if(
+  control.matches?.(':disabled,[aria-disabled="true"]') ||
+  control.closest?.('[aria-disabled="true"]')
+ )return;
+
+ // El switch de Háptica se maneja con su propio onchange para:
+ // - no vibrar al apagar
+ // - dar patrón fuerte al encender
+ if(
+  control===hapticsToggle ||
+  control.contains?.(hapticsToggle) ||
+  ev.target===hapticsToggle
+ )return;
+
+ vibrate(38);
+},{capture:true});
+
+// Selectores/opciones: feedback cuando realmente cambia la selección.
+document.addEventListener('change',ev=>{
+ const el=ev.target;
+ if(!(el instanceof Element))return;
+ if(el===hapticsToggle)return;
+
+ if(el.matches('select,input[type="radio"],input[type="checkbox"]')){
+  vibrate(38);
+ }
+},{capture:true});
 
 // Protección global de todos los botones contra selección/copia accidental
 // durante pulsaciones largas en Android, iOS y escritorio.
