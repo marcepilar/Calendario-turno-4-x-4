@@ -12249,6 +12249,21 @@ body.light .plant-select-btn{
 
 /* ===== V5.1.2 · EVENTOS ACUMULATIVOS · C / EXT / J ===== */
 /* ===== V5.1.3 · CALENDARIO LOCAL · SHARE/IMPORT ICS ===== */
+
+/* ===== V5.1.4 · GOOGLE CALENDAR + ICS SECUNDARIO ===== */
+.agenda-all-actions{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+.agenda-all-ics{
+  font-size:8px;
+}
+@media(max-width:620px){
+  .agenda-all-actions{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+/* ===== V5.1.4 · CALENDARIO EXTERNO DIRECTO ===== */
 </style>
 </head>
 <body class="notranslate">
@@ -12768,8 +12783,9 @@ body.light .plant-select-btn{
           <p><strong>Abrir:</strong> Configuración → Agenda, o mantener un día durante 450 ms.</p>
           <p>Guardá eventos con fecha, hora, título y notas. Después podés buscarlos, editarlos, abrirlos en calendario o eliminarlos.</p>
           <p>Los días con eventos muestran su indicador en el calendario.</p>
-          <p>Agenda permite enviar cada evento al calendario del teléfono mediante un archivo .ics. En dispositivos compatibles se abre el menú nativo para elegir Calendario / Samsung Calendar; si no está disponible, el archivo se descarga para importarlo manualmente. El recordatorio seleccionado viaja dentro del evento.</p>
-          <p>Por seguridad, la PWA no puede escribir silenciosamente en el calendario del sistema: el usuario debe confirmar <strong>Guardar</strong> en la app de calendario.</p>
+          <p>Agenda puede abrir directamente <strong>Google Calendar</strong> con el título, la fecha, la hora y las notas del evento ya preparados. Confirmá <strong>Guardar</strong> en Google Calendar para incorporarlo a tu calendario.</p>
+          <p>El recordatorio elegido en Turnos 4×4 se muestra dentro de los detalles del evento. Antes de guardarlo, revisá la opción de notificación de Google Calendar. También queda disponible <strong>⬇ .ICS</strong> como alternativa para importación manual.</p>
+          <p>Por seguridad, una PWA no puede escribir silenciosamente en el calendario del sistema: el usuario siempre debe confirmar el alta del evento.</p>
           <p>También podés crear/importar una copia de seguridad de los datos de la app.</p>
         </div>
       </section>
@@ -12868,7 +12884,7 @@ body.light .plant-select-btn{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.1.3</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.1.4</span></span>
             </div>
           </div>
 
@@ -13214,7 +13230,7 @@ body.light .plant-select-btn{
       <div class="reminder-guide-icon">📅</div>
       <div class="reminder-guide-text">
         <b>Calendario del teléfono</b>
-        <span>Para recibir el aviso aunque Turnos 4×4 esté cerrada: guardá el evento, tocá <strong>AGREGAR AL CALENDARIO</strong>, elegí Calendario / Samsung Calendar en el teléfono y confirmá <strong>Guardar</strong>. El archivo incluye el recordatorio elegido.</span>
+        <span>Para recibir el aviso aunque Turnos 4×4 esté cerrada: guardá el evento y tocá <strong>GOOGLE CALENDAR</strong>. Se abrirá el evento ya preparado; revisá la notificación y confirmá <strong>Guardar</strong>. Como alternativa podés descargar el archivo .ICS.</span>
       </div>
     </div>
   </div>
@@ -13383,7 +13399,7 @@ body.light .plant-select-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.1.3';
+const CURRENT_VERSION='5.1.4';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -13644,6 +13660,27 @@ Object.assign(I18N.pt,{
  'Por seguridad, la PWA no puede escribir silenciosamente en el calendario del sistema: el usuario debe confirmar ':'Por segurança, a PWA não pode gravar silenciosamente no calendário do sistema: o usuário deve confirmar ',
  ' en la app de calendario.':' no app de calendário.',
  'También podés crear/importar una copia de seguridad de los datos de la app.':'Você também pode criar/importar uma cópia de segurança dos dados do app.'
+});
+
+/* ===== V5.1.4 · I18N GOOGLE CALENDAR ===== */
+Object.assign(I18N.en,{
+ 'GOOGLE CALENDAR':'GOOGLE CALENDAR',
+ '📅 Google Calendar':'📅 Google Calendar',
+ '📅 GOOGLE':'📅 GOOGLE',
+ '⬇ .ICS':'⬇ .ICS',
+ 'Para recibir el aviso aunque Turnos 4×4 esté cerrada: guardá el evento y tocá ':'To receive the alert even when 4×4 Shifts is closed: save the event and tap ',
+ '. Se abrirá el evento ya preparado; revisá la notificación y confirmá ':'. The prepared event will open; review the notification and confirm ',
+ '. Como alternativa podés descargar el archivo .ICS.':'. Alternatively, you can download the .ICS file.'
+});
+
+Object.assign(I18N.pt,{
+ 'GOOGLE CALENDAR':'GOOGLE CALENDAR',
+ '📅 Google Calendar':'📅 Google Calendar',
+ '📅 GOOGLE':'📅 GOOGLE',
+ '⬇ .ICS':'⬇ .ICS',
+ 'Para recibir el aviso aunque Turnos 4×4 esté cerrada: guardá el evento y tocá ':'Para receber o aviso mesmo com Turnos 4×4 fechado: salve o evento e toque em ',
+ '. Se abrirá el evento ya preparado; revisá la notificación y confirmá ':'. O evento preparado será aberto; revise a notificação e confirme ',
+ '. Como alternativa podés descargar el archivo .ICS.':'. Como alternativa, você pode baixar o arquivo .ICS.'
 });
 
 const LANGUAGE_LABELS={es:'ESPAÑOL',en:'ENGLISH',pt:'PORTUGUÊS'};
@@ -16387,11 +16424,12 @@ function renderAgenda(){
  if(!items.length)agendaDayList.innerHTML='<div class="agenda-empty">Todavía no hay nada agendado para este día.</div>';
  items.forEach(item=>{
   const [catName,catColor]=categoryInfo[item.category]||categoryInfo.personal,card=document.createElement('div');card.className='agenda-item';card.style.setProperty('--cat-color',catColor);
-  card.innerHTML=`<div class="agenda-item-top"><div class="agenda-item-title">${escapeHtml(item.title)}</div><div class="agenda-item-time">${item.time||'Todo el día'}</div></div>${item.notes?`<div class="agenda-item-notes">${escapeHtml(item.notes)}</div>`:''}<div class="agenda-item-meta">${catName} · ${repeatLabel(item.repeat)} · 🔔 ${reminderLabel(item.reminder)}</div><div class="agenda-actions"><button data-edit="${item.id}">✏️ Editar</button><button data-ics="${item.id}" data-occ="${item._occurrenceDate}">📅 Agregar al calendario</button><button class="danger" data-del="${item.id}">🗑 Borrar</button></div>`;
+  card.innerHTML=`<div class="agenda-item-top"><div class="agenda-item-title">${escapeHtml(item.title)}</div><div class="agenda-item-time">${item.time||'Todo el día'}</div></div>${item.notes?`<div class="agenda-item-notes">${escapeHtml(item.notes)}</div>`:''}<div class="agenda-item-meta">${catName} · ${repeatLabel(item.repeat)} · 🔔 ${reminderLabel(item.reminder)}</div><div class="agenda-actions"><button data-edit="${item.id}">✏️ Editar</button><button data-gcal="${item.id}" data-gcal-occ="${item._occurrenceDate}">📅 Google Calendar</button><button data-ics="${item.id}" data-occ="${item._occurrenceDate}">⬇ .ICS</button><button class="danger" data-del="${item.id}">🗑 Borrar</button></div>`;
   agendaDayList.appendChild(card);
  });
  agendaDayList.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>editAgenda(b.dataset.edit));
  agendaDayList.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>deleteAgenda(b.dataset.del));
+ agendaDayList.querySelectorAll('[data-gcal]').forEach(b=>b.onclick=()=>openGoogleCalendar(b.dataset.gcal,b.dataset.gcalOcc));
  agendaDayList.querySelectorAll('[data-ics]').forEach(b=>b.onclick=()=>downloadICS(b.dataset.ics,b.dataset.occ));
  renderAllAgendaEvents();renderBackupStatus();
 }
@@ -16447,7 +16485,7 @@ function renderAllAgendaEvents(){
   card.className='agenda-all-item';
   card.style.setProperty('--cat-color',catColor);
   const turnName=item.turn?scheduleName(item.turn):'';
-  card.innerHTML=`<div class="agenda-all-top"><div><div class="agenda-all-date">${shortDateFmt.format(d)}</div><div class="agenda-all-event-title">${escapeHtml(item.title||'Sin título')}</div></div><div class="agenda-all-time">${item.time||'Todo el día'}</div></div>${item.notes?`<div class="agenda-all-notes">${escapeHtml(item.notes)}</div>`:''}<div class="agenda-all-meta"><b style="color:${catColor}">${catName}</b> · ${repeatLabel(item.repeat)}${turnName?' · '+escapeHtml(turnName):''} · 🔔 ${reminderLabel(item.reminder)}</div><div class="agenda-all-actions"><button class="agenda-all-edit" data-all-edit="${item.id}">✏️ EDITAR</button><button class="agenda-all-calendar" data-all-ics="${item.id}" data-all-occ="${item.date}">📅 CALENDARIO</button><button class="agenda-all-delete" data-all-del="${item.id}">🗑 ELIMINAR</button></div>`;
+  card.innerHTML=`<div class="agenda-all-top"><div><div class="agenda-all-date">${shortDateFmt.format(d)}</div><div class="agenda-all-event-title">${escapeHtml(item.title||'Sin título')}</div></div><div class="agenda-all-time">${item.time||'Todo el día'}</div></div>${item.notes?`<div class="agenda-all-notes">${escapeHtml(item.notes)}</div>`:''}<div class="agenda-all-meta"><b style="color:${catColor}">${catName}</b> · ${repeatLabel(item.repeat)}${turnName?' · '+escapeHtml(turnName):''} · 🔔 ${reminderLabel(item.reminder)}</div><div class="agenda-all-actions"><button class="agenda-all-edit" data-all-edit="${item.id}">✏️ EDITAR</button><button class="agenda-all-calendar" data-all-gcal="${item.id}" data-all-gcal-occ="${item.date}">📅 GOOGLE</button><button class="agenda-all-calendar agenda-all-ics" data-all-ics="${item.id}" data-all-occ="${item.date}">⬇ .ICS</button><button class="agenda-all-delete" data-all-del="${item.id}">🗑 ELIMINAR</button></div>`;
   agendaAllList.appendChild(card);
  });
 
@@ -16465,6 +16503,7 @@ function renderAllAgendaEvents(){
   renderAgenda();
   editAgenda(item.id)
  });
+ agendaAllList.querySelectorAll('[data-all-gcal]').forEach(b=>b.onclick=()=>openGoogleCalendar(b.dataset.allGcal,b.dataset.allGcalOcc));
  agendaAllList.querySelectorAll('[data-all-ics]').forEach(b=>b.onclick=()=>downloadICS(b.dataset.allIcs,b.dataset.allOcc));
  agendaAllList.querySelectorAll('[data-all-del]').forEach(b=>b.onclick=()=>deleteAgenda(b.dataset.allDel));
 }
@@ -16556,7 +16595,64 @@ function downloadCalendarFile(file){
  setTimeout(()=>URL.revokeObjectURL(u),1500);
 }
 
-async function downloadICS(id,occ){
+function googleCalendarStamp(d){
+ return `${d.getFullYear()}${pad2(d.getMonth()+1)}${pad2(d.getDate())}T${pad2(d.getHours())}${pad2(d.getMinutes())}00`;
+}
+
+function googleCalendarDates(item,occ){
+ const d=parseDateKey(occ||item.date);
+
+ if(item.time){
+  const[h,m]=item.time.split(':').map(Number);
+  d.setHours(h,m,0,0);
+  const end=new Date(d.getTime()+30*60000);
+  return `${googleCalendarStamp(d)}/${googleCalendarStamp(end)}`;
+ }
+
+ const start=dateKey(d).replace(/-/g,'');
+ const end=dateKey(addDays(d,1)).replace(/-/g,'');
+ return `${start}/${end}`;
+}
+
+function googleCalendarReminderText(item){
+ if(!item.time||item.reminder==='none')return 'Sin recordatorio seleccionado en Turnos 4×4';
+ return `Recordatorio elegido en Turnos 4×4: ${reminderLabel(item.reminder)}`;
+}
+
+function buildGoogleCalendarUrl(item,occ){
+ const details=[
+  item.notes||'',
+  googleCalendarReminderText(item),
+  '',
+  'Creado desde Calendario de Turnos 4×4.'
+ ].filter(Boolean).join('\n');
+
+ const params=new URLSearchParams({
+  action:'TEMPLATE',
+  text:item.title||'Evento',
+  dates:googleCalendarDates(item,occ),
+  details,
+  ctz:Intl.DateTimeFormat().resolvedOptions().timeZone||'America/Argentina/Buenos_Aires'
+ });
+
+ return `https://calendar.google.com/calendar/render?${params.toString()}`;
+}
+
+function openGoogleCalendar(id,occ){
+ const item=normalizedItem(loadAgendaData().find(x=>x.id===id));
+ if(!item)return;
+
+ const url=buildGoogleCalendarUrl(item,occ);
+ const opened=window.open(url,'_blank','noopener');
+
+ // En algunos navegadores/PWA la apertura externa puede bloquearse.
+ // En ese caso usamos la misma ventana.
+ if(!opened){
+  window.location.href=url;
+ }
+}
+
+function downloadICS(id,occ){
  const item=normalizedItem(loadAgendaData().find(x=>x.id===id));
  if(!item)return;
 
@@ -16567,26 +16663,10 @@ async function downloadICS(id,occ){
   {type:'text/calendar;charset=utf-8'}
  );
 
- // Primera opción: entregar el .ics al menú nativo del teléfono.
- // En Android/Samsung y iOS permite elegir una app compatible de calendario.
- if(navigator.share&&navigator.canShare){
-  try{
-   if(navigator.canShare({files:[file]})){
-    await navigator.share({
-     files:[file],
-     title:item.title||'Evento',
-     text:'Abrí este evento con el calendario del teléfono y confirmá Guardar.'
-    });
-    return;
-   }
-  }catch(err){
-   if(err?.name==='AbortError')return;
-  }
- }
-
- // Respaldo universal: descargar el .ics para abrirlo/importarlo con Calendario.
+ // V5.1.4: el .ICS queda como opción secundaria explícita.
+ // No intentamos compartirlo automáticamente porque en algunos Samsung
+ // sólo terminaba en Descargas sin abrir una app de calendario.
  downloadCalendarFile(file);
- alert('Se descargó el evento. Abrí el archivo .ics y elegí Calendario / Samsung Calendar. Después confirmá Guardar para que el calendario del teléfono pueda avisarte aunque Turnos 4×4 esté cerrada.');
 }
 function exportBackup(){const payload={app:'Turnos 4x4',format:6,version:CURRENT_VERSION,exportedAt:new Date().toISOString(),agenda:loadAgendaData(),vacations:loadVacationData(),vacationColor:localStorage.getItem(VACATION_COLOR_KEY)||DEFAULT_VACATION_COLOR,showVacations:localStorage.getItem(SHOW_VACATIONS_KEY)!=='false',worklog:loadWorklogData(),licenses:loadLicenseData()};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=`turnos4x4-backup-${dateKey(new Date())}.json`;a.click();localStorage.setItem(BACKUP_KEY,new Date().toISOString());renderBackupStatus();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 async function importBackup(file){if(!file)return;try{const data=JSON.parse(await file.text()),arr=Array.isArray(data)?data:data.agenda,vacs=Array.isArray(data?.vacations)?data.vacations:null,vacColor=typeof data?.vacationColor==='string'?data.vacationColor:null,showVacs=typeof data?.showVacations==='boolean'?data.showVacations:null,worklog=Array.isArray(data?.worklog)?data.worklog:null,licenses=Array.isArray(data?.licenses)?data.licenses:null;if(!Array.isArray(arr))throw 0;const extraV=vacs?` · ${vacs.length} período${vacs.length===1?'':'s'} de vacaciones`:'';const extraW=worklog?` · ${worklog.length} registro${worklog.length===1?'':'s'} laborales`:'';const extraL=licenses?` · ${licenses.length} licencia${licenses.length===1?'':'s'}`:'';if(!confirm(`Se encontraron ${arr.length} eventos${extraV}${extraW}${extraL}. ¿Reemplazar los datos incluidos en la copia?`))return;saveAgendaData(arr);if(vacs)saveVacationData(vacs);if(vacColor)applyVacationColor(vacColor,true);if(showVacs!==null)localStorage.setItem(SHOW_VACATIONS_KEY,showVacs?'true':'false');if(worklog)saveWorklogData(worklog);if(licenses)saveLicenseData(licenses);loadVacationVisibility();renderAgenda();renderVacationList();renderAll();renderYearIfOpen();renderStatsIfOpen()}catch{alert('No pude leer esa copia de seguridad.')}finally{$('#agendaImportInput').value=''}}
