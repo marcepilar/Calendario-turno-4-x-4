@@ -1,4 +1,4 @@
-const CACHE='turnos4x4-5.1.7';
+const CACHE='turnos4x4-5.1.8';
 const ASSETS=[
   './',
   './index.html',
@@ -29,13 +29,11 @@ self.addEventListener('fetch', event => {
   if(event.request.method !== 'GET') return;
   const url=new URL(event.request.url);
 
-  // version.json siempre debe venir de red para detectar una actualización.
   if(url.pathname.endsWith('/version.json')){
     event.respondWith(fetch(event.request,{cache:'no-store'}));
     return;
   }
 
-  // Network-first: obtiene la versión nueva en cuanto GitHub Pages la publica.
   event.respondWith(
     fetch(event.request).then(response => {
       if(response && response.ok && url.origin === self.location.origin){

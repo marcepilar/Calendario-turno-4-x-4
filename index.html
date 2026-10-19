@@ -12312,7 +12312,7 @@ body.haptics-off [role="button"]{
 
 /* ===== V5.1.6 · FIX HÁPTICA OFF + CONTROLES GLOBALES ===== */
 
-/* ===== V5.1.7 · TEMA DARK BLUE EXPERIMENTAL ===== */
+/* ===== V5.1.8 · TEMA DARK BLUE EXPERIMENTAL ===== */
 body.dark-blue .glass{
   border-color:rgba(93,157,218,.22);
 }
@@ -12328,10 +12328,10 @@ body.dark-blue .detail-card{
     var(--panel);
 }
 
-/* ===== V5.1.7 · TERCER TEMA DARK BLUE ===== */
+/* ===== V5.1.8 · TERCER TEMA DARK BLUE ===== */
 
 /* =====================================================================
-   V5.1.7 · DARK BLUE · ESTADÍSTICAS + VACACIONES · PREMIUM POLISH
+   V5.1.8 · DARK BLUE · ESTADÍSTICAS + VACACIONES · PREMIUM POLISH
    Sólo se aplica al tercer tema. Oscuro y Claro permanecen intactos.
    ===================================================================== */
 
@@ -12721,9 +12721,9 @@ body.dark-blue #worklogStatsDetailModal button:active{
   transform:scale(.975);
 }
 
-/* ===== V5.1.7 · DARK BLUE · STATS + VACACIONES FINAL POLISH ===== */
+/* ===== V5.1.8 · DARK BLUE · STATS + VACACIONES FINAL POLISH ===== */
 
-/* ===== V5.1.7 · DARK BLUE · CAPA FINAL COHERENTE =====
+/* ===== V5.1.8 · DARK BLUE · CAPA FINAL COHERENTE =====
    Sólo tema dark-blue; no cambia geometría ni los datos. */
 body.dark-blue #statsModal,
 body.dark-blue #vacationModal{--db-surface:#0b2542;--db-raised:#123554;--db-line:rgba(112,177,241,.24);--db-copy:#eef7ff;--db-secondary:#a3c1de}
@@ -12773,7 +12773,7 @@ body.dark-blue #vacationModal :is(.vacation-form-actions .btn-secondary,.vacatio
 
 
 /* =====================================================================
-   V5.1.7 · DARK BLUE · ESTADÍSTICAS + VACACIONES + DETALLES · FINAL
+   V5.1.8 · DARK BLUE · ESTADÍSTICAS + VACACIONES + DETALLES · FINAL
    Capa final única. Sólo modifica apariencia en Dark Blue.
    No altera datos, agenda, vacaciones guardadas ni lógica funcional.
    ===================================================================== */
@@ -12951,6 +12951,106 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
   body.dark-blue #vacationModal .vacation-head h2{font-size:15px !important}
   body.dark-blue #statsModal .stats-grid{gap:4px !important}
   body.dark-blue #statsModal .stat-card{padding-left:5px !important;padding-right:5px !important}
+}
+
+
+
+/* ===== V5.1.8 · TIPO DE TURNO EN HORAS EXTRA ===== */
+.workday-overtime-shift{
+  margin-top:7px;
+  padding:7px;
+  display:grid;
+  grid-template-columns:minmax(95px,.72fr) minmax(0,1.45fr);
+  gap:7px;
+  align-items:center;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:rgba(255,255,255,.022);
+  transition:opacity .16s ease,border-color .16s ease,background .16s ease;
+}
+.workday-overtime-shift.is-disabled{opacity:.50}
+.workday-overtime-shift-copy{min-width:0}
+.workday-overtime-shift-copy b{
+  display:block;
+  color:var(--text);
+  font-size:8px;
+  font-weight:950;
+  line-height:1.15;
+}
+.workday-overtime-shift-copy small{
+  display:block;
+  margin-top:2px;
+  color:var(--muted);
+  font-size:6.4px;
+  font-weight:800;
+}
+.workday-overtime-shift-choices{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5px;
+}
+.workday-overtime-shift-choices button{
+  min-width:0;
+  min-height:34px;
+  padding:4px 5px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  background:var(--panel3);
+  color:var(--text);
+  font-size:8px;
+  font-weight:950;
+}
+.workday-overtime-shift-choices button.selected{
+  border-color:rgba(67,168,255,.64);
+  background:linear-gradient(180deg,rgba(67,168,255,.20),rgba(67,168,255,.08));
+  box-shadow:inset 0 -2px 0 rgba(67,168,255,.48),0 0 0 1px rgba(67,168,255,.06);
+}
+.workday-overtime-shift-choices button:disabled{
+  cursor:default;
+  opacity:.58;
+}
+#workdayModal .workday-overtime-shift{
+  margin-top:7px;
+}
+#workdayModal .workday-overtime-shift-choices button{
+  min-height:38px;
+  font-size:9px;
+}
+.worklog-stat-btn > .worklog-overtime-split{
+  grid-column:1/-1;
+  grid-row:auto;
+  margin-top:2px;
+  padding-top:2px;
+  border-top:1px solid rgba(67,168,255,.12);
+  color:var(--muted);
+  font-size:5.8px;
+  font-style:normal;
+  font-weight:850;
+  line-height:1.15;
+}
+@media(max-width:620px){
+  #workdayModal .workday-overtime-shift{
+    grid-template-columns:94px 1fr;
+    gap:6px;
+    padding:6px;
+  }
+  #workdayModal .workday-overtime-shift-choices button{
+    min-height:36px;
+    font-size:8.7px;
+  }
+}
+@media(max-width:390px){
+  #workdayModal .workday-overtime-shift{
+    grid-template-columns:86px 1fr;
+    gap:5px;
+  }
+  #workdayModal .workday-overtime-shift-copy b{font-size:7.6px}
+  #workdayModal .workday-overtime-shift-copy small{font-size:6px}
+  #workdayModal .workday-overtime-shift-choices button{
+    min-height:34px;
+    padding:3px;
+    font-size:8.2px;
+  }
 }
 
 </style>
@@ -13497,7 +13597,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
           <p>La app muestra el turno <strong>Programado</strong>. Si hubo cambio, elegí M, N, F o T5. El ciclo futuro no se modifica.</p>
           <p><strong>Duración automática:</strong> M/N y turnos rotativos de 12 h = 12 horas; T5 FIJO = 9 horas; Franco = 0 horas.</p>
           <p><strong>Jornadas guardadas:</strong> la insignia identifica el tipo de registro: <strong>C</strong> = cambio de turno, <strong>EXT</strong> = horas extra y <strong>J</strong> = jornada/nota. Si una fecha tiene cambio y extras, se muestran ambas insignias.</p>
-          <p><strong>Horas extra:</strong> son independientes del cambio. Los botones rápidos cargan 6, 8, 10 o 12 hs; + y − ajustan de a 0,5 h.</p>
+          <p><strong>Horas extra:</strong> son independientes del cambio. Los botones rápidos cargan 6, 8, 10 o 12 hs; + y − ajustan de a 0,5 h. Cuando cargás extras, elegí si fueron turno M o turno N.</p>
           <p>Podés agregar una nota y eliminar el registro cuando sea necesario.</p>
         </div>
       </section>
@@ -13573,7 +13673,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.1.7</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.1.8</span></span>
             </div>
           </div>
 
@@ -13670,6 +13770,16 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
           <button type="button" data-overtime="8">8 hs</button>
           <button type="button" data-overtime="10">10 hs</button>
           <button type="button" data-overtime="12">12 hs</button>
+        </div>
+        <div id="workdayOvertimeShiftBlock" class="workday-overtime-shift is-disabled">
+          <div class="workday-overtime-shift-copy">
+            <b>Turno de las extras</b>
+            <small>Elegí M o N</small>
+          </div>
+          <div id="workdayOvertimeShiftChoices" class="workday-overtime-shift-choices">
+            <button type="button" data-overtime-code="M" disabled>M · Mañana</button>
+            <button type="button" data-overtime-code="N" disabled>N · Noche</button>
+          </div>
         </div>
       </div>
 
@@ -13979,6 +14089,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
         <small id="worklogOvertimeLabel">Horas extra · 23→23</small>
         <b><span id="worklogOvertimeMonth">0</span> h</b>
         <span><strong id="worklogOvertimeYear">0</strong> h en el año</span>
+        <em id="worklogOvertimeSplit" class="worklog-overtime-split">M 0 h · N 0 h</em>
       </button>
       <button id="worklogLicensesStat" type="button" class="worklog-stat-btn licenses">
         <small>Licencias laborales</small>
@@ -14088,7 +14199,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.1.7';
+const CURRENT_VERSION='5.1.8';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -14372,7 +14483,7 @@ Object.assign(I18N.pt,{
  '. Como alternativa podés descargar el archivo .ICS.':'. Como alternativa, você pode baixar o arquivo .ICS.'
 });
 
-/* ===== V5.1.7 · I18N TEMA DARK BLUE ===== */
+/* ===== V5.1.8 · I18N TEMA DARK BLUE ===== */
 Object.assign(I18N.en,{
  'El botón de tema ahora tiene tres estados de prueba: ':'The theme button now has three test states: ',
  'Oscuro':'Dark',
@@ -14394,6 +14505,22 @@ const LANGUAGE_LOCALES={es:'es-AR',en:'en-US',pt:'pt-BR'};
 const i18nOriginalText=new WeakMap();
 const i18nOriginalAttrs=new WeakMap();
 let i18nApplying=false;
+
+
+Object.assign(I18N.en,{
+  "Turno de las extras":"Overtime shift",
+  "Elegí M o N":"Choose M or N",
+  "Sin tipo":"No type",
+  "Elegí si las horas extra fueron turno M o turno N.":"Choose whether the overtime was an M or N shift.",
+  "Cuando cargás extras, elegí si fueron turno M o turno N.":"When you enter overtime, choose whether it was an M or N shift."
+});
+Object.assign(I18N.pt,{
+  "Turno de las extras":"Turno das horas extras",
+  "Elegí M o N":"Escolha M ou N",
+  "Sin tipo":"Sem tipo",
+  "Elegí si las horas extra fueron turno M o turno N.":"Escolha se as horas extras foram do turno M ou N.",
+  "Cuando cargás extras, elegí si fueron turno M o turno N.":"Ao registrar horas extras, escolha se foram do turno M ou N."
+});
 
 function currentLocale(){return LANGUAGE_LOCALES[appLanguage]||'es-AR'}
 function tr(text){
@@ -14620,7 +14747,7 @@ const SHOW_VACATIONS_KEY='turno4x4.showVacations.v1';
 let now=new Date(),viewYear=now.getFullYear(),viewMonth=now.getMonth(),selectedDate=new Date(now.getFullYear(),now.getMonth(),now.getDate());
 let agendaSelectedDate=new Date(selectedDate),agendaEditingId=null,agendaHoldTimer=null,agendaHoldOpened=false,agendaAllExpanded=false;
 let vacationEditingId=null;
-let workdayEditingDate=new Date(selectedDate),workdayEditingTurn=activeTurnKey(),workdayWorkedCode='',workdayOvertime=0,workdayActiveTab='work';
+let workdayEditingDate=new Date(selectedDate),workdayEditingTurn=activeTurnKey(),workdayWorkedCode='',workdayOvertime=0,workdayOvertimeCode='',workdayActiveTab='work';
 let licenseEditingId=null;
 let worklogStatsDetailMode='changes';
 let swipeStartX=0,swipeStartY=0,swipeStartedAt=0,calendarSwipeMoved=false,calendarSwipeActive=false,monthAnimating=false,yearViewYear=viewYear;
@@ -14724,7 +14851,7 @@ function fitMainCalendarViewport(){
  cancelAnimationFrame(mainViewportFitRaf);
  mainViewportFitRaf=requestAnimationFrame(()=>{
   /*
-    V5.1.7 · BLOQUEO REAL DEL VIEWPORT PRINCIPAL
+    V5.1.8 · BLOQUEO REAL DEL VIEWPORT PRINCIPAL
     Android/Chrome modifica innerHeight y visualViewport.height cuando la barra
     del navegador aparece o desaparece al hacer scroll. Esa variación NO debe
     modificar el calendario. Congelamos la altura útil al entrar y sólo la
@@ -15668,12 +15795,15 @@ function saveWorklogData(items){
 }
 
 function normalizeWorklog(item){
+ const overtime=Math.max(0,Math.min(24,Number(item?.overtime)||0));
+ const overtimeCode=overtime>0&&['M','N'].includes(item?.overtimeCode)?item.overtimeCode:'';
  return {
   id:String(item?.id||''),
   date:String(item?.date||''),
   turn:String(item?.turn||''),
   workedCode:['M','N','F','D'].includes(item?.workedCode)?item.workedCode:'',
-  overtime:Math.max(0,Math.min(24,Number(item?.overtime)||0)),
+  overtime,
+  overtimeCode,
   note:String(item?.note||'').trim(),
   updatedAt:item?.updatedAt||new Date().toISOString()
  };
@@ -15705,13 +15835,43 @@ function worklogOvertimeText(value){
  return Number.isInteger(n)?String(n):n.toFixed(1).replace('.',',');
 }
 
+function worklogOvertimeTypeLabel(code){
+ if(code==='M')return tr('M · Mañana');
+ if(code==='N')return tr('N · Noche');
+ return tr('Sin tipo');
+}
+
+function worklogOvertimeDetailText(record){
+ const hours=worklogOvertimeText(record?.overtime||0);
+ const type=record?.overtimeCode?` · ${worklogOvertimeTypeLabel(record.overtimeCode)}`:'';
+ return `${hours} h extra${type}`;
+}
+
+function overtimeTypeTotals(records){
+ return (records||[]).reduce((acc,r)=>{
+  const h=Number(r?.overtime)||0;
+  if(h<=0)return acc;
+  if(r.overtimeCode==='M')acc.M+=h;
+  else if(r.overtimeCode==='N')acc.N+=h;
+  else acc.untyped+=h;
+  return acc;
+ },{M:0,N:0,untyped:0});
+}
+
+function overtimeTypeSplitText(stats){
+ const totals=overtimeTypeTotals(stats?.records||[]);
+ let text=`M ${worklogOvertimeText(totals.M)} h · N ${worklogOvertimeText(totals.N)} h`;
+ if(totals.untyped>0)text+=` · ${tr('Sin tipo')} ${worklogOvertimeText(totals.untyped)} h`;
+ return text;
+}
+
 function worklogSummaryParts(record){
  const parts=[];
  if(record.workedCode){
   parts.push(`Cambio: ${worklogCodeLabel(record.workedCode)}`);
  }
  if(Number(record.overtime)>0){
-  parts.push(`Horas extra: ${worklogOvertimeText(record.overtime)} h`);
+  parts.push(`Horas extra: ${worklogOvertimeText(record.overtime)} h${record.overtimeCode?` · ${worklogOvertimeTypeLabel(record.overtimeCode)}`:''}`);
  }
  if(record.note){
   parts.push(`Nota: ${record.note}`);
@@ -15734,7 +15894,7 @@ function workdaySavedBadges(record){
   badges.push({
    code:'EXT',
    cls:'overtime',
-   label:'Horas extra'
+   label:`Horas extra${record.overtimeCode?` · ${worklogOvertimeTypeLabel(record.overtimeCode)}`:''}`
   });
  }
 
@@ -15851,11 +16011,37 @@ function setWorkdayWorkedCode(code){
  }
 }
 
+function syncWorkdayOvertimeTypeUI(){
+ const active=workdayOvertime>0;
+ const block=$('#workdayOvertimeShiftBlock');
+ if(block)block.classList.toggle('is-disabled',!active);
+
+ $$('#workdayOvertimeShiftChoices [data-overtime-code]').forEach(btn=>{
+  btn.disabled=!active;
+  const selected=active&&btn.dataset.overtimeCode===workdayOvertimeCode;
+  btn.classList.toggle('selected',selected);
+  btn.setAttribute('aria-pressed',selected?'true':'false');
+ });
+
+ const state=$('#workdayOvertimeState');
+ if(state){
+  state.textContent=workdayOvertime>0
+   ?`${worklogOvertimeText(workdayOvertime)} h${workdayOvertimeCode?` · ${workdayOvertimeCode}`:''}`
+   :'0 h';
+ }
+}
+
+function setWorkdayOvertimeCode(code){
+ workdayOvertimeCode=workdayOvertime>0&&['M','N'].includes(code)?code:'';
+ syncWorkdayOvertimeTypeUI();
+}
+
 function setWorkdayOvertime(value){
  const n=Math.round(Math.max(0,Math.min(24,Number(value)||0))*2)/2;
  workdayOvertime=n;
+ if(n<=0)workdayOvertimeCode='';
  $('#workdayOvertimeDisplay').textContent=worklogOvertimeText(n);
- $('#workdayOvertimeState').textContent=`${worklogOvertimeText(n)} h`;
+ syncWorkdayOvertimeTypeUI();
 }
 
 function renderWorkdayModal(date,turn){
@@ -15872,6 +16058,7 @@ function renderWorkdayModal(date,turn){
 
  setWorkdayWorkedCode(existing?.workedCode||'');
  setWorkdayOvertime(existing?.overtime||0);
+ setWorkdayOvertimeCode(existing?.overtimeCode||'');
  $('#workdayNoteInput').value=existing?.note||'';
  $('#workdayDeleteBtn').disabled=!existing;
  clearLicenseForm(true);
@@ -15893,6 +16080,11 @@ function saveWorkdayRecord(){
  if(workedCode===planned)workedCode='';
 
  const overtime=workdayOvertime;
+ const overtimeCode=overtime>0?workdayOvertimeCode:'';
+ if(overtime>0&&!overtimeCode){
+  alert(tr('Elegí si las horas extra fueron turno M o turno N.'));
+  return;
+ }
  const note=$('#workdayNoteInput').value.trim();
  const id=worklogIdFor(workdayEditingDate,workdayEditingTurn);
  let items=loadWorklogData().map(normalizeWorklog).filter(x=>x.id!==id);
@@ -15904,6 +16096,7 @@ function saveWorkdayRecord(){
    turn:workdayEditingTurn,
    workedCode,
    overtime,
+   overtimeCode,
    note,
    updatedAt:new Date().toISOString()
   });
@@ -16048,6 +16241,8 @@ function renderWorklogStats(){
  $('#worklogOvertimeLabel').textContent=`Horas extra · ${overtimePayrollPeriodLabel(viewYear,viewMonth)}`;
  $('#worklogOvertimeMonth').textContent=worklogOvertimeText(overtimeStats.overtime);
  $('#worklogOvertimeYear').textContent=worklogOvertimeText(yearStats.overtime);
+ const overtimeSplit=$('#worklogOvertimeSplit');
+ if(overtimeSplit)overtimeSplit.textContent=overtimeTypeSplitText(overtimeStats);
 
  $('#worklogLicensesMonth').textContent=monthLicenses.workDays;
  $('#worklogLicensesYear').textContent=yearLicenses.workDays;
@@ -16176,7 +16371,7 @@ function renderWorklogStatsDetail(mode){
    :`${codeText(turn,planned)} · Sin cambio`;
   const detailText=[
    r.workedCode?`Cambio ${workdayChangeHours(r.workedCode)} h automático`:'',
-   r.overtime>0?`${worklogOvertimeText(r.overtime)} h extra`:'',
+   r.overtime>0?worklogOvertimeDetailText(r):'',
    r.note||''
   ].filter(Boolean).join(' · ');
 
@@ -16192,7 +16387,7 @@ function renderWorklogStatsDetail(mode){
       <small>${escapeHtml(detailText||'Sin nota')}</small>
     </div>
     <div class="worklog-stat-row-actions">
-      <span class="worklog-stat-row-value">${mode==='overtime'?`${worklogOvertimeText(r.overtime)} h`:'CAMBIO'}</span>
+      <span class="worklog-stat-row-value">${mode==='overtime'?`${worklogOvertimeText(r.overtime)} h${r.overtimeCode?` · ${r.overtimeCode}`:''}`:'CAMBIO'}</span>
       <button type="button" class="worklog-stat-delete" data-worklog-delete="${escapeHtml(r.id)}">ELIMINAR</button>
     </div>
    </div>`;
@@ -17088,7 +17283,7 @@ function showDetail(d){
    const planned=codeFor(active,d);
    const worked=record.workedCode||planned;
    worklogTitle.textContent='Registro laboral';
-   worklogText.textContent=`Programado ${codeText(active,planned)} · Trabajado ${codeText(active,worked)}${record.workedCode?` · Cambio ${workdayChangeHours(record.workedCode)} h`:''}${record.overtime>0?` · +${worklogOvertimeText(record.overtime)} h extra`:''}`;
+   worklogText.textContent=`Programado ${codeText(active,planned)} · Trabajado ${codeText(active,worked)}${record.workedCode?` · Cambio ${workdayChangeHours(record.workedCode)} h`:''}${record.overtime>0?` · +${worklogOvertimeText(record.overtime)} h extra${record.overtimeCode?` · ${record.overtimeCode}`:''}`:''}`;
    worklogNote.textContent=record.note||'';
   }else{
    worklogText.textContent='';
@@ -17581,7 +17776,7 @@ function downloadICS(id,occ){
  // sólo terminaba en Descargas sin abrir una app de calendario.
  downloadCalendarFile(file);
 }
-function exportBackup(){const payload={app:'Turnos 4x4',format:6,version:CURRENT_VERSION,exportedAt:new Date().toISOString(),agenda:loadAgendaData(),vacations:loadVacationData(),vacationColor:localStorage.getItem(VACATION_COLOR_KEY)||DEFAULT_VACATION_COLOR,showVacations:localStorage.getItem(SHOW_VACATIONS_KEY)!=='false',worklog:loadWorklogData(),licenses:loadLicenseData()};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=`turnos4x4-backup-${dateKey(new Date())}.json`;a.click();localStorage.setItem(BACKUP_KEY,new Date().toISOString());renderBackupStatus();setTimeout(()=>URL.revokeObjectURL(u),1000)}
+function exportBackup(){const payload={app:'Turnos 4x4',format:7,version:CURRENT_VERSION,exportedAt:new Date().toISOString(),agenda:loadAgendaData(),vacations:loadVacationData(),vacationColor:localStorage.getItem(VACATION_COLOR_KEY)||DEFAULT_VACATION_COLOR,showVacations:localStorage.getItem(SHOW_VACATIONS_KEY)!=='false',worklog:loadWorklogData(),licenses:loadLicenseData()};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=`turnos4x4-backup-${dateKey(new Date())}.json`;a.click();localStorage.setItem(BACKUP_KEY,new Date().toISOString());renderBackupStatus();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 async function importBackup(file){if(!file)return;try{const data=JSON.parse(await file.text()),arr=Array.isArray(data)?data:data.agenda,vacs=Array.isArray(data?.vacations)?data.vacations:null,vacColor=typeof data?.vacationColor==='string'?data.vacationColor:null,showVacs=typeof data?.showVacations==='boolean'?data.showVacations:null,worklog=Array.isArray(data?.worklog)?data.worklog:null,licenses=Array.isArray(data?.licenses)?data.licenses:null;if(!Array.isArray(arr))throw 0;const extraV=vacs?` · ${vacs.length} período${vacs.length===1?'':'s'} de vacaciones`:'';const extraW=worklog?` · ${worklog.length} registro${worklog.length===1?'':'s'} laborales`:'';const extraL=licenses?` · ${licenses.length} licencia${licenses.length===1?'':'s'}`:'';if(!confirm(`Se encontraron ${arr.length} eventos${extraV}${extraW}${extraL}. ¿Reemplazar los datos incluidos en la copia?`))return;saveAgendaData(arr);if(vacs)saveVacationData(vacs);if(vacColor)applyVacationColor(vacColor,true);if(showVacs!==null)localStorage.setItem(SHOW_VACATIONS_KEY,showVacs?'true':'false');if(worklog)saveWorklogData(worklog);if(licenses)saveLicenseData(licenses);loadVacationVisibility();renderAgenda();renderVacationList();renderAll();renderYearIfOpen();renderStatsIfOpen()}catch{alert('No pude leer esa copia de seguridad.')}finally{$('#agendaImportInput').value=''}}
 function renderBackupStatus(){const x=localStorage.getItem(BACKUP_KEY);backupStatus.textContent=x?`Última copia: ${new Intl.DateTimeFormat(currentLocale(),{dateStyle:'medium',timeStyle:'short'}).format(new Date(x))}`:'Todavía no hiciste una copia de seguridad.'}
 
@@ -18200,6 +18395,9 @@ $('#workdayOvertimePlus').onclick=()=>setWorkdayOvertime(workdayOvertime+.5);
 $$('.workday-overtime-quick [data-overtime]').forEach(btn=>{
  btn.onclick=()=>setWorkdayOvertime(Number(btn.dataset.overtime));
 });
+$$('#workdayOvertimeShiftChoices [data-overtime-code]').forEach(btn=>{
+ btn.onclick=()=>setWorkdayOvertimeCode(btn.dataset.overtimeCode);
+});
 
 $('#worklogChangesStat').onclick=()=>openWorklogStatsDetail('changes');
 $('#worklogOvertimeStat').onclick=()=>openWorklogStatsDetail('overtime');
@@ -18501,7 +18699,7 @@ function keepDetailBelowInitialFold(){
   const width=Math.round(window.innerWidth||document.documentElement.clientWidth||0);
 
   /*
-    V5.1.7: la referencia vertical de la primera pantalla queda congelada.
+    V5.1.8: la referencia vertical de la primera pantalla queda congelada.
     En Android la barra del navegador cambia visualViewport.height mientras se
     desliza la página. Si usáramos esa altura en cada resize, el spacer volvería
     a crecer/achicarse y el bloque de otros turnos parecería separarse del
