@@ -12264,6 +12264,15 @@ body.light .plant-select-btn{
 }
 
 /* ===== V5.1.4 · CALENDARIO EXTERNO DIRECTO ===== */
+
+/* ===== V5.1.5 · HÁPTICA CONTROLADA POR LA APP ===== */
+.day{
+  -webkit-touch-callout:none !important;
+  -webkit-user-select:none !important;
+  user-select:none !important;
+}
+
+/* ===== V5.1.5 · FIX HÁPTICA OFF + PULSOS PERCEPTIBLES ===== */
 </style>
 </head>
 <body class="notranslate">
@@ -12843,7 +12852,7 @@ body.light .plant-select-btn{
           <p>Desde ⚙️ personalizá colores, tamaños y la vista previa.</p>
           <p><strong>Planta / Ubicación:</strong> permite trabajar con perfiles de calendario diferentes según la planta. Argentina · Pilar es el perfil activo actual.</p>
           <p>Puerto Madryn, Brasil y Estados Unidos aparecen como perfiles preparados para futuras incorporaciones; no se habilitan hasta validar sus horarios y ciclos reales.</p>
-          <p>Podés mostrar/ocultar descripciones, feriados y activar/desactivar vibración.</p>
+          <p>Podés mostrar/ocultar descripciones, feriados y activar/desactivar vibración. Al apagar <strong>Vibración · Háptica</strong>, la app no debe generar pulsos al tocar ni al mantener un día 450 ms. Al volver a activarla se siente un pulso corto de confirmación.</p>
           <p><strong>Restaurar:</strong> devuelve la configuración visual a sus valores originales.</p>
           <p>El botón ☀️/🌙 cambia entre modo claro y oscuro.</p>
           <p class="help-tip">Los cambios visuales y los perfiles aún no habilitados no alteran la lógica de los turnos de Pilar.</p>
@@ -12884,7 +12893,7 @@ body.light .plant-select-btn{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.1.4</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.1.5</span></span>
             </div>
           </div>
 
@@ -13399,7 +13408,7 @@ body.light .plant-select-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.1.4';
+const CURRENT_VERSION='5.1.5';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -13838,7 +13847,7 @@ function cycleLanguage(){
  const order=['es','en','pt'];
  const next=order[(order.indexOf(appLanguage)+1)%order.length];
  applyLanguage(next,{persist:true,rerender:true});
- vibrate(7);
+ vibrate(12);
 }
 
 const nativeAlert=window.alert.bind(window);
@@ -14071,7 +14080,60 @@ function restoreMainAfterWorkday(){
  setTimeout(goHome,360);
 }
 
-function vibrate(ms){if(hapticsToggle.checked&&navigator.vibrate)navigator.vibrate(ms)}
+const HAPTICS_KEY='turno4x4.haptics';
+let hapticsEnabledState=true;
+
+function hapticsEnabled(){
+ return hapticsEnabledState===true &&
+        hapticsToggle?.checked===true &&
+        localStorage.getItem(HAPTICS_KEY)!=='false';
+}
+
+function stopVibration(){
+ try{
+  if(navigator.vibrate)navigator.vibrate(0);
+ }catch{}
+}
+
+function vibrate(pattern){
+ if(!hapticsEnabled()){
+  stopVibration();
+  return false;
+ }
+
+ try{
+  if(!navigator.vibrate)return false;
+  return navigator.vibrate(pattern);
+ }catch{
+  return false;
+ }
+}
+
+function syncHapticsStateFromStorage(){
+ const enabled=localStorage.getItem(HAPTICS_KEY)!=='false';
+ hapticsEnabledState=enabled;
+ if(hapticsToggle)hapticsToggle.checked=enabled;
+ if(!enabled)stopVibration();
+}
+
+function onHapticsToggleChange(){
+ const enabled=Boolean(hapticsToggle?.checked);
+ hapticsEnabledState=enabled;
+ localStorage.setItem(HAPTICS_KEY,enabled?'true':'false');
+
+ if(!enabled){
+  // Corta cualquier patrón activo inmediatamente.
+  stopVibration();
+ }else{
+  // Confirmación háptica perceptible al activar.
+  // No se agrega botón de prueba.
+  try{
+   if(navigator.vibrate)navigator.vibrate(36);
+  }catch{}
+ }
+
+ saveSettings();
+}
 function cap(s){return s?s.charAt(0).toUpperCase()+s.slice(1):s}
 
 function setShareStatus(message,type=''){
@@ -14141,7 +14203,7 @@ async function copyShareLink(){
    ta.remove();
   }
   setShareStatus('Enlace copiado.','ok');
-  vibrate(10);
+  vibrate(16);
  }catch{
   setShareStatus('No se pudo copiar el enlace.','error');
  }
@@ -14244,7 +14306,7 @@ function loadSettings(){
  dayNumberSize.value=daySize;dayNumberSizeValue.textContent=`${daySize} px`;
  showLabels.checked=localStorage.getItem('turno4x4.showLabels')!=='false';
  showHolidays.checked=localStorage.getItem('turno4x4.showHolidays')!=='false';
- hapticsToggle.checked=localStorage.getItem('turno4x4.haptics')!=='false';
+ syncHapticsStateFromStorage();
  applySettings();
 }
 function updateSettingsRangeVisual(input){
@@ -14269,7 +14331,7 @@ function saveSettings(){
  localStorage.setItem(activeColorStorageKey('morning'),morningColor.value);
  localStorage.setItem(activeColorStorageKey('off'),offColor.value);
  if(!isTurn5Profile())localStorage.setItem(activeColorStorageKey('night'),nightColor.value);
- localStorage.setItem('turno4x4.codeSize',codeSize.value);localStorage.setItem('turno4x4.dayNumberSize',dayNumberSize.value);localStorage.setItem('turno4x4.showLabels',showLabels.checked?'true':'false');localStorage.setItem('turno4x4.showHolidays',showHolidays.checked?'true':'false');localStorage.setItem('turno4x4.haptics',hapticsToggle.checked?'true':'false');
+ localStorage.setItem('turno4x4.codeSize',codeSize.value);localStorage.setItem('turno4x4.dayNumberSize',dayNumberSize.value);localStorage.setItem('turno4x4.showLabels',showLabels.checked?'true':'false');localStorage.setItem('turno4x4.showHolidays',showHolidays.checked?'true':'false');localStorage.setItem(HAPTICS_KEY,hapticsToggle.checked?'true':'false');hapticsEnabledState=hapticsToggle.checked;
  applySettings();renderAll();
 }
 function switchActiveColorProfile(){
@@ -15018,7 +15080,7 @@ function saveWorkdayRecord(){
  renderAll();
  renderStats();
  closeModal('workdayModal');
- vibrate(14);
+ vibrate(20);
 }
 
 function deleteWorkdayRecord(){
@@ -15479,7 +15541,7 @@ function saveLicensePeriod(){
  renderYearIfOpen();
  renderStatsIfOpen();
  closeModal('workdayModal');
- vibrate(14);
+ vibrate(20);
 }
 
 function deleteLicenseById(id,{closeWorkday=false,ask=true}={}){
@@ -15760,7 +15822,7 @@ function saveVacationPeriod(){
  renderVacationList();
  renderAll();
  renderYearIfOpen();
- vibrate(14);
+ vibrate(20);
 }
 
 function openVacations(){
@@ -15865,6 +15927,13 @@ function attachDayGestures(cell,d){
  cell.addEventListener('pointerdown',ev=>{
   if(ev.pointerType==='mouse'&&ev.button!==0)return;
 
+  // Evita el feedback háptico/contextual nativo de una pulsación larga
+  // en navegadores móviles. La vibración queda controlada únicamente
+  // por el ajuste "Vibración · Háptica" de la app.
+  if(ev.pointerType==='touch'||ev.pointerType==='pen'){
+   try{ev.preventDefault()}catch{}
+  }
+
   pressStartedAt=performance.now();
   pressMoved=false;
   agendaHoldOpened=false;
@@ -15880,7 +15949,7 @@ function attachDayGestures(cell,d){
    agendaHoldTimer=null;
    agendaHoldOpened=true;
    cell.classList.remove('pending-open');
-   vibrate(32);
+   vibrate(40);
    openAgenda(d);
   },450);
  });
@@ -15917,7 +15986,7 @@ function attachDayGestures(cell,d){
   // Only a short press updates the lower detail panel.
   if(elapsed < 450){
    selectedDate=new Date(d.getFullYear(),d.getMonth(),d.getDate());
-   vibrate(8);
+   vibrate(20);
    showDetail(d);
    renderCalendar();
   }
@@ -16056,7 +16125,7 @@ cal.addEventListener('pointerup',ev=>{
  try{cal.releasePointerCapture(ev.pointerId)}catch{}
 
  if(calendarSwipeMoved){
-  vibrate(7);
+  vibrate(12);
   finishInteractiveSwipe(dx,elapsed);
  }
 
@@ -16439,7 +16508,7 @@ function saveAgenda(){
  let items=loadAgendaData(),data={title,time:agendaTimeInput.value,category:agendaCategoryInput.value,reminder:agendaReminderInput.value,repeat:agendaRepeatInput.value,notes:agendaNotesInput.value.trim(),date:dateKey(agendaSelectedDate),turn:activeTurnKey()};
  if(agendaEditingId){const i=items.findIndex(x=>x.id===agendaEditingId);if(i>=0)items[i]={...items[i],...data}}
  else items.push({id:'a'+Date.now().toString(36)+Math.random().toString(36).slice(2,7),createdAt:Date.now(),...data});
- saveAgendaData(items);clearAgendaForm();vibrate(15);renderAgenda();renderCalendar();if(data.reminder!=='none')requestNotificationPermission()
+ saveAgendaData(items);clearAgendaForm();vibrate(22);renderAgenda();renderCalendar();if(data.reminder!=='none')requestNotificationPermission()
 }
 function editAgenda(id){
  const item=loadAgendaData().find(x=>x.id===id);if(!item)return;
@@ -17224,7 +17293,7 @@ languageCycleBtn?.addEventListener('click',cycleLanguage);
 [morningColor,nightColor,offColor].forEach(x=>x.oninput=()=>{saveSettings();renderQuickPalette()});
 codeSize.oninput=()=>{codeSizeValue.textContent=`${codeSize.value} px`;saveSettings()};
 dayNumberSize.oninput=()=>{dayNumberSizeValue.textContent=`${dayNumberSize.value} px`;saveSettings()};
-showLabels.onchange=saveSettings;showHolidays.onchange=saveSettings;hapticsToggle.onchange=saveSettings;
+showLabels.onchange=saveSettings;showHolidays.onchange=saveSettings;hapticsToggle.onchange=onHapticsToggleChange;
 $('#resetSettingsBtn').onclick=()=>{
  // RESTAURAR devuelve también el idioma y la planta a sus valores por defecto.
  applyLanguage('es',{persist:true,rerender:false});
@@ -17240,6 +17309,8 @@ $('#resetSettingsBtn').onclick=()=>{
  showLabels.checked=true;
  showHolidays.checked=true;
  hapticsToggle.checked=true;
+ hapticsEnabledState=true;
+ localStorage.setItem(HAPTICS_KEY,'true');
  setCalendarViewMode('shifts',{persist:true,render:false});
 
  saveSettings();
@@ -17481,7 +17552,7 @@ function bindYearHold(button,delta){
 
   yearHoldDelayTimer=setTimeout(()=>{
    scheduleYearRepeat(button,delta);
-   vibrate(10);
+   vibrate(16);
   },360);
  });
 
@@ -17650,7 +17721,7 @@ document.addEventListener('pointerdown',ev=>{
  btn.classList.add('is-pressed');
 
  // Golpecito háptico corto para que la pulsación también se sienta.
- vibrate(7);
+ vibrate(12);
 },{passive:true});
 
 document.addEventListener('pointerup',releasePressedButton,{passive:true});
