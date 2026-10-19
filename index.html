@@ -12124,6 +12124,130 @@ body.light .plant-select-btn{
 /* ===== V5.1.0 · FINAL DNDA · EJEMPLAR ESTABLE OFICIAL ===== */
 
 /* ===== V5.1.1 · FIX CONTEO FERIADOS · PUENTES AZULES = 0 ===== */
+
+/* ===== V5.1.2 · JORNADAS GUARDADAS · INSIGNIAS POR TIPO ===== */
+
+/*
+  La lista acumulativa ya no muestra "J" para todo:
+  C   = Cambio de turno
+  EXT = Horas extra
+  J   = Jornada / nota sin cambio ni extras
+  Si un registro tiene Cambio + Extras se muestran ambas insignias.
+*/
+
+.workday-saved-icons{
+  width:40px;
+  height:40px;
+  flex:0 0 40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.workday-saved-icons.single .workday-saved-type{
+  width:40px;
+  height:40px;
+  border-radius:11px;
+  font-size:15px;
+}
+
+.workday-saved-icons.multiple{
+  flex-direction:column;
+  gap:3px;
+}
+
+.workday-saved-icons.multiple .workday-saved-type{
+  width:40px;
+  height:18px;
+  border-radius:7px;
+  font-size:8px;
+}
+
+.workday-saved-type{
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.12),
+    0 4px 10px rgba(0,0,0,.16);
+  font-weight:1000;
+  line-height:1;
+  white-space:nowrap;
+  letter-spacing:.01em;
+}
+
+.workday-saved-type.change{
+  background:linear-gradient(180deg,#f0a03b,#d97924);
+  color:#271808;
+}
+
+.workday-saved-type.overtime{
+  background:linear-gradient(180deg,#50b6ff,#2688d8);
+  color:#041d2a;
+}
+
+.workday-saved-type.workday{
+  background:linear-gradient(180deg,var(--worklog),var(--worklog2));
+  color:#271808;
+}
+
+/* La vieja clase queda neutralizada por compatibilidad visual. */
+.workday-saved-icon{
+  display:none !important;
+}
+
+@media(max-width:620px){
+  .workday-saved-icons{
+    width:37px;
+    height:37px;
+    flex-basis:37px;
+  }
+
+  .workday-saved-icons.single .workday-saved-type{
+    width:37px;
+    height:37px;
+    border-radius:10px;
+    font-size:14px;
+  }
+
+  .workday-saved-icons.multiple{
+    gap:3px;
+  }
+
+  .workday-saved-icons.multiple .workday-saved-type{
+    width:37px;
+    height:17px;
+    font-size:7.6px;
+  }
+}
+
+@media(max-height:760px){
+  .workday-saved-icons{
+    width:32px;
+    height:32px;
+    flex-basis:32px;
+  }
+
+  .workday-saved-icons.single .workday-saved-type{
+    width:32px;
+    height:32px;
+    border-radius:9px;
+    font-size:12px;
+  }
+
+  .workday-saved-icons.multiple{
+    gap:2px;
+  }
+
+  .workday-saved-icons.multiple .workday-saved-type{
+    width:32px;
+    height:15px;
+    border-radius:6px;
+    font-size:6.7px;
+  }
+}
+
+/* ===== V5.1.2 · EVENTOS ACUMULATIVOS · C / EXT / J ===== */
 </style>
 </head>
 <body class="notranslate">
@@ -12664,6 +12788,7 @@ body.light .plant-select-btn{
           <p><strong>Abrir:</strong> podés tocar un día y abrir <strong>JORNADA</strong> desde el detalle, o usar el botón <strong>J</strong> de la cabecera para abrir directamente la Jornada del día seleccionado.</p>
           <p>La app muestra el turno <strong>Programado</strong>. Si hubo cambio, elegí M, N, F o T5. El ciclo futuro no se modifica.</p>
           <p><strong>Duración automática:</strong> M/N y turnos rotativos de 12 h = 12 horas; T5 FIJO = 9 horas; Franco = 0 horas.</p>
+          <p><strong>Jornadas guardadas:</strong> la insignia identifica el tipo de registro: <strong>C</strong> = cambio de turno, <strong>EXT</strong> = horas extra y <strong>J</strong> = jornada/nota. Si una fecha tiene cambio y extras, se muestran ambas insignias.</p>
           <p><strong>Horas extra:</strong> son independientes del cambio. Los botones rápidos cargan 6, 8, 10 o 12 hs; + y − ajustan de a 0,5 h.</p>
           <p>Podés agregar una nota y eliminar el registro cuando sea necesario.</p>
         </div>
@@ -12740,7 +12865,7 @@ body.light .plant-select-btn{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.1.1</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.1.2</span></span>
             </div>
           </div>
 
@@ -13255,7 +13380,7 @@ body.light .plant-select-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.1.1';
+const CURRENT_VERSION='5.1.2';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -13478,6 +13603,23 @@ Object.assign(I18N.pt,{
  ' suma sólo los FER rojos que coinciden con jornadas de trabajo. Un medio feriado de 6 h vale ½. Los puentes azules se muestran en el detalle, pero no suman al total.':' soma apenas os FER vermelhos que coincidem com dias de trabalho. Um meio feriado de 6 h vale ½. As pontes azuis continuam visíveis no detalhe, mas não entram no total.',
  'Feriados del período:':'Feriados do período:',
  ' usa el mismo 23→23. Aplica la misma regla: FER rojo completo = 1, medio feriado = ½ y puente azul = 0.':' usa o mesmo período 23→23. A mesma regra se aplica: FER vermelho completo = 1, meio feriado = ½ e ponte azul = 0.'
+});
+
+/* ===== V5.1.2 · I18N INSIGNIAS JORNADA ===== */
+Object.assign(I18N.en,{
+ 'Jornadas guardadas:':'Saved workdays:',
+ ' la insignia identifica el tipo de registro: ':' the badge identifies the record type: ',
+ ' = cambio de turno, ':' = shift change, ',
+ ' = horas extra y ':' = overtime and ',
+ ' = jornada/nota. Si una fecha tiene cambio y extras, se muestran ambas insignias.':' = workday/note. If a date has both a shift change and overtime, both badges are shown.'
+});
+
+Object.assign(I18N.pt,{
+ 'Jornadas guardadas:':'Jornadas salvas:',
+ ' la insignia identifica el tipo de registro: ':' a insígnia identifica o tipo de registro: ',
+ ' = cambio de turno, ':' = mudança de turno, ',
+ ' = horas extra y ':' = horas extras e ',
+ ' = jornada/nota. Si una fecha tiene cambio y extras, se muestran ambas insignias.':' = jornada/nota. Se uma data tiver mudança de turno e horas extras, as duas insígnias serão exibidas.'
 });
 
 const LANGUAGE_LABELS={es:'ESPAÑOL',en:'ENGLISH',pt:'PORTUGUÊS'};
@@ -14621,6 +14763,54 @@ function worklogSummaryParts(record){
  return parts;
 }
 
+function workdaySavedBadges(record){
+ const badges=[];
+
+ if(record.workedCode){
+  badges.push({
+   code:'C',
+   cls:'change',
+   label:'Cambio de turno'
+  });
+ }
+
+ if(Number(record.overtime)>0){
+  badges.push({
+   code:'EXT',
+   cls:'overtime',
+   label:'Horas extra'
+  });
+ }
+
+ // Si el registro es sólo una nota/jornada general, conserva J.
+ if(!badges.length){
+  badges.push({
+   code:'J',
+   cls:'workday',
+   label:'Jornada'
+  });
+ }
+
+ return badges;
+}
+
+function workdaySavedBadgeMarkup(record){
+ const badges=workdaySavedBadges(record);
+ const mode=badges.length>1?'multiple':'single';
+
+ return `
+  <div class="workday-saved-icons ${mode}">
+   ${badges.map(b=>`
+    <span
+      class="workday-saved-type ${b.cls}"
+      title="${escapeHtml(b.label)}"
+      aria-label="${escapeHtml(b.label)}"
+      data-no-i18n
+    >${escapeHtml(b.code)}</span>
+   `).join('')}
+  </div>`;
+}
+
 function renderWorkdaySavedList(){
  const turn=workdayEditingTurn||activeTurnKey();
  const list=$('#workdaySavedList');
@@ -14645,7 +14835,7 @@ function renderWorkdaySavedList(){
   const summary=worklogSummaryParts(r);
   return `
    <div class="workday-saved-item">
-    <span class="workday-saved-icon">J</span>
+    ${workdaySavedBadgeMarkup(r)}
     <div class="workday-saved-copy">
       <b>${escapeHtml(cap(worklogDateFmt.format(d)))}</b>
       <span>Programado: ${escapeHtml(codeText(turn,planned))}${r.workedCode?` · Trabajado: ${escapeHtml(codeText(turn,r.workedCode))}`:''}</span>
