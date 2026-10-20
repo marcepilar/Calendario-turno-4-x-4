@@ -13541,6 +13541,70 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
   #workdayModal #workdayPane .workday-footnote{display:none}
 }
 
+
+
+/* ===== V5.2.3 · FIX REAL · ACCIONES JORNADA COMO LICENCIAS =====
+   Corrige estilos heredados de V5.2.1 que mantenían las acciones
+   en una fila inferior. Se resetean grid-template-areas y grid-area
+   para que EDITAR / ELIMINAR queden en columna a la derecha. */
+#workdayModal #workdayPane .workday-saved-item{
+  grid-template-columns:auto minmax(0,1fr) auto !important;
+  grid-template-areas:none !important;
+  column-gap:6px !important;
+  row-gap:0 !important;
+  align-items:center !important;
+  min-height:66px !important;
+  padding:8px !important;
+}
+#workdayModal #workdayPane .workday-saved-icons,
+#workdayModal #workdayPane .workday-saved-copy,
+#workdayModal #workdayPane .workday-saved-actions{
+  grid-area:auto !important;
+}
+#workdayModal #workdayPane .workday-saved-icons{
+  align-self:center !important;
+}
+#workdayModal #workdayPane .workday-saved-copy{
+  min-width:0 !important;
+}
+#workdayModal #workdayPane .workday-saved-actions{
+  width:auto !important;
+  min-width:0 !important;
+  display:grid !important;
+  grid-template-columns:1fr !important;
+  grid-auto-flow:row !important;
+  gap:5px !important;
+  align-self:center !important;
+}
+#workdayModal #workdayPane .workday-saved-actions button{
+  width:auto !important;
+  min-width:67px !important;
+  min-height:34px !important;
+  padding:0 6px !important;
+  margin:0 !important;
+  font-size:7.8px !important;
+  white-space:nowrap !important;
+}
+
+@media(max-width:620px){
+  #workdayModal #workdayPane .workday-saved-item{
+    grid-template-columns:auto minmax(0,1fr) auto !important;
+    grid-template-areas:none !important;
+    min-height:66px !important;
+    padding:8px !important;
+    gap:6px !important;
+  }
+  #workdayModal #workdayPane .workday-saved-actions{
+    grid-template-columns:1fr !important;
+    gap:5px !important;
+  }
+  #workdayModal #workdayPane .workday-saved-actions button{
+    min-width:67px !important;
+    min-height:34px !important;
+    font-size:7.8px !important;
+  }
+}
+
 </style>
 </head>
 <body class="notranslate">
@@ -13929,7 +13993,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.2.2</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.2.3</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -14161,7 +14225,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.2.2</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.2.3</span></span>
             </div>
           </div>
 
@@ -14687,7 +14751,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.2.2';
+const CURRENT_VERSION='5.2.3';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
