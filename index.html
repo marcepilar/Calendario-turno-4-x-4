@@ -14093,7 +14093,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.2.9</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.3.0</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -14325,7 +14325,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.2.9</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.3.0</span></span>
             </div>
           </div>
 
@@ -14852,7 +14852,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.2.9';
+const CURRENT_VERSION='5.3.0';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -16073,9 +16073,22 @@ function statusRelief(turn,d){
 // V4.3.21 T5LV visual week:
 // index 0 DOM=F, 1 LUN=T5, 2 MAR=T5, 3 MIE=T5, 4 JUE=T5, 5 VIE=T5, 6 SAB=F
 
+// V5.3.0 · Día operativo de los turnos rotativos.
+// Para T1–T4 y T5 UNO/DOS el día del ciclo cambia a las 06:00, no a las 00:00.
+// Así una noche 18:00–06:00 permanece en el mismo día de ciclo hasta finalizar.
+function cycleOperationalDate(now=new Date()){
+ const d=new Date(now.getTime());
+ if(d.getHours()<6)d.setDate(d.getDate()-1);
+ return new Date(d.getFullYear(),d.getMonth(),d.getDate());
+}
+
 function renderCycle(){
  const turn=activeTurnKey();
- const today=new Date();
+ const now=new Date();
+ // T5 FIJO conserva la semana calendario normal. Los turnos rotativos usan corte 06:00.
+ const today=turn==='T5LV'
+  ?new Date(now.getFullYear(),now.getMonth(),now.getDate())
+  :cycleOperationalDate(now);
  let seq=[],idx=0,title='Ciclo de 16 días';
  cycleStrip.classList.remove('weekly-calendar-align');
 
@@ -16107,6 +16120,20 @@ function renderCycle(){
  });
  cycleTitle.textContent=title;
  cyclePosition.textContent=turn==='T5LV'?`Hoy: día ${idx+1} de 7`:`Hoy: día ${idx+1} de ${seq.length}`;
+}
+
+let cycleBoundaryTimer=null;
+function scheduleCycleBoundaryRefresh(){
+ if(cycleBoundaryTimer)clearTimeout(cycleBoundaryTimer);
+ const now=new Date();
+ const next=new Date(now.getTime());
+ next.setHours(6,0,0,0);
+ if(now>=next)next.setDate(next.getDate()+1);
+ const delay=Math.max(1000,next.getTime()-now.getTime()+250);
+ cycleBoundaryTimer=setTimeout(()=>{
+  renderCycle();
+  scheduleCycleBoundaryRefresh();
+ },delay);
 }
 
 
@@ -19765,11 +19792,13 @@ document.addEventListener('dragstart',ev=>{
 if(!history.state?.[APP_NAV_STATE_KEY]){
  history.replaceState({...history.state,[APP_NAV_STATE_KEY]:'main'},'',location.href);
 }
-loadSettings();loadVacationColor();loadVacationVisibility();syncPlantUI();updateWorkdayNewState();syncTurnPulseText();syncTurn5PulseText();ensurePersistentTurnPulses();updateThemeButton();$('#versionLabel').textContent=CURRENT_VERSION;if($('#copyrightVersionLabel'))$('#copyrightVersionLabel').textContent=CURRENT_VERSION;renderAll();renderBackupStatus();applyLanguage(appLanguage,{persist:false,rerender:false});initSplash();i18nObserver.observe(document.body,{subtree:true,childList:true,characterData:true});fitMainCalendarViewport();keepDetailBelowInitialFold();setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},260);setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},700);checkUpdate();checkReminders();
+loadSettings();loadVacationColor();loadVacationVisibility();syncPlantUI();updateWorkdayNewState();syncTurnPulseText();syncTurn5PulseText();ensurePersistentTurnPulses();updateThemeButton();$('#versionLabel').textContent=CURRENT_VERSION;if($('#copyrightVersionLabel'))$('#copyrightVersionLabel').textContent=CURRENT_VERSION;renderAll();scheduleCycleBoundaryRefresh();renderBackupStatus();applyLanguage(appLanguage,{persist:false,rerender:false});initSplash();i18nObserver.observe(document.body,{subtree:true,childList:true,characterData:true});fitMainCalendarViewport();keepDetailBelowInitialFold();setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},260);setTimeout(()=>{ensurePersistentTurnPulses();fitMainCalendarViewport();keepDetailBelowInitialFold()},700);checkUpdate();checkReminders();
 window.addEventListener('resize',scheduleViewportLayout,{passive:true});
 window.addEventListener('orientationchange',()=>{resetMainViewportAnchor();resetBelowFoldAnchor();scheduleViewportLayout()},{passive:true});
 
 window.addEventListener('focus',()=>{
+ renderCycle();
+ scheduleCycleBoundaryRefresh();
  ensurePersistentTurnPulses();
  startHolidayBadgePulses();
  ensureHolidaysForCurrentView();
@@ -19780,6 +19809,8 @@ window.addEventListener('focus',()=>{
 
 document.addEventListener('visibilitychange',()=>{
  if(!document.hidden){
+  renderCycle();
+  scheduleCycleBoundaryRefresh();
   ensurePersistentTurnPulses();
   startHolidayBadgePulses();
   ensureHolidaysForCurrentView();
