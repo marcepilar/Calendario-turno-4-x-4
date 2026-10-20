@@ -14093,7 +14093,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.2.4</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.2.5</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -14325,7 +14325,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.2.4</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.2.5</span></span>
             </div>
           </div>
 
@@ -14851,7 +14851,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.2.4';
+const CURRENT_VERSION='5.2.5';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -16648,13 +16648,13 @@ function renderWorkdaySavedList(){
   btn.onclick=()=>{
    const id=btn.dataset.workdayDelete;
    const currentId=worklogIdFor(workdayEditingDate,workdayEditingTurn);
-   if(!deleteWorklogById(id,{ask:true}))return;
+   if(!deleteWorklogById(id,{closeWorkday:false,ask:true}))return;
    if(id===currentId){
     renderWorkdayModal(workdayEditingDate,workdayEditingTurn);
-    setWorkdayTab('work');
    }else{
     renderWorkdaySavedList();
    }
+   setWorkdayTab('work');
   };
  });
 }
@@ -16780,7 +16780,9 @@ function saveWorkdayRecord(){
 function deleteWorkdayRecord(){
  const existing=worklogForDate(workdayEditingDate,workdayEditingTurn);
  if(!existing)return;
- deleteWorklogById(existing.id,{closeWorkday:true});
+ if(!deleteWorklogById(existing.id,{closeWorkday:false,ask:true}))return;
+ renderWorkdayModal(workdayEditingDate,workdayEditingTurn);
+ setWorkdayTab('work');
 }
 
 function worklogRecordsForPeriod(turn,year,month=null){
@@ -17328,7 +17330,13 @@ function renderLicenseList(){
  });
 
  $$('[data-license-delete]').forEach(btn=>{
-  btn.onclick=()=>deleteLicenseById(btn.dataset.licenseDelete,{closeWorkday:true});
+  btn.onclick=()=>{
+   const id=btn.dataset.licenseDelete;
+   const wasEditing=licenseEditingId===id;
+   if(!deleteLicenseById(id,{closeWorkday:false,ask:true}))return;
+   if(wasEditing)clearLicenseForm(true);
+   setWorkdayTab('license');
+  };
  });
 }
 
