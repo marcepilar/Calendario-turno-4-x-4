@@ -14093,7 +14093,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.2.6</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.2.7</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -14246,8 +14246,8 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
         <div class="help-section-title"><span>6</span><div><b>Jornada</b><small>Cambios de turno y horas extra</small></div></div>
         <div class="help-card">
           <p><strong>Abrir:</strong> podés tocar un día y abrir <strong>JORNADA</strong> desde el detalle, o usar el botón <strong>J</strong> de la cabecera para abrir directamente la Jornada del día seleccionado.</p>
-          <p>La app muestra tu turno <strong>Programado</strong>. Si hacés un cambio, ese día no venís: elegí M, N, F o T5 según el turno del compañero que te cubre. Podés elegir incluso el mismo código que tenías programado. El ciclo futuro no se modifica.</p>
-          <p><strong>Duración automática:</strong> se calcula con tu turno programado de ese día, no con el turno del compañero que te cubre. M/N y turnos rotativos de 12 h = 12 horas; T5 FIJO = 9 horas; Franco = 0 horas.</p>
+          <p>La app muestra tu turno <strong>Programado</strong>. Si hacés un cambio, ese día no venís y elegís el turno del compañero que te cubre. Para T1/T2 se ofrecen T3/T4; para T3/T4 se ofrecen T1/T2. En T5 FIJO y T5 4×4 quedan disponibles T1, T2, T3 y T4. El ciclo futuro no se modifica.</p>
+          <p><strong>Horas cubiertas:</strong> se calculan con tu jornada programada de ese día, no con el turno del compañero que te cubre. Los turnos rotativos son de 12 horas; T5 FIJO = 9 horas; un franco programado = 0 horas.</p>
           <p><strong>Jornadas guardadas:</strong> la insignia identifica el tipo de registro: <strong>C</strong> = cambio de turno, <strong>EXT</strong> = horas extra y <strong>J</strong> = jornada/nota. Si una fecha tiene cambio y extras, se muestran ambas insignias.</p>
           <p><strong>Horas extra:</strong> son independientes del cambio. Los botones rápidos cargan 6, 8, 10 o 12 hs; + y − ajustan de a 0,5 h. Cuando cargás extras, elegí si fueron turno M o turno N.</p>
           <p>Podés agregar una nota y eliminar el registro cuando sea necesario.</p>
@@ -14325,7 +14325,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.2.6</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.2.7</span></span>
             </div>
           </div>
 
@@ -14383,16 +14383,16 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
         <div class="workday-section-head">
           <div>
             <b>Cambio de turno</b>
-            <small>Ese día no venís · elegí el turno de quien te cubre</small>
+            <small>Ese día no venís · elegí el turno del compañero que te cubre</small>
           </div>
           <span id="workdayChangeState">SIN CAMBIO</span>
         </div>
         <div id="workdayShiftChoices" class="workday-shift-choices">
           <button type="button" data-work-code="" class="selected">Sin cambio</button>
-          <button type="button" data-work-code="M">M · Mañana</button>
-          <button type="button" data-work-code="N">N · Noche</button>
-          <button type="button" data-work-code="F">F · Franco</button>
-          <button type="button" data-work-code="D">T5 · 07:30</button>
+          <button type="button" data-work-code="T1">T1</button>
+          <button type="button" data-work-code="T2">T2</button>
+          <button type="button" data-work-code="T3">T3</button>
+          <button type="button" data-work-code="T4">T4</button>
         </div>
         <div class="workday-change-duration">
           <span>Horas cubiertas</span>
@@ -14851,7 +14851,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.2.6';
+const CURRENT_VERSION='5.2.7';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -16489,7 +16489,7 @@ function normalizeWorklog(item){
   id:String(item?.id||''),
   date:String(item?.date||''),
   turn:String(item?.turn||''),
-  workedCode:['M','N','F','D'].includes(item?.workedCode)?item.workedCode:'',
+  workedCode:['T1','T2','T3','T4','M','N','F','D'].includes(item?.workedCode)?item.workedCode:'',
   overtime,
   overtimeCode,
   note:String(item?.note||'').trim(),
@@ -16511,6 +16511,8 @@ function worklogForDate(date,turn=activeTurnKey()){
 }
 
 function worklogCodeLabel(code){
+ if(['T1','T2','T3','T4'].includes(code))return code;
+ // Compatibilidad con registros creados hasta V5.2.6.
  if(code==='M')return 'M · Mañana';
  if(code==='N')return 'N · Noche';
  if(code==='F')return 'F · Franco';
@@ -16642,7 +16644,7 @@ function renderWorkdaySavedList(){
     ${workdaySavedBadgeMarkup(r)}
     <div class="workday-saved-copy">
       <b>${escapeHtml(cap(worklogDateFmt.format(d)))}</b>
-      <span>Programado: ${escapeHtml(codeText(turn,planned))}${r.workedCode?` · Me cubre: ${escapeHtml(codeText(turn,r.workedCode))}`:''}</span>
+      <span>Programado: ${escapeHtml(codeText(turn,planned))}${r.workedCode?` · Me cubre: ${escapeHtml(worklogCodeLabel(r.workedCode))}`:''}</span>
       <small>${summary.map(escapeHtml).join(' · ')}</small>
     </div>
     <div class="workday-saved-actions">
@@ -16680,17 +16682,55 @@ function renderWorkdaySavedList(){
 }
 
 
+function workdayCoverTurnOptions(turn){
+ // T1 y T2 se cubren con compañeros de T3/T4.
+ if(turn==='T1'||turn==='T2')return ['T3','T4'];
+ // T3 y T4 se cubren con compañeros de T1/T2.
+ if(turn==='T3'||turn==='T4')return ['T1','T2'];
+ // En T5 FIJO y T5 4×4 quedan disponibles los cuatro turnos rotativos.
+ if(turn==='T5LV'||turn==='T5A'||turn==='T5B')return ['T1','T2','T3','T4'];
+ return [];
+}
+
+function syncWorkdayCoverTurnButtons(){
+ const wrap=$('#workdayShiftChoices');
+ if(!wrap)return;
+ const buttons=$$('#workdayShiftChoices [data-work-code]');
+ const clearBtn=buttons.find(btn=>btn.dataset.workCode==='')||buttons[0];
+ const optionBtns=buttons.filter(btn=>btn!==clearBtn);
+ const options=workdayCoverTurnOptions(workdayEditingTurn);
+
+ if(clearBtn){
+  clearBtn.hidden=false;
+  clearBtn.dataset.workCode='';
+  clearBtn.textContent=tr('Sin cambio');
+ }
+
+ optionBtns.forEach((btn,index)=>{
+  const value=options[index]||'';
+  btn.hidden=!value;
+  btn.disabled=!value;
+  btn.dataset.workCode=value;
+  btn.textContent=value;
+  btn.setAttribute('aria-label',value?`${tr('Cubre')} ${value}`:'');
+ });
+
+ // Sin cambio + opciones visibles ocupan siempre todo el ancho disponible.
+ wrap.style.gridTemplateColumns=`repeat(${Math.max(1,options.length+1)},minmax(0,1fr))`;
+}
+
 function setWorkdayWorkedCode(code){
  const planned=codeFor(workdayEditingTurn,workdayEditingDate);
- const normalized=['M','N','F','D'].includes(code)?code:'';
- // workedCode se conserva como nombre interno por compatibilidad con backups anteriores.
- // Desde V5.2.6 representa el turno del compañero que cubre al usuario, NO el turno trabajado por el usuario.
+ const allowed=workdayCoverTurnOptions(workdayEditingTurn);
+ // Conserva códigos antiguos sólo al abrir backups/registros previos; las selecciones nuevas son T1–T4.
+ const legacy=['M','N','F','D'].includes(code);
+ const normalized=(allowed.includes(code)||legacy)?code:'';
  workdayWorkedCode=normalized;
  $$('#workdayShiftChoices [data-work-code]').forEach(btn=>{
   btn.classList.toggle('selected',btn.dataset.workCode===workdayWorkedCode);
  });
  $('#workdayChangeState').textContent=workdayWorkedCode
-  ?`${tr('CUBRE')} · ${workdayWorkedCode}`
+  ?`${tr('CUBRE')} · ${worklogCodeLabel(workdayWorkedCode)}`
   :'SIN CAMBIO';
  const duration=$('#workdayChangeDuration');
  if(duration){
@@ -16746,6 +16786,7 @@ function renderWorkdayModal(date,turn){
  $('#workdayTurnLabel').textContent=scheduleName(turn);
  $('#workdayPlannedLabel').textContent=`${codeText(turn,planned)} · ${shiftNames[planned][0]}`;
 
+ syncWorkdayCoverTurnButtons();
  setWorkdayWorkedCode(existing?.workedCode||'');
  setWorkdayOvertime(existing?.overtime||0);
  setWorkdayOvertimeCode(existing?.overtimeCode||'');
@@ -16764,7 +16805,7 @@ function openWorkday(date=selectedDate,turn=activeTurnKey(),tab='work'){
 
 function saveWorkdayRecord(){
  const planned=codeFor(workdayEditingTurn,workdayEditingDate);
- // workedCode mantiene el nombre histórico del campo, pero representa quién cubre la jornada.
+ // workedCode mantiene el nombre histórico del campo, pero desde V5.2.7 guarda el turno (T1–T4) del compañero que cubre la jornada.
  // Incluso si coincide con el código programado, sigue siendo un cambio válido.
  const workedCode=workdayWorkedCode;
 
@@ -17173,7 +17214,7 @@ function renderWorklogStatsDetail(mode){
   const iconClass=mode==='overtime'?' overtime':'';
   const icon=mode==='overtime'?'+H':'C';
   const mainText=r.workedCode
-   ?`Programado ${codeText(turn,planned)} · Me cubre ${codeText(turn,cover)}`
+   ?`Programado ${codeText(turn,planned)} · Me cubre ${worklogCodeLabel(cover)}`
    :`${codeText(turn,planned)} · Sin cambio`;
   const detailText=[
    r.workedCode?`Cambio ${workdayChangeHours(planned)} h automático`:'',
@@ -18097,7 +18138,7 @@ function showDetail(d){
    const planned=codeFor(active,d);
    const cover=record.workedCode||'';
    worklogTitle.textContent='Registro laboral';
-   worklogText.textContent=`Programado ${codeText(active,planned)}${record.workedCode?` · Me cubre ${codeText(active,cover)} · Cambio ${workdayChangeHours(planned)} h`:''}${record.overtime>0?` · +${worklogOvertimeText(record.overtime)} h extra${record.overtimeCode?` · ${record.overtimeCode}`:''}`:''}`;
+   worklogText.textContent=`Programado ${codeText(active,planned)}${record.workedCode?` · Me cubre ${worklogCodeLabel(cover)} · Cambio ${workdayChangeHours(planned)} h`:''}${record.overtime>0?` · +${worklogOvertimeText(record.overtime)} h extra${record.overtimeCode?` · ${record.overtimeCode}`:''}`:''}`;
    worklogNote.textContent=record.note||'';
   }else{
    worklogText.textContent='';
