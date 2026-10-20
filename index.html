@@ -14182,7 +14182,7 @@ body.light #shareModal .share-qr-url{color:#64758a}
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.3.3</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.3.4</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -14414,7 +14414,7 @@ body.light #shareModal .share-qr-url{color:#64758a}
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.3.3</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.3.4</span></span>
             </div>
           </div>
 
@@ -14941,7 +14941,7 @@ body.light #shareModal .share-qr-url{color:#64758a}
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.3.3';
+const CURRENT_VERSION='5.3.4';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -15563,7 +15563,7 @@ window.addEventListener('storage',event=>{
 });
 const SHOW_VACATIONS_KEY='turno4x4.showVacations.v1';
 
-let now=new Date(),viewYear=now.getFullYear(),viewMonth=now.getMonth(),selectedDate=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+let now=new Date(),viewYear=now.getFullYear(),viewMonth=now.getMonth(),selectedDate=calendarDate(now.getFullYear(),now.getMonth(),now.getDate());
 let agendaSelectedDate=new Date(selectedDate),agendaEditingId=null,agendaHoldTimer=null,agendaHoldOpened=false,agendaAllExpanded=false;
 let vacationEditingId=null;
 let workdayEditingDate=new Date(selectedDate),workdayEditingTurn=activeTurnKey(),workdayWorkedCode='',workdayOvertime=0,workdayOvertimeCode='',workdayActiveTab='work';
@@ -15603,12 +15603,27 @@ let shortDateFmt=new Intl.DateTimeFormat(currentLocale(),{day:'2-digit',month:'2
 let miniMonthFmt=new Intl.DateTimeFormat(currentLocale(),{month:'short'});
 
 function pad2(n){return String(n).padStart(2,'0')}
+/* ===== V5.3.4 · FECHAS HISTÓRICAS · AÑOS 1–99 SIN DESPLAZAMIENTO A 1900 =====
+   JavaScript interpreta new Date(1,...) como 1901. Esta fábrica usa setFullYear()
+   para que el año mostrado y calculado sea exactamente el elegido por el usuario. */
+function calendarDate(year,month=0,day=1,hour=0,minute=0,second=0,millisecond=0){
+ const x=new Date(0);
+ x.setFullYear(Number(year),Number(month),Number(day));
+ x.setHours(Number(hour),Number(minute),Number(second),Number(millisecond));
+ return x;
+}
+function utcCalendarDayValue(d){
+ const x=new Date(0);
+ x.setUTCFullYear(d.getFullYear(),d.getMonth(),d.getDate());
+ x.setUTCHours(0,0,0,0);
+ return x.getTime();
+}
 function dateKey(d){return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`}
-function parseDateKey(k){const [y,m,d]=k.split('-').map(Number);return new Date(y,m-1,d)}
+function parseDateKey(k){const [y,m,d]=k.split('-').map(Number);return calendarDate(y,m-1,d)}
 function mod(n,m){return((n%m)+m)%m}
-function diffDays(a,b){return Math.round((Date.UTC(a.getFullYear(),a.getMonth(),a.getDate())-Date.UTC(b.getFullYear(),b.getMonth(),b.getDate()))/86400000)}
+function diffDays(a,b){return Math.round((utcCalendarDayValue(a)-utcCalendarDayValue(b))/86400000)}
 function sameDate(a,b){return a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate()}
-function addDays(d,n){const x=new Date(d.getFullYear(),d.getMonth(),d.getDate());x.setDate(x.getDate()+n);return x}
+function addDays(d,n){const x=calendarDate(d.getFullYear(),d.getMonth(),d.getDate());x.setDate(x.getDate()+n);return x}
 function activeTurnKey(){return turnSelect.value==='T5'?turn5Select.value:turnSelect.value}
 function scheduleName(turn){return scheduleNames[turn]||turn}
 const scheduleCodeCache=new Map();
@@ -16247,7 +16262,7 @@ function statusRelief(turn,d){
 function cycleOperationalDate(now=new Date()){
  const d=new Date(now.getTime());
  if(d.getHours()<6)d.setDate(d.getDate()-1);
- return new Date(d.getFullYear(),d.getMonth(),d.getDate());
+ return calendarDate(d.getFullYear(),d.getMonth(),d.getDate());
 }
 
 function renderCycle(){
@@ -16255,7 +16270,7 @@ function renderCycle(){
  const now=new Date();
  // T5 FIJO conserva la semana calendario normal. Los turnos rotativos usan corte 06:00.
  const today=turn==='T5LV'
-  ?new Date(now.getFullYear(),now.getMonth(),now.getDate())
+  ?calendarDate(now.getFullYear(),now.getMonth(),now.getDate())
   :cycleOperationalDate(now);
  let seq=[],idx=0,title='Ciclo de 16 días';
  cycleStrip.classList.remove('weekly-calendar-align');
@@ -16893,20 +16908,20 @@ function workdayCoverBaseOptions(turn){
 }
 
 function workdayShiftInterval(turn,date){
- const d=new Date(date.getFullYear(),date.getMonth(),date.getDate());
+ const d=calendarDate(date.getFullYear(),date.getMonth(),date.getDate());
  const code=codeFor(turn,d);
  let start=null,end=null;
 
  if(code==='M'){
-  start=new Date(d.getFullYear(),d.getMonth(),d.getDate(),6,0,0,0);
-  end=new Date(d.getFullYear(),d.getMonth(),d.getDate(),18,0,0,0);
+  start=calendarDate(d.getFullYear(),d.getMonth(),d.getDate(),6,0,0,0);
+  end=calendarDate(d.getFullYear(),d.getMonth(),d.getDate(),18,0,0,0);
  }else if(code==='N'){
-  start=new Date(d.getFullYear(),d.getMonth(),d.getDate(),18,0,0,0);
+  start=calendarDate(d.getFullYear(),d.getMonth(),d.getDate(),18,0,0,0);
   const next=addDays(d,1);
-  end=new Date(next.getFullYear(),next.getMonth(),next.getDate(),6,0,0,0);
+  end=calendarDate(next.getFullYear(),next.getMonth(),next.getDate(),6,0,0,0);
  }else if(code==='D'){
-  start=new Date(d.getFullYear(),d.getMonth(),d.getDate(),7,30,0,0);
-  end=new Date(d.getFullYear(),d.getMonth(),d.getDate(),16,30,0,0);
+  start=calendarDate(d.getFullYear(),d.getMonth(),d.getDate(),7,30,0,0);
+  end=calendarDate(d.getFullYear(),d.getMonth(),d.getDate(),16,30,0,0);
  }
 
  return start&&end?{start,end,code}:null;
@@ -17035,7 +17050,7 @@ function setWorkdayOvertime(value){
 }
 
 function renderWorkdayModal(date,turn){
- workdayEditingDate=new Date(date.getFullYear(),date.getMonth(),date.getDate());
+ workdayEditingDate=calendarDate(date.getFullYear(),date.getMonth(),date.getDate());
  workdayEditingTurn=turn;
 
  const planned=codeFor(turn,workdayEditingDate);
@@ -17132,8 +17147,8 @@ function overtimePayrollPeriod(year,month){
  // Mes contable: desde el día 24 a las 00:00 (inclusive) del mes anterior
  // hasta el día 24 a las 00:00 (exclusive) del mes mostrado.
  // En términos de fechas: 24 → 23 inclusive.
- const start=new Date(year,month-1,24,0,0,0,0);
- const endExclusive=new Date(year,month,24,0,0,0,0);
+ const start=calendarDate(year,month-1,24,0,0,0,0);
+ const endExclusive=calendarDate(year,month,24,0,0,0,0);
  const end=addDays(endExclusive,-1);
  return {
   start,
@@ -17161,7 +17176,7 @@ function overtimeIntervalForRecord(record){
  if(hours<=0||!record?.date||!['M','N'].includes(record?.overtimeCode))return null;
  const d=parseDateKey(record.date);
  const startHour=record.overtimeCode==='M'?6:18;
- const start=new Date(d.getFullYear(),d.getMonth(),d.getDate(),startHour,0,0,0);
+ const start=calendarDate(d.getFullYear(),d.getMonth(),d.getDate(),startHour,0,0,0);
  const end=new Date(start.getTime()+hours*3600000);
  return {start,end};
 }
@@ -17214,8 +17229,8 @@ function overtimePayrollStats(turn,year,month){
 
 function overtimeAccountingYearStats(turn,year){
  // Los 12 meses contables de un año: 24/12 del año previo → 24/12 del año.
- const start=new Date(year-1,11,24,0,0,0,0);
- const endExclusive=new Date(year,11,24,0,0,0,0);
+ const start=calendarDate(year-1,11,24,0,0,0,0);
+ const endExclusive=calendarDate(year,11,24,0,0,0,0);
  return {
   start,
   endExclusive,
@@ -17232,25 +17247,25 @@ function holidayShiftIntervalForTurnDate(turn,d){
  let start=null,end=null;
 
  if(turn==='T5LV'){
-  start=new Date(d.getFullYear(),d.getMonth(),d.getDate(),7,30,0,0);
-  end=new Date(d.getFullYear(),d.getMonth(),d.getDate(),16,30,0,0);
+  start=calendarDate(d.getFullYear(),d.getMonth(),d.getDate(),7,30,0,0);
+  end=calendarDate(d.getFullYear(),d.getMonth(),d.getDate(),16,30,0,0);
  }else if(turn==='T5A'||turn==='T5B'||code==='M'){
-  start=new Date(d.getFullYear(),d.getMonth(),d.getDate(),6,0,0,0);
-  end=new Date(d.getFullYear(),d.getMonth(),d.getDate(),18,0,0,0);
+  start=calendarDate(d.getFullYear(),d.getMonth(),d.getDate(),6,0,0,0);
+  end=calendarDate(d.getFullYear(),d.getMonth(),d.getDate(),18,0,0,0);
  }else if(code==='N'&&workedHours===12){
   // Feriado completo en N: se trata como la jornada 18:00–06:00.
   // Esto permite partir correctamente una N del día 23 en 6 h + 6 h.
-  start=new Date(d.getFullYear(),d.getMonth(),d.getDate(),18,0,0,0);
-  end=new Date(d.getFullYear(),d.getMonth(),d.getDate()+1,6,0,0,0);
+  start=calendarDate(d.getFullYear(),d.getMonth(),d.getDate(),18,0,0,0);
+  end=calendarDate(d.getFullYear(),d.getMonth(),d.getDate()+1,6,0,0,0);
  }else if(code==='N'&&workedHours===6){
   if(scheduled==='N'){
    // Primera noche: el feriado toma 18:00–24:00.
-   start=new Date(d.getFullYear(),d.getMonth(),d.getDate(),18,0,0,0);
-   end=new Date(d.getFullYear(),d.getMonth(),d.getDate()+1,0,0,0,0);
+   start=calendarDate(d.getFullYear(),d.getMonth(),d.getDate(),18,0,0,0);
+   end=calendarDate(d.getFullYear(),d.getMonth(),d.getDate()+1,0,0,0,0);
   }else{
    // Cola de la última noche: el feriado toma 00:00–06:00.
-   start=new Date(d.getFullYear(),d.getMonth(),d.getDate(),0,0,0,0);
-   end=new Date(d.getFullYear(),d.getMonth(),d.getDate(),6,0,0,0);
+   start=calendarDate(d.getFullYear(),d.getMonth(),d.getDate(),0,0,0,0);
+   end=calendarDate(d.getFullYear(),d.getMonth(),d.getDate(),6,0,0,0);
   }
  }else{
   return null;
@@ -17341,7 +17356,7 @@ function renderWorklogStats(){
  const monthLicenses=licenseStatsForPeriod(turn,viewYear,viewMonth);
  const yearLicenses=licenseStatsForPeriod(turn,viewYear,null);
 
- $('#worklogStatsPeriod').textContent=cap(monthFmt.format(new Date(viewYear,viewMonth,1)));
+ $('#worklogStatsPeriod').textContent=cap(monthFmt.format(calendarDate(viewYear,viewMonth,1)));
  $('#worklogChangesMonth').textContent=monthStats.changes;
  $('#worklogChangesYear').textContent=yearStats.changes;
 
@@ -17361,7 +17376,7 @@ function renderWorklogStats(){
 function renderWorklogStatsDetail(mode){
  worklogStatsDetailMode=mode;
  const turn=activeTurnKey();
- const calendarPeriodLabel=cap(monthFmt.format(new Date(viewYear,viewMonth,1)));
+ const calendarPeriodLabel=cap(monthFmt.format(calendarDate(viewYear,viewMonth,1)));
  const overtimePeriodLabel=overtimePayrollPeriodLabel(viewYear,viewMonth);
  const periodLabel=(mode==='overtime'||mode==='holidays')?overtimePeriodLabel:calendarPeriodLabel;
  const titleIcon=$('#worklogStatsHeadIcon');
@@ -17574,8 +17589,8 @@ function licenseWorkDaysCount(l,turn=l.turn){
 }
 
 function licenseStatsForPeriod(turn,year,month=null){
- const periodStart=month===null?new Date(year,0,1):new Date(year,month,1);
- const periodEnd=month===null?new Date(year,11,31):new Date(year,month+1,0);
+ const periodStart=month===null?calendarDate(year,0,1):calendarDate(year,month,1);
+ const periodEnd=month===null?calendarDate(year,11,31):calendarDate(year,month+1,0);
  const startKey=dateKey(periodStart),endKey=dateKey(periodEnd);
  const periods=loadLicenseData().map(normalizeLicense).filter(l=>
   l.turn===turn&&l.start&&l.end&&l.end>=startKey&&l.start<=endKey
@@ -17994,13 +18009,13 @@ function renderCalendar(){
  localStorage.setItem('turno4x4.turno',turnSelect.value);
  localStorage.setItem('turno4x4.turno5',turn5Select.value);
 
- monthName.textContent=monthFmt.format(new Date(viewYear,viewMonth,1)).toUpperCase();
+ monthName.textContent=monthFmt.format(calendarDate(viewYear,viewMonth,1)).toUpperCase();
  selectedInfo.textContent=isCommonCalendarView()
   ? 'CALENDARIO COMÚN · deslizar para cambiar mes'
   : `${scheduleName(turn)} · deslizar para cambiar mes`;
 
  const fragment=document.createDocumentFragment();
- const start=new Date(viewYear,viewMonth,1-new Date(viewYear,viewMonth,1).getDay());
+ const start=calendarDate(viewYear,viewMonth,1-calendarDate(viewYear,viewMonth,1).getDay());
 
  for(let i=0;i<42;i++){
   const d=addDays(start,i),c=codeFor(turn,d),cell=document.createElement('div');
@@ -18135,7 +18150,7 @@ function attachDayGestures(cell,d){
 
   // Only a short press updates the lower detail panel.
   if(elapsed < 450){
-   selectedDate=new Date(d.getFullYear(),d.getMonth(),d.getDate());
+   selectedDate=calendarDate(d.getFullYear(),d.getMonth(),d.getDate());
    vibrate(20);
    showDetail(d);
    renderCalendar();
@@ -18169,6 +18184,8 @@ function shiftViewMonth(delta){
  viewMonth+=delta;
  if(viewMonth>11){viewMonth=0;viewYear++}
  if(viewMonth<0){viewMonth=11;viewYear--}
+ if(viewYear<1){viewYear=1;viewMonth=0}
+ if(viewYear>9999){viewYear=9999;viewMonth=11}
 }
 
 function snapCalendarToCenter(){
@@ -18477,7 +18494,7 @@ function clearAgendaForm(){
  if(agendaFormMode){agendaFormMode.textContent='NUEVO EVENTO';agendaFormMode.classList.remove('editing')}
 }
 function openAgenda(d){
- agendaSelectedDate=new Date(d.getFullYear(),d.getMonth(),d.getDate());
+ agendaSelectedDate=calendarDate(d.getFullYear(),d.getMonth(),d.getDate());
  agendaAllExpanded=false;
  clearAgendaForm();
  renderAgenda();
@@ -18907,21 +18924,21 @@ function renderYear(){
  for(let m=0;m<12;m++){
   const box=document.createElement('div');
   box.className='mini-month';
-  box.innerHTML=`<h3>${miniMonthFmt.format(new Date(yearViewYear,m,1))}</h3>`;
+  box.innerHTML=`<h3>${miniMonthFmt.format(calendarDate(yearViewYear,m,1))}</h3>`;
 
   const days=document.createElement('div');
   days.className='mini-days';
 
-  const firstDay=new Date(yearViewYear,m,1).getDay();
+  const firstDay=calendarDate(yearViewYear,m,1).getDay();
   for(let b=0;b<firstDay;b++){
    const blank=document.createElement('i');
    blank.className='mini-day blank';
    days.appendChild(blank);
   }
 
-  const last=new Date(yearViewYear,m+1,0).getDate();
+  const last=calendarDate(yearViewYear,m+1,0).getDate();
   for(let day=1;day<=last;day++){
-   const dt=new Date(yearViewYear,m,day);
+   const dt=calendarDate(yearViewYear,m,day);
    const c=codeFor(activeTurn,dt);
    const el=document.createElement('i');
    const commonView=isCommonCalendarView();
@@ -18948,24 +18965,24 @@ function renderYear(){
  grid.replaceChildren(fragment);
 }
 
-function countsForPeriod(turn,y,m=null){const start=m===null?new Date(y,0,1):new Date(y,m,1),end=m===null?new Date(y+1,0,1):new Date(y,m+1,1),r={M:0,N:0,D:0,F:0};for(let d=new Date(start);d<end;d=addDays(d,1))r[codeFor(turn,d)]++;return r}
+function countsForPeriod(turn,y,m=null){const start=m===null?calendarDate(y,0,1):calendarDate(y,m,1),end=m===null?calendarDate(y+1,0,1):calendarDate(y,m+1,1),r={M:0,N:0,D:0,F:0};for(let d=new Date(start);d<end;d=addDays(d,1))r[codeFor(turn,d)]++;return r}
 
 function lastWeekdayOfMonth(year,month){
- let d=new Date(year,month+1,0);
+ let d=calendarDate(year,month+1,0);
  while(d.getDay()===0||d.getDay()===6)d.setDate(d.getDate()-1);
- return new Date(d.getFullYear(),d.getMonth(),d.getDate());
+ return calendarDate(d.getFullYear(),d.getMonth(),d.getDate());
 }
 function nextSalaryDate(from=new Date()){
- const today=new Date(from.getFullYear(),from.getMonth(),from.getDate());
+ const today=calendarDate(from.getFullYear(),from.getMonth(),from.getDate());
  let payday=lastWeekdayOfMonth(today.getFullYear(),today.getMonth());
  if(today>payday){
-  const n=new Date(today.getFullYear(),today.getMonth()+1,1);
+  const n=calendarDate(today.getFullYear(),today.getMonth()+1,1);
   payday=lastWeekdayOfMonth(n.getFullYear(),n.getMonth());
  }
  return payday;
 }
 function salaryCountdown(from=new Date()){
- const today=new Date(from.getFullYear(),from.getMonth(),from.getDate());
+ const today=calendarDate(from.getFullYear(),from.getMonth(),from.getDate());
  const payday=nextSalaryDate(today);
  return {payday,days:Math.max(0,diffDays(payday,today))};
 }
@@ -18979,8 +18996,8 @@ function formatRemainingHMS(ms){
 }
 function relativeDayWord(d){
  const today=new Date();
- const a=new Date(today.getFullYear(),today.getMonth(),today.getDate());
- const b=new Date(d.getFullYear(),d.getMonth(),d.getDate());
+ const a=calendarDate(today.getFullYear(),today.getMonth(),today.getDate());
+ const b=calendarDate(d.getFullYear(),d.getMonth(),d.getDate());
  const diff=diffDays(b,a);
  if(diff===0)return 'Hoy';
  if(diff===1)return 'Mañana';
@@ -18988,16 +19005,16 @@ function relativeDayWord(d){
 }
 function activeTurnInfo(turn,nowDate){
  const now=new Date(nowDate);
- const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+ const today=calendarDate(now.getFullYear(),now.getMonth(),now.getDate());
  const yesterday=addDays(today,-1);
- const sixToday=new Date(today.getFullYear(),today.getMonth(),today.getDate(),6,0,0,0);
- const sixTomorrow=new Date(today.getFullYear(),today.getMonth(),today.getDate()+1,6,0,0,0);
- const sevenThirtyToday=new Date(today.getFullYear(),today.getMonth(),today.getDate(),7,30,0,0);
- const sixteenThirtyToday=new Date(today.getFullYear(),today.getMonth(),today.getDate(),16,30,0,0);
- const eighteenToday=new Date(today.getFullYear(),today.getMonth(),today.getDate(),18,0,0,0);
+ const sixToday=calendarDate(today.getFullYear(),today.getMonth(),today.getDate(),6,0,0,0);
+ const sixTomorrow=calendarDate(today.getFullYear(),today.getMonth(),today.getDate()+1,6,0,0,0);
+ const sevenThirtyToday=calendarDate(today.getFullYear(),today.getMonth(),today.getDate(),7,30,0,0);
+ const sixteenThirtyToday=calendarDate(today.getFullYear(),today.getMonth(),today.getDate(),16,30,0,0);
+ const eighteenToday=calendarDate(today.getFullYear(),today.getMonth(),today.getDate(),18,0,0,0);
 
  if(now<sixToday && codeFor(turn,yesterday)==='N'){
-  return {active:true,code:'N',end:sixToday,start:new Date(yesterday.getFullYear(),yesterday.getMonth(),yesterday.getDate(),18,0,0,0)};
+  return {active:true,code:'N',end:sixToday,start:calendarDate(yesterday.getFullYear(),yesterday.getMonth(),yesterday.getDate(),18,0,0,0)};
  }
  if(now>=sevenThirtyToday && now<sixteenThirtyToday && codeFor(turn,today)==='D'){
   return {active:true,code:'D',end:sixteenThirtyToday,start:sevenThirtyToday};
@@ -19012,20 +19029,20 @@ function activeTurnInfo(turn,nowDate){
 }
 function nextWorkStart(turn,nowDate){
  const now=new Date(nowDate);
- const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+ const today=calendarDate(now.getFullYear(),now.getMonth(),now.getDate());
  for(let i=0;i<=20;i++){
   const d=addDays(today,i);
   const c=codeFor(turn,d);
   if(c==='D'){
-   const start=new Date(d.getFullYear(),d.getMonth(),d.getDate(),7,30,0,0);
+   const start=calendarDate(d.getFullYear(),d.getMonth(),d.getDate(),7,30,0,0);
    if(start>now)return {code:'D',start};
   }
   if(c==='M'){
-   const start=new Date(d.getFullYear(),d.getMonth(),d.getDate(),6,0,0,0);
+   const start=calendarDate(d.getFullYear(),d.getMonth(),d.getDate(),6,0,0,0);
    if(start>now)return {code:'M',start};
   }
   if(c==='N'){
-   const start=new Date(d.getFullYear(),d.getMonth(),d.getDate(),18,0,0,0);
+   const start=calendarDate(d.getFullYear(),d.getMonth(),d.getDate(),18,0,0,0);
    if(start>now)return {code:'N',start};
   }
  }
@@ -19139,8 +19156,8 @@ function holidayExistsForTurnOnDate(d,turn){
 function holidayWorkDetailsForTurn(year,turn){
  const details=[];
  const holidayMap=loadHolidayYear(year);
- const start=new Date(year,0,1);
- const end=new Date(year+1,0,1);
+ const start=calendarDate(year,0,1);
+ const end=calendarDate(year+1,0,1);
 
  for(let d=new Date(start);d<end;d=addDays(d,1)){
   const key=dateKey(d);
@@ -19297,7 +19314,7 @@ function renderStats(){
  ensureHolidayYear(viewYear);
  renderHolidayWorkStats(viewYear);
  renderWorklogStats();
- $('#statsSubtitle').textContent=`${scheduleName(t)} · ${monthFmt.format(new Date(viewYear,viewMonth,1))}`;
+ $('#statsSubtitle').textContent=`${scheduleName(t)} · ${monthFmt.format(calendarDate(viewYear,viewMonth,1))}`;
  if(t==='T5LV')$('#statsCards').innerHTML=`<div class="stat-card stat-morning"><i>☀</i><small>Días T5</small><b>${m.D}</b></div><div class="stat-card stat-off"><i>▦</i><small>Francos</small><b>${m.F}</b></div><div class="stat-card stat-hours"><i>◷</i><small>Horas mes</small><b>${hours}</b></div><div class="stat-card stat-cycle"><i>↻</i><small>Jornada</small><b>9 h</b></div>`;
  else if(t==='T5A'||t==='T5B')$('#statsCards').innerHTML=`<div class="stat-card stat-morning"><i>☀</i><small>Mañanas</small><b>${m.M}</b></div><div class="stat-card stat-off"><i>▦</i><small>Francos</small><b>${m.F}</b></div><div class="stat-card stat-hours"><i>◷</i><small>Horas mes</small><b>${hours}</b></div><div class="stat-card stat-cycle"><i>↻</i><small>Ciclo</small><b>4×4</b></div>`;
  else $('#statsCards').innerHTML=`<div class="stat-card stat-morning"><i>☀</i><small>Mañanas</small><b>${m.M}</b></div><div class="stat-card stat-night"><i>◒</i><small>Noches</small><b>${m.N}</b></div><div class="stat-card stat-off"><i>▦</i><small>Francos</small><b>${m.F}</b></div><div class="stat-card stat-hours"><i>◷</i><small>Horas mes</small><b>${hours}</b></div>`;
@@ -19389,7 +19406,7 @@ agendaSheet.addEventListener('click',e=>{
 });
 
 $('#prevBtn').onclick=()=>animateMonthButton(-1);$('#nextBtn').onclick=()=>animateMonthButton(1);
-$('#todayBtn').onclick=()=>{const d=new Date();viewYear=d.getFullYear();viewMonth=d.getMonth();selectedDate=new Date(d.getFullYear(),d.getMonth(),d.getDate());renderAll();scheduleBelowFoldLayout()};
+$('#todayBtn').onclick=()=>{const d=new Date();viewYear=d.getFullYear();viewMonth=d.getMonth();selectedDate=calendarDate(d.getFullYear(),d.getMonth(),d.getDate());renderAll();scheduleBelowFoldLayout()};
 turnSelect.onchange=()=>{
  updateTurn5Visibility();
  syncTurnPulseText();
