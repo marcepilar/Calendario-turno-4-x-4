@@ -13053,6 +13053,53 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
   }
 }
 
+
+
+/* ===== V5.2.0 · JORNADA · HISTORIAL FIJO EN RECUADRO INFERIOR =====
+   La ventana conserva siempre su altura. Las jornadas guardadas ya no
+   hacen crecer la pestaña: el historial ocupa el espacio inferior
+   disponible y, cuando hay más registros, desplaza sólo su lista. */
+#workdayModal #workdayPane{
+  overflow:hidden;
+  padding-right:0;
+}
+#workdayModal #workdayPane .workday-list-panel{
+  flex:1 1 0;
+  min-height:108px;
+  max-height:none;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+#workdayModal #workdayPane .workday-list-head{
+  flex:0 0 auto;
+}
+#workdayModal #workdayPane .workday-saved-list{
+  flex:1 1 auto;
+  min-height:0;
+  max-height:none;
+  overflow-y:auto;
+  overflow-x:hidden;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  align-content:start;
+  scrollbar-gutter:stable;
+}
+#workdayModal #workdayPane .workday-footnote{
+  flex:0 0 auto;
+}
+@media(max-height:760px){
+  #workdayModal #workdayPane .workday-list-panel{
+    min-height:82px;
+    margin-top:5px;
+  }
+}
+@media(max-height:650px){
+  #workdayModal #workdayPane .workday-list-panel{
+    min-height:66px;
+  }
+}
+
 </style>
 </head>
 <body class="notranslate">
@@ -13441,7 +13488,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">4.11.8</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.2.0</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -13673,7 +13720,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.1.9</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.2.0</span></span>
             </div>
           </div>
 
@@ -14199,7 +14246,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.1.9';
+const CURRENT_VERSION='5.2.0';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
