@@ -14093,7 +14093,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.2.8</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.2.9</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -14246,7 +14246,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
         <div class="help-section-title"><span>6</span><div><b>Jornada</b><small>Cambios de turno y horas extra</small></div></div>
         <div class="help-card">
           <p><strong>Abrir:</strong> podés tocar un día y abrir <strong>JORNADA</strong> desde el detalle, o usar el botón <strong>J</strong> de la cabecera para abrir directamente la Jornada del día seleccionado.</p>
-          <p>La app muestra tu turno <strong>Programado</strong>. Si hacés un cambio, ese día no venís y elegís el turno del compañero que te cubre. Para T1/T2 se ofrecen T3/T4; para T3/T4 se ofrecen T1/T2. En T5 FIJO quedan disponibles T1, T2, T3 y T4. En T5 UNO se agrega T5 DOS, y en T5 DOS se agrega T5 UNO. El ciclo futuro no se modifica.</p>
+          <p>La app muestra tu turno <strong>Programado</strong>. Si hacés un cambio, ese día no venís y elegís el turno del compañero que te cubre. En T1–T4 la app analiza la rotación de esa fecha y oculta automáticamente al compañero que no puede cubrirte sin encadenar jornadas. Ejemplo: quien termina su última noche a las 06:00 no puede cubrir una mañana que empieza a las 06:00; del mismo modo, quien empieza su primera mañana a las 06:00 no puede cubrir la noche anterior. Se exige un margen mínimo de 12 h entre la jornada propia y la cobertura. T5 UNO y T5 DOS aplican la misma validación para T1–T4 y mantienen disponible la pareja T5 opuesta cuando corresponde. T5 FIJO conserva T1, T2, T3 y T4 disponibles. El ciclo futuro no se modifica.</p>
           <p><strong>Horas cubiertas:</strong> se calculan con tu jornada programada de ese día, no con el turno del compañero que te cubre. Los turnos rotativos son de 12 horas; T5 FIJO = 9 horas; un franco programado = 0 horas.</p>
           <p><strong>Jornadas guardadas:</strong> la insignia identifica el tipo de registro: <strong>C</strong> = cambio de turno, <strong>EXT</strong> = horas extra y <strong>J</strong> = jornada/nota. Si una fecha tiene cambio y extras, se muestran ambas insignias.</p>
           <p><strong>Horas extra:</strong> son independientes del cambio. Los botones rápidos cargan 6, 8, 10 o 12 hs; + y − ajustan de a 0,5 h. Cuando cargás extras, elegí si fueron turno M o turno N.</p>
@@ -14325,7 +14325,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.2.8</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.2.9</span></span>
             </div>
           </div>
 
@@ -14383,7 +14383,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
         <div class="workday-section-head">
           <div>
             <b>Cambio de turno</b>
-            <small>Ese día no venís · elegí el turno del compañero que te cubre</small>
+            <small>Ese día no venís · se muestran sólo los turnos que pueden cubrirte</small>
           </div>
           <span id="workdayChangeState">SIN CAMBIO</span>
         </div>
@@ -14852,7 +14852,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.2.8';
+const CURRENT_VERSION='5.2.9';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -16683,17 +16683,77 @@ function renderWorkdaySavedList(){
 }
 
 
-function workdayCoverTurnOptions(turn){
- // T1 y T2 se cubren con compañeros de T3/T4.
+const WORKDAY_COVER_MIN_REST_MS=12*60*60*1000;
+
+function workdayCoverBaseOptions(turn){
+ // Grupos complementarios del 4×4.
  if(turn==='T1'||turn==='T2')return ['T3','T4'];
- // T3 y T4 se cubren con compañeros de T1/T2.
  if(turn==='T3'||turn==='T4')return ['T1','T2'];
- // T5 FIJO puede ser cubierto por cualquiera de los cuatro turnos rotativos.
+ // T5 FIJO conserva los cuatro turnos disponibles, según la regla acordada.
  if(turn==='T5LV')return ['T1','T2','T3','T4'];
- // En T5 4×4 también se habilita la pareja opuesta: UNO ↔ DOS.
- if(turn==='T5B')return ['T1','T2','T3','T4','T5A']; // T5 UNO → agrega T5 DOS
- if(turn==='T5A')return ['T1','T2','T3','T4','T5B']; // T5 DOS → agrega T5 UNO
+ // T5 4×4: T1–T4 + la pareja T5 opuesta.
+ if(turn==='T5B')return ['T1','T2','T3','T4','T5A']; // T5 UNO → T5 DOS
+ if(turn==='T5A')return ['T1','T2','T3','T4','T5B']; // T5 DOS → T5 UNO
  return [];
+}
+
+function workdayShiftInterval(turn,date){
+ const d=new Date(date.getFullYear(),date.getMonth(),date.getDate());
+ const code=codeFor(turn,d);
+ let start=null,end=null;
+
+ if(code==='M'){
+  start=new Date(d.getFullYear(),d.getMonth(),d.getDate(),6,0,0,0);
+  end=new Date(d.getFullYear(),d.getMonth(),d.getDate(),18,0,0,0);
+ }else if(code==='N'){
+  start=new Date(d.getFullYear(),d.getMonth(),d.getDate(),18,0,0,0);
+  const next=addDays(d,1);
+  end=new Date(next.getFullYear(),next.getMonth(),next.getDate(),6,0,0,0);
+ }else if(code==='D'){
+  start=new Date(d.getFullYear(),d.getMonth(),d.getDate(),7,30,0,0);
+  end=new Date(d.getFullYear(),d.getMonth(),d.getDate(),16,30,0,0);
+ }
+
+ return start&&end?{start,end,code}:null;
+}
+
+function workdayCanCoverTurn(candidateTurn,targetTurn,date){
+ const target=workdayShiftInterval(targetTurn,date);
+ if(!target)return false;
+
+ // Revisa los turnos propios del posible reemplazo antes, durante y después.
+ // Se exige un descanso mínimo de 12 h para evitar encadenar dos jornadas de 12 h.
+ for(let delta=-2;delta<=2;delta++){
+  const own=workdayShiftInterval(candidateTurn,addDays(date,delta));
+  if(!own)continue;
+
+  // Superposición directa con la jornada que pretende cubrir.
+  if(own.start<target.end&&own.end>target.start)return false;
+
+  // Turno propio inmediatamente anterior: debe haber al menos 12 h de descanso.
+  if(own.end<=target.start&&target.start-own.end<WORKDAY_COVER_MIN_REST_MS)return false;
+
+  // Turno propio inmediatamente posterior: debe haber al menos 12 h de descanso.
+  if(own.start>=target.end&&own.start-target.end<WORKDAY_COVER_MIN_REST_MS)return false;
+ }
+
+ return true;
+}
+
+function workdayCoverTurnOptions(turn,date=workdayEditingDate){
+ const base=workdayCoverBaseOptions(turn);
+ if(!date)return base;
+
+ const planned=codeFor(turn,date);
+ // En un franco no hay una jornada propia que cubrir.
+ if(planned==='F')return [];
+
+ // T5 FIJO mantiene disponibles T1–T4 como se definió anteriormente.
+ if(turn==='T5LV')return base;
+
+ // T1–T4 y T5 UNO/DOS se filtran por la rotación real de la fecha:
+ // sin superposición y con un mínimo de 12 h antes y después.
+ return base.filter(candidate=>workdayCanCoverTurn(candidate,turn,date));
 }
 
 function syncWorkdayCoverTurnButtons(){
@@ -16702,7 +16762,7 @@ function syncWorkdayCoverTurnButtons(){
  const buttons=$$('#workdayShiftChoices [data-work-code]');
  const clearBtn=buttons.find(btn=>btn.dataset.workCode==='')||buttons[0];
  const optionBtns=buttons.filter(btn=>btn!==clearBtn);
- const options=workdayCoverTurnOptions(workdayEditingTurn);
+ const options=workdayCoverTurnOptions(workdayEditingTurn,workdayEditingDate);
 
  if(clearBtn){
   clearBtn.hidden=false;
@@ -16726,7 +16786,7 @@ function syncWorkdayCoverTurnButtons(){
 
 function setWorkdayWorkedCode(code){
  const planned=codeFor(workdayEditingTurn,workdayEditingDate);
- const allowed=workdayCoverTurnOptions(workdayEditingTurn);
+ const allowed=workdayCoverTurnOptions(workdayEditingTurn,workdayEditingDate);
  // Conserva códigos antiguos sólo al abrir backups/registros previos; las selecciones nuevas son T1–T4 y, para T5 4×4, la pareja T5 opuesta.
  const legacy=['M','N','F','D'].includes(code);
  const normalized=(allowed.includes(code)||legacy)?code:'';
