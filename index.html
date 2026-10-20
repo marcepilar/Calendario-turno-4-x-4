@@ -14093,7 +14093,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.2.5</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.2.6</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -14246,8 +14246,8 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
         <div class="help-section-title"><span>6</span><div><b>Jornada</b><small>Cambios de turno y horas extra</small></div></div>
         <div class="help-card">
           <p><strong>Abrir:</strong> podés tocar un día y abrir <strong>JORNADA</strong> desde el detalle, o usar el botón <strong>J</strong> de la cabecera para abrir directamente la Jornada del día seleccionado.</p>
-          <p>La app muestra el turno <strong>Programado</strong>. Si hubo cambio, elegí M, N, F o T5. El ciclo futuro no se modifica.</p>
-          <p><strong>Duración automática:</strong> M/N y turnos rotativos de 12 h = 12 horas; T5 FIJO = 9 horas; Franco = 0 horas.</p>
+          <p>La app muestra tu turno <strong>Programado</strong>. Si hacés un cambio, ese día no venís: elegí M, N, F o T5 según el turno del compañero que te cubre. Podés elegir incluso el mismo código que tenías programado. El ciclo futuro no se modifica.</p>
+          <p><strong>Duración automática:</strong> se calcula con tu turno programado de ese día, no con el turno del compañero que te cubre. M/N y turnos rotativos de 12 h = 12 horas; T5 FIJO = 9 horas; Franco = 0 horas.</p>
           <p><strong>Jornadas guardadas:</strong> la insignia identifica el tipo de registro: <strong>C</strong> = cambio de turno, <strong>EXT</strong> = horas extra y <strong>J</strong> = jornada/nota. Si una fecha tiene cambio y extras, se muestran ambas insignias.</p>
           <p><strong>Horas extra:</strong> son independientes del cambio. Los botones rápidos cargan 6, 8, 10 o 12 hs; + y − ajustan de a 0,5 h. Cuando cargás extras, elegí si fueron turno M o turno N.</p>
           <p>Podés agregar una nota y eliminar el registro cuando sea necesario.</p>
@@ -14325,7 +14325,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.2.5</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.2.6</span></span>
             </div>
           </div>
 
@@ -14383,7 +14383,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
         <div class="workday-section-head">
           <div>
             <b>Cambio de turno</b>
-            <small>El ciclo original nunca se modifica</small>
+            <small>Ese día no venís · elegí el turno de quien te cubre</small>
           </div>
           <span id="workdayChangeState">SIN CAMBIO</span>
         </div>
@@ -14395,7 +14395,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
           <button type="button" data-work-code="D">T5 · 07:30</button>
         </div>
         <div class="workday-change-duration">
-          <span>Duración del cambio</span>
+          <span>Horas cubiertas</span>
           <b id="workdayChangeDuration">—</b>
           <small>AUTOMÁTICA</small>
         </div>
@@ -14851,7 +14851,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.2.5';
+const CURRENT_VERSION='5.2.6';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -15190,6 +15190,26 @@ Object.assign(I18N.pt,{
   "Cuando cargás extras, elegí si fueron turno M o turno N.":"Ao registrar horas extras, escolha se foram do turno M ou N."
 });
 
+Object.assign(I18N.en,{
+  "Ese día no venís · elegí el turno de quien te cubre":"You don't work that day · choose the shift of the coworker covering you",
+  "Horas cubiertas":"Covered hours",
+  "Me cubre:":"Covered by:",
+  "Me cubre":"Covered by",
+  "CUBRE":"COVER",
+  "La app muestra tu turno Programado. Si hacés un cambio, ese día no venís: elegí M, N, F o T5 según el turno del compañero que te cubre. Podés elegir incluso el mismo código que tenías programado. El ciclo futuro no se modifica.":"The app shows your scheduled shift. If you make a shift change, you do not work that day: choose M, N, F or T5 according to the shift of the coworker covering you. You can even choose the same code you were scheduled for. Your future cycle is not modified.",
+  "Duración automática: se calcula con tu turno programado de ese día, no con el turno del compañero que te cubre. M/N y turnos rotativos de 12 h = 12 horas; T5 FIJO = 9 horas; Franco = 0 horas.":"Automatic duration: it is calculated from your scheduled shift for that day, not from the shift of the coworker covering you. M/N and 12-hour rotating shifts = 12 hours; T5 FIXED = 9 hours; Off = 0 hours."
+});
+Object.assign(I18N.pt,{
+  "Ese día no venís · elegí el turno de quien te cubre":"Nesse dia você não trabalha · escolha o turno de quem cobre você",
+  "Horas cubiertas":"Horas cobertas",
+  "Me cubre:":"Me cobre:",
+  "Me cubre":"Me cobre",
+  "CUBRE":"COBRE",
+  "La app muestra tu turno Programado. Si hacés un cambio, ese día no venís: elegí M, N, F o T5 según el turno del compañero que te cubre. Podés elegir incluso el mismo código que tenías programado. El ciclo futuro no se modifica.":"O app mostra seu turno programado. Se você fizer uma troca, não trabalha nesse dia: escolha M, N, F ou T5 conforme o turno do colega que cobre você. Você pode inclusive escolher o mesmo código que estava programado. O ciclo futuro não é alterado.",
+  "Duración automática: se calcula con tu turno programado de ese día, no con el turno del compañero que te cubre. M/N y turnos rotativos de 12 h = 12 horas; T5 FIJO = 9 horas; Franco = 0 horas.":"A duração automática é calculada pelo seu turno programado nesse dia, não pelo turno do colega que cobre você. M/N e turnos rotativos de 12 h = 12 horas; T5 FIXO = 9 horas; Folga = 0 horas."
+});
+
+
 function currentLocale(){return LANGUAGE_LOCALES[appLanguage]||'es-AR'}
 function tr(text){
  const source=String(text??'');
@@ -15207,7 +15227,7 @@ function translateRuntimeText(text){
  const replacements=en?[
   ['CALENDARIO COMÚN','REGULAR CALENDAR'],['T5 FIJO','T5 FIXED'],['T5 UNO','T5 ONE'],['T5 DOS','T5 TWO'],
   ['deslizar para cambiar mes','swipe to change month'],['Próximo ingreso:','Next shift:'],['Hoy: día','Today: day'],[' de 16',' of 16'],
-  ['Colores ·','Colors ·'],['perfil Turno 5','Shift 5 profile'],['Programado:','Scheduled:'],['Trabajado:','Worked:'],
+  ['Colores ·','Colors ·'],['perfil Turno 5','Shift 5 profile'],['Programado:','Scheduled:'],['Me cubre:','Covered by:'],['Me cubre','Covered by'],['Trabajado:','Worked:'],
   ['Mañana','Morning'],['Noche','Night'],['Franco','Off'],['Diurno','Day shift'],['Libre','Off'],
   ['Todo el día','All day'],['Sin recordatorio','No reminder'],['No repetir','Do not repeat'],['Todos los días','Every day'],['Cada semana','Every week'],['Cada año','Every year'],
   ['Todos mis días T5 FIJO','All my T5 FIXED days'],['Todos mis días M','All my M days'],['Todos mis días N','All my N days'],['Todos mis francos','All my days off'],
@@ -15219,7 +15239,7 @@ function translateRuntimeText(text){
  ]:[
   ['CALENDARIO COMÚN','CALENDÁRIO COMUM'],['T5 FIJO','T5 FIXO'],['T5 UNO','T5 UM'],['T5 DOS','T5 DOIS'],
   ['deslizar para cambiar mes','deslize para mudar o mês'],['Próximo ingreso:','Próxima entrada:'],['Hoy: día','Hoje: dia'],[' de 16',' de 16'],
-  ['Colores ·','Cores ·'],['perfil Turno 5','perfil Turno 5'],['Programado:','Programado:'],['Trabajado:','Trabalhado:'],
+  ['Colores ·','Cores ·'],['perfil Turno 5','perfil Turno 5'],['Programado:','Programado:'],['Me cubre:','Me cobre:'],['Me cubre','Me cobre'],['Trabajado:','Trabalhado:'],
   ['Mañana','Manhã'],['Noche','Noite'],['Franco','Folga'],['Diurno','Diurno'],['Libre','Livre'],
   ['Todo el día','O dia todo'],['Sin recordatorio','Sem lembrete'],['No repetir','Não repetir'],['Todos los días','Todos os dias'],['Cada semana','Toda semana'],['Cada año','Todo ano'],
   ['Todos mis días T5 FIJO','Todos os meus dias T5 FIXO'],['Todos mis días M','Todos os meus dias M'],['Todos mis días N','Todos os meus dias N'],['Todos mis francos','Todas as minhas folgas'],
@@ -16536,7 +16556,7 @@ function overtimeTypeSplitText(stats){
 function worklogSummaryParts(record){
  const parts=[];
  if(record.workedCode){
-  parts.push(`Cambio: ${worklogCodeLabel(record.workedCode)}`);
+  parts.push(`Me cubre: ${worklogCodeLabel(record.workedCode)}`);
  }
  if(Number(record.overtime)>0){
   parts.push(`Horas extra: ${worklogOvertimeText(record.overtime)} h${record.overtimeCode?` · ${worklogOvertimeTypeLabel(record.overtimeCode)}`:''}`);
@@ -16622,7 +16642,7 @@ function renderWorkdaySavedList(){
     ${workdaySavedBadgeMarkup(r)}
     <div class="workday-saved-copy">
       <b>${escapeHtml(cap(worklogDateFmt.format(d)))}</b>
-      <span>Programado: ${escapeHtml(codeText(turn,planned))}${r.workedCode?` · Trabajado: ${escapeHtml(codeText(turn,r.workedCode))}`:''}</span>
+      <span>Programado: ${escapeHtml(codeText(turn,planned))}${r.workedCode?` · Me cubre: ${escapeHtml(codeText(turn,r.workedCode))}`:''}</span>
       <small>${summary.map(escapeHtml).join(' · ')}</small>
     </div>
     <div class="workday-saved-actions">
@@ -16662,19 +16682,21 @@ function renderWorkdaySavedList(){
 
 function setWorkdayWorkedCode(code){
  const planned=codeFor(workdayEditingTurn,workdayEditingDate);
- let normalized=['M','N','F','D'].includes(code)?code:'';
- if(normalized===planned)normalized='';
+ const normalized=['M','N','F','D'].includes(code)?code:'';
+ // workedCode se conserva como nombre interno por compatibilidad con backups anteriores.
+ // Desde V5.2.6 representa el turno del compañero que cubre al usuario, NO el turno trabajado por el usuario.
  workdayWorkedCode=normalized;
  $$('#workdayShiftChoices [data-work-code]').forEach(btn=>{
   btn.classList.toggle('selected',btn.dataset.workCode===workdayWorkedCode);
  });
  $('#workdayChangeState').textContent=workdayWorkedCode
-  ?worklogCodeLabel(workdayWorkedCode)
+  ?`${tr('CUBRE')} · ${workdayWorkedCode}`
   :'SIN CAMBIO';
  const duration=$('#workdayChangeDuration');
  if(duration){
+  // Las horas cubiertas dependen de la jornada programada del usuario.
   duration.textContent=workdayWorkedCode
-   ?`${workdayChangeHours(workdayWorkedCode)} h`
+   ?`${workdayChangeHours(planned)} h`
    :'—';
  }
 }
@@ -16742,10 +16764,9 @@ function openWorkday(date=selectedDate,turn=activeTurnKey(),tab='work'){
 
 function saveWorkdayRecord(){
  const planned=codeFor(workdayEditingTurn,workdayEditingDate);
- let workedCode=workdayWorkedCode;
-
- // Elegir exactamente el turno programado equivale a "sin cambio".
- if(workedCode===planned)workedCode='';
+ // workedCode mantiene el nombre histórico del campo, pero representa quién cubre la jornada.
+ // Incluso si coincide con el código programado, sigue siendo un cambio válido.
+ const workedCode=workdayWorkedCode;
 
  const overtime=workdayOvertime;
  const overtimeCode=overtime>0?workdayOvertimeCode:'';
@@ -17148,14 +17169,14 @@ function renderWorklogStatsDetail(mode){
  list.innerHTML=records.map(r=>{
   const d=parseDateKey(r.date);
   const planned=codeFor(turn,d);
-  const worked=r.workedCode||planned;
+  const cover=r.workedCode||'';
   const iconClass=mode==='overtime'?' overtime':'';
   const icon=mode==='overtime'?'+H':'C';
   const mainText=r.workedCode
-   ?`${codeText(turn,planned)} → ${codeText(turn,worked)}`
+   ?`Programado ${codeText(turn,planned)} · Me cubre ${codeText(turn,cover)}`
    :`${codeText(turn,planned)} · Sin cambio`;
   const detailText=[
-   r.workedCode?`Cambio ${workdayChangeHours(r.workedCode)} h automático`:'',
+   r.workedCode?`Cambio ${workdayChangeHours(planned)} h automático`:'',
    r.overtime>0?(mode==='overtime'
     ?`${worklogOvertimeText(r.periodOvertime??r.overtime)} h extra${r.overtimeCode?` · ${worklogOvertimeTypeLabel(r.overtimeCode)}`:''}${r.splitAcrossPeriod?` · de ${worklogOvertimeText(r.overtimeTotal??r.overtime)} h registradas`:''}`
     :worklogOvertimeDetailText(r)):'',
@@ -18074,9 +18095,9 @@ function showDetail(d){
   worklogBanner.classList.toggle('show',Boolean(record));
   if(record){
    const planned=codeFor(active,d);
-   const worked=record.workedCode||planned;
+   const cover=record.workedCode||'';
    worklogTitle.textContent='Registro laboral';
-   worklogText.textContent=`Programado ${codeText(active,planned)} · Trabajado ${codeText(active,worked)}${record.workedCode?` · Cambio ${workdayChangeHours(record.workedCode)} h`:''}${record.overtime>0?` · +${worklogOvertimeText(record.overtime)} h extra${record.overtimeCode?` · ${record.overtimeCode}`:''}`:''}`;
+   worklogText.textContent=`Programado ${codeText(active,planned)}${record.workedCode?` · Me cubre ${codeText(active,cover)} · Cambio ${workdayChangeHours(planned)} h`:''}${record.overtime>0?` · +${worklogOvertimeText(record.overtime)} h extra${record.overtimeCode?` · ${record.overtimeCode}`:''}`:''}`;
    worklogNote.textContent=record.note||'';
   }else{
    worklogText.textContent='';
