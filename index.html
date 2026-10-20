@@ -2579,23 +2579,23 @@ body.light .day.today .event-count{
   z-index:8 !important;
   transform-origin:center center;
   overflow:visible;
-  animation:todayCellFramePulse 2.45s ease-in-out infinite !important;
+  animation:todayCellFramePulse 2.55s ease-in-out infinite !important;
 }
 
 @keyframes todayCellFramePulse{
   0%,100%{
-    transform:scale(.965);
+    transform:scale(.94);
     box-shadow:
       inset 0 0 0 1px rgba(39,174,228,.16),
       0 0 3px rgba(39,174,228,.10);
     filter:brightness(.98);
   }
   50%{
-    transform:scale(1.055);
+    transform:scale(1.085);
     box-shadow:
-      inset 0 0 0 2px rgba(39,174,228,.36),
-      0 0 15px rgba(39,174,228,.42);
-    filter:brightness(1.08);
+      inset 0 0 0 2px rgba(39,174,228,.40),
+      0 0 18px rgba(39,174,228,.48);
+    filter:brightness(1.09);
   }
 }
 
@@ -14093,7 +14093,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.3.0</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.3.1</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -14325,7 +14325,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.3.0</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.3.1</span></span>
             </div>
           </div>
 
@@ -14852,7 +14852,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.3.0';
+const CURRENT_VERSION='5.3.1';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
