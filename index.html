@@ -13100,6 +13100,227 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
   }
 }
 
+
+
+/* ===== V5.2.1 · JORNADA · ESPACIO OPTIMIZADO + HISTORIAL AMPLIO =====
+   Mantiene la ventana en una única altura fija. Se compactan únicamente
+   los controles internos y se reserva más superficie al historial.
+   EDITAR / ELIMINAR se muestran en una fila independiente para evitar
+   superposiciones incluso con pantallas angostas o texto ampliado. */
+#workdayModal #workdayPane{
+  min-height:0;
+  overflow:hidden;
+}
+
+/* Recupera espacio vertical sin achicar la ventana. */
+#workdayModal #workdayPane > .workday-section{
+  margin-bottom:4px;
+  padding:6px 7px;
+}
+#workdayModal #workdayPane .workday-section-head{
+  margin-bottom:4px;
+}
+#workdayModal #workdayPane .workday-shift-choices{
+  gap:3px;
+}
+#workdayModal #workdayPane .workday-shift-choices button{
+  min-height:38px;
+  padding:3px 2px;
+}
+#workdayModal #workdayPane .workday-change-duration{
+  min-height:22px;
+  margin-top:4px;
+  padding:3px 6px;
+}
+#workdayModal #workdayPane .workday-overtime-control{
+  grid-template-columns:46px 1fr 46px;
+  gap:5px;
+}
+#workdayModal #workdayPane .workday-overtime-control > button,
+#workdayModal #workdayPane .workday-overtime-display{
+  min-height:46px;
+}
+#workdayModal #workdayPane .workday-overtime-quick{
+  margin-top:4px;
+  gap:4px;
+}
+#workdayModal #workdayPane .workday-overtime-quick button{
+  min-height:28px;
+}
+#workdayModal #workdayPane .workday-overtime-shift{
+  margin-top:4px;
+  padding:5px 6px;
+}
+#workdayModal #workdayPane .workday-overtime-shift-choices button{
+  min-height:32px;
+}
+#workdayModal #workdayPane .workday-note-section{
+  min-height:52px;
+  margin-bottom:4px;
+  padding:5px 7px;
+}
+#workdayModal #workdayPane .workday-note-section label{
+  margin-bottom:3px;
+}
+#workdayModal #workdayPane .workday-note-section textarea{
+  min-height:34px;
+  height:34px;
+  padding:6px 7px;
+}
+#workdayModal #workdayPane .workday-actions{
+  gap:6px;
+}
+#workdayModal #workdayPane .workday-actions button{
+  min-height:39px;
+}
+
+/* El recuadro acumulativo usa todo el espacio libre restante. */
+#workdayModal #workdayPane .workday-list-panel{
+  flex:1 1 auto;
+  min-height:150px;
+  margin-top:5px;
+  padding:6px;
+  overflow:hidden;
+}
+#workdayModal #workdayPane .workday-list-head{
+  margin-bottom:5px;
+  min-height:18px;
+}
+#workdayModal #workdayPane .workday-saved-list{
+  flex:1 1 auto;
+  min-height:0;
+  max-height:none;
+  overflow-y:auto;
+  overflow-x:hidden;
+  padding-right:2px;
+  align-content:start;
+}
+#workdayModal #workdayPane .workday-footnote{
+  padding-top:4px;
+  font-size:6.2px;
+  line-height:1.08;
+}
+
+/* Cada evento queda ordenado en dos filas: contenido + acciones. */
+#workdayModal #workdayPane .workday-saved-item{
+  grid-template-columns:auto minmax(0,1fr);
+  grid-template-areas:
+    "saved-icons saved-copy"
+    "saved-icons saved-actions";
+  column-gap:7px;
+  row-gap:5px;
+  min-height:78px;
+  padding:7px;
+  align-items:center;
+}
+#workdayModal #workdayPane .workday-saved-icons{
+  grid-area:saved-icons;
+  align-self:center;
+}
+#workdayModal #workdayPane .workday-saved-copy{
+  grid-area:saved-copy;
+  min-width:0;
+}
+#workdayModal #workdayPane .workday-saved-actions{
+  grid-area:saved-actions;
+  width:100%;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+  min-width:0;
+}
+#workdayModal #workdayPane .workday-saved-actions button{
+  width:100%;
+  min-width:0;
+  min-height:30px;
+  padding:0 6px;
+  margin:0;
+  line-height:1;
+  white-space:nowrap;
+}
+
+@media(max-width:620px){
+  #workdayModal #workdayPane > .workday-section{
+    margin-bottom:4px;
+    padding:5px 6px;
+  }
+  #workdayModal #workdayPane .workday-shift-choices button{
+    min-height:35px;
+    font-size:7.6px;
+  }
+  #workdayModal #workdayPane .workday-overtime-control{
+    grid-template-columns:44px 1fr 44px;
+  }
+  #workdayModal #workdayPane .workday-overtime-control > button,
+  #workdayModal #workdayPane .workday-overtime-display{
+    min-height:43px;
+  }
+  #workdayModal #workdayPane .workday-overtime-display strong{
+    font-size:23px;
+  }
+  #workdayModal #workdayPane .workday-overtime-quick button{
+    min-height:27px;
+    font-size:8px;
+  }
+  #workdayModal #workdayPane .workday-overtime-shift{
+    grid-template-columns:90px 1fr;
+    gap:5px;
+    padding:4px 5px;
+  }
+  #workdayModal #workdayPane .workday-overtime-shift-choices button{
+    min-height:30px;
+    font-size:8.1px;
+  }
+  #workdayModal #workdayPane .workday-note-section{
+    min-height:48px;
+  }
+  #workdayModal #workdayPane .workday-note-section textarea{
+    min-height:31px;
+    height:31px;
+  }
+  #workdayModal #workdayPane .workday-actions button{
+    min-height:37px;
+    font-size:9.2px;
+  }
+  #workdayModal #workdayPane .workday-list-panel{
+    min-height:155px;
+    margin-top:4px;
+    padding:6px;
+  }
+  #workdayModal #workdayPane .workday-saved-item{
+    min-height:75px;
+    padding:6px;
+    column-gap:6px;
+    row-gap:4px;
+  }
+  #workdayModal #workdayPane .workday-saved-actions{
+    gap:5px;
+  }
+  #workdayModal #workdayPane .workday-saved-actions button{
+    min-height:29px;
+    font-size:7.2px;
+  }
+}
+
+@media(max-height:760px){
+  #workdayModal #workdayPane .workday-shift-choices button{min-height:32px}
+  #workdayModal #workdayPane .workday-overtime-control > button,
+  #workdayModal #workdayPane .workday-overtime-display{min-height:39px}
+  #workdayModal #workdayPane .workday-overtime-quick button{min-height:25px}
+  #workdayModal #workdayPane .workday-overtime-shift-choices button{min-height:27px}
+  #workdayModal #workdayPane .workday-note-section{min-height:43px}
+  #workdayModal #workdayPane .workday-note-section textarea{min-height:27px;height:27px}
+  #workdayModal #workdayPane .workday-actions button{min-height:34px}
+  #workdayModal #workdayPane .workday-list-panel{min-height:125px}
+  #workdayModal #workdayPane .workday-saved-item{min-height:70px}
+}
+
+@media(max-height:650px){
+  #workdayModal #workdayPane .workday-list-panel{min-height:96px}
+  #workdayModal #workdayPane .workday-saved-item{min-height:66px}
+  #workdayModal #workdayPane .workday-footnote{display:none}
+}
+
 </style>
 </head>
 <body class="notranslate">
@@ -13488,7 +13709,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.2.0</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.2.1</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -13720,7 +13941,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.2.0</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.2.1</span></span>
             </div>
           </div>
 
@@ -14246,7 +14467,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.2.0';
+const CURRENT_VERSION='5.2.1';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
