@@ -14093,7 +14093,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.2.7</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.2.8</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -14246,7 +14246,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
         <div class="help-section-title"><span>6</span><div><b>Jornada</b><small>Cambios de turno y horas extra</small></div></div>
         <div class="help-card">
           <p><strong>Abrir:</strong> podés tocar un día y abrir <strong>JORNADA</strong> desde el detalle, o usar el botón <strong>J</strong> de la cabecera para abrir directamente la Jornada del día seleccionado.</p>
-          <p>La app muestra tu turno <strong>Programado</strong>. Si hacés un cambio, ese día no venís y elegís el turno del compañero que te cubre. Para T1/T2 se ofrecen T3/T4; para T3/T4 se ofrecen T1/T2. En T5 FIJO y T5 4×4 quedan disponibles T1, T2, T3 y T4. El ciclo futuro no se modifica.</p>
+          <p>La app muestra tu turno <strong>Programado</strong>. Si hacés un cambio, ese día no venís y elegís el turno del compañero que te cubre. Para T1/T2 se ofrecen T3/T4; para T3/T4 se ofrecen T1/T2. En T5 FIJO quedan disponibles T1, T2, T3 y T4. En T5 UNO se agrega T5 DOS, y en T5 DOS se agrega T5 UNO. El ciclo futuro no se modifica.</p>
           <p><strong>Horas cubiertas:</strong> se calculan con tu jornada programada de ese día, no con el turno del compañero que te cubre. Los turnos rotativos son de 12 horas; T5 FIJO = 9 horas; un franco programado = 0 horas.</p>
           <p><strong>Jornadas guardadas:</strong> la insignia identifica el tipo de registro: <strong>C</strong> = cambio de turno, <strong>EXT</strong> = horas extra y <strong>J</strong> = jornada/nota. Si una fecha tiene cambio y extras, se muestran ambas insignias.</p>
           <p><strong>Horas extra:</strong> son independientes del cambio. Los botones rápidos cargan 6, 8, 10 o 12 hs; + y − ajustan de a 0,5 h. Cuando cargás extras, elegí si fueron turno M o turno N.</p>
@@ -14325,7 +14325,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.2.7</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.2.8</span></span>
             </div>
           </div>
 
@@ -14393,6 +14393,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
           <button type="button" data-work-code="T2">T2</button>
           <button type="button" data-work-code="T3">T3</button>
           <button type="button" data-work-code="T4">T4</button>
+          <button type="button" data-work-code="" hidden></button>
         </div>
         <div class="workday-change-duration">
           <span>Horas cubiertas</span>
@@ -14851,7 +14852,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.2.7';
+const CURRENT_VERSION='5.2.8';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -16489,7 +16490,7 @@ function normalizeWorklog(item){
   id:String(item?.id||''),
   date:String(item?.date||''),
   turn:String(item?.turn||''),
-  workedCode:['T1','T2','T3','T4','M','N','F','D'].includes(item?.workedCode)?item.workedCode:'',
+  workedCode:['T1','T2','T3','T4','T5A','T5B','M','N','F','D'].includes(item?.workedCode)?item.workedCode:'',
   overtime,
   overtimeCode,
   note:String(item?.note||'').trim(),
@@ -16511,7 +16512,7 @@ function worklogForDate(date,turn=activeTurnKey()){
 }
 
 function worklogCodeLabel(code){
- if(['T1','T2','T3','T4'].includes(code))return code;
+ if(['T1','T2','T3','T4','T5A','T5B'].includes(code))return scheduleName(code);
  // Compatibilidad con registros creados hasta V5.2.6.
  if(code==='M')return 'M · Mañana';
  if(code==='N')return 'N · Noche';
@@ -16687,8 +16688,11 @@ function workdayCoverTurnOptions(turn){
  if(turn==='T1'||turn==='T2')return ['T3','T4'];
  // T3 y T4 se cubren con compañeros de T1/T2.
  if(turn==='T3'||turn==='T4')return ['T1','T2'];
- // En T5 FIJO y T5 4×4 quedan disponibles los cuatro turnos rotativos.
- if(turn==='T5LV'||turn==='T5A'||turn==='T5B')return ['T1','T2','T3','T4'];
+ // T5 FIJO puede ser cubierto por cualquiera de los cuatro turnos rotativos.
+ if(turn==='T5LV')return ['T1','T2','T3','T4'];
+ // En T5 4×4 también se habilita la pareja opuesta: UNO ↔ DOS.
+ if(turn==='T5B')return ['T1','T2','T3','T4','T5A']; // T5 UNO → agrega T5 DOS
+ if(turn==='T5A')return ['T1','T2','T3','T4','T5B']; // T5 DOS → agrega T5 UNO
  return [];
 }
 
@@ -16711,8 +16715,9 @@ function syncWorkdayCoverTurnButtons(){
   btn.hidden=!value;
   btn.disabled=!value;
   btn.dataset.workCode=value;
-  btn.textContent=value;
-  btn.setAttribute('aria-label',value?`${tr('Cubre')} ${value}`:'');
+  const label=value?scheduleName(value):'';
+  btn.textContent=label;
+  btn.setAttribute('aria-label',value?`${tr('Cubre')} ${label}`:'');
  });
 
  // Sin cambio + opciones visibles ocupan siempre todo el ancho disponible.
@@ -16722,7 +16727,7 @@ function syncWorkdayCoverTurnButtons(){
 function setWorkdayWorkedCode(code){
  const planned=codeFor(workdayEditingTurn,workdayEditingDate);
  const allowed=workdayCoverTurnOptions(workdayEditingTurn);
- // Conserva códigos antiguos sólo al abrir backups/registros previos; las selecciones nuevas son T1–T4.
+ // Conserva códigos antiguos sólo al abrir backups/registros previos; las selecciones nuevas son T1–T4 y, para T5 4×4, la pareja T5 opuesta.
  const legacy=['M','N','F','D'].includes(code);
  const normalized=(allowed.includes(code)||legacy)?code:'';
  workdayWorkedCode=normalized;
@@ -16805,7 +16810,7 @@ function openWorkday(date=selectedDate,turn=activeTurnKey(),tab='work'){
 
 function saveWorkdayRecord(){
  const planned=codeFor(workdayEditingTurn,workdayEditingDate);
- // workedCode mantiene el nombre histórico del campo, pero desde V5.2.7 guarda el turno (T1–T4) del compañero que cubre la jornada.
+ // workedCode mantiene el nombre histórico del campo; guarda el turno del compañero que cubre la jornada (T1–T4 y la pareja T5 opuesta cuando corresponde).
  // Incluso si coincide con el código programado, sigue siendo un cambio válido.
  const workedCode=workdayWorkedCode;
 
