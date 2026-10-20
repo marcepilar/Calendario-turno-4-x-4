@@ -13605,6 +13605,106 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
   }
 }
 
+
+
+/* ===== V5.2.4 · JORNADA · BOTONES COMPACTOS SIN SUPERPOSICIÓN =====
+   Conserva el tamaño fijo de la ventana. Los botones del historial
+   quedan en columna a la derecha, pero más compactos para caber por
+   completo dentro de cada tarjeta sin invadir la siguiente. */
+#workdayModal #workdayPane .workday-saved-item{
+  grid-template-columns:auto minmax(0,1fr) 58px !important;
+  grid-template-areas:none !important;
+  gap:6px !important;
+  align-items:center !important;
+  min-height:70px !important;
+  padding:6px !important;
+}
+#workdayModal #workdayPane .workday-saved-actions{
+  grid-area:auto !important;
+  width:58px !important;
+  min-width:58px !important;
+  max-width:58px !important;
+  display:grid !important;
+  grid-template-columns:58px !important;
+  grid-auto-flow:row !important;
+  gap:4px !important;
+  align-self:center !important;
+  justify-self:end !important;
+}
+#workdayModal #workdayPane .workday-saved-actions button{
+  width:58px !important;
+  min-width:58px !important;
+  max-width:58px !important;
+  height:27px !important;
+  min-height:27px !important;
+  max-height:27px !important;
+  padding:0 3px !important;
+  margin:0 !important;
+  border-radius:7px !important;
+  font-size:6.5px !important;
+  line-height:1 !important;
+  white-space:nowrap !important;
+}
+#workdayModal #workdayPane .workday-saved-copy{
+  min-width:0 !important;
+  overflow:hidden !important;
+}
+#workdayModal #workdayPane .workday-saved-copy b,
+#workdayModal #workdayPane .workday-saved-copy span,
+#workdayModal #workdayPane .workday-saved-copy small{
+  max-width:100% !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+}
+
+@media(max-width:620px){
+  #workdayModal #workdayPane .workday-saved-item{
+    grid-template-columns:auto minmax(0,1fr) 56px !important;
+    min-height:68px !important;
+    padding:6px !important;
+    gap:6px !important;
+  }
+  #workdayModal #workdayPane .workday-saved-actions{
+    width:56px !important;
+    min-width:56px !important;
+    max-width:56px !important;
+    grid-template-columns:56px !important;
+    gap:3px !important;
+  }
+  #workdayModal #workdayPane .workday-saved-actions button{
+    width:56px !important;
+    min-width:56px !important;
+    max-width:56px !important;
+    height:26px !important;
+    min-height:26px !important;
+    max-height:26px !important;
+    padding:0 2px !important;
+    font-size:6.2px !important;
+  }
+}
+
+@media(max-width:380px){
+  #workdayModal #workdayPane .workday-saved-item{
+    grid-template-columns:auto minmax(0,1fr) 52px !important;
+    gap:5px !important;
+  }
+  #workdayModal #workdayPane .workday-saved-actions{
+    width:52px !important;
+    min-width:52px !important;
+    max-width:52px !important;
+    grid-template-columns:52px !important;
+  }
+  #workdayModal #workdayPane .workday-saved-actions button{
+    width:52px !important;
+    min-width:52px !important;
+    max-width:52px !important;
+    height:25px !important;
+    min-height:25px !important;
+    max-height:25px !important;
+    font-size:5.9px !important;
+  }
+}
+
 </style>
 </head>
 <body class="notranslate">
@@ -13993,7 +14093,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.2.3</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.2.4</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -14225,7 +14325,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.2.3</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.2.4</span></span>
             </div>
           </div>
 
@@ -14751,7 +14851,7 @@ body.dark-blue #worklogStatsDetailModal .close-btn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.2.3';
+const CURRENT_VERSION='5.2.4';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
