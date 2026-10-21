@@ -13803,7 +13803,7 @@ body.light #shareModal .share-qr-url{color:#64758a}
 
 
 
-/* ===== V5.3.7 · CONFIGURACIÓN · TRÍO DE TOGGLES CON MÁS AIRE ===== */
+/* ===== V5.3.8 · CONFIGURACIÓN · TRÍO DE TOGGLES CON MÁS AIRE ===== */
 #settingsModal .settings-toggle-trio .toggle-mini{
   min-height:61px;
   padding-top:8px;
@@ -13850,6 +13850,107 @@ body.light #shareModal .share-qr-url{color:#64758a}
     padding-top:5px !important;
     padding-bottom:5px !important;
     gap:4px !important;
+  }
+}
+
+
+
+/* ===== V5.3.8 · CONFIGURACIÓN · MÁS AIRE EN DESLIZANTES Y VISTA PREVIA ===== */
+@media(max-width:620px){
+  #settingsModal .setting-range-row{
+    min-height:78px !important;
+    padding:13px 12px 12px !important;
+    gap:8px !important;
+    overflow:visible !important;
+  }
+  #settingsModal .setting-range-row > div:first-child{
+    padding-left:4px !important;
+    padding-right:4px !important;
+  }
+  #settingsModal .setting-range-row .range-wrap{
+    grid-template-columns:minmax(0,1fr) 96px !important;
+    gap:12px !important;
+    align-items:center !important;
+    padding:0 2px 2px 1px !important;
+  }
+  #settingsModal .setting-range-row .range-wrap input[type="range"]{
+    height:30px !important;
+  }
+  #settingsModal .range-value{
+    min-width:96px !important;
+    height:46px !important;
+    font-size:13px !important;
+    border-radius:18px !important;
+  }
+  #settingsModal .settings-toggle-trio{
+    margin-top:3px !important;
+  }
+  #settingsModal .settings-preview{
+    flex:0 0 90px !important;
+    min-height:90px !important;
+    max-height:none !important;
+    margin-top:8px !important;
+    padding:8px 10px 10px !important;
+    overflow:hidden !important;
+  }
+  #settingsModal .settings-preview-head{
+    margin-bottom:4px !important;
+    padding:0 2px !important;
+  }
+  #settingsModal .settings-preview-grid{
+    gap:8px !important;
+    padding:1px 1px 3px !important;
+  }
+  #settingsModal .settings-preview-day{
+    min-height:58px !important;
+    height:100% !important;
+    padding:8px 5px 10px !important;
+    border-radius:16px !important;
+    gap:2px !important;
+    justify-content:flex-start !important;
+  }
+  #settingsModal .settings-preview-day strong{
+    line-height:.92 !important;
+    margin-top:4px !important;
+  }
+  #settingsModal .settings-preview-day small{
+    font-size:7.5px !important;
+    line-height:1.08 !important;
+    padding-bottom:1px !important;
+  }
+  #settingsModal .settings-preview-date{
+    right:8px !important;
+    top:6px !important;
+  }
+}
+
+@media(max-width:620px) and (max-height:760px){
+  #settingsModal .setting-range-row{
+    min-height:74px !important;
+    padding:12px 11px 11px !important;
+  }
+  #settingsModal .setting-range-row .range-wrap{
+    grid-template-columns:minmax(0,1fr) 88px !important;
+    gap:10px !important;
+  }
+  #settingsModal .range-value{
+    min-width:88px !important;
+    height:42px !important;
+    font-size:12px !important;
+  }
+  #settingsModal .settings-preview{
+    flex-basis:84px !important;
+    min-height:84px !important;
+    max-height:none !important;
+    padding-top:7px !important;
+    padding-bottom:8px !important;
+  }
+  #settingsModal .settings-preview-day{
+    min-height:54px !important;
+    padding:7px 5px 9px !important;
+  }
+  #settingsModal .settings-preview-day small{
+    font-size:7px !important;
   }
 }
 
@@ -14255,7 +14356,7 @@ body.light #shareModal .share-qr-url{color:#64758a}
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.3.7</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.3.8</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -14487,7 +14588,7 @@ body.light #shareModal .share-qr-url{color:#64758a}
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.3.7</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.3.8</span></span>
             </div>
           </div>
 
@@ -15014,7 +15115,7 @@ body.light #shareModal .share-qr-url{color:#64758a}
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.3.7';
+const CURRENT_VERSION='5.3.8';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -15676,7 +15777,7 @@ let shortDateFmt=new Intl.DateTimeFormat(currentLocale(),{day:'2-digit',month:'2
 let miniMonthFmt=new Intl.DateTimeFormat(currentLocale(),{month:'short'});
 
 function pad2(n){return String(n).padStart(2,'0')}
-/* ===== V5.3.7 · FECHAS HISTÓRICAS · AÑOS 1–99 SIN DESPLAZAMIENTO A 1900 =====
+/* ===== V5.3.8 · FECHAS HISTÓRICAS · AÑOS 1–99 SIN DESPLAZAMIENTO A 1900 =====
    JavaScript interpreta new Date(1,...) como 1901. Esta fábrica usa setFullYear()
    para que el año mostrado y calculado sea exactamente el elegido por el usuario. */
 function calendarDate(year,month=0,day=1,hour=0,minute=0,second=0,millisecond=0){
