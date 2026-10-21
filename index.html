@@ -14341,6 +14341,140 @@ body.light #shareModal .share-qr-url{color:#64758a}
   }
 }
 
+
+/* ===== V5.4.3 · FLECHAS DE PULSABILIDAD SELECCIONADAS =====
+   Todas las señales son solo CSS decorativo y no modifican eventos ni datos.
+   Excluidos a propósito: controles superiores principales, X, iconos,
+   +/- de horas, deslizadores, switches y botones ya provistos de ›.
+   El selector híbrido Jornada/Licencias V5.4.2 se conserva intacto.
+*/
+/* Acciones principales y navegación, seleccionadas una a una. */
+:is(
+ #settingsModal #languageCycleBtn,
+ #settingsModal .calendar-view-btn,
+ #settingsModal #settingsAgendaBtn,
+ #settingsModal #settingsVacationBtn,
+ #settingsModal #settingsStatsBtn,
+ #settingsModal #resetSettingsBtn,
+ #settingsModal .action-row button[data-close="settingsModal"],
+ #shareModal .share-main-btn,
+ #shareModal .share-secondary-btn,
+ #helpModal [data-help-go],
+ #helpModal #helpTopBtn,
+ #workdayModal #workdayDeleteBtn,
+ #workdayModal #workdaySaveBtn,
+ #workdayModal #licenseClearBtn,
+ #workdayModal #licenseSaveBtn,
+ #vacationModal #vacationClearBtn,
+ #vacationModal #vacationSaveBtn,
+ #agendaSheet #agendaAllToggle,
+ #agendaSheet #agendaNotifyBtn,
+ #agendaSheet #agendaExportBtn,
+ #agendaSheet label[for="agendaImportInput"],
+ #agendaSheet .action-row button[data-close="agendaSheet"],
+ #agendaSheet #agendaClearBtn,
+ #agendaSheet #agendaSaveBtn,
+ #agendaSheet .agenda-actions button,
+ #agendaSheet .agenda-all-actions button
+){
+ position:relative;
+}
+:is(
+ #settingsModal #languageCycleBtn,
+ #settingsModal .calendar-view-btn,
+ #settingsModal #settingsAgendaBtn,
+ #settingsModal #settingsVacationBtn,
+ #settingsModal #settingsStatsBtn,
+ #settingsModal #resetSettingsBtn,
+ #settingsModal .action-row button[data-close="settingsModal"],
+ #shareModal .share-main-btn,
+ #shareModal .share-secondary-btn,
+ #helpModal [data-help-go],
+ #helpModal #helpTopBtn,
+ #workdayModal #workdayDeleteBtn,
+ #workdayModal #workdaySaveBtn,
+ #workdayModal #licenseClearBtn,
+ #workdayModal #licenseSaveBtn,
+ #vacationModal #vacationClearBtn,
+ #vacationModal #vacationSaveBtn,
+ #agendaSheet #agendaAllToggle,
+ #agendaSheet #agendaNotifyBtn,
+ #agendaSheet #agendaExportBtn,
+ #agendaSheet label[for="agendaImportInput"],
+ #agendaSheet .action-row button[data-close="agendaSheet"],
+ #agendaSheet #agendaClearBtn,
+ #agendaSheet #agendaSaveBtn,
+ #agendaSheet .agenda-actions button,
+ #agendaSheet .agenda-all-actions button
+)::after{
+ content:'›';
+ position:absolute;
+ top:50%;
+ right:clamp(5px,1.4vw,10px);
+ transform:translateY(-50%);
+ font-family:Arial,sans-serif;
+ font-size:clamp(10px,2.3vw,13px);
+ font-weight:900;
+ line-height:1;
+ color:currentColor;
+ opacity:.72;
+ pointer-events:none;
+ text-decoration:none;
+ text-shadow:none;
+}
+/* En los botones con textos secundarios largos, reservar lugar seguro. */
+#shareModal .share-main-btn,
+#shareModal .share-secondary-btn,
+#helpModal [data-help-go],
+#agendaSheet #agendaNotifyBtn,
+#agendaSheet #agendaAllToggle,
+#agendaSheet .agenda-actions button,
+#agendaSheet .agenda-all-actions button{
+ padding-right:max(17px,1.45em);
+}
+/* Compactos de Configuración: la flecha no quita el centrado de textos. */
+#settingsModal .settings-main-actions button::after,
+#settingsModal .calendar-view-btn::after{
+ right:4px;
+ font-size:10px;
+ opacity:.64;
+}
+#settingsModal #languageCycleBtn::after{
+ right:6px;
+ font-size:11px;
+}
+/* El selector de vista es una acción, no un switch: sugerencia discreta. */
+#settingsModal .calendar-view-btn{position:relative;}
+/* Cuadros numéricos de Estadísticas: flecha en esquina sin alterar grid
+   (especialmente la tarjeta de Horas extra validada en Samsung A04e). */
+#statsModal .worklog-stat-btn{
+ position:relative;
+}
+#statsModal .worklog-stat-btn::after{
+ content:'›' !important;
+ display:block !important;
+ position:absolute;
+ top:4px;
+ right:6px;
+ font:900 10px/1 Arial,sans-serif;
+ opacity:.53;
+ color:var(--muted);
+ pointer-events:none;
+}
+/* En modo claro el indicador sigue siendo visible, sin alterar el botón. */
+body.light #statsModal .worklog-stat-btn::after{opacity:.72;}
+/* Controles deshabilitados no prometen acciones. */
+:is(
+ #settingsModal button,
+ #shareModal button,
+ #helpModal button,
+ #workdayModal button,
+ #vacationModal button,
+ #agendaSheet button
+):disabled::after{
+ opacity:0!important;
+}
+
 </style>
 </head>
 <body class="notranslate">
@@ -14743,7 +14877,7 @@ body.light #shareModal .share-qr-url{color:#64758a}
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.4.2</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.4.3</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -14975,7 +15109,7 @@ body.light #shareModal .share-qr-url{color:#64758a}
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.4.2</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.4.3</span></span>
             </div>
           </div>
 
@@ -15502,7 +15636,7 @@ body.light #shareModal .share-qr-url{color:#64758a}
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.4.2';
+const CURRENT_VERSION='5.4.3';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
