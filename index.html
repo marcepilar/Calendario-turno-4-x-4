@@ -14593,6 +14593,50 @@ body.light #reportModal select,body.light #reportModal input{color-scheme:light}
 }
 #reportModal .report-remember input{width:17px;height:17px;accent-color:#28c6a4;flex:0 0 auto}
 
+
+/* ===== V5.5.0 · INFORMES PDF · MULTISELECCIÓN + CAMPOS LABORALES ===== */
+#reportModal .report-multi-details{
+  border:1px solid rgba(125,171,214,.26);border-radius:12px;
+  background:var(--panel3);overflow:hidden;color:var(--text);
+}
+#reportModal .report-multi-details > summary{
+  display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;min-height:45px;padding:10px 13px;
+  font-size:12px;font-weight:900;list-style:none;user-select:none;
+}
+#reportModal .report-multi-details > summary::-webkit-details-marker{display:none}
+#reportModal .report-multi-details .report-chevron{
+  font-size:20px;color:var(--muted);transform:rotate(0deg);transition:transform .18s ease;
+}
+#reportModal .report-multi-details[open] .report-chevron{transform:rotate(180deg)}
+#reportModal .report-multi-body{padding:7px 9px 10px;border-top:1px solid var(--line);display:grid;gap:6px}
+#reportModal .report-multi-tools{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:1px 0 4px}
+#reportModal .report-multi-tools button{
+  border:1px solid rgba(104,170,199,.29);border-radius:9px;
+  background:linear-gradient(180deg,rgba(52,115,163,.23),rgba(28,78,118,.16));
+  color:var(--text);font-size:10px;font-weight:850;min-height:37px;padding:5px 4px;
+  cursor:pointer;touch-action:manipulation;
+}
+#reportModal .report-multi-tools button:active{transform:scale(.99)}
+#reportModal label.report-multi-option{
+  display:flex;align-items:center;gap:12px;min-height:41px;
+  border:1px solid rgba(137,174,207,.15);border-radius:9px;
+  background:rgba(77,129,176,.055);padding:8px 12px;
+  color:var(--text);font-size:12px;font-weight:850;letter-spacing:0;cursor:pointer;
+}
+#reportModal .report-multi-option:has(input:checked){
+  border-color:rgba(50,201,157,.40);background:rgba(46,182,144,.09);
+}
+#reportModal .report-type-check{
+  width:19px;height:19px;min-width:19px;accent-color:#34ceb0;
+  cursor:pointer;appearance:auto;margin:0;
+}
+#reportModal .report-select-hint{font-size:10px;line-height:1.4;color:var(--muted)}
+@media(max-width:360px){
+  #reportModal .report-multi-tools button{font-size:9px}
+  #reportModal label.report-multi-option{min-height:38px;font-size:11px;padding:6px 9px}
+}
+
 </style>
 </head>
 <body class="notranslate">
@@ -14995,7 +15039,7 @@ body.light #reportModal select,body.light #reportModal input{color-scheme:light}
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.4.9</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.5.0</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -15227,7 +15271,7 @@ body.light #reportModal select,body.light #reportModal input{color-scheme:light}
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.4.9</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.5.0</span></span>
             </div>
           </div>
 
@@ -15689,30 +15733,40 @@ body.light #reportModal select,body.light #reportModal input{color-scheme:light}
     </div>
     <div class="report-content">
       <div class="report-card">
-        <label for="reportType">¿Qué querés incluir?</label>
-        <select id="reportType">
-          <option value="overtime">Horas extras</option>
-          <option value="changes">Cambios de turno</option>
-          <option value="licenses">Licencias laborales</option>
-          <option value="vacations">Vacaciones</option>
-          <option value="agenda">Eventos de Agenda</option>
-          <option value="all">Informe completo</option>
-        </select>
+        <label id="reportTypesLabel">¿Qué querés incluir?</label>
+        <details id="reportMultiDetails" class="report-multi-details" open>
+          <summary aria-labelledby="reportTypesLabel reportSelectedCount">
+            <span id="reportSelectedCount">1 sección seleccionada</span>
+            <span class="report-chevron" aria-hidden="true">⌄</span>
+          </summary>
+          <div class="report-multi-body" role="group" aria-labelledby="reportTypesLabel">
+            <div class="report-multi-tools">
+              <button type="button" id="reportSelectAll">Seleccionar todo ›</button>
+              <button type="button" id="reportClearAll">Limpiar selección ›</button>
+            </div>
+            <label class="report-multi-option"><input type="checkbox" value="overtime" class="report-type-check" checked><span>Horas extras</span></label>
+            <label class="report-multi-option"><input type="checkbox" value="changes" class="report-type-check"><span>Cambios de turno</span></label>
+            <label class="report-multi-option"><input type="checkbox" value="licenses" class="report-type-check"><span>Licencias laborales</span></label>
+            <label class="report-multi-option"><input type="checkbox" value="vacations" class="report-type-check"><span>Vacaciones</span></label>
+            <label class="report-multi-option"><input type="checkbox" value="agenda" class="report-type-check"><span>Eventos de Agenda</span></label>
+          </div>
+        </details>
+        <small class="report-select-hint">Podés incluir una, varias o todas las secciones en el mismo PDF.</small>
       </div>
       <div class="report-card">
         <label>Identificación del empleado</label>
         <div class="report-employee-grid">
           <div class="report-employee-field report-employee-wide">
             <label for="reportEmployeeNumber">Número de legajo</label>
-            <input id="reportEmployeeNumber" class="report-employee-input" type="text" maxlength="24" placeholder="Ej.: 12345" autocapitalize="off" autocomplete="off" />
+            <input id="reportEmployeeNumber" class="report-employee-input" type="text" inputmode="text" name="legajo_laboral" maxlength="24" placeholder="Ej.: 12345" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-autocomplete="none" data-lpignore="true" data-1p-ignore="true" data-form-type="other" />
           </div>
           <div class="report-employee-field">
             <label for="reportEmployeeFirst">Nombre</label>
-            <input id="reportEmployeeFirst" class="report-employee-input" type="text" maxlength="60" placeholder="Nombre" autocomplete="given-name" />
+            <input id="reportEmployeeFirst" class="report-employee-input" type="text" inputmode="text" name="nombre_en_informe_laboral" maxlength="60" placeholder="Nombre" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-autocomplete="none" data-lpignore="true" data-1p-ignore="true" data-form-type="other" />
           </div>
           <div class="report-employee-field">
             <label for="reportEmployeeLast">Apellido</label>
-            <input id="reportEmployeeLast" class="report-employee-input" type="text" maxlength="60" placeholder="Apellido" autocomplete="family-name" />
+            <input id="reportEmployeeLast" class="report-employee-input" type="text" inputmode="text" name="apellido_en_informe_laboral" maxlength="60" placeholder="Apellido" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-autocomplete="none" data-lpignore="true" data-1p-ignore="true" data-form-type="other" />
           </div>
         </div>
         <label class="report-remember" for="reportRememberEmployee"><input id="reportRememberEmployee" type="checkbox" /> Recordar estos datos en este dispositivo</label>
@@ -15826,7 +15880,7 @@ body.light #reportModal select,body.light #reportModal input{color-scheme:light}
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.4.9';
+const CURRENT_VERSION='5.5.0';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -20916,9 +20970,22 @@ setInterval(()=>{
 },1000);
 /* ===== V5.4.8 · INFORMES PDF OFFLINE · NO MODIFICA LOS REGISTROS ===== */
 const reportTypeNames={overtime:'Horas extras',changes:'Cambios de turno',licenses:'Licencias laborales',vacations:'Vacaciones',agenda:'Eventos de Agenda',all:'Informe completo'};
-const reportTypeEl=$('#reportType'),reportPeriodEl=$('#reportPeriod'),reportMonthEl=$('#reportMonth');
+const reportTypeChecks=$$('#reportModal .report-type-check'),reportPeriodEl=$('#reportPeriod'),reportMonthEl=$('#reportMonth');
+const reportSelectedCountEl=$('#reportSelectedCount');
 const reportStartEl=$('#reportStart'),reportEndEl=$('#reportEnd'),reportDetailEl=$('#reportDetail');
 const reportPreviewEl=$('#reportPreview'),reportStatusEl=$('#reportStatus'),reportGenerateBtn=$('#reportGenerateBtn');
+const reportSelectedTypes=()=>reportTypeChecks.filter(el=>el.checked).map(el=>el.value);
+function reportUpdateMultiLabel(){
+ const selected=reportSelectedTypes();
+ reportSelectedCountEl.textContent=selected.length===0?'Ninguna sección seleccionada':selected.length===5?'Todas las secciones (5)':selected.length===1?`${reportTypeNames[selected[0]]} (1)`:`${selected.length} secciones seleccionadas`;
+}
+function reportToggleAll(checked){
+ reportTypeChecks.forEach(el=>{el.checked=checked});
+ refreshReportPreview();
+}
+$('#reportSelectAll').addEventListener('click',()=>reportToggleAll(true));
+$('#reportClearAll').addEventListener('click',()=>reportToggleAll(false));
+reportTypeChecks.forEach(el=>el.addEventListener('change',refreshReportPreview));
 const reportEmployeeNumberEl=$('#reportEmployeeNumber'),reportEmployeeFirstEl=$('#reportEmployeeFirst'),reportEmployeeLastEl=$('#reportEmployeeLast');
 const reportRememberEmployeeEl=$('#reportRememberEmployee');
 const REPORT_EMPLOYEE_STORAGE_KEY='turno4x4.reportEmployee.v1';
@@ -20951,7 +21018,8 @@ reportLoadRememberedEmployee();
 });
 reportRememberEmployeeEl.addEventListener('change',reportSaveEmployeePreference);
 function openReportGenerator(){
- reportTypeEl.value='overtime';
+ reportTypeChecks.forEach(el=>{el.checked=el.value==='overtime'});
+ reportUpdateMultiLabel();
  reportPeriodEl.value='payroll';
  reportDetailEl.value='detail';
  reportMonthEl.value=`${String(viewYear).padStart(4,'0')}-${String(viewMonth+1).padStart(2,'0')}`;
@@ -20989,12 +21057,16 @@ function reportHours(h){return worklogOvertimeText(Math.round((Number(h)||0)*100
 function reportCollect(){
  const bounds=reportBounds();
  const turn=activeTurnKey();
- const type=reportTypeEl.value;
- const result={bounds,turn,turnLabel:scheduleName(turn),type,typeLabel:reportTypeNames[type],sections:[],summary:[],totalRows:0,detailLevel:reportDetailEl.value,employee:reportEmployeeData()};
+ const types=reportSelectedTypes();
+ if(!types.length)throw Error('Seleccioná al menos una sección para generar el PDF.');
+ const selected=new Set(types);
+ const type=types.length===5?'all':types.length===1?types[0]:'custom';
+ const typeLabel=type==='all'?'Informe completo':type==='custom'?'Informe personalizado':reportTypeNames[type];
+ const result={bounds,turn,turnLabel:scheduleName(turn),type,types,typeLabel,sections:[],summary:[],totalRows:0,detailLevel:reportDetailEl.value,employee:reportEmployeeData()};
  const addSection=(key,title,rows)=>{
-  if(type==='all'||type===key){result.sections.push({title,rows});result.totalRows+=rows.length;}
+  if(selected.has(key)){result.sections.push({title,rows});result.totalRows+=rows.length;}
  };
- if(type==='all'||type==='overtime'){
+ if(selected.has('overtime')){
   // Usa exactamente el mismo motor de prorrateo que Estadísticas (incluye M/N cruzando medianoche).
   const data=overtimeStatsForBounds(turn,bounds.start,bounds.endExclusive);
   const total={M:0,N:0,unknown:0};
@@ -21009,7 +21081,7 @@ function reportCollect(){
   result.summary.push(`Horas extras: ${reportHours(totalH)} h (M ${reportHours(total.M)} h · N ${reportHours(total.N)} h${total.unknown?` · sin tipo ${reportHours(total.unknown)} h`:''})`);
   addSection('overtime','HORAS EXTRAS · REGISTRO FECHA POR FECHA',rows);
  }
- if(type==='all'||type==='changes'){
+ if(selected.has('changes')){
   const rows=loadWorklogData().map(normalizeWorklog)
    .filter(r=>r.turn===turn&&r.workedCode&&r.date>=bounds.startKey&&r.date<=bounds.endKey)
    .sort((a,b)=>a.date.localeCompare(b.date))
@@ -21017,7 +21089,7 @@ function reportCollect(){
   result.summary.push(`Cambios de turno: ${rows.length}`);
   addSection('changes','CAMBIOS DE TURNO',rows);
  }
- if(type==='all'||type==='licenses'){
+ if(selected.has('licenses')){
   const rows=loadLicenseData().map(normalizeLicense)
    .filter(r=>r.turn===turn&&r.start&&r.end&&r.start<=bounds.endKey&&r.end>=bounds.startKey)
    .sort((a,b)=>a.start.localeCompare(b.start)).map(r=>{
@@ -21032,7 +21104,7 @@ function reportCollect(){
   result.summary.push(`Períodos de licencias: ${rows.length}`);
   addSection('licenses','LICENCIAS · JORNADAS LABORALES AFECTADAS',rows);
  }
- if(type==='all'||type==='vacations'){
+ if(selected.has('vacations')){
   const rows=loadVacationData().map(normalizeVacation)
    .filter(r=>r.start&&r.end&&r.start<=bounds.endKey&&r.end>=bounds.startKey)
    .sort((a,b)=>a.start.localeCompare(b.start))
@@ -21044,7 +21116,7 @@ function reportCollect(){
   result.summary.push(`Períodos de vacaciones: ${rows.length}`);
   addSection('vacations','VACACIONES',rows);
  }
- if(type==='all'||type==='agenda'){
+ if(selected.has('agenda')){
   const rows=[];
   for(let d=new Date(bounds.start);d<bounds.endExclusive;d=addDays(d,1)){
    const entries=agendaForDate(d);
@@ -21059,6 +21131,7 @@ function reportCollect(){
  return result;
 }
 function refreshReportPreview(){
+ reportUpdateMultiLabel();
  $('#reportMonthRow').hidden=reportPeriodEl.value==='custom';
  $('#reportDatesRow').hidden=reportPeriodEl.value!=='custom';
  try{
@@ -21066,7 +21139,7 @@ function refreshReportPreview(){
   reportPreviewEl.innerHTML='<b>Vista previa del informe</b><p id="reportPreviewText"></p>';
   const emp=report.employee;
   const employeeName=[emp.first,emp.last].filter(Boolean).join(' ');
-  $('#reportPreviewText').textContent=`Empleado: ${employeeName||'Sin completar'} · Legajo: ${emp.number||'Sin completar'}\nTurno: ${report.turnLabel}\nDel ${reportDateText(report.bounds.startKey)} al ${reportDateText(report.bounds.endKey)}\n${report.summary.join(' | ')}\n${report.detailLevel==='summary'?'PDF resumido · '+report.totalRows+' '+(report.totalRows===1?'registro contabilizado':'registros contabilizados')+', sin desglose por fecha.':report.totalRows+' '+(report.totalRows===1?'registro detallado':'registros detallados')+'.'}`;
+  $('#reportPreviewText').textContent=`Empleado: ${employeeName||'Sin completar'} · Legajo: ${emp.number||'Sin completar'}\nSecciones: ${report.types.map(k=>reportTypeNames[k]).join(', ')}\nTurno: ${report.turnLabel}\nDel ${reportDateText(report.bounds.startKey)} al ${reportDateText(report.bounds.endKey)}\n${report.summary.join(' | ')}\n${report.detailLevel==='summary'?'PDF resumido · '+report.totalRows+' '+(report.totalRows===1?'registro contabilizado':'registros contabilizados')+', sin desglose por fecha.':report.totalRows+' '+(report.totalRows===1?'registro detallado':'registros detallados')+'.'}`;
   $('#reportPreviewText').style.whiteSpace='pre-line';
   reportGenerateBtn.disabled=false;
   reportStatusEl.textContent='';
@@ -21076,7 +21149,7 @@ function refreshReportPreview(){
   reportGenerateBtn.disabled=true;
  }
 }
-[reportTypeEl,reportPeriodEl,reportMonthEl,reportStartEl,reportEndEl,reportDetailEl].forEach(el=>{
+[reportPeriodEl,reportMonthEl,reportStartEl,reportEndEl,reportDetailEl].forEach(el=>{
  el.addEventListener('change',refreshReportPreview);
  el.addEventListener('input',refreshReportPreview);
 });
@@ -21196,7 +21269,7 @@ function reportBuildPageCanvases(report){
  ctx.font='15px Arial';
  const disclaimer='Documento personal elaborado con la información ingresada en Calendario 4×4. No es constancia de RR. HH., ni certifica liquidaciones de sueldo.';
  let yy=y+26;for(const line of reportWrapText(ctx,disclaimer,R-M-40)){text(line,M+20,yy,'15px Arial','#596d78');yy+=23}
- if(report.type==='overtime'||report.type==='all')text('Horas nocturnas: se contabiliza solo el tramo comprendido en el período.',M+20,yy+3,'14px Arial','#596d78');
+ if(report.types.includes('overtime'))text('Horas nocturnas: se contabiliza solo el tramo comprendido en el período.',M+20,yy+3,'14px Arial','#596d78');
  pages.forEach(({ctx:pgCtx},i)=>{
   pgCtx.strokeStyle='#dde7eb';pgCtx.lineWidth=2;pgCtx.beginPath();pgCtx.moveTo(M,H-98);pgCtx.lineTo(R,H-98);pgCtx.stroke();
   pgCtx.font='15px Arial';pgCtx.fillStyle='#6c8491';pgCtx.textBaseline='alphabetic';pgCtx.textAlign='left';
@@ -21241,7 +21314,7 @@ function reportDownload(){
     const blob=reportPdfFromCanvasPages(canvases);
     const url=URL.createObjectURL(blob);
     const a=document.createElement('a');
-    const fileType=report.type==='all'?'Completo':report.type;
+    const fileType=report.type==='all'?'Completo':report.type==='custom'?'Personalizado':report.type;
     a.href=url;
     a.download=`Calendario4x4_${fileType}_${report.turn}_${report.bounds.startKey}_${report.bounds.endKey}.pdf`;
     document.body.appendChild(a);a.click();a.remove();
