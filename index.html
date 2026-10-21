@@ -13796,6 +13796,58 @@ body.light #shareModal .share-qr-url{color:#64758a}
   #shareModal .share-secondary-btn.share-qr-btn{min-height:46px}
 }
 
+
+
+/* ===== V5.3.6 · CONFIGURACIÓN · TRÍO DE TOGGLES CON MÁS AIRE ===== */
+#settingsModal .settings-toggle-trio .toggle-mini{
+  min-height:61px;
+  padding-top:8px;
+  padding-bottom:8px;
+  gap:6px;
+}
+#settingsModal .settings-toggle-trio .toggle-mini b{
+  line-height:1.10;
+}
+#settingsModal .settings-toggle-trio .toggle-mini small{
+  line-height:1.12;
+  margin-top:3px;
+}
+#settingsModal .settings-toggle-trio .switch{
+  margin-top:1px;
+}
+@media(max-width:620px){
+  #settingsModal .settings-toggle-trio .toggle-mini{
+    min-height:57px;
+    padding-top:7px;
+    padding-bottom:7px;
+    gap:5px;
+  }
+}
+@media(max-width:620px) and (min-height:761px){
+  #settingsModal .settings-toggle-trio .toggle-mini{
+    min-height:59px !important;
+    padding-top:7px !important;
+    padding-bottom:7px !important;
+    gap:5px !important;
+  }
+}
+@media(max-width:620px) and (min-height:761px) and (max-height:820px){
+  #settingsModal .settings-toggle-trio .toggle-mini{
+    min-height:56px !important;
+    padding-top:6px !important;
+    padding-bottom:6px !important;
+    gap:5px !important;
+  }
+}
+@media(max-width:620px) and (max-height:760px){
+  #settingsModal .settings-toggle-trio .toggle-mini{
+    min-height:49px !important;
+    padding-top:5px !important;
+    padding-bottom:5px !important;
+    gap:4px !important;
+  }
+}
+
 </style>
 </head>
 <body class="notranslate">
@@ -14198,7 +14250,7 @@ body.light #shareModal .share-qr-url{color:#64758a}
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.3.5</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.3.6</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -14430,7 +14482,7 @@ body.light #shareModal .share-qr-url{color:#64758a}
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.3.5</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.3.6</span></span>
             </div>
           </div>
 
@@ -14957,7 +15009,7 @@ body.light #shareModal .share-qr-url{color:#64758a}
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.3.5';
+const CURRENT_VERSION='5.3.6';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -15619,7 +15671,7 @@ let shortDateFmt=new Intl.DateTimeFormat(currentLocale(),{day:'2-digit',month:'2
 let miniMonthFmt=new Intl.DateTimeFormat(currentLocale(),{month:'short'});
 
 function pad2(n){return String(n).padStart(2,'0')}
-/* ===== V5.3.5 · FECHAS HISTÓRICAS · AÑOS 1–99 SIN DESPLAZAMIENTO A 1900 =====
+/* ===== V5.3.6 · FECHAS HISTÓRICAS · AÑOS 1–99 SIN DESPLAZAMIENTO A 1900 =====
    JavaScript interpreta new Date(1,...) como 1901. Esta fábrica usa setFullYear()
    para que el año mostrado y calculado sea exactamente el elegido por el usuario. */
 function calendarDate(year,month=0,day=1,hour=0,minute=0,second=0,millisecond=0){
