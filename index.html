@@ -14567,6 +14567,32 @@ body.light #reportModal select,body.light #reportModal input{color-scheme:light}
 #reportModal #reportStatus{min-height:14px;font-size:10px;color:#54dcaf;text-align:center}
 @media(max-height:640px){#reportModal .report-window{padding:8px 11px}#reportModal .report-card{padding:9px;gap:5px}#reportModal .report-content{gap:7px}}
 
+
+/* ===== V5.4.9 · INFORMES PDF · IDENTIFICACIÓN DEL EMPLEADO ===== */
+#reportModal input.report-employee-input{
+  display:block;width:100%;min-width:0;min-height:43px;padding:10px 12px;
+  border:1px solid rgba(140,177,195,.25);border-radius:11px;
+  background:var(--panel3);color:var(--text);font-size:13px;font-weight:750;
+  outline:none;box-sizing:border-box;
+}
+#reportModal input.report-employee-input:focus{
+  border-color:rgba(52,211,172,.72);
+  box-shadow:0 0 0 2px rgba(52,211,172,.12);
+}
+#reportModal .report-employee-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+#reportModal .report-employee-field{display:flex;flex-direction:column;gap:6px;min-width:0}
+#reportModal .report-employee-wide{grid-column:1/-1}
+#reportModal .report-employee-tip{font-size:10px;line-height:1.4;color:var(--muted)}
+@media(max-width:520px){
+  #reportModal .report-employee-grid{grid-template-columns:minmax(0,1fr)}
+  #reportModal .report-employee-wide{grid-column:auto}
+}
+#reportModal .report-remember{
+  display:flex;align-items:center;gap:8px;font-size:11px;font-weight:750;
+  color:var(--text);letter-spacing:0;cursor:pointer;
+}
+#reportModal .report-remember input{width:17px;height:17px;accent-color:#28c6a4;flex:0 0 auto}
+
 </style>
 </head>
 <body class="notranslate">
@@ -14969,7 +14995,7 @@ body.light #reportModal select,body.light #reportModal input{color-scheme:light}
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.4.8</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.4.9</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -15201,7 +15227,7 @@ body.light #reportModal select,body.light #reportModal input{color-scheme:light}
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.4.8</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.4.9</span></span>
             </div>
           </div>
 
@@ -15674,6 +15700,25 @@ body.light #reportModal select,body.light #reportModal input{color-scheme:light}
         </select>
       </div>
       <div class="report-card">
+        <label>Identificación del empleado</label>
+        <div class="report-employee-grid">
+          <div class="report-employee-field report-employee-wide">
+            <label for="reportEmployeeNumber">Número de legajo</label>
+            <input id="reportEmployeeNumber" class="report-employee-input" type="text" maxlength="24" placeholder="Ej.: 12345" autocapitalize="off" autocomplete="off" />
+          </div>
+          <div class="report-employee-field">
+            <label for="reportEmployeeFirst">Nombre</label>
+            <input id="reportEmployeeFirst" class="report-employee-input" type="text" maxlength="60" placeholder="Nombre" autocomplete="given-name" />
+          </div>
+          <div class="report-employee-field">
+            <label for="reportEmployeeLast">Apellido</label>
+            <input id="reportEmployeeLast" class="report-employee-input" type="text" maxlength="60" placeholder="Apellido" autocomplete="family-name" />
+          </div>
+        </div>
+        <label class="report-remember" for="reportRememberEmployee"><input id="reportRememberEmployee" type="checkbox" /> Recordar estos datos en este dispositivo</label>
+        <span class="report-employee-tip">Opcionales. Si los completás, figurarán en el PDF. Se guardan solo si activás la casilla.</span>
+      </div>
+      <div class="report-card">
         <label for="reportPeriod">Período del informe</label>
         <select id="reportPeriod">
           <option value="payroll">Laboral · del 24 al 23</option>
@@ -15781,7 +15826,7 @@ body.light #reportModal select,body.light #reportModal input{color-scheme:light}
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.4.8';
+const CURRENT_VERSION='5.4.9';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -20874,6 +20919,37 @@ const reportTypeNames={overtime:'Horas extras',changes:'Cambios de turno',licens
 const reportTypeEl=$('#reportType'),reportPeriodEl=$('#reportPeriod'),reportMonthEl=$('#reportMonth');
 const reportStartEl=$('#reportStart'),reportEndEl=$('#reportEnd'),reportDetailEl=$('#reportDetail');
 const reportPreviewEl=$('#reportPreview'),reportStatusEl=$('#reportStatus'),reportGenerateBtn=$('#reportGenerateBtn');
+const reportEmployeeNumberEl=$('#reportEmployeeNumber'),reportEmployeeFirstEl=$('#reportEmployeeFirst'),reportEmployeeLastEl=$('#reportEmployeeLast');
+const reportRememberEmployeeEl=$('#reportRememberEmployee');
+const REPORT_EMPLOYEE_STORAGE_KEY='turno4x4.reportEmployee.v1';
+const reportCleanIdentityField=el=>el.value.trim().replace(/\s+/g,' ');
+function reportEmployeeData(){
+ return {number:reportCleanIdentityField(reportEmployeeNumberEl),first:reportCleanIdentityField(reportEmployeeFirstEl),last:reportCleanIdentityField(reportEmployeeLastEl)};
+}
+function reportLoadRememberedEmployee(){
+ try{
+  const raw=localStorage.getItem(REPORT_EMPLOYEE_STORAGE_KEY);
+  if(!raw)return;
+  const saved=JSON.parse(raw);
+  if(!saved||typeof saved!=='object')return;
+  reportEmployeeNumberEl.value=typeof saved.number==='string'?saved.number.slice(0,24):'';
+  reportEmployeeFirstEl.value=typeof saved.first==='string'?saved.first.slice(0,60):'';
+  reportEmployeeLastEl.value=typeof saved.last==='string'?saved.last.slice(0,60):'';
+  reportRememberEmployeeEl.checked=true;
+ }catch(e){ /* HTML privado o almacenamiento no disponible: usar campos temporales */ }
+}
+function reportSaveEmployeePreference(){
+ try{
+  if(reportRememberEmployeeEl.checked){
+   localStorage.setItem(REPORT_EMPLOYEE_STORAGE_KEY,JSON.stringify(reportEmployeeData()));
+  }else localStorage.removeItem(REPORT_EMPLOYEE_STORAGE_KEY);
+ }catch(e){ /* Guardado opcional: no bloquear generación PDF */ }
+}
+reportLoadRememberedEmployee();
+[reportEmployeeNumberEl,reportEmployeeFirstEl,reportEmployeeLastEl].forEach(el=>{
+ el.addEventListener('input',()=>{reportSaveEmployeePreference();refreshReportPreview()});
+});
+reportRememberEmployeeEl.addEventListener('change',reportSaveEmployeePreference);
 function openReportGenerator(){
  reportTypeEl.value='overtime';
  reportPeriodEl.value='payroll';
@@ -20914,7 +20990,7 @@ function reportCollect(){
  const bounds=reportBounds();
  const turn=activeTurnKey();
  const type=reportTypeEl.value;
- const result={bounds,turn,turnLabel:scheduleName(turn),type,typeLabel:reportTypeNames[type],sections:[],summary:[],totalRows:0,detailLevel:reportDetailEl.value};
+ const result={bounds,turn,turnLabel:scheduleName(turn),type,typeLabel:reportTypeNames[type],sections:[],summary:[],totalRows:0,detailLevel:reportDetailEl.value,employee:reportEmployeeData()};
  const addSection=(key,title,rows)=>{
   if(type==='all'||type===key){result.sections.push({title,rows});result.totalRows+=rows.length;}
  };
@@ -20988,7 +21064,9 @@ function refreshReportPreview(){
  try{
   const report=reportCollect();
   reportPreviewEl.innerHTML='<b>Vista previa del informe</b><p id="reportPreviewText"></p>';
-  $('#reportPreviewText').textContent=`Turno: ${report.turnLabel}\nDel ${reportDateText(report.bounds.startKey)} al ${reportDateText(report.bounds.endKey)}\n${report.summary.join(' | ')}\n${report.detailLevel==='summary'?'PDF resumido · '+report.totalRows+' '+(report.totalRows===1?'registro contabilizado':'registros contabilizados')+', sin desglose por fecha.':report.totalRows+' '+(report.totalRows===1?'registro detallado':'registros detallados')+'.'}`;
+  const emp=report.employee;
+  const employeeName=[emp.first,emp.last].filter(Boolean).join(' ');
+  $('#reportPreviewText').textContent=`Empleado: ${employeeName||'Sin completar'} · Legajo: ${emp.number||'Sin completar'}\nTurno: ${report.turnLabel}\nDel ${reportDateText(report.bounds.startKey)} al ${reportDateText(report.bounds.endKey)}\n${report.summary.join(' | ')}\n${report.detailLevel==='summary'?'PDF resumido · '+report.totalRows+' '+(report.totalRows===1?'registro contabilizado':'registros contabilizados')+', sin desglose por fecha.':report.totalRows+' '+(report.totalRows===1?'registro detallado':'registros detallados')+'.'}`;
   $('#reportPreviewText').style.whiteSpace='pre-line';
   reportGenerateBtn.disabled=false;
   reportStatusEl.textContent='';
@@ -21041,6 +21119,11 @@ function reportBuildPageCanvases(report){
   rect(M,41,91,75,'#1cbaa0',19);text('4×4',M+45,89,'bold 32px Arial','#fff','center');
   text('CALENDARIO DE TURNOS 4×4',M+112,70,'bold 29px Arial','#ffffff');
   text('INFORME PERSONAL DE REGISTROS',M+112,112,'bold 17px Arial','#a6d7d7');
+  // Referencia abreviada en cada hoja; la primera incluye ficha completa.
+  ctx.font='15px Arial';
+  const shortIdentity=`${[report.employee.first,report.employee.last].filter(Boolean).join(' ')||'Empleado sin completar'}  ·  Legajo: ${report.employee.number||'Sin completar'}`;
+  const clippedIdentity=reportWrapText(ctx,shortIdentity,R-M-112,1)[0]||'';
+  text(clippedIdentity,M+112,146,'15px Arial','#d3e9e9');
   y=224;
   pages.push({canvas,ctx});
  }
@@ -21048,6 +21131,21 @@ function reportBuildPageCanvases(report){
  function label(s,yy){text(s,M,yy,'bold 18px Arial','#6b8291')}
  newPage();
  text(report.typeLabel.toUpperCase(),M,y,'bold 36px Arial','#123c50');y+=46;
+ // Datos identificatorios visibles y legibles en el PDF, incluso si falta algún campo.
+ const emp=report.employee;
+ const identityRows=[['LEGAJO',emp.number||'Sin completar'],['NOMBRE',emp.first||'Sin completar'],['APELLIDO',emp.last||'Sin completar']];
+ const identityLines=identityRows.map(([k,v])=>{ctx.font='bold 21px Arial';return [k,reportWrapText(ctx,v,R-M-205)]});
+ const identityHeight=52+identityLines.reduce((total,[_k,lines])=>total+Math.max(1,lines.length)*27+7,0)+16;
+ ensure(identityHeight+33);
+ rect(M,y,R-M,identityHeight,'#edf6f6',13);
+ text('DATOS DEL EMPLEADO',M+17,y+33,'bold 20px Arial','#175d64');
+ let identY=y+66;
+ for(const [key,lines] of identityLines){
+  text(key,M+18,identY,'bold 16px Arial','#65818e');
+  for(const line of lines){text(line,M+167,identY,'bold 21px Arial','#17394d');identY+=27}
+  identY+=7;
+ }
+ y+=identityHeight+26;
  label(`Turno: ${report.turnLabel}   |   Período: ${reportDateText(report.bounds.startKey)} - ${reportDateText(report.bounds.endKey)}`,y);y+=27;
  label(`Generado el ${new Date().toLocaleDateString('es-AR')} · Informe personal para comparar con RR. HH.`,y);y+=34;
  label(`Contenido: ${report.detailLevel==='summary'?'Solo resumen':'Resumen y detalle por fecha'}`,y);y+=30;
