@@ -14475,6 +14475,26 @@ body.light #statsModal .worklog-stat-btn::after{opacity:.72;}
  opacity:0!important;
 }
 
+
+/* ===== V5.4.4 · SHARE · LOGO ORIGINAL DE WHATSAPP =====
+   Reemplaza el texto "WA" por un ícono vectorial de WhatsApp dentro del
+   mismo círculo blanco, manteniendo tamaño, contraste y comportamiento.
+*/
+.share-wa-icon{
+  overflow:hidden;
+}
+.share-wa-icon svg{
+  width:22px;
+  height:22px;
+  display:block;
+}
+.share-wa-icon .wa-bubble{
+  fill:#25D366;
+}
+.share-wa-icon .wa-phone{
+  fill:#fff;
+}
+
 </style>
 </head>
 <body class="notranslate">
@@ -14805,7 +14825,7 @@ body.light #statsModal .worklog-stat-btn::after{opacity:.72;}
     </div>
 
     <button id="shareWhatsAppBtn" class="share-main-btn whatsapp" type="button">
-      <span class="share-wa-icon">WA</span>
+      <span class="share-wa-icon" aria-hidden="true"><svg viewBox="0 0 32 32" focusable="false"><path class="wa-bubble" d="M27.28 4.68A15.36 15.36 0 0 0 2.72 23.3L1 31l7.9-1.67A15.36 15.36 0 1 0 27.28 4.68Zm-11.9 22.1c-2.12 0-4.2-.56-6.03-1.61l-.43-.25-4.69.99 1-4.57-.28-.46a11.42 11.42 0 1 1 10.43 5.9Z"/><path class="wa-phone" d="M22.23 18.96c-.32-.16-1.9-.94-2.2-1.05-.29-.11-.51-.16-.72.16-.21.31-.82 1.04-1.01 1.25-.18.21-.37.24-.69.08a9.23 9.23 0 0 1-2.72-1.68 10.15 10.15 0 0 1-1.88-2.34c-.2-.32-.02-.49.14-.65.15-.15.32-.37.48-.56.16-.19.21-.32.32-.53.11-.21.05-.4-.03-.56-.08-.16-.72-1.74-.99-2.38-.26-.62-.53-.54-.72-.55h-.61c-.21 0-.56.08-.85.4-.29.32-1.12 1.09-1.12 2.65 0 1.56 1.15 3.07 1.31 3.28.16.21 2.26 3.45 5.48 4.83.77.33 1.37.53 1.84.68.77.24 1.47.2 2.02.12.62-.09 1.9-.78 2.17-1.53.27-.75.27-1.39.19-1.53-.08-.13-.29-.21-.61-.37Z"/></svg></span>
       <span>
         <b>COMPARTIR POR WHATSAPP</b>
         <small>Opción recomendada</small>
@@ -14877,7 +14897,7 @@ body.light #statsModal .worklog-stat-btn::after{opacity:.72;}
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.4.3</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.4.4</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -15109,7 +15129,7 @@ body.light #statsModal .worklog-stat-btn::after{opacity:.72;}
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.4.3</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.4.4</span></span>
             </div>
           </div>
 
@@ -15636,7 +15656,7 @@ body.light #statsModal .worklog-stat-btn::after{opacity:.72;}
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.4.3';
+const CURRENT_VERSION='5.4.4';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
