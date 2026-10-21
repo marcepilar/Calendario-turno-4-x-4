@@ -15183,7 +15183,7 @@ body.light #turn5Select{
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.5.3</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.5.4</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -15415,7 +15415,7 @@ body.light #turn5Select{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.5.3</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.5.4</span></span>
             </div>
           </div>
 
@@ -16024,7 +16024,7 @@ body.light #turn5Select{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.5.3';
+const CURRENT_VERSION='5.5.4';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -20748,99 +20748,117 @@ $('#settingsAgendaBtn').onclick=()=>pushAppView('agenda');
 $('#settingsVacationBtn').onclick=()=>pushAppView('vacations');
 $('#settingsStatsBtn').onclick=()=>pushAppView('stats');
 
-let yearHoldDelayTimer=null;
-let yearHoldRepeatTimer=null;
-let yearHoldStarted=false;
-let yearHoldCount=0;
-let yearHoldStartTime=0;
-let yearHoldTier=1;
+/* ===== V5.5.4 · NAVEGACIÓN ANUAL CON ACELERACIÓN POR TIEMPO TOTAL =====
+   Click corto: +/- 1 año.
+   Mantener: desde 1 s +/- 1; 3 s +/- 5; 6 s +/- 10;
+   10 s +/- 100; 12 s +/- 500.
+   Los tiempos se miden desde pointerdown (no desde el nivel anterior).
+   Ningún paso altera el turno, la rotación ni los datos almacenados.
+*/
+const YEAR_HOLD_TIERS=[
+ {fromMs:12000,step:500,repeatMs:420},
+ {fromMs:10000,step:100,repeatMs:350},
+ {fromMs:6000,step:10,repeatMs:260},
+ {fromMs:3000,step:5,repeatMs:210},
+ {fromMs:1000,step:1,repeatMs:170}
+];
+let activeYearHold=null;
 
-function stopYearHold(btn){
- if(yearHoldDelayTimer){clearTimeout(yearHoldDelayTimer);yearHoldDelayTimer=null}
- if(yearHoldRepeatTimer){clearTimeout(yearHoldRepeatTimer);yearHoldRepeatTimer=null}
- yearHoldStarted=false;
- yearHoldCount=0;
- yearHoldStartTime=0;
- yearHoldTier=1;
- btn?.classList.remove('year-hold-active');
+function stopYearHold(){
+ const hold=activeYearHold;
+ if(!hold)return;
+ activeYearHold=null;
+ if(hold.timer!==null)clearTimeout(hold.timer);
+ hold.button.classList.remove('year-hold-active');
+ if(hold.button.hasPointerCapture?.(hold.pointerId)){
+  try{hold.button.releasePointerCapture(hold.pointerId)}catch{}
+ }
 }
 
 function stepYear(delta){
- // Mantiene la vista en un rango seguro para Date de JavaScript.
- yearViewYear=Math.max(1,Math.min(9999,yearViewYear+delta));
+ // Mantiene el rango válido original: 1..9999 (incluidos años 1 a 99).
+ const next=Math.max(1,Math.min(9999,yearViewYear+delta));
+ if(next===yearViewYear)return;
+ yearViewYear=next;
  renderYear();
 }
 
-function yearStepFromHeldTime(heldMs){
- // 0–14999 ms: de a 1 año.
- // 15000–19999 ms: de a 10 años.
- // 20000 ms en adelante: de a 50 años.
- if(heldMs>=20000)return 50;
- if(heldMs>=15000)return 10;
- return 1;
+function yearTierForHeldMs(heldMs){
+ return YEAR_HOLD_TIERS.find(tier=>heldMs>=tier.fromMs)||null;
 }
 
-function scheduleYearRepeat(btn,delta){
- yearHoldStarted=true;
- btn.classList.add('year-hold-active');
-
- const heldMs=Date.now()-yearHoldStartTime;
- const newTier=yearStepFromHeldTime(heldMs);
-
- if(newTier!==yearHoldTier){
-  yearHoldTier=newTier;
-  vibrate(newTier===10?22:34);
+function repeatYearHold(hold){
+ if(activeYearHold!==hold)return;
+ if(!$('#yearModal')?.classList.contains('open')){
+  stopYearHold();
+  return;
  }
-
- stepYear(delta*newTier);
- yearHoldCount++;
-
- // Se mantiene rápido pero controlable.
- // Cuando entra en saltos de 10 o 50 años, baja un poco la frecuencia
- // para que el usuario pueda seguir visualmente los cambios.
- const nextDelay=
-   yearHoldTier===50 ? 150 :
-   yearHoldTier===10 ? 120 :
-   (yearHoldCount<7 ? 120 : (yearHoldCount<20 ? 90 : 70));
-
- yearHoldRepeatTimer=setTimeout(()=>scheduleYearRepeat(btn,delta),nextDelay);
+ const elapsed=Date.now()-hold.startedAt;
+ const tier=yearTierForHeldMs(elapsed);
+ if(!tier){
+  hold.timer=setTimeout(()=>repeatYearHold(hold),Math.max(1,1000-elapsed));
+  return;
+ }
+ if(hold.lastTier!==tier.step){
+  hold.lastTier=tier.step;
+  vibrate(tier.step>=100?22:14);
+ }
+ hold.repeated=true;
+ stepYear(hold.delta*tier.step);
+ // Programar también justo en cada umbral para no demorar la aceleración.
+ const nextTier=YEAR_HOLD_TIERS
+  .filter(t=>t.fromMs>elapsed)
+  .sort((a,b)=>a.fromMs-b.fromMs)[0];
+ const toThreshold=nextTier?nextTier.fromMs-elapsed:Infinity;
+ const wait=Math.max(1,Math.min(tier.repeatMs,toThreshold));
+ hold.timer=setTimeout(()=>repeatYearHold(hold),wait);
 }
 
 function bindYearHold(button,delta){
  button.addEventListener('pointerdown',ev=>{
   if(ev.pointerType==='mouse'&&ev.button!==0)return;
-
-  stopYearHold(button);
-  yearHoldStartTime=Date.now();
-
-  yearHoldDelayTimer=setTimeout(()=>{
-   scheduleYearRepeat(button,delta);
-   vibrate(16);
-  },360);
+  if(!ev.isPrimary || activeYearHold)return;
+  const hold={
+   button,delta,pointerId:ev.pointerId,startedAt:Date.now(),
+   timer:null,repeated:false,lastTier:0
+  };
+  activeYearHold=hold;
+  try{button.setPointerCapture(ev.pointerId)}catch{}
+  // Antes del segundo 1 NO se repite: un toque corto suma/resta una sola vez.
+  hold.timer=setTimeout(()=>repeatYearHold(hold),1000);
  });
 
- button.addEventListener('pointerup',()=>{
-  const wasHolding=yearHoldStarted;
-  stopYearHold(button);
-
-  if(!wasHolding){
-   stepYear(delta);
-  }
+ button.addEventListener('pointerup',ev=>{
+  const hold=activeYearHold;
+  if(!hold||hold.pointerId!==ev.pointerId||hold.button!==button)return;
+  const wasRepeated=hold.repeated;
+  stopYearHold();
+  if(!wasRepeated)stepYear(delta);
  });
-
- button.addEventListener('pointercancel',()=>stopYearHold(button));
-
- button.addEventListener('pointerleave',ev=>{
-  if(ev.pointerType==='mouse'&&ev.buttons){
-   stopYearHold(button);
-  }
+ button.addEventListener('pointercancel',ev=>{
+  if(activeYearHold?.button===button&&activeYearHold.pointerId===ev.pointerId)stopYearHold();
  });
-
- // Evita menú contextual / selección durante pulsación prolongada.
+ button.addEventListener('lostpointercapture',ev=>{
+  if(activeYearHold?.button===button&&activeYearHold.pointerId===ev.pointerId)stopYearHold();
+ });
+ // Acceso por teclado (Enter/Espacio) y tecnología asistiva.
+ // Los clicks normales de mouse/touch ya se gestionan por pointerup.
+ button.addEventListener('click',ev=>{
+  if(ev.detail===0)stepYear(delta);
+ });
  button.addEventListener('contextmenu',ev=>ev.preventDefault());
  button.addEventListener('selectstart',ev=>ev.preventDefault());
  button.addEventListener('dragstart',ev=>ev.preventDefault());
 }
+
+// Evitar temporizadores activos si Android cambia de app o se cierra la vista.
+document.addEventListener('visibilitychange',()=>{
+ if(document.hidden)stopYearHold();
+});
+window.addEventListener('blur',stopYearHold);
+document.querySelectorAll('[data-close="yearModal"]').forEach(btn=>{
+ btn.addEventListener('click',stopYearHold);
+});
 
 bindYearHold($('#yearPrev'),-1);
 bindYearHold($('#yearNext'),1);
