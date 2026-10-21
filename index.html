@@ -524,9 +524,20 @@ body.light .event-count{
   grid-column:1/-1;
   grid-template-columns:1fr !important;
   align-content:center;
-  gap:6px;
-  min-height:72px;
-  padding:8px 11px;
+  gap:8px;
+  min-height:78px;
+  padding:10px 12px 11px;
+}
+#settingsModal .setting-range-row > div:first-child{
+  padding-top:2px;
+  padding-left:2px;
+}
+#settingsModal .setting-range-row b{
+  line-height:1.16;
+}
+#settingsModal .setting-range-row small{
+  line-height:1.22;
+  margin-top:4px;
 }
 #settingsModal .setting-range-row .range-wrap{
   width:100%;
@@ -877,8 +888,11 @@ body.light .event-count{
   }
   #settingsModal .setting-range-row{
     grid-column:1/-1;
-    min-height:60px;
-    padding:6px 9px;
+    min-height:66px;
+    padding:8px 10px 9px;
+  }
+  #settingsModal .setting-range-row > div:first-child{
+    padding-top:1px;
   }
   #settingsModal .setting-range-row .range-wrap{
     grid-template-columns:minmax(0,1fr) 59px;
@@ -954,10 +968,12 @@ body.light .event-count{
   #settingsModal .setting-row b{font-size:11px}
   #settingsModal .setting-row small{font-size:7.5px}
   #settingsModal .setting-range-row{
-    min-height:54px;
-    padding:4px 8px;
-    gap:3px;
+    min-height:60px;
+    padding:7px 9px 8px;
+    gap:5px;
   }
+  #settingsModal .setting-range-row b{line-height:1.14}
+  #settingsModal .setting-range-row small{line-height:1.16;margin-top:3px}
   #settingsModal .setting-range-row .range-wrap input[type="range"]{
     height:25px;
   }
@@ -14182,7 +14198,7 @@ body.light #shareModal .share-qr-url{color:#64758a}
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.3.4</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.3.5</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -14414,7 +14430,7 @@ body.light #shareModal .share-qr-url{color:#64758a}
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.3.4</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.3.5</span></span>
             </div>
           </div>
 
@@ -14941,7 +14957,7 @@ body.light #shareModal .share-qr-url{color:#64758a}
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.3.4';
+const CURRENT_VERSION='5.3.5';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -15603,7 +15619,7 @@ let shortDateFmt=new Intl.DateTimeFormat(currentLocale(),{day:'2-digit',month:'2
 let miniMonthFmt=new Intl.DateTimeFormat(currentLocale(),{month:'short'});
 
 function pad2(n){return String(n).padStart(2,'0')}
-/* ===== V5.3.4 · FECHAS HISTÓRICAS · AÑOS 1–99 SIN DESPLAZAMIENTO A 1900 =====
+/* ===== V5.3.5 · FECHAS HISTÓRICAS · AÑOS 1–99 SIN DESPLAZAMIENTO A 1900 =====
    JavaScript interpreta new Date(1,...) como 1901. Esta fábrica usa setFullYear()
    para que el año mostrado y calculado sea exactamente el elegido por el usuario. */
 function calendarDate(year,month=0,day=1,hour=0,minute=0,second=0,millisecond=0){
