@@ -14525,6 +14525,48 @@ body.light #statsModal .worklog-stat-btn::after{opacity:.72;}
   user-select:none;
 }
 
+
+/* ===== V5.4.8 · INFORMES PDF · VENTANA INDEPENDIENTE ===== */
+#statsModal .stats-head-copy{flex:1;min-width:0}
+#statsModal .stats-head-actions{display:flex;align-items:center;gap:6px;flex-shrink:0}
+#statsModal #openReportBtn{
+  min-width:62px;height:40px;border-radius:12px;padding:0 9px;
+  border:1px solid rgba(71,195,178,.42);color:#d9fff6;
+  background:linear-gradient(180deg,rgba(35,121,111,.31),rgba(23,89,83,.28));
+  font-size:10px;font-weight:950;letter-spacing:.035em;
+  display:flex;align-items:center;justify-content:center;gap:5px;
+}
+#statsModal #openReportBtn:active{transform:scale(.97)}
+#reportModal{z-index:10115}
+#reportModal .report-window{width:min(590px,calc(100vw - 12px));max-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 12px);height:auto;display:flex;flex-direction:column;overflow:hidden;padding:12px 13px 13px;border-radius:21px;}
+#reportModal .report-head{flex:0 0 auto;position:relative;top:auto;padding:3px 0 12px;margin:0 0 8px;align-items:center}
+#reportModal .report-head h2{font-size:21px;display:flex;align-items:center;gap:9px}
+#reportModal .report-head h2 span{background:rgba(44,194,161,.17);border:1px solid rgba(44,194,161,.30);padding:6px;border-radius:10px;font-size:13px;color:#74e9d3}
+#reportModal .report-head small{font-size:9px;line-height:1.5}
+#reportModal .report-content{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:4px 2px 10px;display:flex;flex-direction:column;gap:10px;}
+#reportModal .report-card{border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--panel2);display:flex;flex-direction:column;gap:7px}
+#reportModal .report-card label{color:var(--muted);font-size:10px;font-weight:900;letter-spacing:.02em}
+#reportModal select,#reportModal input[type='month'],#reportModal input[type='date']{
+  display:block;min-height:44px;width:100%;padding:10px 13px;border:1px solid rgba(140,177,195,.25);
+  border-radius:11px;background:var(--panel3);color:var(--text);font-weight:750;font-size:13px;outline:none;
+  color-scheme:dark;
+}
+body.light #reportModal select,body.light #reportModal input{color-scheme:light}
+#reportModal .report-inline{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#reportModal .report-inline >div{min-width:0;display:flex;flex-direction:column;gap:6px}
+#reportModal .report-preview{background:linear-gradient(130deg,rgba(38,188,153,.14),rgba(36,116,209,.08));border:1px solid rgba(63,184,154,.23);border-radius:13px;padding:11px 12px;display:flex;flex-direction:column;gap:5px;}
+#reportModal .report-preview b{font-size:15px;color:var(--text)}
+#reportModal .report-preview p{margin:0;font-size:11px;line-height:1.5;color:var(--muted)}
+#reportModal .report-preview strong{color:#46dbb9}
+#reportModal .report-footer{flex:0 0 auto;border-top:1px solid var(--line);padding-top:12px;display:grid;grid-template-columns:1fr 1.4fr;gap:9px}
+#reportModal .report-footer button{min-height:48px;border-radius:12px;padding:6px;font-size:11px;font-weight:950;border:1px solid var(--line);background:var(--panel2);color:var(--text)}
+#reportModal #reportGenerateBtn{background:linear-gradient(135deg,#1bbf95,#148e90);color:#fff;border-color:rgba(51,225,186,.34)}
+#reportModal #reportGenerateBtn:disabled{opacity:.50}
+#reportModal #reportDatesRow[hidden],#reportModal #reportMonthRow[hidden]{display:none !important;}
+#reportModal .report-warning{font-size:10px;color:var(--muted);line-height:1.45;padding:0 3px}
+#reportModal #reportStatus{min-height:14px;font-size:10px;color:#54dcaf;text-align:center}
+@media(max-height:640px){#reportModal .report-window{padding:8px 11px}#reportModal .report-card{padding:9px;gap:5px}#reportModal .report-content{gap:7px}}
+
 </style>
 </head>
 <body class="notranslate">
@@ -14927,7 +14969,7 @@ body.light #statsModal .worklog-stat-btn::after{opacity:.72;}
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.4.5</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.4.8</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -15159,7 +15201,7 @@ body.light #statsModal .worklog-stat-btn::after{opacity:.72;}
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.4.5</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.4.8</span></span>
             </div>
           </div>
 
@@ -15543,7 +15585,7 @@ body.light #statsModal .worklog-stat-btn::after{opacity:.72;}
 
 <!-- Stats -->
 <div id="statsModal" class="backdrop"><div class="modal glass stats-modal-window">
-  <div class="modal-head stats-head"><div class="stats-head-copy"><h2><span class="stats-head-icon">▥</span>Estadísticas</h2><small id="statsSubtitle"></small></div><button class="close-btn" data-close="statsModal" aria-label="Cerrar estadísticas">×</button></div>
+  <div class="modal-head stats-head"><div class="stats-head-copy"><h2><span class="stats-head-icon">▥</span>Estadísticas</h2><small id="statsSubtitle"></small></div><div class="stats-head-actions"><button type="button" id="openReportBtn" aria-label="Abrir Informes PDF" title="Generar informe PDF">▤ PDF ›</button><button class="close-btn" data-close="statsModal" aria-label="Cerrar estadísticas">×</button></div></div>
   <div id="statsCards" class="stats-grid"></div>
   <div class="stats-section stats-turn-end">
     <h3><span class="stats-title-dot"></span>Tu turno termina en</h3>
@@ -15610,6 +15652,59 @@ body.light #statsModal .worklog-stat-btn::after{opacity:.72;}
   </div>
 </div></div>
 
+
+
+<!-- V5.4.8 · Generador local de informes PDF para comparación con RR.HH. -->
+<div id="reportModal" class="backdrop" role="dialog" aria-modal="true" aria-labelledby="reportTitle">
+  <div class="modal glass report-window">
+    <div class="modal-head report-head">
+      <div><h2 id="reportTitle"><span>PDF</span> Informes laborales</h2><small>Compará tus registros con el informe de RR. HH.</small></div>
+      <button class="close-btn" data-close="reportModal" aria-label="Cerrar informe">×</button>
+    </div>
+    <div class="report-content">
+      <div class="report-card">
+        <label for="reportType">¿Qué querés incluir?</label>
+        <select id="reportType">
+          <option value="overtime">Horas extras</option>
+          <option value="changes">Cambios de turno</option>
+          <option value="licenses">Licencias laborales</option>
+          <option value="vacations">Vacaciones</option>
+          <option value="agenda">Eventos de Agenda</option>
+          <option value="all">Informe completo</option>
+        </select>
+      </div>
+      <div class="report-card">
+        <label for="reportPeriod">Período del informe</label>
+        <select id="reportPeriod">
+          <option value="payroll">Laboral · del 24 al 23</option>
+          <option value="calendar">Mes calendario · del 1 al último</option>
+          <option value="custom">Personalizado · desde / hasta</option>
+        </select>
+        <div id="reportMonthRow">
+          <label for="reportMonth">Mes a consultar</label>
+          <input id="reportMonth" type="month" min="1900-01" max="2100-12" />
+        </div>
+        <div id="reportDatesRow" class="report-inline" hidden>
+          <div><label for="reportStart">Desde</label><input id="reportStart" type="date" /></div>
+          <div><label for="reportEnd">Hasta</label><input id="reportEnd" type="date" /></div>
+        </div>
+      </div>
+      <div class="report-card">
+        <label for="reportDetail">Contenido del PDF</label>
+        <select id="reportDetail">
+          <option value="detail">Resumen + detalle por fecha</option>
+          <option value="summary">Solo resumen</option>
+        </select>
+      </div>
+      <div id="reportPreview" class="report-preview" aria-live="polite">
+        <b>Resumen del informe</b><p>Elegí las opciones para consultar tus registros.</p>
+      </div>
+      <div class="report-warning">Informe personal basado en tus datos guardados en este dispositivo. No reemplaza la liquidación oficial de RR. HH. La descarga es local y no envía datos a servidores.</div>
+    </div>
+    <div class="report-footer"><button type="button" data-close="reportModal">VOLVER</button><button type="button" id="reportGenerateBtn">⬇ GENERAR PDF ›</button></div>
+    <div id="reportStatus" aria-live="polite"></div>
+  </div>
+</div>
 
 <!-- Detalle del registro laboral -->
 <div id="worklogStatsDetailModal" class="backdrop worklog-stats-detail-backdrop">
@@ -15686,7 +15781,7 @@ body.light #statsModal .worklog-stat-btn::after{opacity:.72;}
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.4.5';
+const CURRENT_VERSION='5.4.8';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -19262,6 +19357,7 @@ const APP_VIEW_TO_MODAL={
  vacations:'vacationModal',
  year:'yearModal',
  stats:'statsModal',
+ report:'reportModal',
  worklogDetail:'worklogStatsDetailModal',
  holidayDetail:'holidayStatsDetailModal'
 };
@@ -19300,6 +19396,7 @@ function closeAppNavigationViews(){
   'vacationModal',
   'yearModal',
   'statsModal',
+  'reportModal',
   'worklogStatsDetailModal',
   'holidayStatsDetailModal'
  ].forEach(id=>{
@@ -19359,6 +19456,11 @@ function showAppViewFromHistory(view){
  else if(view==='stats'){
   renderStats();
   openModalWithoutHistory('statsModal');
+ }
+ else if(view==='report'){
+  renderStats();
+  openModalWithoutHistory('statsModal');
+  openModalWithoutHistory('reportModal');
  }
  else if(view==='worklogDetail'){
   renderStats();
@@ -20767,6 +20869,293 @@ setInterval(()=>{
  const stats=$('#statsModal');
  if(stats?.classList.contains('open'))renderTurnEndCard(activeTurnKey());
 },1000);
+/* ===== V5.4.8 · INFORMES PDF OFFLINE · NO MODIFICA LOS REGISTROS ===== */
+const reportTypeNames={overtime:'Horas extras',changes:'Cambios de turno',licenses:'Licencias laborales',vacations:'Vacaciones',agenda:'Eventos de Agenda',all:'Informe completo'};
+const reportTypeEl=$('#reportType'),reportPeriodEl=$('#reportPeriod'),reportMonthEl=$('#reportMonth');
+const reportStartEl=$('#reportStart'),reportEndEl=$('#reportEnd'),reportDetailEl=$('#reportDetail');
+const reportPreviewEl=$('#reportPreview'),reportStatusEl=$('#reportStatus'),reportGenerateBtn=$('#reportGenerateBtn');
+function openReportGenerator(){
+ reportTypeEl.value='overtime';
+ reportPeriodEl.value='payroll';
+ reportDetailEl.value='detail';
+ reportMonthEl.value=`${String(viewYear).padStart(4,'0')}-${String(viewMonth+1).padStart(2,'0')}`;
+ const bound=overtimePayrollPeriod(viewYear,viewMonth);
+ reportStartEl.value=bound.startKey;
+ reportEndEl.value=bound.endKey;
+ reportStatusEl.textContent='';
+ refreshReportPreview();
+ openModal('reportModal');
+}
+function reportBounds(){
+ const mode=reportPeriodEl.value;
+ let start,end;
+ if(mode==='custom'){
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(reportStartEl.value)||!/^\d{4}-\d{2}-\d{2}$/.test(reportEndEl.value))throw Error('Elegí las dos fechas del período.');
+  start=parseDateKey(reportStartEl.value);end=parseDateKey(reportEndEl.value);
+ }else{
+  const m=/^(\d{4})-(\d{2})$/.exec(reportMonthEl.value);
+  if(!m)throw Error('Seleccioná el mes del informe.');
+  const year=Number(m[1]),month=Number(m[2])-1;
+  if(year<1900||year>2100||month<0||month>11)throw Error('Mes fuera de rango.');
+  if(mode==='payroll')({start,end}=overtimePayrollPeriod(year,month));
+  else{start=calendarDate(year,month,1);end=calendarDate(year,month+1,0)}
+ }
+ const startKey=dateKey(start),endKey=dateKey(end);
+ if(startKey>endKey)throw Error('La fecha «Desde» debe ser anterior o igual a «Hasta».');
+ const days=diffDays(end,start)+1;
+ if(days<1||days>366)throw Error('Elegí un período máximo de 366 días para generar el informe.');
+ return {start,end,startKey,endKey,endExclusive:addDays(end,1),days,mode};
+}
+function reportDateText(key){
+ const [y,m,d]=key.split('-');return `${d}/${m}/${y}`;
+}
+function reportHours(h){return worklogOvertimeText(Math.round((Number(h)||0)*100)/100)}
+function reportCollect(){
+ const bounds=reportBounds();
+ const turn=activeTurnKey();
+ const type=reportTypeEl.value;
+ const result={bounds,turn,turnLabel:scheduleName(turn),type,typeLabel:reportTypeNames[type],sections:[],summary:[],totalRows:0,detailLevel:reportDetailEl.value};
+ const addSection=(key,title,rows)=>{
+  if(type==='all'||type===key){result.sections.push({title,rows});result.totalRows+=rows.length;}
+ };
+ if(type==='all'||type==='overtime'){
+  // Usa exactamente el mismo motor de prorrateo que Estadísticas (incluye M/N cruzando medianoche).
+  const data=overtimeStatsForBounds(turn,bounds.start,bounds.endExclusive);
+  const total={M:0,N:0,unknown:0};
+  const rows=data.records.map(r=>{
+   const code=['M','N'].includes(r.overtimeCode)?r.overtimeCode:'unknown';
+   total[code]+=Number(r.periodOvertime)||0;
+   const desc=code==='M'?'Turno mañana (M)':code==='N'?'Turno noche (N)':'Sin turno M/N (registro anterior)';
+   const partial=r.splitAcrossPeriod?`Imputadas ${reportHours(r.periodOvertime)} h de ${reportHours(r.overtimeTotal)} h registradas por cruce de período.`:'';
+   return {date:r.date,detail:desc,value:`${reportHours(r.periodOvertime)} h`,note:[partial,r.note].filter(Boolean).join(' · ')};
+  });
+  const totalH=total.M+total.N+total.unknown;
+  result.summary.push(`Horas extras: ${reportHours(totalH)} h (M ${reportHours(total.M)} h · N ${reportHours(total.N)} h${total.unknown?` · sin tipo ${reportHours(total.unknown)} h`:''})`);
+  addSection('overtime','HORAS EXTRAS · REGISTRO FECHA POR FECHA',rows);
+ }
+ if(type==='all'||type==='changes'){
+  const rows=loadWorklogData().map(normalizeWorklog)
+   .filter(r=>r.turn===turn&&r.workedCode&&r.date>=bounds.startKey&&r.date<=bounds.endKey)
+   .sort((a,b)=>a.date.localeCompare(b.date))
+   .map(r=>({date:r.date,detail:`Cobertura: ${worklogCodeLabel(r.workedCode)}`,value:'Cambio',note:`Programado: ${codeText(turn,codeFor(turn,parseDateKey(r.date)))}${r.note?' · '+r.note:''}`}));
+  result.summary.push(`Cambios de turno: ${rows.length}`);
+  addSection('changes','CAMBIOS DE TURNO',rows);
+ }
+ if(type==='all'||type==='licenses'){
+  const rows=loadLicenseData().map(normalizeLicense)
+   .filter(r=>r.turn===turn&&r.start&&r.end&&r.start<=bounds.endKey&&r.end>=bounds.startKey)
+   .sort((a,b)=>a.start.localeCompare(b.start)).map(r=>{
+    const left=r.start<bounds.startKey?bounds.startKey:r.start;
+    const right=r.end>bounds.endKey?bounds.endKey:r.end;
+    let workdays=0;
+    for(let d=parseDateKey(left);dateKey(d)<=right;d=addDays(d,1)){
+     if(isWorkCodeForHoliday(turn,codeFor(turn,d)))workdays++;
+    }
+    return {date:left,detail:r.type||'Licencia',value:`${workdays} jorn.`,note:`Del ${reportDateText(r.start)} al ${reportDateText(r.end)}${r.note?' · '+r.note:''}`};
+   });
+  result.summary.push(`Períodos de licencias: ${rows.length}`);
+  addSection('licenses','LICENCIAS · JORNADAS LABORALES AFECTADAS',rows);
+ }
+ if(type==='all'||type==='vacations'){
+  const rows=loadVacationData().map(normalizeVacation)
+   .filter(r=>r.start&&r.end&&r.start<=bounds.endKey&&r.end>=bounds.startKey)
+   .sort((a,b)=>a.start.localeCompare(b.start))
+   .map(r=>{
+    const left=r.start<bounds.startKey?bounds.startKey:r.start;
+    const right=r.end>bounds.endKey?bounds.endKey:r.end;
+    return {date:left,detail:r.title||'Vacaciones',value:`${diffDays(parseDateKey(right),parseDateKey(left))+1} días`,note:`Período guardado: ${reportDateText(r.start)} a ${reportDateText(r.end)}`};
+   });
+  result.summary.push(`Períodos de vacaciones: ${rows.length}`);
+  addSection('vacations','VACACIONES',rows);
+ }
+ if(type==='all'||type==='agenda'){
+  const rows=[];
+  for(let d=new Date(bounds.start);d<bounds.endExclusive;d=addDays(d,1)){
+   const entries=agendaForDate(d);
+   entries.forEach(item=>{
+    rows.push({date:dateKey(d),detail:`${item.time||'Todo el día'} · ${item.title||'Evento'}`,value:'Agenda',note:[item.notes,item.repeat&&item.repeat!=='none'?repeatLabel(item.repeat):''].filter(Boolean).join(' · ')});
+   });
+   if(rows.length>300)throw Error('Hay más de 300 eventos en el período. Elegí un rango menor para el PDF.');
+  }
+  result.summary.push(`Eventos de Agenda: ${rows.length}`);
+  addSection('agenda','EVENTOS DE AGENDA',rows);
+ }
+ return result;
+}
+function refreshReportPreview(){
+ $('#reportMonthRow').hidden=reportPeriodEl.value==='custom';
+ $('#reportDatesRow').hidden=reportPeriodEl.value!=='custom';
+ try{
+  const report=reportCollect();
+  reportPreviewEl.innerHTML='<b>Vista previa del informe</b><p id="reportPreviewText"></p>';
+  $('#reportPreviewText').textContent=`Turno: ${report.turnLabel}\nDel ${reportDateText(report.bounds.startKey)} al ${reportDateText(report.bounds.endKey)}\n${report.summary.join(' | ')}\n${report.detailLevel==='summary'?'PDF resumido · '+report.totalRows+' '+(report.totalRows===1?'registro contabilizado':'registros contabilizados')+', sin desglose por fecha.':report.totalRows+' '+(report.totalRows===1?'registro detallado':'registros detallados')+'.'}`;
+  $('#reportPreviewText').style.whiteSpace='pre-line';
+  reportGenerateBtn.disabled=false;
+  reportStatusEl.textContent='';
+ }catch(err){
+  reportPreviewEl.innerHTML='<b>Revisá el período</b><p id="reportPreviewText"></p>';
+  $('#reportPreviewText').textContent=err.message;
+  reportGenerateBtn.disabled=true;
+ }
+}
+[reportTypeEl,reportPeriodEl,reportMonthEl,reportStartEl,reportEndEl,reportDetailEl].forEach(el=>{
+ el.addEventListener('change',refreshReportPreview);
+ el.addEventListener('input',refreshReportPreview);
+});
+$('#openReportBtn').onclick=openReportGenerator;
+
+/* Motor PDF local basado en páginas Canvas + JPEG incrustado en PDF estándar.
+   Funciona sin CDNs, API, Internet ni permiso de impresión. */
+function reportWrapText(ctx,text,width,maxLines=99){
+ const words=String(text??'').replace(/\s+/g,' ').trim().split(' ').filter(Boolean);
+ const lines=[];let line='';
+ const addWord=(word)=>{
+  if(ctx.measureText(word).width<=width)return [word];
+  // Cortar palabras larguísimas (URL, notas sin espacios) sin invadir columnas.
+  const parts=[];let fragment='';
+  for(const char of word){if(fragment&&ctx.measureText(fragment+char).width>width){parts.push(fragment);fragment='';}fragment+=char;}
+  if(fragment)parts.push(fragment);return parts;
+ };
+ for(const word of words){
+  for(const piece of addWord(word)){
+   const trial=line?line+' '+piece:piece;
+   if(line&&ctx.measureText(trial).width>width){lines.push(line);line=piece;}else line=trial;
+  }
+ }
+ if(line)lines.push(line);
+ return lines.slice(0,maxLines);
+}
+function reportBuildPageCanvases(report){
+ const W=1240,H=1754,M=68,R=W-M;
+ const pages=[];let ctx=null,canvas=null,y=0;
+ function text(t,x,yy,font,color='#162536',align='left'){
+  ctx.font=font;ctx.fillStyle=color;ctx.textAlign=align;ctx.textBaseline='alphabetic';ctx.fillText(String(t),x,yy);
+ }
+ function rect(x,yy,w,h,color,radius=0){ctx.fillStyle=color;ctx.beginPath();ctx.roundRect(x,yy,w,h,radius);ctx.fill()}
+ function newPage(){
+  canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;
+  ctx=canvas.getContext('2d',{alpha:false});
+  rect(0,0,W,H,'#ffffff');
+  rect(0,0,W,168,'#122d43');
+  rect(0,0,10,168,'#21bd9f');
+  rect(M,41,91,75,'#1cbaa0',19);text('4×4',M+45,89,'bold 32px Arial','#fff','center');
+  text('CALENDARIO DE TURNOS 4×4',M+112,70,'bold 29px Arial','#ffffff');
+  text('INFORME PERSONAL DE REGISTROS',M+112,112,'bold 17px Arial','#a6d7d7');
+  y=224;
+  pages.push({canvas,ctx});
+ }
+ function ensure(height){if(y+height>H-146)newPage()}
+ function label(s,yy){text(s,M,yy,'bold 18px Arial','#6b8291')}
+ newPage();
+ text(report.typeLabel.toUpperCase(),M,y,'bold 36px Arial','#123c50');y+=46;
+ label(`Turno: ${report.turnLabel}   |   Período: ${reportDateText(report.bounds.startKey)} - ${reportDateText(report.bounds.endKey)}`,y);y+=27;
+ label(`Generado el ${new Date().toLocaleDateString('es-AR')} · Informe personal para comparar con RR. HH.`,y);y+=34;
+ label(`Contenido: ${report.detailLevel==='summary'?'Solo resumen':'Resumen y detalle por fecha'}`,y);y+=30;
+ const summaryLines=[];
+ ctx.font='bold 21px Arial';
+ for(const line of report.summary)summaryLines.push(...reportWrapText(ctx,line,W-M*2-50));
+ const summaryH=Math.max(82,summaryLines.length*31+38);
+ ensure(summaryH+45);
+ rect(M,y,R-M,summaryH,'#e9f7f3',16);
+ let sy=y+35;
+ for(const line of summaryLines){text(line,M+22,sy,'bold 21px Arial','#0c6255');sy+=31}
+ y+=summaryH+30;
+ if(report.detailLevel==='summary'){
+  ensure(80);
+  rect(M,y,R-M,66,'#f6f9fb',9);
+  text(`${report.totalRows} ${report.totalRows===1?'registro contabilizado':'registros contabilizados'} · Desglose por fecha no incluido.`,M+18,y+40,'18px Arial','#556d7e');
+  y+=88;
+ }
+ for(const section of (report.detailLevel==='summary'?[]:report.sections)){
+  ensure(90);
+  rect(M,y,R-M,48,'#e7eef2',9);
+  text(section.title,M+18,y+31,'bold 19px Arial','#19465b');
+  y+=65;
+  if(!section.rows.length){
+   ensure(70);rect(M,y,R-M,54,'#f7f9fb',9);
+   text('Sin registros en el período seleccionado.',M+18,y+35,'17px Arial','#7e8f9c');y+=71;continue;
+  }
+  let index=0;
+  for(const row of section.rows){
+   ctx.font='bold 19px Arial';
+   const details=reportWrapText(ctx,row.detail,810);
+   ctx.font='16px Arial';
+   const notes=row.note?reportWrapText(ctx,row.note,1030):[];
+   const height=80+Math.max(0,details.length-1)*25+notes.length*22;
+   ensure(height+8);
+   if(index%2===0)rect(M,y,R-M,height,'#f6f9fb',9);
+   text(reportDateText(row.date),M+15,y+27,'bold 18px Arial','#287c84');
+   text(row.value,M+R-M-18,y+27,'bold 19px Arial','#175a54','right');
+   let dy=y+53;
+   for(const part of details){text(part,M+15,dy,'bold 19px Arial','#182f3d');dy+=25}
+   for(const part of notes){text(part,M+15,dy,'16px Arial','#5d7382');dy+=22}
+   y+=height+8;index++;
+  }
+  y+=13;
+ }
+ ensure(116);
+ rect(M,y,R-M,90,'#f0f4f6',10);
+ ctx.font='15px Arial';
+ const disclaimer='Documento personal elaborado con la información ingresada en Calendario 4×4. No es constancia de RR. HH., ni certifica liquidaciones de sueldo.';
+ let yy=y+26;for(const line of reportWrapText(ctx,disclaimer,R-M-40)){text(line,M+20,yy,'15px Arial','#596d78');yy+=23}
+ if(report.type==='overtime'||report.type==='all')text('Horas nocturnas: se contabiliza solo el tramo comprendido en el período.',M+20,yy+3,'14px Arial','#596d78');
+ pages.forEach(({ctx:pgCtx},i)=>{
+  pgCtx.strokeStyle='#dde7eb';pgCtx.lineWidth=2;pgCtx.beginPath();pgCtx.moveTo(M,H-98);pgCtx.lineTo(R,H-98);pgCtx.stroke();
+  pgCtx.font='15px Arial';pgCtx.fillStyle='#6c8491';pgCtx.textBaseline='alphabetic';pgCtx.textAlign='left';
+  pgCtx.fillText('Calendario de Turnos 4×4  ·  Informe generado localmente',M,H-61);
+  pgCtx.textAlign='right';pgCtx.fillText(`Página ${i+1} / ${pages.length}`,R,H-61);
+ });
+ return pages.map(p=>p.canvas);
+}
+function reportPdfFromCanvasPages(pages){
+ const ascii=str=>new TextEncoder().encode(str);
+ const parts=[];const offsets=[0];let length=0;
+ const push=data=>{const arr=typeof data==='string'?ascii(data):data;parts.push(arr);length+=arr.length};
+ const obj=(id,parts)=>{offsets[id]=length;push(`${id} 0 obj\n`);parts.forEach(push);push('\nendobj\n')};
+ const pageCount=pages.length;
+ push('%PDF-1.4\n%');push(new Uint8Array([0xE2,0xE3,0xCF,0xD3,0x0A]));
+ obj(1,['<< /Type /Catalog /Pages 2 0 R >>']);
+ const pageIds=pages.map((_,i)=>3+i*3);
+ obj(2,[`<< /Type /Pages /Kids [${pageIds.map(id=>id+' 0 R').join(' ')}] /Count ${pageCount} >>`]);
+ pages.forEach((canvas,i)=>{
+  const pageId=3+i*3,imgId=pageId+1,contentId=pageId+2;
+  const jpeg=Uint8Array.from(atob(canvas.toDataURL('image/jpeg',0.86).split(',')[1]),c=>c.charCodeAt(0));
+  const content=ascii('q\n595.28 0 0 841.89 0 0 cm\n/Im0 Do\nQ\n');
+  obj(pageId,[`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /XObject << /Im0 ${imgId} 0 R >> >> /Contents ${contentId} 0 R >>`]);
+  obj(imgId,[`<< /Type /XObject /Subtype /Image /Width ${canvas.width} /Height ${canvas.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpeg.length} >>\nstream\n`,jpeg,'\nendstream']);
+  obj(contentId,[`<< /Length ${content.length} >>\nstream\n`,content,'\nendstream']);
+ });
+ const offsetXref=length;
+ push(`xref\n0 ${offsets.length}\n0000000000 65535 f \n`);
+ for(let id=1;id<offsets.length;id++)push(`${String(offsets[id]).padStart(10,'0')} 00000 n \n`);
+ push(`trailer\n<< /Size ${offsets.length} /Root 1 0 R >>\nstartxref\n${offsetXref}\n%%EOF`);
+ return new Blob(parts,{type:'application/pdf'});
+}
+function reportDownload(){
+ try{
+  const report=reportCollect();
+  if(report.detailLevel==='detail'&&report.totalRows>120)throw Error('Hay más de 120 registros para detallar. Seleccioná un período menor o elegí «Solo resumen».');
+  reportGenerateBtn.disabled=true;reportStatusEl.textContent='Preparando PDF...';
+  // Posponer un cuadro permite repintar el estado antes de generar las páginas.
+  requestAnimationFrame(()=>{
+   try{
+    const canvases=reportBuildPageCanvases(report);
+    const blob=reportPdfFromCanvasPages(canvases);
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    const fileType=report.type==='all'?'Completo':report.type;
+    a.href=url;
+    a.download=`Calendario4x4_${fileType}_${report.turn}_${report.bounds.startKey}_${report.bounds.endKey}.pdf`;
+    document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),45000);
+    reportStatusEl.textContent=`PDF generado (${canvases.length} pág.). Revisá las descargas del teléfono.`;
+   }catch(error){reportStatusEl.textContent=`No se pudo generar el PDF: ${error.message}`;}
+   reportGenerateBtn.disabled=false;
+  });
+ }catch(error){reportStatusEl.textContent=error.message;reportGenerateBtn.disabled=false;}
+}
+reportGenerateBtn.onclick=reportDownload;
+
 if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));
 })();
 </script>
