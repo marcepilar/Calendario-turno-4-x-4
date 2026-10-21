@@ -14698,6 +14698,89 @@ body.light #reportModal select,body.light #reportModal input{color-scheme:light}
   }
 }
 
+
+
+/* ===== V5.5.3 · MODO CLARO · CONTRASTE JORNADA/LICENCIAS + DESPLEGABLES CLAROS ===== */
+body.light,
+body.light input,
+body.light select,
+body.light textarea{
+  color-scheme: light;
+}
+body.light select,
+body.light option,
+body.light optgroup{
+  background:#eef4f8;
+  color:#172536;
+}
+body.light select{
+  border-color:rgba(62,82,106,.16);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.82);
+}
+body.light select:focus{
+  border-color:rgba(74,152,214,.44);
+  box-shadow:0 0 0 2px rgba(74,152,214,.10), inset 0 1px 0 rgba(255,255,255,.88);
+}
+body.light #workdayModal .workday-tabs{
+  background:linear-gradient(180deg,#edf3f8,#e6edf5);
+  border-color:rgba(62,82,106,.14);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.80);
+}
+body.light #workdayModal .workday-tabs button{
+  color:#33465d;
+  border-color:rgba(99,125,154,.20);
+  background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(240,244,249,.92));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.86), 0 4px 10px rgba(24,45,70,.05);
+}
+body.light #workdayModal .workday-tabs button::after{
+  color:#64748b;
+  opacity:.9;
+}
+body.light #workdayModal .workday-tabs button[data-workday-tab="work"]::before{
+  color:#d38a22;
+  background:linear-gradient(180deg,rgba(240,160,59,.20),rgba(240,160,59,.10));
+  border-color:rgba(240,160,59,.28);
+}
+body.light #workdayModal .workday-tabs button[data-workday-tab="license"]::before{
+  color:#d65394;
+  background:linear-gradient(180deg,rgba(233,95,158,.18),rgba(233,95,158,.09));
+  border-color:rgba(233,95,158,.26);
+}
+body.light #workdayModal .workday-tabs button:not(.selected)[data-workday-tab="license"]{
+  background:linear-gradient(180deg,rgba(255,247,251,.98),rgba(248,238,244,.95));
+  border-color:rgba(233,95,158,.24);
+  color:#8b466b;
+}
+body.light #workdayModal .workday-tabs button:not(.selected)[data-workday-tab="work"]{
+  background:linear-gradient(180deg,rgba(255,251,245,.98),rgba(248,241,230,.95));
+  border-color:rgba(240,160,59,.24);
+  color:#7b5a29;
+}
+body.light #workdayModal .workday-tabs button.selected{
+  color:#172536;
+}
+body.light #workdayModal .workday-tabs button[data-workday-tab="work"].selected{
+  border-color:rgba(240,160,59,.34);
+  background:linear-gradient(180deg,rgba(255,250,242,.98),rgba(247,236,219,.96));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.92), inset 0 -2px 0 rgba(240,160,59,.30), 0 5px 12px rgba(217,121,36,.10);
+}
+body.light #workdayModal .workday-tabs button[data-workday-tab="license"].selected{
+  border-color:rgba(233,95,158,.34);
+  background:linear-gradient(180deg,rgba(255,246,251,.98),rgba(248,233,241,.97));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.92), inset 0 -2px 0 rgba(233,95,158,.30), 0 5px 12px rgba(214,83,148,.10);
+}
+body.light #workdayModal .license-field select,
+body.light #agendaSheet .form-field select,
+body.light #agendaSheet .agenda-search-shell select,
+body.light #reportModal select,
+body.light #settingsModal select,
+body.light #turnSelect,
+body.light #turn5Select{
+  background:#eef4f8;
+  color:#172536;
+  border-color:rgba(62,82,106,.16);
+}
+
 </style>
 </head>
 <body class="notranslate">
@@ -15100,7 +15183,7 @@ body.light #reportModal select,body.light #reportModal input{color-scheme:light}
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.5.2</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.5.3</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -15332,7 +15415,7 @@ body.light #reportModal select,body.light #reportModal input{color-scheme:light}
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.5.2</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.5.3</span></span>
             </div>
           </div>
 
@@ -15941,7 +16024,7 @@ body.light #reportModal select,body.light #reportModal input{color-scheme:light}
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.5.2';
+const CURRENT_VERSION='5.5.3';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
