@@ -14136,6 +14136,60 @@ body.light #shareModal .share-qr-url{color:#64758a}
   }
 }
 
+
+/* ===== V5.4.1 · ESTADÍSTICAS · HORAS EXTRA RESPONSIVO =====
+   Sólo se corrige la distribución visual de esta tarjeta. El total de horas,
+   los registros y el cálculo del período permanecen exactamente iguales.
+   El texto no empuja nunca la columna numérica, incluso en móviles angostos
+   o con tamaños de letra del sistema distintos.
+*/
+#statsModal #worklogOvertimeStat{
+  grid-template-columns:minmax(0,1fr) max-content;
+  grid-template-rows:auto auto auto;
+  column-gap:clamp(5px,1.6vw,9px);
+}
+#statsModal #worklogOvertimeStat #worklogOvertimeLabel{
+  grid-column:1 / -1;
+  grid-row:1;
+  min-width:0;
+  max-width:100%;
+  white-space:normal !important;
+  overflow-wrap:break-word;
+  word-break:normal;
+  line-height:1.16;
+  font-size:clamp(9px,2.55vw,11px);
+  align-self:end;
+}
+#statsModal #worklogOvertimeStat > b{
+  grid-column:2;
+  grid-row:2;
+  min-width:max-content;
+  white-space:nowrap;
+  justify-self:end;
+  align-self:center;
+  font-size:clamp(24px,7.5vw,31px);
+}
+#statsModal #worklogOvertimeStat > span{
+  grid-column:1;
+  grid-row:2;
+  min-width:0;
+  overflow-wrap:break-word;
+  align-self:start;
+}
+#statsModal #worklogOvertimeStat > .worklog-overtime-split{
+  grid-column:1 / -1;
+  grid-row:3;
+  min-width:0;
+}
+@media(max-height:760px){
+  #statsModal #worklogOvertimeStat #worklogOvertimeLabel{
+    font-size:clamp(7.5px,2.2vw,9px);
+  }
+  #statsModal #worklogOvertimeStat > b{
+    font-size:21px;
+  }
+}
+
 </style>
 </head>
 <body class="notranslate">
@@ -14538,7 +14592,7 @@ body.light #shareModal .share-qr-url{color:#64758a}
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.3.9</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.4.1</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -14770,7 +14824,7 @@ body.light #shareModal .share-qr-url{color:#64758a}
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.3.9</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.4.1</span></span>
             </div>
           </div>
 
@@ -15297,7 +15351,7 @@ body.light #shareModal .share-qr-url{color:#64758a}
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.4.0';
+const CURRENT_VERSION='5.4.1';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
