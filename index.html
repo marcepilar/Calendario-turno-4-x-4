@@ -14872,6 +14872,62 @@ body.light #settingsModal .color-edit-text{color:#172536}
 body.light #languageDropdown .lang-check{color:#127d6e}
 @media(hover:hover){#languageDropdown button:hover{background:rgba(84,174,218,.18)}body.light #languageDropdown button:hover{background:#dcecf9}}
 
+
+/* ===== V5.5.8 · Selector independiente: mes y fechas, seis idiomas ===== */
+#reportModal .report-date-pick{
+ display:flex;align-items:center;justify-content:space-between;gap:9px;
+ width:100%;min-width:0;min-height:44px;padding:9px 12px;border-radius:11px;
+ border:1px solid rgba(140,177,195,.30);background:var(--panel3);
+ color:var(--text);font-weight:850;font-size:13px;text-align:left;touch-action:manipulation;
+}
+#reportModal .report-date-pick>span:last-child{font-size:18px;color:var(--muted);flex:0 0 auto}
+#reportModal .report-date-picked{overflow-wrap:anywhere;min-width:0}
+#reportModal .report-date-pick:focus-visible{outline:2px solid #26c9a7;outline-offset:2px}
+body.light #reportModal .report-date-pick{background:#eef4f8;color:#172536;border-color:rgba(62,82,106,.18)}
+.report-picker-shade{position:fixed;inset:0;z-index:19200;background:rgba(3,12,24,.72)}
+.report-picker{
+ position:fixed;z-index:19201;left:50%;top:50%;transform:translate(-50%,-50%);
+ width:min(420px,calc(100vw - 24px));max-height:calc(100dvh - 24px);
+ overflow:auto;overscroll-behavior:contain;padding:15px;border-radius:19px;
+ background:var(--panel3);color:var(--text);border:1px solid var(--line);
+ box-shadow:0 24px 70px rgba(0,0,0,.40);box-sizing:border-box;
+}
+.report-picker[hidden],.report-picker-shade[hidden],.report-picker-day-grid[hidden],.report-picker-month-grid[hidden],.report-picker-month-nav[hidden]{display:none!important}
+.report-picker-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
+.report-picker-head strong{font-size:18px;line-height:1.25}
+.report-picker:focus{outline:none}
+.report-picker button{touch-action:manipulation}
+.report-picker-head button{width:38px;height:38px;flex:0 0 auto;font-size:24px}
+.report-picker-head button,.report-picker-year-nav button,.report-picker-month-nav button,.report-picker-month-grid button,.report-picker-day-grid button,.report-picker-actions button{
+ border:1px solid var(--line);border-radius:10px;background:var(--panel2);color:var(--text);
+}
+.report-picker-year-nav{display:grid;grid-template-columns:49px 36px minmax(0,1fr) 36px 49px;gap:5px;align-items:center;margin-bottom:12px}
+.report-picker-year-nav button{min-height:42px;padding:3px;font-weight:850;font-size:14px}
+.report-picker-year-nav b{text-align:center;font-size:20px;font-variant-numeric:tabular-nums}
+.report-picker-month-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.report-picker-month-grid button{min-height:52px;font-size:clamp(11px,3.2vw,14px);font-weight:800;padding:5px 2px;overflow-wrap:anywhere}
+.report-picker-month-grid button.selected,.report-picker-day-grid button.selected{
+ background:linear-gradient(135deg,#26c9a7,#1d95c4);color:#061a25;border-color:#69e5d3;
+ box-shadow:0 2px 9px rgba(22,166,159,.24);
+}
+.report-picker-month-nav{display:grid;grid-template-columns:40px 1fr 40px;align-items:center;gap:9px;margin-bottom:12px}
+.report-picker-month-nav button{min-height:38px;font-size:22px}
+.report-picker-month-nav strong{text-align:center;font-size:15px}
+.report-picker-day-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.report-picker-day-grid .weekday{text-align:center;color:var(--muted);font-size:10px;font-weight:900;padding:5px 0}
+.report-picker-day-grid button{min-height:37px;padding:2px 0;font-size:13px;font-weight:800}
+.report-picker-day-grid .empty{min-height:37px}
+.report-picker-actions{display:grid;grid-template-columns:1fr 1.15fr;gap:9px;margin-top:14px}
+.report-picker-actions button{min-height:44px;padding:7px;font-size:13px;font-weight:900}
+.report-picker-actions button:last-child{background:#25c5a2;color:#06202a;border-color:#4bdfbc}
+.report-picker-actions button:disabled{opacity:.35}
+.report-picker button:disabled{opacity:.30;cursor:default}
+body.light .report-picker{background:#eef4f9;color:#172536;border-color:#c3d5e5}
+body.light .report-picker-head button,body.light .report-picker-year-nav button,body.light .report-picker-month-nav button,body.light .report-picker-month-grid button,body.light .report-picker-day-grid button,body.light .report-picker-actions button:not(:last-child){background:#fff;color:#172536;border-color:#cbd8e5}
+body.light .report-picker-month-grid button.selected,body.light .report-picker-day-grid button.selected{background:linear-gradient(135deg,#19bca3,#2799df);color:#052332;border-color:#2cb5b4}
+body.dark-blue .report-picker{background:#0d2846;border-color:#32618a}
+@media(max-height:650px){.report-picker{padding:11px}.report-picker-month-grid button{min-height:43px}.report-picker-day-grid button{min-height:32px}.report-picker-actions{margin-top:9px}}
+
 </style>
 </head>
 <body class="notranslate">
@@ -15274,7 +15330,7 @@ body.light #languageDropdown .lang-check{color:#127d6e}
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.5.7</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.5.8</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -15506,7 +15562,7 @@ body.light #languageDropdown .lang-check{color:#127d6e}
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.5.7</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.5.8</span></span>
             </div>
           </div>
 
@@ -16015,12 +16071,13 @@ body.light #languageDropdown .lang-check{color:#127d6e}
           <option value="custom">Personalizado · desde / hasta</option>
         </select>
         <div id="reportMonthRow">
-          <label for="reportMonth">Mes a consultar</label>
-          <input id="reportMonth" type="month" min="1900-01" max="2100-12" />
+          <label for="reportMonthPick">Mes a consultar</label>
+          <input id="reportMonth" type="hidden" value="" />
+          <button type="button" id="reportMonthPick" class="report-date-pick" data-no-i18n="true" aria-haspopup="dialog" aria-label="Seleccionar mes"><span class="report-date-picked">—</span><span aria-hidden="true">▦</span></button>
         </div>
         <div id="reportDatesRow" class="report-inline" hidden>
-          <div><label for="reportStart">Desde</label><input id="reportStart" type="date" /></div>
-          <div><label for="reportEnd">Hasta</label><input id="reportEnd" type="date" /></div>
+          <div><label for="reportStartPick">Desde</label><input id="reportStart" type="hidden" value="" /><button type="button" id="reportStartPick" class="report-date-pick" data-no-i18n="true" aria-haspopup="dialog" aria-label="Elegir fecha inicial"><span class="report-date-picked">—</span><span aria-hidden="true">▦</span></button></div>
+          <div><label for="reportEndPick">Hasta</label><input id="reportEnd" type="hidden" value="" /><button type="button" id="reportEndPick" class="report-date-pick" data-no-i18n="true" aria-haspopup="dialog" aria-label="Elegir fecha final"><span class="report-date-picked">—</span><span aria-hidden="true">▦</span></button></div>
         </div>
       </div>
       <div class="report-card">
@@ -16039,6 +16096,30 @@ body.light #languageDropdown .lang-check{color:#127d6e}
     <div id="reportStatus" aria-live="polite"></div>
   </div>
 </div>
+
+<!-- V5.5.8: calendario propio para informes, consistente con los seis idiomas -->
+<div id="reportPickerShade" class="report-picker-shade" hidden></div>
+<section id="reportDatePicker" class="report-picker" role="dialog" aria-modal="true" aria-labelledby="reportPickerHeading" tabindex="-1" data-no-i18n="true" hidden>
+ <div class="report-picker-head"><strong id="reportPickerHeading"></strong><button type="button" id="reportPickerClose" aria-label="Cerrar">×</button></div>
+ <div class="report-picker-year-nav">
+  <button type="button" id="reportPickerYearBack10" aria-label="Retroceder diez años">«10</button>
+  <button type="button" id="reportPickerYearBack" aria-label="Año anterior">‹</button>
+  <b id="reportPickerYear"></b>
+  <button type="button" id="reportPickerYearNext" aria-label="Año siguiente">›</button>
+  <button type="button" id="reportPickerYearNext10" aria-label="Adelantar diez años">10»</button>
+ </div>
+ <div id="reportPickerDateMonthNav" class="report-picker-month-nav" hidden>
+  <button type="button" id="reportPickerMonthBack" aria-label="Mes anterior">‹</button>
+  <strong id="reportPickerMonthHeading"></strong>
+  <button type="button" id="reportPickerMonthNext" aria-label="Mes siguiente">›</button>
+ </div>
+ <div id="reportPickerMonthGrid" class="report-picker-month-grid"></div>
+ <div id="reportPickerDayGrid" class="report-picker-day-grid" hidden></div>
+ <div class="report-picker-actions">
+  <button type="button" id="reportPickerCancel"></button>
+  <button type="button" id="reportPickerApply"></button>
+ </div>
+</section>
 
 <!-- V5.5.5: editor interno de identificación, sin campos de texto enfocables -->
 <div id="reportSafeShade" class="report-safe-shade" hidden></div>
@@ -16131,7 +16212,7 @@ body.light #languageDropdown .lang-check{color:#127d6e}
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.5.7';
+const CURRENT_VERSION='5.5.8';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -16670,6 +16751,10 @@ function applyLanguage(lang,{persist=true,rerender=true}={}){
  document.body?.classList.add('notranslate');
  document.title=({en:'4×4 Shift Calendar',pt:'Calendário de Turnos 4×4',fr:'Calendrier des équipes 4×4',de:'4×4 Schichtkalender',it:'Calendario turni 4×4'})[appLanguage]||'Calendario de Turnos 4×4';
  updateLanguageButton();
+ if(document.getElementById('reportMonthPick')?.dataset.pickerReady==='yes'){
+  reportPickerUpdateButtons();
+  if(!document.getElementById('reportDatePicker').hidden)reportPickerRender();
+ }
  syncPlantUI();
 
  if(rerender){
@@ -21487,6 +21572,143 @@ new MutationObserver(()=>{
 }).observe($('#reportModal'),{attributes:true,attributeFilter:['class']});
 reportRefreshIdentityButtons();
 
+
+/* ===== V5.5.8: Calendario propio para informes, sin panel nativo Android ===== */
+const REPORT_PICKER_I18N={
+ es:{month:'Seleccionar mes',start:'Seleccionar fecha inicial',end:'Seleccionar fecha final',cancel:'Cancelar',apply:'Aplicar'},
+ en:{month:'Select month',start:'Select start date',end:'Select end date',cancel:'Cancel',apply:'Apply'},
+ pt:{month:'Selecionar mês',start:'Selecionar data inicial',end:'Selecionar data final',cancel:'Cancelar',apply:'Aplicar'},
+ fr:{month:'Choisir un mois',start:'Choisir la date de début',end:'Choisir la date de fin',cancel:'Annuler',apply:'Appliquer'},
+ de:{month:'Monat auswählen',start:'Startdatum auswählen',end:'Enddatum auswählen',cancel:'Abbrechen',apply:'Übernehmen'},
+ it:{month:'Seleziona mese',start:'Seleziona data iniziale',end:'Seleziona data finale',cancel:'Annulla',apply:'Applica'}
+};
+const reportPickerShade=$('#reportPickerShade'),reportPicker=$('#reportDatePicker');
+const reportPickerInputs={month:reportMonthEl,start:reportStartEl,end:reportEndEl};
+const reportPickerButtons={month:$('#reportMonthPick'),start:$('#reportStartPick'),end:$('#reportEndPick')};
+let reportPickerKind=null, reportPickerYear=2026, reportPickerMonth=0, reportPickerDay=1;
+function reportPickerLocale(){return LANGUAGE_LOCALES[appLanguage]||'es-AR'}
+function reportPickerText(){return REPORT_PICKER_I18N[appLanguage]||REPORT_PICKER_I18N.es}
+function reportPickerMonthName(year,month,short=false){
+ return new Intl.DateTimeFormat(reportPickerLocale(),{month:short?'short':'long'}).format(calendarDate(year,month,1));
+}
+function reportPickerFormat(kind,value){
+ if(kind==='month'){
+  const m=/^(\d{4})-(\d{2})$/.exec(value||'');
+  return m?new Intl.DateTimeFormat(reportPickerLocale(),{month:'long',year:'numeric'}).format(calendarDate(+m[1],+m[2]-1,1)):'—';
+ }
+ const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(value||'');
+ return m?new Intl.DateTimeFormat(reportPickerLocale(),{day:'2-digit',month:'short',year:'numeric'}).format(calendarDate(+m[1],+m[2]-1,+m[3])):'—';
+}
+function reportPickerUpdateButtons(){
+ for(const kind of ['month','start','end']){
+  reportPickerButtons[kind].querySelector('.report-date-picked').textContent=reportPickerFormat(kind,reportPickerInputs[kind].value);
+  reportPickerButtons[kind].setAttribute('aria-label',(reportPickerText()[kind])+': '+reportPickerFormat(kind,reportPickerInputs[kind].value));
+ }
+}
+function reportPickerRender(){
+ if(!reportPickerKind)return;
+ const txt=reportPickerText();
+ $('#reportPickerHeading').textContent=txt[reportPickerKind];
+ $('#reportPickerYear').textContent=String(reportPickerYear);
+ $('#reportPickerCancel').textContent=txt.cancel;
+ $('#reportPickerApply').textContent=txt.apply;
+ const min=reportPickerKind==='month'?1900:1,max=reportPickerKind==='month'?2100:9999;
+ $('#reportPickerYearBack').disabled=reportPickerYear<=min;
+ $('#reportPickerYearBack10').disabled=reportPickerYear<=min;
+ $('#reportPickerYearNext').disabled=reportPickerYear>=max;
+ $('#reportPickerYearNext10').disabled=reportPickerYear>=max;
+ $('#reportPickerMonthGrid').hidden=reportPickerKind!=='month';
+ $('#reportPickerDayGrid').hidden=reportPickerKind==='month';
+ $('#reportPickerDateMonthNav').hidden=reportPickerKind==='month';
+ $('#reportPickerApply').disabled=!(reportPickerYear>=min && reportPickerYear<=max);
+ const mg=$('#reportPickerMonthGrid');mg.replaceChildren();
+ if(reportPickerKind==='month'){
+  for(let month=0;month<12;month++){
+   const btn=document.createElement('button');btn.type='button';
+   btn.textContent=reportPickerMonthName(reportPickerYear,month);
+   btn.className=month===reportPickerMonth?'selected':'';
+   btn.setAttribute('aria-pressed',String(month===reportPickerMonth));
+   btn.onclick=()=>{reportPickerMonth=month;reportPickerRender()};
+   mg.appendChild(btn);
+  }
+  return;
+ }
+ $('#reportPickerMonthHeading').textContent=reportPickerMonthName(reportPickerYear,reportPickerMonth);
+ const grid=$('#reportPickerDayGrid');grid.replaceChildren();
+ for(let d=0;d<7;d++){
+  const date=calendarDate(2024,0,1+d);
+  const label=document.createElement('div');label.className='weekday';
+  label.textContent=new Intl.DateTimeFormat(reportPickerLocale(),{weekday:'short'}).format(date);
+  grid.appendChild(label);
+ }
+ const dow=(calendarDate(reportPickerYear,reportPickerMonth,1).getDay()+6)%7;
+ const last=calendarDate(reportPickerYear,reportPickerMonth+1,0).getDate();
+ if(reportPickerDay>last)reportPickerDay=last;
+ for(let blank=0;blank<dow;blank++){
+  const el=document.createElement('div');el.className='empty';grid.appendChild(el);
+ }
+ for(let d=1;d<=last;d++){
+  const btn=document.createElement('button');btn.type='button';btn.textContent=String(d);
+  btn.className=d===reportPickerDay?'selected':'';
+  btn.setAttribute('aria-label',new Intl.DateTimeFormat(reportPickerLocale(),{day:'numeric',month:'long',year:'numeric'}).format(calendarDate(reportPickerYear,reportPickerMonth,d)));
+  btn.setAttribute('aria-pressed',String(d===reportPickerDay));
+  btn.onclick=()=>{reportPickerDay=d;reportPickerRender()};
+  grid.appendChild(btn);
+ }
+}
+function reportPickerOpen(kind){
+ reportSafeHide();
+ reportPickerKind=kind;
+ const value=reportPickerInputs[kind].value;
+ const m=/^(\d{4})-(\d{2})(?:-(\d{2}))?$/.exec(value||'');
+ const now=new Date();
+ reportPickerYear=m?Number(m[1]):now.getFullYear();
+ reportPickerMonth=m?Number(m[2])-1:now.getMonth();
+ reportPickerDay=m&&m[3]?Number(m[3]):now.getDate();
+ reportPickerShade.hidden=false;reportPicker.hidden=false;
+ reportPickerRender();reportPicker.focus({preventScroll:true});
+}
+function reportPickerClose(){
+ reportPickerShade.hidden=true;reportPicker.hidden=true;reportPickerKind=null;
+}
+function reportPickerShiftYear(delta){
+ const min=reportPickerKind==='month'?1900:1,max=reportPickerKind==='month'?2100:9999;
+ reportPickerYear=Math.max(min,Math.min(max,reportPickerYear+delta));reportPickerRender();
+}
+function reportPickerShiftMonth(delta){
+ const d=calendarDate(reportPickerYear,reportPickerMonth+delta,1);
+ if(d.getFullYear()<1||d.getFullYear()>9999)return;
+ reportPickerYear=d.getFullYear();reportPickerMonth=d.getMonth();reportPickerRender();
+}
+for(const kind of ['month','start','end'])reportPickerButtons[kind].addEventListener('click',()=>reportPickerOpen(kind));
+$('#reportPickerYearBack10').onclick=()=>reportPickerShiftYear(-10);
+$('#reportPickerYearBack').onclick=()=>reportPickerShiftYear(-1);
+$('#reportPickerYearNext').onclick=()=>reportPickerShiftYear(1);
+$('#reportPickerYearNext10').onclick=()=>reportPickerShiftYear(10);
+$('#reportPickerMonthBack').onclick=()=>reportPickerShiftMonth(-1);
+$('#reportPickerMonthNext').onclick=()=>reportPickerShiftMonth(1);
+$('#reportPickerClose').onclick=reportPickerClose;
+$('#reportPickerCancel').onclick=reportPickerClose;
+reportPickerShade.onclick=reportPickerClose;
+$('#reportPickerApply').onclick=()=>{
+ if(!reportPickerKind)return;
+ const pad=n=>String(n).padStart(2,'0');
+ const value=String(reportPickerYear).padStart(4,'0')+'-'+pad(reportPickerMonth+1)+(reportPickerKind==='month'?'':'-'+pad(reportPickerDay));
+ const el=reportPickerInputs[reportPickerKind];el.value=value;
+ reportPickerClose();reportPickerUpdateButtons();
+ el.dispatchEvent(new Event('change',{bubbles:true}));
+};
+document.addEventListener('keydown',e=>{
+ if(reportPicker.hidden)return;
+ if(e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();reportPickerClose();return;}
+ if(e.key==='Enter'){e.preventDefault();e.stopImmediatePropagation();$('#reportPickerApply').click();}
+},true);
+new MutationObserver(()=>{
+ if(!$('#reportModal').classList.contains('open'))reportPickerClose();
+}).observe($('#reportModal'),{attributes:true,attributeFilter:['class']});
+reportPickerUpdateButtons();
+document.getElementById('reportMonthPick').dataset.pickerReady='yes';
+
 function openReportGenerator(){
  reportTypeChecks.forEach(el=>{el.checked=el.value==='overtime'});
  reportUpdateMultiLabel();
@@ -21497,6 +21719,7 @@ function openReportGenerator(){
  reportStartEl.value=bound.startKey;
  reportEndEl.value=bound.endKey;
  reportStatusEl.textContent='';
+ reportPickerUpdateButtons();
  refreshReportPreview();
  openModal('reportModal');
 }
