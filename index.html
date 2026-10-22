@@ -15330,7 +15330,7 @@ body.dark-blue .report-picker{background:#0d2846;border-color:#32618a}
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.5.8</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.5.9</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -15562,7 +15562,7 @@ body.dark-blue .report-picker{background:#0d2846;border-color:#32618a}
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.5.8</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.5.9</span></span>
             </div>
           </div>
 
@@ -16212,7 +16212,7 @@ body.dark-blue .report-picker{background:#0d2846;border-color:#32618a}
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.5.8';
+const CURRENT_VERSION='5.5.9';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -20916,25 +20916,15 @@ if(vacationColorCard&&vacationColorInput){
 }
 
 
+/* V5.5.9: Evita showPicker/focus/click nativos (Safari iOS no garantiza apertura)
+   y reutiliza el calendario propio multilingüe validado en Informes PDF. */
 function openVacationDatePicker(input){
  if(!input)return;
-
- try{
-  if(typeof input.showPicker==='function'){
-   input.showPicker();
-   return;
-  }
- }catch{}
-
- try{
-  input.focus({preventScroll:true});
- }catch{
-  input.focus();
- }
-
- try{
-  input.click();
- }catch{}
+ const kind={
+  vacationStartInput:'vacationStart',vacationEndInput:'vacationEnd',
+  licenseStartInput:'licenseStart',licenseEndInput:'licenseEnd'
+ }[input.id];
+ if(kind)reportPickerOpen(kind);
 }
 
 $$('.vacation-date-button').forEach(btn=>{
@@ -21575,15 +21565,19 @@ reportRefreshIdentityButtons();
 
 /* ===== V5.5.8: Calendario propio para informes, sin panel nativo Android ===== */
 const REPORT_PICKER_I18N={
- es:{month:'Seleccionar mes',start:'Seleccionar fecha inicial',end:'Seleccionar fecha final',cancel:'Cancelar',apply:'Aplicar'},
- en:{month:'Select month',start:'Select start date',end:'Select end date',cancel:'Cancel',apply:'Apply'},
- pt:{month:'Selecionar mês',start:'Selecionar data inicial',end:'Selecionar data final',cancel:'Cancelar',apply:'Aplicar'},
- fr:{month:'Choisir un mois',start:'Choisir la date de début',end:'Choisir la date de fin',cancel:'Annuler',apply:'Appliquer'},
- de:{month:'Monat auswählen',start:'Startdatum auswählen',end:'Enddatum auswählen',cancel:'Abbrechen',apply:'Übernehmen'},
- it:{month:'Seleziona mese',start:'Seleziona data iniziale',end:'Seleziona data finale',cancel:'Annulla',apply:'Applica'}
+ es:{month:'Seleccionar mes',start:'Seleccionar fecha inicial',end:'Seleccionar fecha final',cancel:'Cancelar',apply:'Aplicar',vacationStart:'Elegir inicio de vacaciones',vacationEnd:'Elegir fin de vacaciones',licenseStart:'Elegir inicio de licencia',licenseEnd:'Elegir fin de licencia'},
+ en:{month:'Select month',start:'Select start date',end:'Select end date',cancel:'Cancel',apply:'Apply',vacationStart:'Select vacation start date',vacationEnd:'Select vacation end date',licenseStart:'Select leave start date',licenseEnd:'Select leave end date'},
+ pt:{month:'Selecionar mês',start:'Selecionar data inicial',end:'Selecionar data final',cancel:'Cancelar',apply:'Aplicar',vacationStart:'Selecionar início das férias',vacationEnd:'Selecionar fim das férias',licenseStart:'Selecionar início da licença',licenseEnd:'Selecionar fim da licença'},
+ fr:{month:'Choisir un mois',start:'Choisir la date de début',end:'Choisir la date de fin',cancel:'Annuler',apply:'Appliquer',vacationStart:'Choisir le début des vacances',vacationEnd:'Choisir la fin des vacances',licenseStart:'Choisir le début du congé',licenseEnd:'Choisir la fin du congé'},
+ de:{month:'Monat auswählen',start:'Startdatum auswählen',end:'Enddatum auswählen',cancel:'Abbrechen',apply:'Übernehmen',vacationStart:'Urlaubsbeginn auswählen',vacationEnd:'Urlaubsende auswählen',licenseStart:'Beginn der Freistellung wählen',licenseEnd:'Ende der Freistellung wählen'},
+ it:{month:'Seleziona mese',start:'Seleziona data iniziale',end:'Seleziona data finale',cancel:'Annulla',apply:'Applica',vacationStart:'Seleziona inizio ferie',vacationEnd:'Seleziona fine ferie',licenseStart:'Seleziona inizio permesso',licenseEnd:'Seleziona fine permesso'}
 };
 const reportPickerShade=$('#reportPickerShade'),reportPicker=$('#reportDatePicker');
-const reportPickerInputs={month:reportMonthEl,start:reportStartEl,end:reportEndEl};
+const reportPickerInputs={
+ month:reportMonthEl,start:reportStartEl,end:reportEndEl,
+ vacationStart:$('#vacationStartInput'),vacationEnd:$('#vacationEndInput'),
+ licenseStart:$('#licenseStartInput'),licenseEnd:$('#licenseEndInput')
+};
 const reportPickerButtons={month:$('#reportMonthPick'),start:$('#reportStartPick'),end:$('#reportEndPick')};
 let reportPickerKind=null, reportPickerYear=2026, reportPickerMonth=0, reportPickerDay=1;
 function reportPickerLocale(){return LANGUAGE_LOCALES[appLanguage]||'es-AR'}
@@ -21706,6 +21700,12 @@ document.addEventListener('keydown',e=>{
 new MutationObserver(()=>{
  if(!$('#reportModal').classList.contains('open'))reportPickerClose();
 }).observe($('#reportModal'),{attributes:true,attributeFilter:['class']});
+new MutationObserver(()=>{
+ if(reportPickerKind?.startsWith('vacation') && !$('#vacationModal').classList.contains('open'))reportPickerClose();
+}).observe($('#vacationModal'),{attributes:true,attributeFilter:['class']});
+new MutationObserver(()=>{
+ if(reportPickerKind?.startsWith('license') && !$('#workdayModal').classList.contains('open'))reportPickerClose();
+}).observe($('#workdayModal'),{attributes:true,attributeFilter:['class']});
 reportPickerUpdateButtons();
 document.getElementById('reportMonthPick').dataset.pickerReady='yes';
 
