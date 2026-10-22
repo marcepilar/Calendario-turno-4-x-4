@@ -14966,6 +14966,39 @@ body.dark-blue .report-picker{background:#0d2846;border-color:#32618a}
 #helpModal .help-ip-dnda-version b{color:var(--text);font-weight:750}
 @media(max-width:400px){#helpModal .help-ip-dnda{padding:11px}#helpModal .help-ip-dnda-number{font-size:10.3px}}
 
+
+/* ===== V5.6.1 · TIPO DE CAMBIO · 12 HORAS / ESTADÍSTICAS ===== */
+#workdayModal .workday-change-modes{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin:7px 0 6px;
+}
+#workdayModal .workday-change-modes button{
+  min-height:39px;padding:5px 3px;border-radius:11px;
+  border:1px solid rgba(132,156,180,.30);background:rgba(103,135,167,.12);
+  color:var(--text,#e8edf5);font-size:10px;font-weight:850;line-height:1.16;
+  cursor:pointer;white-space:normal;
+}
+#workdayModal .workday-change-modes button.selected{
+  border-color:rgba(240,166,68,.73);
+  background:linear-gradient(180deg,rgba(248,173,75,.19),rgba(209,115,34,.16));
+  box-shadow:0 0 0 1px rgba(247,173,68,.09) inset;
+}
+#workdayModal .workday-shift-choices[hidden]{display:none!important}
+#workdayModal .workday-change-duration .change-fixed-info{white-space:nowrap}
+#worklogChangesBreakdown{
+  display:block;margin-top:2px;font-size:9px;font-weight:850;font-style:normal;
+  color:var(--text,#dce4f1);opacity:.86;letter-spacing:0;
+}
+body.light #workdayModal .workday-change-modes button{
+  background:#f4f7fb;border-color:#c9d3df;color:#24354c;
+}
+body.light #workdayModal .workday-change-modes button.selected{
+  background:#ffeed8;border-color:#c98735;color:#6c410c;
+}
+@media(max-width:390px){
+  #workdayModal .workday-change-modes button{font-size:8.6px;min-height:35px}
+  #worklogChangesBreakdown{font-size:7.2px}
+}
+
 </style>
 </head>
 <body class="notranslate">
@@ -15368,7 +15401,7 @@ body.dark-blue .report-picker{background:#0d2846;border-color:#32618a}
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.6.0</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.6.1</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -15600,7 +15633,7 @@ body.dark-blue .report-picker{background:#0d2846;border-color:#32618a}
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.6.0</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.6.1</span></span>
             </div>
           </div>
 
@@ -15669,11 +15702,16 @@ body.dark-blue .report-picker{background:#0d2846;border-color:#32618a}
         <div class="workday-section-head">
           <div>
             <b>Cambio de turno</b>
-            <small>Ese día no venís · se muestran sólo los turnos que pueden cubrirte</small>
+            <small id="workdayChangeHelp">Elegí si pediste el cambio o si te solicitaron cubrir una jornada.</small>
           </div>
           <span id="workdayChangeState">SIN CAMBIO</span>
         </div>
-        <div id="workdayShiftChoices" class="workday-shift-choices">
+        <div id="workdayChangeModes" class="workday-change-modes" role="group" aria-label="Tipo de cambio de turno">
+          <button type="button" data-change-mode="none" class="selected">Sin cambio</button>
+          <button type="button" data-change-mode="requested">Pedí un cambio</button>
+          <button type="button" data-change-mode="received">Me pidieron un cambio</button>
+        </div>
+        <div id="workdayShiftChoices" class="workday-shift-choices" hidden>
           <button type="button" data-work-code="" class="selected">Sin cambio</button>
           <button type="button" data-work-code="T1">T1</button>
           <button type="button" data-work-code="T2">T2</button>
@@ -15682,9 +15720,9 @@ body.dark-blue .report-picker{background:#0d2846;border-color:#32618a}
           <button type="button" data-work-code="" hidden></button>
         </div>
         <div class="workday-change-duration">
-          <span>Horas cubiertas</span>
+          <span id="workdayChangeHoursTitle">Jornada completa</span>
           <b id="workdayChangeDuration">—</b>
-          <small>AUTOMÁTICA</small>
+          <small>12 H FIJAS</small>
         </div>
       </div>
 
@@ -16023,6 +16061,7 @@ body.dark-blue .report-picker{background:#0d2846;border-color:#32618a}
         <small>Cambios de turno</small>
         <b id="worklogChangesMonth">0</b>
         <span><strong id="worklogChangesYear">0</strong> en el año</span>
+        <em id="worklogChangesBreakdown" class="worklog-change-breakdown">Pedí 0 · Me pidieron 0</em>
       </button>
       <button id="worklogOvertimeStat" type="button" class="worklog-stat-btn overtime">
         <small id="worklogOvertimeLabel">Horas extra · 24→23</small>
@@ -16261,7 +16300,7 @@ body.dark-blue .report-picker{background:#0d2846;border-color:#32618a}
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.6.0';
+const CURRENT_VERSION='5.6.1';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -16680,6 +16719,14 @@ Object.assign(I18N.fr,{"Registro de la obra — DNDA":"Enregistrement de l’œu
 Object.assign(I18N.de,{"Registro de la obra — DNDA":"Werkregistrierung — DNDA","Registro de Obra Publicada – Software. Documentación incorporada al registro el 22/10/2026.":"Register veröffentlichter Werke – Software. Unterlagen am 22/10/2026 in das Register aufgenommen.","NÚMERO DE LEGAJO":"DNDA-AKTENZEICHEN","Versión presentada:":"Eingereichte Version:"});
 Object.assign(I18N.it,{"Registro de la obra — DNDA":"Registrazione dell’opera — DNDA","Registro de Obra Publicada – Software. Documentación incorporada al registro el 22/10/2026.":"Registro delle opere pubblicate – Software. Documentazione inserita nel registro il 22/10/2026.","NÚMERO DE LEGAJO":"NUMERO DI FASCICOLO DNDA","Versión presentada:":"Versione depositata:"});
 
+
+/* ===== V5.6.1 · TRADUCCIONES DEL CAMBIO DE TURNO ===== */
+Object.assign(I18N.en,{"Tipo de cambio de turno":"Shift change type","Pedí un cambio":"I requested a change","Me pidieron un cambio":"I was asked to cover","Pedí":"I requested","Me pidieron":"Asked me","ME PIDIERON":"ASKED ME","PEDÍ":"I REQUESTED","ELEGÍ TURNO":"SELECT A SHIFT","Turno que me solicitó":"Shift that requested me","Turno que me cubre":"Shift covering me","Me solicitó":"Requested me","Jornada completa":"Full shift","Horas que cubrí":"Hours I covered","Elegí si pediste el cambio o si te solicitaron cubrir una jornada.":"Choose whether you requested a swap or were asked to cover a shift.","No asistís: elegí el turno compatible que cubre tus 12 horas.":"You will not attend: choose the shift that covers your 12 hours.","Cubrís 12 horas a otro turno, incluso si estabas de franco.":"You cover another shift for 12 hours, even on your day off.","Elegí el turno correspondiente para registrar el cambio de 12 horas.":"Choose the corresponding shift to record the 12-hour change.","12 H FIJAS":"FIXED 12 H"});
+Object.assign(I18N.pt,{"Tipo de cambio de turno":"Tipo de troca de turno","Pedí un cambio":"Pedi uma troca","Me pidieron un cambio":"Pediram que eu cobrisse","Pedí":"Pedi","Me pidieron":"Me pediram","ME PIDIERON":"PEDIRAM","PEDÍ":"PEDI","ELEGÍ TURNO":"ESCOLHA UM TURNO","Turno que me solicitó":"Turno que me pediu","Turno que me cubre":"Turno que me cobre","Me solicitó":"Me pediu","Jornada completa":"Jornada completa","Horas que cubrí":"Horas cobertas","Elegí si pediste el cambio o si te solicitaron cubrir una jornada.":"Escolha se pediu a troca ou se lhe pediram para cobrir um turno.","No asistís: elegí el turno compatible que cubre tus 12 horas.":"Você não vai trabalhar: escolha o turno que cobre suas 12 horas.","Cubrís 12 horas a otro turno, incluso si estabas de franco.":"Você cobre outro turno por 12 horas, mesmo no dia de folga.","Elegí el turno correspondiente para registrar el cambio de 12 horas.":"Escolha o turno correspondente para registrar a troca de 12 horas.","12 H FIJAS":"12 H FIXAS"});
+Object.assign(I18N.fr,{"Tipo de cambio de turno":"Type de remplacement","Pedí un cambio":"J’ai demandé un remplacement","Me pidieron un cambio":"On m’a demandé de remplacer","Pedí":"J’ai demandé","Me pidieron":"On m’a demandé","ME PIDIERON":"DEMANDÉ","PEDÍ":"DEMANDÉ","ELEGÍ TURNO":"CHOISIR ÉQUIPE","Turno que me solicitó":"Équipe qui m’a sollicité","Turno que me cubre":"Équipe qui me remplace","Me solicitó":"M’a sollicité","Jornada completa":"Service complet","Horas que cubrí":"Heures assurées","Elegí si pediste el cambio o si te solicitaron cubrir una jornada.":"Choisissez si vous avez demandé un échange ou accepté un remplacement.","No asistís: elegí el turno compatible que cubre tus 12 horas.":"Vous êtes absent : choisissez l’équipe qui couvre vos 12 heures.","Cubrís 12 horas a otro turno, incluso si estabas de franco.":"Vous assurez 12 heures pour une autre équipe, même pendant votre repos.","Elegí el turno correspondiente para registrar el cambio de 12 horas.":"Choisissez l’équipe concernée pour enregistrer le remplacement de 12 heures.","12 H FIJAS":"12 H FIXES"});
+Object.assign(I18N.de,{"Tipo de cambio de turno":"Art des Schichttausches","Pedí un cambio":"Ich bat um Schichttausch","Me pidieron un cambio":"Ich wurde um Vertretung gebeten","Pedí":"Ich bat","Me pidieron":"Ich wurde gefragt","ME PIDIERON":"ANGEFRAGT","PEDÍ":"ERBETEN","ELEGÍ TURNO":"SCHICHT WÄHLEN","Turno que me solicitó":"Anfragende Schicht","Turno que me cubre":"Vertretende Schicht","Me solicitó":"Fragte mich an","Jornada completa":"Volle Schicht","Horas que cubrí":"Übernommene Stunden","Elegí si pediste el cambio o si te solicitaron cubrir una jornada.":"Wählen Sie, ob Sie getauscht haben oder um Vertretung gebeten wurden.","No asistís: elegí el turno compatible que cubre tus 12 horas.":"Sie fehlen: Wählen Sie die Schicht, die Ihre 12 Stunden übernimmt.","Cubrís 12 horas a otro turno, incluso si estabas de franco.":"Sie übernehmen 12 Stunden für eine andere Schicht, auch am freien Tag.","Elegí el turno correspondiente para registrar el cambio de 12 horas.":"Wählen Sie die Schicht für die Erfassung des 12-Stunden-Tausches.","12 H FIJAS":"12 STD. FEST"});
+Object.assign(I18N.it,{"Tipo de cambio de turno":"Tipo di cambio turno","Pedí un cambio":"Ho chiesto un cambio","Me pidieron un cambio":"Mi hanno chiesto di coprire","Pedí":"Ho chiesto","Me pidieron":"Mi hanno chiesto","ME PIDIERON":"RICHIESTO","PEDÍ":"HO CHIESTO","ELEGÍ TURNO":"SCEGLI TURNO","Turno que me solicitó":"Turno che mi ha chiesto","Turno que me cubre":"Turno che mi copre","Me solicitó":"Mi ha chiesto","Jornada completa":"Turno completo","Horas que cubrí":"Ore coperte","Elegí si pediste el cambio o si te solicitaron cubrir una jornada.":"Scegli se hai chiesto il cambio oppure sei stato chiamato a coprire un turno.","No asistís: elegí el turno compatible que cubre tus 12 horas.":"Non lavori: scegli il turno che copre le tue 12 ore.","Cubrís 12 horas a otro turno, incluso si estabas de franco.":"Copri un altro turno per 12 ore, anche nel tuo giorno libero.","Elegí el turno correspondiente para registrar el cambio de 12 horas.":"Scegli il turno per registrare il cambio di 12 ore.","12 H FIJAS":"12 ORE FISSE"});
+
 function tr(text){
  const source=String(text??'');
  if(appLanguage==='es')return source;
@@ -16950,7 +16997,7 @@ const SHOW_VACATIONS_KEY='turno4x4.showVacations.v1';
 let now=new Date(),viewYear=now.getFullYear(),viewMonth=now.getMonth(),selectedDate=calendarDate(now.getFullYear(),now.getMonth(),now.getDate());
 let agendaSelectedDate=new Date(selectedDate),agendaEditingId=null,agendaHoldTimer=null,agendaHoldOpened=false,agendaAllExpanded=false;
 let vacationEditingId=null;
-let workdayEditingDate=new Date(selectedDate),workdayEditingTurn=activeTurnKey(),workdayWorkedCode='',workdayOvertime=0,workdayOvertimeCode='',workdayActiveTab='work';
+let workdayEditingDate=new Date(selectedDate),workdayEditingTurn=activeTurnKey(),workdayWorkedCode='',workdayChangeType='none',workdayOvertime=0,workdayOvertimeCode='',workdayActiveTab='work';
 let licenseEditingId=null;
 let worklogStatsDetailMode='changes';
 let swipeStartX=0,swipeStartY=0,swipeStartedAt=0,calendarSwipeMoved=false,calendarSwipeActive=false,monthAnimating=false,yearViewYear=viewYear;
@@ -18085,6 +18132,7 @@ function normalizeWorklog(item){
   date:String(item?.date||''),
   turn:String(item?.turn||''),
   workedCode:['T1','T2','T3','T4','T5A','T5B','M','N','F','D'].includes(item?.workedCode)?item.workedCode:'',
+  changeType:item?.workedCode?(item?.changeType==='received'?'received':'requested'):'',
   overtime,
   overtimeCode,
   note:String(item?.note||'').trim(),
@@ -18150,10 +18198,32 @@ function overtimeTypeSplitText(stats){
  return text;
 }
 
+function worklogChangeMode(record){
+ return record?.workedCode?(record.changeType==='received'?'received':'requested'):'none';
+}
+function worklogChangeModeLabel(record){
+ return tr(worklogChangeMode(record)==='received'?'Me pidieron un cambio':'Pedí un cambio');
+}
+function worklogChangeCounterpartLabel(record){
+ return tr(worklogChangeMode(record)==='received'?'Turno que me solicitó':'Turno que me cubre');
+}
+function worklogChangeSummary(record){
+ if(!record?.workedCode)return '';
+ return `${worklogChangeModeLabel(record)} · ${worklogChangeCounterpartLabel(record)}: ${worklogCodeLabel(record.workedCode)} · 12 h`;
+}
+function worklogChangeBreakdown(records){
+ const changes=(records||[]).filter(r=>r.workedCode);
+ return {
+  requested:changes.filter(r=>worklogChangeMode(r)==='requested').length,
+  received:changes.filter(r=>worklogChangeMode(r)==='received').length,
+  total:changes.length,hours:changes.length*12
+ };
+}
+
 function worklogSummaryParts(record){
  const parts=[];
  if(record.workedCode){
-  parts.push(`Me cubre: ${worklogCodeLabel(record.workedCode)}`);
+  parts.push(worklogChangeSummary(record));
  }
  if(Number(record.overtime)>0){
   parts.push(`Horas extra: ${worklogOvertimeText(record.overtime)} h${record.overtimeCode?` · ${worklogOvertimeTypeLabel(record.overtimeCode)}`:''}`);
@@ -18171,7 +18241,7 @@ function workdaySavedBadges(record){
   badges.push({
    code:'C',
    cls:'change',
-   label:'Cambio de turno'
+   label:worklogChangeModeLabel(record)
   });
  }
 
@@ -18239,7 +18309,7 @@ function renderWorkdaySavedList(){
     ${workdaySavedBadgeMarkup(r)}
     <div class="workday-saved-copy">
       <b>${escapeHtml(cap(worklogDateFmt.format(d)))}</b>
-      <span>Programado: ${escapeHtml(codeText(turn,planned))}${r.workedCode?` · Me cubre: ${escapeHtml(worklogCodeLabel(r.workedCode))}`:''}</span>
+      <span>Programado: ${escapeHtml(codeText(turn,planned))}${r.workedCode?` · ${escapeHtml(worklogChangeModeLabel(r))}`:''}</span>
       <small>${summary.map(escapeHtml).join(' · ')}</small>
     </div>
     <div class="workday-saved-actions">
@@ -18350,16 +18420,57 @@ function workdayCoverTurnOptions(turn,date=workdayEditingDate){
  return base.filter(candidate=>workdayCanCoverTurn(candidate,turn,date));
 }
 
+function workdayRequestedByOptions(turn,date){
+ if(!date)return [];
+ // Sólo jornadas M/N (12 horas) de turnos que el usuario puede cubrir,
+ // sin superposición con su programación ni descanso mínimo de 12 horas.
+ const base=workdayCoverBaseOptions(turn);
+ return base.filter(requester=>{
+  const requesterCode=codeFor(requester,date);
+  return (requesterCode==='M'||requesterCode==='N')
+   &&workdayCoverBaseOptions(requester).includes(turn)
+   &&workdayCanCoverTurn(turn,requester,date);
+ });
+}
+function workdayModeOptions(){
+ if(workdayChangeType==='requested'){
+  const planned=codeFor(workdayEditingTurn,workdayEditingDate);
+  if(planned!=='M'&&planned!=='N')return [];
+  return workdayCoverTurnOptions(workdayEditingTurn,workdayEditingDate);
+ }
+ if(workdayChangeType==='received')return workdayRequestedByOptions(workdayEditingTurn,workdayEditingDate);
+ return [];
+}
+function setWorkdayChangeType(mode,keepCode=false){
+ workdayChangeType=['requested','received'].includes(mode)?mode:'none';
+ if(!keepCode)workdayWorkedCode='';
+ $$('#workdayChangeModes [data-change-mode]').forEach(btn=>{
+  const selected=btn.dataset.changeMode===workdayChangeType;
+  btn.classList.toggle('selected',selected);
+  btn.setAttribute('aria-pressed',selected?'true':'false');
+ });
+ const help=$('#workdayChangeHelp');
+ if(help)help.textContent=workdayChangeType==='requested'
+  ?tr('No asistís: elegí el turno compatible que cubre tus 12 horas.')
+  :workdayChangeType==='received'
+   ?tr('Cubrís 12 horas a otro turno, incluso si estabas de franco.')
+   :tr('Elegí si pediste el cambio o si te solicitaron cubrir una jornada.');
+ const label=$('#workdayChangeHoursTitle');
+ if(label)label.textContent=tr(workdayChangeType==='received'?'Horas que cubrí':'Jornada completa');
+ syncWorkdayCoverTurnButtons();
+ setWorkdayWorkedCode(workdayWorkedCode);
+}
+
 function syncWorkdayCoverTurnButtons(){
  const wrap=$('#workdayShiftChoices');
  if(!wrap)return;
  const buttons=$$('#workdayShiftChoices [data-work-code]');
  const clearBtn=buttons.find(btn=>btn.dataset.workCode==='')||buttons[0];
  const optionBtns=buttons.filter(btn=>btn!==clearBtn);
- const options=workdayCoverTurnOptions(workdayEditingTurn,workdayEditingDate);
+ const options=workdayModeOptions();
 
  if(clearBtn){
-  clearBtn.hidden=false;
+  clearBtn.hidden=workdayChangeType!=='none';
   clearBtn.dataset.workCode='';
   clearBtn.textContent=tr('Sin cambio');
  }
@@ -18371,32 +18482,30 @@ function syncWorkdayCoverTurnButtons(){
   btn.dataset.workCode=value;
   const label=value?scheduleName(value):'';
   btn.textContent=label;
-  btn.setAttribute('aria-label',value?`${tr('Cubre')} ${label}`:'');
+  btn.setAttribute('aria-label',value?`${tr(workdayChangeType==='received'?'Me solicitó':'Me cubre')} ${label}`:'');
  });
 
  // Sin cambio + opciones visibles ocupan siempre todo el ancho disponible.
- wrap.style.gridTemplateColumns=`repeat(${Math.max(1,options.length+1)},minmax(0,1fr))`;
+ wrap.hidden=workdayChangeType==='none';
+ wrap.style.gridTemplateColumns=`repeat(${Math.max(1,options.length)},minmax(0,1fr))`;
 }
 
 function setWorkdayWorkedCode(code){
- const planned=codeFor(workdayEditingTurn,workdayEditingDate);
- const allowed=workdayCoverTurnOptions(workdayEditingTurn,workdayEditingDate);
- // Conserva códigos antiguos sólo al abrir backups/registros previos; las selecciones nuevas son T1–T4 y, para T5 4×4, la pareja T5 opuesta.
- const legacy=['M','N','F','D'].includes(code);
- const normalized=(allowed.includes(code)||legacy)?code:'';
+ const allowed=workdayModeOptions();
+ // Sólo se mantienen códigos antiguos al restaurar registros preexistentes.
+ const legacy=workdayChangeType==='requested'&&['M','N','F','D'].includes(code);
+ const normalized=(workdayChangeType!=='none'&&(allowed.includes(code)||legacy))?code:'';
  workdayWorkedCode=normalized;
  $$('#workdayShiftChoices [data-work-code]').forEach(btn=>{
   btn.classList.toggle('selected',btn.dataset.workCode===workdayWorkedCode);
  });
  $('#workdayChangeState').textContent=workdayWorkedCode
-  ?`${tr('CUBRE')} · ${worklogCodeLabel(workdayWorkedCode)}`
-  :'SIN CAMBIO';
+  ?`${tr(workdayChangeType==='received'?'ME PIDIERON':'PEDÍ')} · ${worklogCodeLabel(workdayWorkedCode)}`
+  :tr(workdayChangeType==='none'?'SIN CAMBIO':'ELEGÍ TURNO');
  const duration=$('#workdayChangeDuration');
  if(duration){
-  // Las horas cubiertas dependen de la jornada programada del usuario.
-  duration.textContent=workdayWorkedCode
-   ?`${workdayChangeHours(planned)} h`
-   :'—';
+  // Toda cobertura es siempre una jornada completa de 12 horas.
+  duration.textContent=workdayWorkedCode?'12 h':'—';
  }
 }
 
@@ -18445,7 +18554,7 @@ function renderWorkdayModal(date,turn){
  $('#workdayTurnLabel').textContent=scheduleName(turn);
  $('#workdayPlannedLabel').textContent=`${codeText(turn,planned)} · ${shiftNames[planned][0]}`;
 
- syncWorkdayCoverTurnButtons();
+ setWorkdayChangeType(existing?.workedCode?worklogChangeMode(existing):'none',false);
  setWorkdayWorkedCode(existing?.workedCode||'');
  setWorkdayOvertime(existing?.overtime||0);
  setWorkdayOvertimeCode(existing?.overtimeCode||'');
@@ -18466,7 +18575,12 @@ function saveWorkdayRecord(){
  const planned=codeFor(workdayEditingTurn,workdayEditingDate);
  // workedCode mantiene el nombre histórico del campo; guarda el turno del compañero que cubre la jornada (T1–T4 y la pareja T5 opuesta cuando corresponde).
  // Incluso si coincide con el código programado, sigue siendo un cambio válido.
- const workedCode=workdayWorkedCode;
+ const workedCode=workdayChangeType==='none'?'':workdayWorkedCode;
+ const changeType=workedCode?workdayChangeType:'';
+ if(workdayChangeType!=='none'&&!workedCode){
+  alert(tr('Elegí el turno correspondiente para registrar el cambio de 12 horas.'));
+  return;
+ }
 
  const overtime=workdayOvertime;
  const overtimeCode=overtime>0?workdayOvertimeCode:'';
@@ -18484,6 +18598,7 @@ function saveWorkdayRecord(){
    date:dateKey(workdayEditingDate),
    turn:workdayEditingTurn,
    workedCode,
+   changeType,
    overtime,
    overtimeCode,
    note,
@@ -18523,6 +18638,7 @@ function worklogPeriodStats(turn,year,month=null){
  return {
   records,
   changes:records.filter(r=>r.workedCode).length,
+  changeBreakdown:worklogChangeBreakdown(records),
   overtime:records.reduce((sum,r)=>sum+(Number(r.overtime)||0),0)
  };
 }
@@ -18743,6 +18859,7 @@ function renderWorklogStats(){
  $('#worklogStatsPeriod').textContent=cap(monthFmt.format(calendarDate(viewYear,viewMonth,1)));
  $('#worklogChangesMonth').textContent=monthStats.changes;
  $('#worklogChangesYear').textContent=yearStats.changes;
+ $('#worklogChangesBreakdown').textContent=`${tr('Pedí')} ${monthStats.changeBreakdown.requested} · ${tr('Me pidieron')} ${monthStats.changeBreakdown.received} · ${monthStats.changeBreakdown.hours} h`;
 
  $('#worklogOvertimeLabel').textContent=`Horas extra · ${overtimePayrollPeriodLabel(viewYear,viewMonth)}`;
  $('#worklogOvertimeMonth').textContent=worklogOvertimeText(overtimeStats.overtime);
@@ -18873,10 +18990,10 @@ function renderWorklogStatsDetail(mode){
   const iconClass=mode==='overtime'?' overtime':'';
   const icon=mode==='overtime'?'+H':'C';
   const mainText=r.workedCode
-   ?`Programado ${codeText(turn,planned)} · Me cubre ${worklogCodeLabel(cover)}`
+   ?`${worklogChangeModeLabel(r)} · ${worklogChangeCounterpartLabel(r)}: ${worklogCodeLabel(cover)}`
    :`${codeText(turn,planned)} · Sin cambio`;
   const detailText=[
-   r.workedCode?`Cambio ${workdayChangeHours(planned)} h automático`:'',
+   r.workedCode?`${tr('Jornada completa')} 12 h · ${tr('Programado')}: ${codeText(turn,planned)}`:'',
    r.overtime>0?(mode==='overtime'
     ?`${worklogOvertimeText(r.periodOvertime??r.overtime)} h extra${r.overtimeCode?` · ${worklogOvertimeTypeLabel(r.overtimeCode)}`:''}${r.splitAcrossPeriod?` · de ${worklogOvertimeText(r.overtimeTotal??r.overtime)} h registradas`:''}`
     :worklogOvertimeDetailText(r)):'',
@@ -18895,7 +19012,7 @@ function renderWorklogStatsDetail(mode){
       <small>${escapeHtml(detailText||'Sin nota')}</small>
     </div>
     <div class="worklog-stat-row-actions">
-      <span class="worklog-stat-row-value">${mode==='overtime'?`${worklogOvertimeText(r.periodOvertime??r.overtime)} h${r.overtimeCode?` · ${r.overtimeCode}`:''}`:'CAMBIO'}</span>
+      <span class="worklog-stat-row-value">${mode==='overtime'?`${worklogOvertimeText(r.periodOvertime??r.overtime)} h${r.overtimeCode?` · ${r.overtimeCode}`:''}`:'12 h'}</span>
       <button type="button" class="worklog-stat-delete" data-worklog-delete="${escapeHtml(r.id)}">ELIMINAR</button>
     </div>
    </div>`;
@@ -19799,7 +19916,7 @@ function showDetail(d){
    const planned=codeFor(active,d);
    const cover=record.workedCode||'';
    worklogTitle.textContent='Registro laboral';
-   worklogText.textContent=`Programado ${codeText(active,planned)}${record.workedCode?` · Me cubre ${worklogCodeLabel(cover)} · Cambio ${workdayChangeHours(planned)} h`:''}${record.overtime>0?` · +${worklogOvertimeText(record.overtime)} h extra${record.overtimeCode?` · ${record.overtimeCode}`:''}`:''}`;
+   worklogText.textContent=`Programado ${codeText(active,planned)}${record.workedCode?` · ${worklogChangeSummary(record)}`:''}${record.overtime>0?` · +${worklogOvertimeText(record.overtime)} h extra${record.overtimeCode?` · ${record.overtimeCode}`:''}`:''}`;
    worklogNote.textContent=record.note||'';
   }else{
    worklogText.textContent='';
@@ -20910,6 +21027,9 @@ if(licenseDetailBanner){
 }
 
 
+$$('#workdayChangeModes [data-change-mode]').forEach(btn=>{
+ btn.onclick=()=>setWorkdayChangeType(btn.dataset.changeMode);
+});
 $$('#workdayShiftChoices [data-work-code]').forEach(btn=>{
  btn.onclick=()=>setWorkdayWorkedCode(btn.dataset.workCode);
 });
@@ -21831,11 +21951,17 @@ function reportCollect(){
   addSection('overtime','HORAS EXTRAS · REGISTRO FECHA POR FECHA',rows);
  }
  if(selected.has('changes')){
-  const rows=loadWorklogData().map(normalizeWorklog)
+  const changeRecords=loadWorklogData().map(normalizeWorklog)
    .filter(r=>r.turn===turn&&r.workedCode&&r.date>=bounds.startKey&&r.date<=bounds.endKey)
-   .sort((a,b)=>a.date.localeCompare(b.date))
-   .map(r=>({date:r.date,detail:`${reportTx('Cobertura:')} ${worklogCodeLabel(r.workedCode)}`,value:reportTx('Cambio'),note:`${reportTx('Programado:')} ${codeText(turn,codeFor(turn,parseDateKey(r.date)))}${r.note?' · '+r.note:''}`}));
-  result.summary.push(`Cambios de turno: ${rows.length}`);
+   .sort((a,b)=>a.date.localeCompare(b.date));
+  const count=worklogChangeBreakdown(changeRecords);
+  const rows=changeRecords.map(r=>({
+   date:r.date,
+   detail:`${reportTx(worklogChangeMode(r)==='received'?'Me pidieron un cambio':'Pedí un cambio')} · ${reportTx(worklogChangeMode(r)==='received'?'Turno que me solicitó':'Turno que me cubre')}: ${worklogCodeLabel(r.workedCode)}`,
+   value:'12 h',
+   note:`${reportTx('Programado:')} ${codeText(turn,codeFor(turn,parseDateKey(r.date)))}${r.note?' · '+r.note:''}`
+  }));
+  result.summary.push(`${reportTx('Cambios de turno:')} ${count.total} · ${reportTx('Pedí')} ${count.requested} · ${reportTx('Me pidieron')} ${count.received} · ${count.hours} h`);
   addSection('changes','CAMBIOS DE TURNO',rows);
  }
  if(selected.has('licenses')){
