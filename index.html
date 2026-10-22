@@ -15401,7 +15401,7 @@ body.light #workdayModal .workday-change-modes button.selected{
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.6.1</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.6.2</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -15633,7 +15633,7 @@ body.light #workdayModal .workday-change-modes button.selected{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.6.1</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.6.2</span></span>
             </div>
           </div>
 
@@ -16154,7 +16154,7 @@ body.light #workdayModal .workday-change-modes button.selected{
       <div class="report-card">
         <label for="reportPeriod">Período del informe</label>
         <select id="reportPeriod">
-          <option value="payroll">Laboral · del 24 al 23</option>
+          <option id="reportPayrollOption" value="payroll" data-no-i18n="true">Laboral · del 24 al 23</option>
           <option value="calendar">Mes calendario · del 1 al último</option>
           <option value="custom">Personalizado · desde / hasta</option>
         </select>
@@ -16300,7 +16300,7 @@ body.light #workdayModal .workday-change-modes button.selected{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.6.1';
+const CURRENT_VERSION='5.6.2';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -22005,7 +22005,25 @@ function reportCollect(){
  }
  return result;
 }
+/* ===== V5.6.2 · ETIQUETA LABORAL DINÁMICA (24/MM → 23/MM) =====
+   Solo presentación: no modifica el período real, el PDF ni registros.
+   La opción dinámica se excluye del traductor automático para mantener las fechas.
+*/
+function reportUpdatePayrollPeriodOption(){
+ const option=$('#reportPayrollOption');
+ if(!option)return;
+ const localizedPrefix=reportTx('Laboral · del 24 al 23').split(' · ')[0];
+ const prefix=({fr:'Travail',de:'Abrechnung'})[appLanguage]||localizedPrefix;
+ const selected=/^(\d{4})-(\d{2})$/.exec(reportMonthEl.value||'');
+ if(!selected){option.textContent=reportTx('Laboral · del 24 al 23');return;}
+ const year=Number(selected[1]),month=Number(selected[2])-1;
+ if(year<1900||year>2100||month<0||month>11){option.textContent=reportTx('Laboral · del 24 al 23');return;}
+ const bounds=overtimePayrollPeriod(year,month);
+ const fmt=key=>{const [,m,d]=key.split('-');return `${d}/${m}`};
+ option.textContent=`${prefix} · ${fmt(bounds.startKey)} → ${fmt(bounds.endKey)}`;
+}
 function refreshReportPreview(){
+ reportUpdatePayrollPeriodOption();
  reportUpdateMultiLabel();
  $('#reportMonthRow').hidden=reportPeriodEl.value==='custom';
  $('#reportDatesRow').hidden=reportPeriodEl.value!=='custom';
