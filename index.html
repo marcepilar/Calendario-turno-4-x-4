@@ -15439,6 +15439,219 @@ body.dark-blue .topbar #workdayTopBtn{
   #statsModal #openReportBtn.stats-pdf-entry-action{font-size:10px !important;}
 }
 
+
+/* ===== V5.7.0 · ESTADÍSTICAS: COMPACTACIÓN CONTROLADA SIN RECORTES =====
+   Se reducen espacios internos y reservas mínimas antiguas, sin alterar lógica
+   ni ocultar tarjetas. Sigue existiendo un solo scroll vertical cuando hace falta.
+   Cada tarjeta conserva la altura necesaria para su contenido traducido. */
+#statsModal .stats-modal-window{
+  grid-template-rows:repeat(7,max-content) !important;
+  grid-auto-rows:max-content !important;
+  align-content:start !important;
+  gap:6px !important;
+  padding-top:5px !important;
+  padding-bottom:max(15px,env(safe-area-inset-bottom)) !important;
+  overflow-x:hidden !important;
+  overflow-y:auto !important;
+  -webkit-overflow-scrolling:touch;
+  scroll-padding-bottom:22px;
+}
+#statsModal .stats-head{
+  min-height:47px !important;
+  padding:2px 0 5px !important;
+  margin:0 !important;
+}
+#statsModal .stats-head-icon{width:25px;height:25px;}
+#statsModal .stats-head h2{font-size:19px;}
+/* Resumen superior: eliminar el aire encima del número, no su tamaño. */
+#statsModal .stats-grid{gap:5px !important;}
+#statsModal .stat-card{
+  min-height:59px !important;
+  height:auto !important;
+  padding:5px 7px 8px !important;
+  justify-content:flex-end !important;
+  gap:2px !important;
+}
+#statsModal .stat-card i{
+  width:18px !important;height:18px !important;
+  top:5px !important;right:6px !important;
+  font-size:9px !important;border-radius:7px;
+}
+#statsModal .stat-card small{
+  line-height:1.12 !important;
+  font-size:7px !important;
+  padding-right:1px;
+}
+#statsModal .stat-card b{
+  font-size:21px !important;
+  line-height:1 !important;
+  margin-top:1px !important;
+}
+/* Acceso a informes: una sola fila compacta, área táctil legible. */
+#statsModal .stats-pdf-entry{
+  min-height:46px !important;
+  padding:5px 8px !important;
+  column-gap:7px !important;
+}
+#statsModal .stats-pdf-entry-icon{width:30px !important;height:30px !important;}
+#statsModal .stats-pdf-entry-copy{gap:2px !important;}
+#statsModal #openReportBtn.stats-pdf-entry-action{
+  min-height:34px !important;
+  padding:5px !important;
+}
+/* Estado de turno: nunca se achica el contenido a costa de ocultarlo. */
+#statsModal .stats-turn-end{
+  min-height:0 !important;
+  height:auto !important;
+}
+#statsModal .stats-turn-end h3{
+  margin-bottom:3px !important;
+  line-height:1.15 !important;
+}
+#statsModal .turn-end-card{
+  min-height:0 !important;
+  padding:6px 9px !important;
+}
+#statsModal .turn-end-copy b{
+  font-size:clamp(21px,4.4vw,27px) !important;
+  line-height:1.07 !important;
+  margin-top:3px !important;
+}
+#statsModal .turn-end-copy span{margin-top:4px !important;line-height:1.15 !important;}
+#statsModal .turn-end-badge{
+  min-width:59px !important;
+  min-height:53px !important;
+  padding:6px !important;
+  font-size:23px !important;
+  border-radius:14px !important;
+}
+/* Feriados: mantener valores y leyenda, disminuir marco vacío. */
+#statsModal .stats-holidays{
+  min-height:0 !important;
+  height:auto !important;
+  padding:6px 7px !important;
+}
+#statsModal .stats-holidays h3{margin-bottom:5px !important;}
+#statsModal .stats-holidays .holiday-work-grid{gap:4px !important;}
+#statsModal .stats-holidays .holiday-work-chip{
+  min-height:46px !important;
+  height:auto !important;
+  padding:4px 2px 5px !important;
+}
+#statsModal .stats-holidays .holiday-work-chip b{
+  font-size:19px !important;
+  margin-top:2px !important;
+}
+#statsModal .stats-holidays .holiday-work-chip span{font-size:8px !important;}
+#statsModal .holiday-work-note{
+  margin-top:4px !important;
+  line-height:1.18 !important;
+  font-size:8px !important;
+}
+/* Registro laboral: dos filas naturales sin el alto mínimo heredado de 193px. */
+#statsModal .stats-worklog{
+  min-height:0 !important;
+  height:auto !important;
+  padding:6px 7px !important;
+}
+#statsModal .stats-worklog h3{
+  margin-bottom:5px !important;
+  line-height:1.16 !important;
+}
+#statsModal .stats-worklog .stats-title-mark{
+  width:26px !important;min-width:26px !important;
+  height:25px !important;
+  border-radius:8px !important;
+}
+#statsModal .worklog-stats-grid{
+  min-height:0 !important;
+  grid-template-rows:repeat(2,minmax(57px,max-content)) !important;
+  gap:4px !important;
+}
+#statsModal .worklog-stat-btn{
+  min-height:57px !important;
+  height:auto !important;
+  padding:5px 7px !important;
+  gap:2px 5px !important;
+}
+#statsModal .worklog-stat-btn b{
+  font-size:21px !important;
+  line-height:1.03 !important;
+}
+/* Última fila: datos legibles y pastilla de sueldo enteramente visible. */
+#statsModal .stats-off,
+#statsModal .stats-salary{
+  min-height:122px !important;
+  height:auto !important;
+  padding:6px 7px !important;
+}
+#statsModal .stats-off h3,
+#statsModal .stats-salary h3{
+  margin-bottom:5px !important;
+  line-height:1.16 !important;
+  gap:5px !important;
+}
+#statsModal .stats-off .stats-title-mark,
+#statsModal .stats-salary .stats-title-mark{
+  width:25px !important;
+  height:25px !important;
+  font-size:11px !important;
+}
+#statsModal .off-premium{
+  min-height:0 !important;
+  padding:5px 6px !important;
+  row-gap:3px !important;
+}
+#statsModal .stats-salary .salary-card{
+  min-height:72px !important;
+  height:auto !important;
+}
+#statsModal .stats-salary .salary-top{
+  gap:5px !important;
+  align-items:center !important;
+}
+#statsModal .stats-salary .salary-days{
+  min-width:56px !important;
+  min-height:67px !important;
+  height:auto !important;
+  padding:7px 5px 9px !important;
+  gap:4px !important;
+  overflow:visible !important;
+}
+#statsModal .stats-salary .salary-days strong{
+  font-size:26px !important;
+  line-height:1.13 !important;
+  padding-bottom:2px !important;
+}
+#statsModal .stats-salary .salary-days span{
+  font-size:8.5px !important;
+  line-height:1.2 !important;
+}
+/* En alemán y otros idiomas de palabras largas, evitar invasión de la pastilla. */
+#statsModal .stats-salary .salary-copy{
+  min-width:0 !important;
+  overflow-wrap:anywhere !important;
+}
+#statsModal .stats-salary .salary-copy small,
+#statsModal .stats-salary .salary-copy b,
+#statsModal .stats-salary .salary-copy span{
+  overflow-wrap:anywhere !important;
+}
+@media(max-width:370px){
+  #statsModal .stats-grid{gap:4px !important;}
+  #statsModal .stat-card{padding-left:5px !important;padding-right:5px !important;}
+  #statsModal .stat-card b{font-size:19px !important;}
+  #statsModal .stat-card small{font-size:6.7px !important;}
+  #statsModal .stats-pdf-entry-icon{width:28px !important;height:28px !important;}
+  #statsModal .stats-pdf-entry{padding:5px 7px !important;column-gap:5px !important;}
+  #statsModal .stats-salary .salary-days{min-width:51px !important;}
+}
+@media(min-width:621px){
+  #statsModal .stats-modal-window{gap:8px !important;}
+  #statsModal .stat-card{min-height:66px !important;}
+  #statsModal .stats-pdf-entry{padding:8px 10px !important;}
+}
+
 </style>
 </head>
 <body class="notranslate">
@@ -15841,7 +16054,7 @@ body.dark-blue .topbar #workdayTopBtn{
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.6.9</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.7.0</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -16094,7 +16307,7 @@ body.dark-blue .topbar #workdayTopBtn{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.6.9</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.7.0</span></span>
             </div>
           </div>
 
@@ -16778,7 +16991,7 @@ body.dark-blue .topbar #workdayTopBtn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.6.9';
+const CURRENT_VERSION='5.7.0';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
