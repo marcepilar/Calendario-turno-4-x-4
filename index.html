@@ -15079,7 +15079,7 @@ body.light #workdayModal .workday-swap-pick{background:#f7fbfe;color:#253549}
   }
 }
 
-/* V5.6.8 · ACCESO A INFORMES PDF EN ESTADÍSTICAS, SIN RECORTAR LAS TARJETAS */
+/* V5.6.9 · ACCESO A INFORMES PDF EN ESTADÍSTICAS, SIN RECORTAR LAS TARJETAS */
 #statsModal .stats-modal-window{
   overflow-x:hidden !important;overflow-y:auto !important;
   overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
@@ -15132,7 +15132,7 @@ body.dark-blue #statsModal .stats-pdf-entry-icon{color:#a4f2ec;background:#185b6
 #helpModal .help-pdf-example{background:rgba(35,175,155,.10);border:1px solid rgba(35,175,155,.25);border-radius:11px;padding:11px}
 
 
-/* ===== V5.6.8 · FIRMA DE AUTOR Y CABECERA TÁCTIL ===== */
+/* ===== V5.6.9 · FIRMA DE AUTOR Y CABECERA TÁCTIL ===== */
 .topbar .top-actions .icon-btn{
   display:grid;
   place-items:center;
@@ -15196,7 +15196,7 @@ body.dark-blue .topbar #workdayTopBtn{
 }
 
 
-/* ===== V5.6.8 · ESTADÍSTICAS · PRÓXIMO SUELDO SIN RECORTES =====
+/* ===== V5.6.9 · ESTADÍSTICAS · PRÓXIMO SUELDO SIN RECORTES =====
    La última fila permite su altura real y se puede alcanzar deslizando
    Estadísticas. Se conservan los cálculos y los tres temas. */
 #statsModal .stats-modal-window{
@@ -15255,6 +15255,188 @@ body.dark-blue .topbar #workdayTopBtn{
 @media(max-width:350px){
   #statsModal .stats-salary .salary-top{gap:5px;}
   #statsModal .stats-salary .salary-days{min-width:58px;padding:9px 6px 11px;}
+}
+
+
+/* ===== V5.6.9 · ESTADÍSTICAS: AJUSTE INTEGRAL RESPONSIVO =====
+   Una sola zona de desplazamiento, sin filas flexibles forzadas.
+   Tarjeta de informes compacta y tamaño natural del resto de tarjetas.
+   No se alteran los registros, informes ni cálculos de la aplicación. */
+#statsModal .stats-modal-window{
+  grid-template-areas:
+    "head head" "cards cards" "pdf pdf" "turn turn"
+    "holidays holidays" "worklog worklog" "off salary" !important;
+  grid-template-rows:repeat(7,max-content) !important;
+  grid-auto-rows:max-content;
+  align-content:start !important;
+  gap:8px !important;
+  overflow-x:hidden !important;
+  overflow-y:auto !important;
+  overscroll-behavior-y:contain;
+  -webkit-overflow-scrolling:touch;
+  scroll-padding-top:60px;
+  padding-bottom:max(18px,env(safe-area-inset-bottom)) !important;
+}
+#statsModal .stats-head{
+  position:sticky !important;
+  top:0 !important;
+  z-index:5;
+  min-width:0;
+  margin:0 !important;
+}
+#statsModal .stats-pdf-entry{
+  grid-area:pdf;
+  display:grid !important;
+  grid-template-columns:32px minmax(0,1fr) minmax(111px,126px) !important;
+  grid-template-rows:max-content !important;
+  align-items:center !important;
+  column-gap:8px !important;
+  row-gap:0 !important;
+  padding:8px 10px !important;
+  margin:0 !important;
+  min-height:54px !important;
+  height:auto !important;
+  box-sizing:border-box;
+  border-radius:15px;
+  overflow:visible;
+}
+#statsModal .stats-pdf-entry-icon{
+  grid-column:1;grid-row:1;
+  width:32px !important;height:32px !important;
+  font-size:18px !important;border-radius:10px;
+}
+#statsModal .stats-pdf-entry-copy{
+  grid-column:2;grid-row:1;
+  display:flex;flex-direction:column;
+  gap:3px;min-width:0;
+}
+#statsModal .stats-pdf-entry-copy b{
+  font-size:12px !important;
+  line-height:1.15 !important;
+  overflow-wrap:break-word;
+}
+#statsModal .stats-pdf-entry-copy small{
+  font-size:8px !important;
+  line-height:1.3 !important;
+  overflow-wrap:break-word;
+}
+#statsModal #openReportBtn.stats-pdf-entry-action{
+  grid-column:3 !important;
+  grid-row:1 !important;
+  justify-self:stretch;
+  width:100% !important;
+  min-width:0 !important;
+  max-width:100% !important;
+  height:auto !important;
+  min-height:36px !important;
+  padding:6px 5px !important;
+  margin:0 !important;
+  font-size:9px !important;
+  line-height:1.2 !important;
+  letter-spacing:-.015em;
+  white-space:normal !important;
+  overflow-wrap:break-word;
+  text-align:center;
+  border-radius:10px;
+}
+/* Las tarjetas mantienen su altura real y no se pisan entre sí. */
+#statsModal .stat-card{
+  min-height:78px !important;
+  padding-top:24px !important;
+  justify-content:flex-end;
+}
+#statsModal .stat-card small{
+  white-space:normal !important;
+  overflow-wrap:anywhere;
+  font-size:6.4px !important;
+  letter-spacing:-.01em !important;
+  line-height:1.12 !important;
+}
+#statsModal .stats-grid,
+#statsModal .stats-turn-end,
+#statsModal .stats-holidays,
+#statsModal .stats-worklog,
+#statsModal .stats-off,
+#statsModal .stats-salary{
+  min-width:0;
+  height:auto !important;
+  margin-top:0 !important;
+  align-self:stretch;
+  box-sizing:border-box;
+}
+#statsModal .stats-turn-end{
+  min-height:100px;
+  overflow:visible;
+}
+#statsModal .stats-holidays{
+  min-height:124px;
+  overflow:visible !important;
+}
+#statsModal .stats-holidays h3,
+#statsModal .stats-worklog h3{
+  white-space:normal !important;
+  overflow-wrap:break-word;
+  line-height:1.15 !important;
+}
+#statsModal .holiday-work-note{
+  display:block;
+  width:100% !important;
+  max-width:100% !important;
+  white-space:normal !important;
+  overflow-wrap:break-word;
+  line-height:1.25 !important;
+  text-overflow:clip !important;
+}
+#statsModal .holiday-work-grid{min-width:0;max-width:100%;}
+#statsModal .stats-worklog{
+  min-height:193px;
+  overflow:visible !important;
+}
+#statsModal .worklog-stats-grid{
+  min-height:136px;
+  grid-template-rows:repeat(2,minmax(64px,max-content));
+  align-content:start;
+}
+#statsModal .worklog-stat-btn{
+  min-width:0;
+  min-height:64px;
+  height:auto;
+}
+#statsModal .worklog-stat-btn small,
+#statsModal .worklog-stat-btn > span,
+#statsModal .worklog-stat-btn em{
+  overflow-wrap:break-word;
+}
+#statsModal .stats-off,
+#statsModal .stats-salary{
+  min-height:155px !important;
+  overflow:visible !important;
+}
+#statsModal .stats-salary .salary-days{
+  overflow:visible !important;
+}
+@media(max-width:370px){
+  #statsModal .stats-pdf-entry{
+    grid-template-columns:30px minmax(0,1fr) minmax(106px,115px) !important;
+    column-gap:7px !important;
+    padding:7px 8px !important;
+  }
+  #statsModal .stats-pdf-entry-icon{width:30px !important;height:30px !important;}
+  #statsModal .stats-pdf-entry-copy b{font-size:11.5px !important;}
+  #statsModal .stats-pdf-entry-copy small{font-size:7.8px !important;}
+  #statsModal #openReportBtn.stats-pdf-entry-action{font-size:8.2px !important;min-height:36px !important;}
+  #statsModal .stats-worklog{min-height:185px;}
+}
+@media(min-width:621px){
+  #statsModal .stats-modal-window{gap:10px !important;}
+  #statsModal .stats-pdf-entry{
+    grid-template-columns:37px minmax(0,1fr) minmax(132px,160px) !important;
+    padding:10px 12px !important;
+  }
+  #statsModal .stats-pdf-entry-icon{width:37px !important;height:37px !important;}
+  #statsModal .stats-pdf-entry-copy b{font-size:13px !important;}
+  #statsModal .stats-pdf-entry-copy small{font-size:9px !important;}
+  #statsModal #openReportBtn.stats-pdf-entry-action{font-size:10px !important;}
 }
 
 </style>
@@ -15659,7 +15841,7 @@ body.dark-blue .topbar #workdayTopBtn{
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.6.8</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.6.9</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -15912,7 +16094,7 @@ body.dark-blue .topbar #workdayTopBtn{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.6.8</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.6.9</span></span>
             </div>
           </div>
 
@@ -16596,7 +16778,7 @@ body.dark-blue .topbar #workdayTopBtn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.6.8';
+const CURRENT_VERSION='5.6.9';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -17078,7 +17260,7 @@ function translateRuntimeText(text){
 }
 
 
-/* V5.6.8 · Traducciones verificables de la nueva guía PDF, en seis idiomas */
+/* V5.6.9 · Traducciones verificables de la nueva guía PDF, en seis idiomas */
 Object.assign(I18N.en,{"Informes PDF":"PDF reports","Cómo preparar un informe según cada situación":"How to prepare a report for each situation","Desde Estadísticas tocá ABRIR INFORMES PDF. Esta herramienta genera un documento personal con los registros guardados en tu dispositivo.":"In Statistics, tap OPEN PDF REPORTS. This tool creates a personal document from records stored on your device.","Preparar y descargar":"Prepare and download","1. Elegí una o varias categorías: horas extra, cambios de turno, licencias, vacaciones o agenda. Podés seleccionar todas o quitar las que no necesites.":"1. Choose one or more categories: overtime, shift changes, leave, vacations or agenda. You can select all or clear those you do not need.","2. Si querés, completá legajo, nombre y apellido. Son opcionales; solo se recuerdan en el dispositivo si activás la casilla correspondiente.":"2. Optionally enter your employee number, first name and surname. They are saved on this device only if you enable the remember option.","3. Seleccioná el período, el mes a consultar y el contenido: Resumen + detalle por fecha o Solo resumen.":"3. Select the period, the month to review, and the content: Summary + details by date or Summary only.","4. Revisá la vista previa y tocá GENERAR PDF. La descarga se realiza localmente; no se envían tus registros a un servidor.":"4. Check the preview and tap GENERATE PDF. The download happens locally; your records are not sent to a server.","Qué período elegir":"Which period should you choose?","Laboral (24 → 23): incluye del día 24 del mes anterior hasta el día 23 del mes seleccionado, para todas las categorías. Ejemplo: octubre 2026 = 24/09 al 23/10.":"Payroll (24 → 23): from the 24th of the previous month through the 23rd of the selected month, for all categories. Example: October 2026 = 24/09 to 23/10.","Mes calendario: incluye del día 1 al último día del mes elegido, para todas las categorías. Ejemplo: octubre 2026 = 01/10 al 31/10.":"Calendar month: from the 1st to the last day of the selected month, for all categories. Example: October 2026 = 01/10 to 31/10.","Personalizado: elegí las fechas Desde y Hasta. Todas las categorías seleccionadas usan ese mismo rango.":"Custom: choose From and To dates. All selected categories use the same range.","Combinado: usa el período laboral (24 → 23) para horas extra y el mes calendario (1 → último) para cambios de turno. Licencias, vacaciones y agenda usan el período laboral.":"Combined: uses the payroll period (24 → 23) for overtime and the calendar month (1 → last day) for shift changes. Leave, vacations and agenda use the payroll period.","Ejemplo: informe combinado de octubre de 2026":"Example: combined report for October 2026","Horas extra: 24/09/2026 → 23/10/2026. Cambios de turno: 01/10/2026 → 31/10/2026. Así, un cambio del 26 de octubre aparece en el PDF sin excluir las horas extra del cierre laboral.":"Overtime: 24/09/2026 → 23/10/2026. Shift changes: 01/10/2026 → 31/10/2026. This way, a shift change on October 26 appears in the PDF without excluding overtime from the payroll period.","Cómo se registran los cambios pactados":"How agreed shift swaps are recorded","Pedí un cambio significa que otro turno me cubre; Me pidieron un cambio significa que yo cubro a otro turno, incluso estando de franco. Cada movimiento representa 12 horas y es independiente de las horas extra.":"I requested a change means another shift covers me; I was asked to cover means I cover another shift, even on my day off. Each movement is 12 hours and is separate from overtime.","Si pactaron una devolución en otra fecha, podés vincular las dos jornadas. El informe muestra cada movimiento en su fecha, aunque pertenezcan a meses diferentes; no se duplican las horas extra.":"If you agreed to return the coverage on another date, you can link the two workdays. The report shows each movement on its own date, even in different months; overtime is not counted twice.","Formato del documento":"Document format","Resumen + detalle por fecha permite revisar cada registro individual. Solo resumen muestra los totales sin el listado de fechas.":"Summary + details by date lists each record. Summary only shows totals without the dated entries.","El PDF es un informe personal de los datos ingresados. No es una constancia oficial de Recursos Humanos ni reemplaza la liquidación de haberes.":"This PDF is a personal report based on entered data. It is not an official HR certificate and does not replace a payslip.","ABRIR INFORMES PDF ›":"OPEN PDF REPORTS ›","Exportá tus registros laborales por categoría y período.":"Export your work records by category and period.","Turnos, calendario, instalación, Agenda, Vacaciones, Jornada, Licencias, Estadísticas, Informes PDF y Configuración.":"Shifts, calendar, installation, agenda, vacations, workdays, leave, statistics, PDF reports and settings."});
 Object.assign(I18N.pt,{"Informes PDF":"Relatórios PDF","Cómo preparar un informe según cada situación":"Como preparar um relatório para cada situação","Desde Estadísticas tocá ABRIR INFORMES PDF. Esta herramienta genera un documento personal con los registros guardados en tu dispositivo.":"Em Estatísticas, toque em ABRIR RELATÓRIOS PDF. Esta ferramenta gera um documento pessoal com os registros salvos no dispositivo.","Preparar y descargar":"Preparar e baixar","1. Elegí una o varias categorías: horas extra, cambios de turno, licencias, vacaciones o agenda. Podés seleccionar todas o quitar las que no necesites.":"1. Escolha uma ou mais categorias: horas extras, trocas de turno, licenças, férias ou agenda. Você pode selecionar todas ou desmarcar as desnecessárias.","2. Si querés, completá legajo, nombre y apellido. Son opcionales; solo se recuerdan en el dispositivo si activás la casilla correspondiente.":"2. Opcionalmente, informe matrícula, nome e sobrenome. Esses dados só ficam salvos no dispositivo se você ativar a opção de memorização.","3. Seleccioná el período, el mes a consultar y el contenido: Resumen + detalle por fecha o Solo resumen.":"3. Selecione o período, o mês e o conteúdo: Resumo + detalhes por data ou Apenas resumo.","4. Revisá la vista previa y tocá GENERAR PDF. La descarga se realiza localmente; no se envían tus registros a un servidor.":"4. Confira a prévia e toque em GERAR PDF. O download é local; seus registros não são enviados a um servidor.","Qué período elegir":"Qual período escolher?","Laboral (24 → 23): incluye del día 24 del mes anterior hasta el día 23 del mes seleccionado, para todas las categorías. Ejemplo: octubre 2026 = 24/09 al 23/10.":"Trabalhista (24 → 23): do dia 24 do mês anterior ao dia 23 do mês selecionado, para todas as categorias. Exemplo: outubro de 2026 = 24/09 a 23/10.","Mes calendario: incluye del día 1 al último día del mes elegido, para todas las categorías. Ejemplo: octubre 2026 = 01/10 al 31/10.":"Mês civil: do dia 1 ao último dia do mês selecionado, para todas as categorias. Exemplo: outubro de 2026 = 01/10 a 31/10.","Personalizado: elegí las fechas Desde y Hasta. Todas las categorías seleccionadas usan ese mismo rango.":"Personalizado: escolha as datas De e Até. Todas as categorias selecionadas usam o mesmo intervalo.","Combinado: usa el período laboral (24 → 23) para horas extra y el mes calendario (1 → último) para cambios de turno. Licencias, vacaciones y agenda usan el período laboral.":"Combinado: usa o período trabalhista (24 → 23) para horas extras e o mês civil (1 → último dia) para trocas de turno. Licenças, férias e agenda usam o período trabalhista.","Ejemplo: informe combinado de octubre de 2026":"Exemplo: relatório combinado de outubro de 2026","Horas extra: 24/09/2026 → 23/10/2026. Cambios de turno: 01/10/2026 → 31/10/2026. Así, un cambio del 26 de octubre aparece en el PDF sin excluir las horas extra del cierre laboral.":"Horas extras: 24/09/2026 → 23/10/2026. Trocas de turno: 01/10/2026 → 31/10/2026. Assim, uma troca em 26 de outubro aparece no PDF sem excluir as horas extras do fechamento.","Cómo se registran los cambios pactados":"Como são registradas as trocas acordadas","Pedí un cambio significa que otro turno me cubre; Me pidieron un cambio significa que yo cubro a otro turno, incluso estando de franco. Cada movimiento representa 12 horas y es independiente de las horas extra.":"Pedi uma troca significa que outro turno me cobre; Pediram para eu cobrir significa que eu cubro outro turno, inclusive na folga. Cada movimento vale 12 horas e é separado das horas extras.","Si pactaron una devolución en otra fecha, podés vincular las dos jornadas. El informe muestra cada movimiento en su fecha, aunque pertenezcan a meses diferentes; no se duplican las horas extra.":"Se combinaram a devolução em outra data, você pode vincular as duas jornadas. O relatório mostra cada movimento em sua própria data, mesmo em meses diferentes; as horas extras não são duplicadas.","Formato del documento":"Formato do documento","Resumen + detalle por fecha permite revisar cada registro individual. Solo resumen muestra los totales sin el listado de fechas.":"Resumo + detalhes por data lista cada registro. Apenas resumo apresenta os totais sem a relação por data.","El PDF es un informe personal de los datos ingresados. No es una constancia oficial de Recursos Humanos ni reemplaza la liquidación de haberes.":"Este PDF é um relatório pessoal baseado nos dados inseridos. Não é um comprovante oficial do RH nem substitui o contracheque.","ABRIR INFORMES PDF ›":"ABRIR RELATÓRIOS PDF ›","Exportá tus registros laborales por categoría y período.":"Exporte seus registros de trabalho por categoria e período.","Turnos, calendario, instalación, Agenda, Vacaciones, Jornada, Licencias, Estadísticas, Informes PDF y Configuración.":"Turnos, calendário, instalação, agenda, férias, jornada, licenças, estatísticas, relatórios PDF e configurações."});
 Object.assign(I18N.fr,{"Informes PDF":"Rapports PDF","Cómo preparar un informe según cada situación":"Comment préparer un rapport selon la situation","Desde Estadísticas tocá ABRIR INFORMES PDF. Esta herramienta genera un documento personal con los registros guardados en tu dispositivo.":"Dans Statistiques, touchez OUVRIR LES RAPPORTS PDF. Cet outil crée un document personnel à partir des enregistrements de votre appareil.","Preparar y descargar":"Préparer et télécharger","1. Elegí una o varias categorías: horas extra, cambios de turno, licencias, vacaciones o agenda. Podés seleccionar todas o quitar las que no necesites.":"1. Choisissez une ou plusieurs catégories : heures supplémentaires, changements d’équipe, absences, congés ou agenda. Vous pouvez tout sélectionner ou retirer les catégories inutiles.","2. Si querés, completá legajo, nombre y apellido. Son opcionales; solo se recuerdan en el dispositivo si activás la casilla correspondiente.":"2. Renseignez éventuellement votre matricule, prénom et nom. Ils ne sont mémorisés sur cet appareil que si vous activez cette option.","3. Seleccioná el período, el mes a consultar y el contenido: Resumen + detalle por fecha o Solo resumen.":"3. Choisissez la période, le mois et le contenu : Résumé + détail par date ou Résumé uniquement.","4. Revisá la vista previa y tocá GENERAR PDF. La descarga se realiza localmente; no se envían tus registros a un servidor.":"4. Vérifiez l’aperçu et touchez CRÉER LE PDF. Le téléchargement est local ; vos données ne sont pas envoyées à un serveur.","Qué período elegir":"Quelle période choisir ?","Laboral (24 → 23): incluye del día 24 del mes anterior hasta el día 23 del mes seleccionado, para todas las categorías. Ejemplo: octubre 2026 = 24/09 al 23/10.":"Période de paie (24 → 23) : du 24 du mois précédent au 23 du mois sélectionné, pour toutes les catégories. Exemple : octobre 2026 = du 24/09 au 23/10.","Mes calendario: incluye del día 1 al último día del mes elegido, para todas las categorías. Ejemplo: octubre 2026 = 01/10 al 31/10.":"Mois civil : du 1er au dernier jour du mois choisi, pour toutes les catégories. Exemple : octobre 2026 = du 01/10 au 31/10.","Personalizado: elegí las fechas Desde y Hasta. Todas las categorías seleccionadas usan ese mismo rango.":"Personnalisé : choisissez les dates Du et Au. Toutes les catégories sélectionnées utilisent la même plage.","Combinado: usa el período laboral (24 → 23) para horas extra y el mes calendario (1 → último) para cambios de turno. Licencias, vacaciones y agenda usan el período laboral.":"Combiné : période de paie (24 → 23) pour les heures supplémentaires et mois civil (1 → dernier) pour les changements d’équipe. Absences, congés et agenda utilisent la période de paie.","Ejemplo: informe combinado de octubre de 2026":"Exemple : rapport combiné d’octobre 2026","Horas extra: 24/09/2026 → 23/10/2026. Cambios de turno: 01/10/2026 → 31/10/2026. Así, un cambio del 26 de octubre aparece en el PDF sin excluir las horas extra del cierre laboral.":"Heures supplémentaires : 24/09/2026 → 23/10/2026. Changements d’équipe : 01/10/2026 → 31/10/2026. Un changement le 26 octobre figure ainsi dans le PDF sans exclure les heures supplémentaires de la clôture.","Cómo se registran los cambios pactados":"Comment sont enregistrés les échanges convenus","Pedí un cambio significa que otro turno me cubre; Me pidieron un cambio significa que yo cubro a otro turno, incluso estando de franco. Cada movimiento representa 12 horas y es independiente de las horas extra.":"J’ai demandé un changement signifie qu’une autre équipe me remplace ; On m’a demandé de couvrir signifie que je remplace une autre équipe, même en repos. Chaque mouvement représente 12 heures, distinctes des heures supplémentaires.","Si pactaron una devolución en otra fecha, podés vincular las dos jornadas. El informe muestra cada movimiento en su fecha, aunque pertenezcan a meses diferentes; no se duplican las horas extra.":"Si vous avez convenu d’une contrepartie à une autre date, vous pouvez lier les deux journées. Le rapport affiche chaque mouvement à sa propre date, même sur deux mois ; les heures supplémentaires ne sont pas doublées.","Formato del documento":"Format du document","Resumen + detalle por fecha permite revisar cada registro individual. Solo resumen muestra los totales sin el listado de fechas.":"Résumé + détail par date liste chaque enregistrement. Résumé uniquement affiche les totaux sans liste des dates.","El PDF es un informe personal de los datos ingresados. No es una constancia oficial de Recursos Humanos ni reemplaza la liquidación de haberes.":"Ce PDF est un rapport personnel établi à partir de données saisies. Il ne constitue pas une attestation officielle des RH et ne remplace pas la fiche de paie.","ABRIR INFORMES PDF ›":"OUVRIR LES RAPPORTS PDF ›","Exportá tus registros laborales por categoría y período.":"Exportez vos données de travail par catégorie et période.","Turnos, calendario, instalación, Agenda, Vacaciones, Jornada, Licencias, Estadísticas, Informes PDF y Configuración.":"Équipes, calendrier, installation, agenda, congés, journées, absences, statistiques, rapports PDF et paramètres."});
@@ -21925,7 +22107,7 @@ function reportTxDynamic(text){
 }
 function reportTypeCaption(type){return reportTx(reportTypeNames[type]||type)}
 
-/* V5.6.8: modo combinado para cierres de horas extras y cambios de mes calendario.
+/* V5.6.9: modo combinado para cierres de horas extras y cambios de mes calendario.
    Las otras secciones mantienen el período laboral. Textos de interfaz y PDF en seis idiomas. */
 const REPORT_COMBINED_I18N={
  es:{option:'Combinado · dos períodos',changes:'Cambios de turno',remaining:'Otras secciones',hint:'Horas extra y otras secciones: cierre laboral 24→23. Cambios de turno: mes calendario.'},
