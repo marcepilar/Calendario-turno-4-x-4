@@ -15480,7 +15480,7 @@ body.light #workdayModal .workday-swap-pick{background:#f7fbfe;color:#253549}
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.6.4</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.6.5</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -15712,7 +15712,7 @@ body.light #workdayModal .workday-swap-pick{background:#f7fbfe;color:#253549}
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.6.4</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.6.5</span></span>
             </div>
           </div>
 
@@ -16243,6 +16243,7 @@ body.light #workdayModal .workday-swap-pick{background:#f7fbfe;color:#253549}
           <option id="reportPayrollOption" value="payroll" data-no-i18n="true">Laboral · del 24 al 23</option>
           <option value="calendar">Mes calendario · del 1 al último</option>
           <option value="custom">Personalizado · desde / hasta</option>
+          <option id="reportCombinedOption" value="combined" data-no-i18n="true">Combinado · dos períodos</option>
         </select>
         <div id="reportMonthRow">
           <label for="reportMonthPick">Mes a consultar</label>
@@ -16253,6 +16254,7 @@ body.light #workdayModal .workday-swap-pick{background:#f7fbfe;color:#253549}
           <div><label for="reportStartPick">Desde</label><input id="reportStart" type="hidden" value="" /><button type="button" id="reportStartPick" class="report-date-pick" data-no-i18n="true" aria-haspopup="dialog" aria-label="Elegir fecha inicial"><span class="report-date-picked">—</span><span aria-hidden="true">▦</span></button></div>
           <div><label for="reportEndPick">Hasta</label><input id="reportEnd" type="hidden" value="" /><button type="button" id="reportEndPick" class="report-date-pick" data-no-i18n="true" aria-haspopup="dialog" aria-label="Elegir fecha final"><span class="report-date-picked">—</span><span aria-hidden="true">▦</span></button></div>
         </div>
+        <small id="reportCombinedHint" class="report-select-hint" data-no-i18n="true" hidden></small>
       </div>
       <div class="report-card">
         <label for="reportDetail">Contenido del PDF</label>
@@ -16386,7 +16388,7 @@ body.light #workdayModal .workday-swap-pick{background:#f7fbfe;color:#253549}
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.6.4';
+const CURRENT_VERSION='5.6.5';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -21707,6 +21709,31 @@ function reportTxDynamic(text){
 }
 function reportTypeCaption(type){return reportTx(reportTypeNames[type]||type)}
 
+/* V5.6.5: modo combinado para cierres de horas extras y cambios de mes calendario.
+   Las otras secciones mantienen el período laboral. Textos de interfaz y PDF en seis idiomas. */
+const REPORT_COMBINED_I18N={
+ es:{option:'Combinado · dos períodos',changes:'Cambios de turno',remaining:'Otras secciones',hint:'Horas extra y otras secciones: cierre laboral 24→23. Cambios de turno: mes calendario.'},
+ en:{option:'Combined · two periods',changes:'Shift changes',remaining:'Other sections',hint:'Overtime and other sections: payroll period 24→23. Shift changes: calendar month.'},
+ pt:{option:'Combinado · dois períodos',changes:'Mudanças de turno',remaining:'Outras seções',hint:'Horas extras e outras seções: período laboral 24→23. Mudanças: mês civil.'},
+ fr:{option:'Combiné · deux périodes',changes:'Changements d’équipe',remaining:'Autres sections',hint:'Heures supplémentaires et autres sections : période du 24 au 23. Changements : mois civil.'},
+ de:{option:'Kombi · 2 Zeiträume',changes:'Schichtwechsel',remaining:'Andere Abschnitte',hint:'Überstunden und andere Bereiche: 24.–23. Schichtwechsel: Kalendermonat.'},
+ it:{option:'Combinato · due periodi',changes:'Cambi turno',remaining:'Altre sezioni',hint:'Straordinari e altre sezioni: periodo lavorativo 24→23. Cambi turno: mese solare.'}
+};
+function reportCombinedText(key){return (REPORT_COMBINED_I18N[appLanguage]||REPORT_COMBINED_I18N.es)[key]}
+function reportSectionBounds(bounds,type){
+ return bounds.mode==='combined'&&type==='changes'?bounds.calendar:bounds;
+}
+function reportPeriodLines(report){
+ const {bounds}=report;
+ if(bounds.mode!=='combined')return [`${reportTx('Del')} ${reportDateText(bounds.startKey)} ${reportTx('al')} ${reportDateText(bounds.endKey)}`];
+ const lines=[];
+ const others=report.types.filter(type=>type!=='changes');
+ if(others.length)lines.push(`${others.map(reportTypeCaption).join(' / ')}: ${reportDateText(bounds.startKey)} → ${reportDateText(bounds.endKey)}`);
+ if(report.types.includes('changes'))lines.push(`${reportCombinedText('changes')}: ${reportDateText(bounds.calendar.startKey)} → ${reportDateText(bounds.calendar.endKey)}`);
+ return lines;
+}
+
+
 
 function reportPartialPeriodNote(included,registered){
  switch(appLanguage){
@@ -22048,7 +22075,7 @@ function openReportGenerator(){
 }
 function reportBounds(){
  const mode=reportPeriodEl.value;
- let start,end;
+ let start,end,calendar=null;
  if(mode==='custom'){
   if(!/^\d{4}-\d{2}-\d{2}$/.test(reportStartEl.value)||!/^\d{4}-\d{2}-\d{2}$/.test(reportEndEl.value))throw Error('Elegí las dos fechas del período.');
   start=parseDateKey(reportStartEl.value);end=parseDateKey(reportEndEl.value);
@@ -22057,14 +22084,18 @@ function reportBounds(){
   if(!m)throw Error('Seleccioná el mes del informe.');
   const year=Number(m[1]),month=Number(m[2])-1;
   if(year<1900||year>2100||month<0||month>11)throw Error('Mes fuera de rango.');
-  if(mode==='payroll')({start,end}=overtimePayrollPeriod(year,month));
+  if(mode==='payroll'||mode==='combined')({start,end}=overtimePayrollPeriod(year,month));
   else{start=calendarDate(year,month,1);end=calendarDate(year,month+1,0)}
+  if(mode==='combined'){
+   const monthStart=calendarDate(year,month,1),monthEnd=calendarDate(year,month+1,0);
+   calendar={start:monthStart,end:monthEnd,startKey:dateKey(monthStart),endKey:dateKey(monthEnd),endExclusive:addDays(monthEnd,1)};
+  }
  }
  const startKey=dateKey(start),endKey=dateKey(end);
  if(startKey>endKey)throw Error('La fecha «Desde» debe ser anterior o igual a «Hasta».');
  const days=diffDays(end,start)+1;
  if(days<1||days>366)throw Error('Elegí un período máximo de 366 días para generar el informe.');
- return {start,end,startKey,endKey,endExclusive:addDays(end,1),days,mode};
+ return {start,end,startKey,endKey,endExclusive:addDays(end,1),days,mode,calendar};
 }
 function reportDateText(key){
  const [y,m,d]=key.split('-');return `${d}/${m}/${y}`;
@@ -22080,11 +22111,12 @@ function reportCollect(){
  const typeLabel=reportTx(type==='all'?'Informe completo':type==='custom'?'Informe personalizado':reportTypeNames[type]);
  const result={bounds,turn,turnLabel:scheduleName(turn),type,types,typeLabel,sections:[],summary:[],totalRows:0,detailLevel:reportDetailEl.value,employee:reportEmployeeData()};
  const addSection=(key,title,rows)=>{
-  if(selected.has(key)){result.sections.push({title:reportTx(title),rows});result.totalRows+=rows.length;}
+  if(selected.has(key)){result.sections.push({title:reportTx(title),rows,bounds:reportSectionBounds(bounds,key)});result.totalRows+=rows.length;}
  };
  if(selected.has('overtime')){
   // Usa exactamente el mismo motor de prorrateo que Estadísticas (incluye M/N cruzando medianoche).
-  const data=overtimeStatsForBounds(turn,bounds.start,bounds.endExclusive);
+  const overtimeBounds=reportSectionBounds(bounds,'overtime');
+  const data=overtimeStatsForBounds(turn,overtimeBounds.start,overtimeBounds.endExclusive);
   const total={M:0,N:0,unknown:0};
   const rows=data.records.map(r=>{
    const code=['M','N'].includes(r.overtimeCode)?r.overtimeCode:'unknown';
@@ -22098,8 +22130,9 @@ function reportCollect(){
   addSection('overtime','HORAS EXTRAS · REGISTRO FECHA POR FECHA',rows);
  }
  if(selected.has('changes')){
+  const changesBounds=reportSectionBounds(bounds,'changes');
   const changeRecords=loadWorklogData().map(normalizeWorklog)
-   .filter(r=>r.turn===turn&&r.workedCode&&r.date>=bounds.startKey&&r.date<=bounds.endKey)
+   .filter(r=>r.turn===turn&&r.workedCode&&r.date>=changesBounds.startKey&&r.date<=changesBounds.endKey)
    .sort((a,b)=>a.date.localeCompare(b.date));
   const count=worklogChangeBreakdown(changeRecords);
   const rows=changeRecords.map(r=>({
@@ -22169,8 +22202,15 @@ function reportUpdatePayrollPeriodOption(){
  const fmt=key=>{const [,m,d]=key.split('-');return `${d}/${m}`};
  option.textContent=`${prefix} · ${fmt(bounds.startKey)} → ${fmt(bounds.endKey)}`;
 }
+function reportUpdateCombinedOption(){
+ const option=$('#reportCombinedOption');if(option)option.textContent=reportCombinedText('option');
+ const hint=$('#reportCombinedHint');
+ hint.hidden=reportPeriodEl.value!=='combined';
+ if(!hint.hidden)hint.textContent=reportCombinedText('hint');
+}
 function refreshReportPreview(){
  reportUpdatePayrollPeriodOption();
+ reportUpdateCombinedOption();
  reportUpdateMultiLabel();
  $('#reportMonthRow').hidden=reportPeriodEl.value==='custom';
  $('#reportDatesRow').hidden=reportPeriodEl.value!=='custom';
@@ -22179,7 +22219,7 @@ function refreshReportPreview(){
   reportPreviewEl.innerHTML='<b>'+reportTx('Vista previa del informe')+'</b><p id="reportPreviewText"></p>';
   const emp=report.employee;
   const employeeName=[emp.first,emp.last].filter(Boolean).join(' ');
-  $('#reportPreviewText').textContent=`${reportTx('Empleado:')} ${employeeName||reportTx('Sin completar')} · ${reportTx('Legajo:')} ${emp.number||reportTx('Sin completar')}\n${reportTx('Secciones:')} ${report.types.map(k=>reportTypeCaption(k)).join(', ')}\n${reportTx('Turno')}: ${report.turnLabel}\n${reportTx('Del')} ${reportDateText(report.bounds.startKey)} ${reportTx('al')} ${reportDateText(report.bounds.endKey)}\n${report.summary.map(reportTxDynamic).join(' | ')}\n${report.detailLevel==='summary'?reportTx('PDF resumido')+' · '+report.totalRows+' '+reportTx(report.totalRows===1?'registro contabilizado':'registros contabilizados')+', '+reportTx('sin desglose por fecha.'):report.totalRows+' '+reportTx(report.totalRows===1?'registro detallado':'registros detallados')+'.'}`;
+  $('#reportPreviewText').textContent=`${reportTx('Empleado:')} ${employeeName||reportTx('Sin completar')} · ${reportTx('Legajo:')} ${emp.number||reportTx('Sin completar')}\n${reportTx('Secciones:')} ${report.types.map(k=>reportTypeCaption(k)).join(', ')}\n${reportTx('Turno')}: ${report.turnLabel}\n${reportPeriodLines(report).join('\n')}\n${report.summary.map(reportTxDynamic).join(' | ')}\n${report.detailLevel==='summary'?reportTx('PDF resumido')+' · '+report.totalRows+' '+reportTx(report.totalRows===1?'registro contabilizado':'registros contabilizados')+', '+reportTx('sin desglose por fecha.'):report.totalRows+' '+reportTx(report.totalRows===1?'registro detallado':'registros detallados')+'.'}`;
   $('#reportPreviewText').style.whiteSpace='pre-line';
   reportGenerateBtn.disabled=false;
   reportStatusEl.textContent='';
@@ -22189,6 +22229,17 @@ function refreshReportPreview(){
   reportGenerateBtn.disabled=true;
  }
 }
+/* Al elegir Combinado desde el valor inicial de Horas extras, incluir Cambios de turno.
+   El usuario puede luego activar o desactivar libremente cualquiera de las cinco secciones. */
+reportPeriodEl.addEventListener('change',()=>{
+ if(reportPeriodEl.value==='combined'){
+  const chosen=reportSelectedTypes();
+  if(chosen.length===1&&chosen[0]==='overtime'){
+   const changes=reportTypeChecks.find(el=>el.value==='changes');
+   if(changes)changes.checked=true;
+  }
+ }
+});
 [reportPeriodEl,reportMonthEl,reportStartEl,reportEndEl,reportDetailEl].forEach(el=>{
  el.addEventListener('change',refreshReportPreview);
  el.addEventListener('input',refreshReportPreview);
@@ -22259,7 +22310,12 @@ function reportBuildPageCanvases(report){
   identY+=7;
  }
  y+=identityHeight+26;
- label(`${reportTx('Turno')}: ${report.turnLabel}   |   ${reportTx('Período del informe')}: ${reportDateText(report.bounds.startKey)} - ${reportDateText(report.bounds.endKey)}`,y);y+=27;
+ label(`${reportTx('Turno')}: ${report.turnLabel}   |   ${reportTx('Período del informe')}${report.bounds.mode==='combined'?' · '+reportCombinedText('option'):''}`,y);y+=27;
+ ctx.font='bold 18px Arial';
+ for(const periodLine of reportPeriodLines(report)){
+  const wrapped=reportWrapText(ctx,periodLine,R-M);
+  for(const segment of wrapped){ensure(28);text(segment,M,y,'bold 18px Arial','#4b7181');y+=27;}
+ }
  label(`${reportTx('Generado el')} ${new Date().toLocaleDateString(currentLocale())} · ${reportTx('Informe personal para comparar con RR. HH.')}`,y);y+=34;
  label(`Contenido: ${report.detailLevel==='summary'?reportTx('Solo resumen'):reportTx('Resumen y detalle por fecha')}`,y);y+=30;
  const summaryLines=[];
@@ -22282,6 +22338,11 @@ function reportBuildPageCanvases(report){
   rect(M,y,R-M,48,'#e7eef2',9);
   text(reportTx(section.title),M+18,y+31,'bold 19px Arial','#19465b');
   y+=65;
+  if(report.bounds.mode==='combined'){
+   ensure(35);
+   text(`${reportDateText(section.bounds.startKey)} → ${reportDateText(section.bounds.endKey)}`,M+18,y,'16px Arial','#4b7181');
+   y+=32;
+  }
   if(!section.rows.length){
    ensure(70);rect(M,y,R-M,54,'#f7f9fb',9);
    text(reportTx('Sin registros en el período seleccionado.'),M+18,y+35,'17px Arial','#7e8f9c');y+=71;continue;
@@ -22356,7 +22417,7 @@ function reportDownload(){
     const a=document.createElement('a');
     const fileType=report.type==='all'?'Completo':report.type==='custom'?'Personalizado':report.type;
     a.href=url;
-    a.download=`Calendario4x4_${fileType}_${report.turn}_${report.bounds.startKey}_${report.bounds.endKey}.pdf`;
+    a.download=`Calendario4x4_${fileType}${report.bounds.mode==='combined'?'_Combinado':''}_${report.turn}_${report.bounds.startKey}_${report.bounds.calendar?.endKey||report.bounds.endKey}.pdf`;
     document.body.appendChild(a);a.click();a.remove();
     setTimeout(()=>URL.revokeObjectURL(url),45000);
     reportStatusEl.textContent=reportSuccessMessage(canvases.length);
