@@ -15692,6 +15692,15 @@ body.dark-blue .topbar #workdayTopBtn{
   #statsModal .stats-pdf-entry-copy small{font-size:8px !important;}
 }
 
+
+/* ===== V5.7.5 · AJUSTE ÓPTICO EXCLUSIVO DE M EN ESTADÍSTICAS ===== */
+/* La M del turno mañana deja de dominar visualmente el distintivo. */
+#statsModal .turn-end-badge.shift-m{
+  font-size:19px !important;
+  font-weight:850 !important;
+  letter-spacing:0 !important;
+}
+
 </style>
 </head>
 <body class="notranslate">
@@ -17031,7 +17040,7 @@ body.dark-blue .topbar #workdayTopBtn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.7.4';
+const CURRENT_VERSION='5.7.5';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -21368,6 +21377,7 @@ function renderTurnEndCard(turn){
   text.textContent=formatRemainingHMS(remaining);
   note.textContent=`Salida: ${relativeDayWord(info.end)} · ${pad2(info.end.getHours())}:${pad2(info.end.getMinutes())}`;
   badge.textContent=codeText(turn,info.code);
+  if(info.code==='M')badge.classList.add('shift-m');
  }else{
   const next=nextWorkStart(turn,now);
   label.textContent='Ahora no estás en turno';
