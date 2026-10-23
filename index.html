@@ -14999,6 +14999,21 @@ body.light #workdayModal .workday-change-modes button.selected{
   #worklogChangesBreakdown{font-size:7.2px}
 }
 
+/* ===== V5.6.3 · ACUERDO RECÍPROCO DE CAMBIOS ===== */
+#workdayModal .workday-swap-agreement{margin:8px 0 2px;padding:10px;border-radius:13px;
+ border:1px solid rgba(101,169,191,.35);background:rgba(45,122,149,.09);}
+#workdayModal .workday-swap-agreement[hidden]{display:none!important}
+#workdayModal .workday-swap-agreement label{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:850;color:var(--text)}
+#workdayModal .workday-swap-agreement input[type=checkbox]{width:18px;height:18px;accent-color:#22b6aa;flex:none}
+#workdayModal .workday-swap-agreement small{display:block;line-height:1.4;margin:6px 0;color:var(--muted,#9aabc0);font-size:10px}
+#workdayModal .workday-swap-pick{width:100%;background:rgba(90,145,181,.12);color:var(--text);
+ border:1px solid rgba(121,174,204,.39);padding:11px;border-radius:10px;display:flex;gap:10px;align-items:center;justify-content:space-between;font-weight:850;font-size:12px;cursor:pointer}
+#workdayModal .workday-swap-pick[hidden]{display:none!important}
+#workdayModal .workday-swap-pick:disabled{opacity:.6;cursor:default}
+#workdayModal .workday-swap-alert{font-size:10px;font-weight:700;color:#f2c075;margin-top:5px;line-height:1.35}
+body.light #workdayModal .workday-swap-agreement{background:#e9f5f7;border-color:#abcad2}
+body.light #workdayModal .workday-swap-alert{color:#92630f}
+body.light #workdayModal .workday-swap-pick{background:#f7fbfe;color:#253549}
 </style>
 </head>
 <body class="notranslate">
@@ -15401,7 +15416,7 @@ body.light #workdayModal .workday-change-modes button.selected{
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.6.2</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.6.3</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -15633,7 +15648,7 @@ body.light #workdayModal .workday-change-modes button.selected{
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.6.2</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.6.3</span></span>
             </div>
           </div>
 
@@ -15718,6 +15733,13 @@ body.light #workdayModal .workday-change-modes button.selected{
           <button type="button" data-work-code="T3">T3</button>
           <button type="button" data-work-code="T4">T4</button>
           <button type="button" data-work-code="" hidden></button>
+        </div>
+        <div id="workdaySwapAgreement" class="workday-swap-agreement" hidden>
+          <label><input id="workdaySwapEnabled" type="checkbox"><span>Intercambio pactado · devolución de jornada</span></label>
+          <small>Opcional: acordamos dos fechas. Ese turno me cubre un día y yo lo cubro otro día. Son dos jornadas de 12 h, vinculadas.</small>
+          <input id="workdaySwapInput" type="hidden" value="">
+          <button id="workdaySwapPick" class="workday-swap-pick" type="button" hidden><span id="workdaySwapDateText">Elegir segunda fecha</span><span>▦</span></button>
+          <div id="workdaySwapWarning" class="workday-swap-alert" hidden></div>
         </div>
         <div class="workday-change-duration">
           <span id="workdayChangeHoursTitle">Jornada completa</span>
@@ -16300,7 +16322,7 @@ body.light #workdayModal .workday-change-modes button.selected{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.6.2';
+const CURRENT_VERSION='5.6.3';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -16727,6 +16749,14 @@ Object.assign(I18N.fr,{"Tipo de cambio de turno":"Type de remplacement","Pedí u
 Object.assign(I18N.de,{"Tipo de cambio de turno":"Art des Schichttausches","Pedí un cambio":"Ich bat um Schichttausch","Me pidieron un cambio":"Ich wurde um Vertretung gebeten","Pedí":"Ich bat","Me pidieron":"Ich wurde gefragt","ME PIDIERON":"ANGEFRAGT","PEDÍ":"ERBETEN","ELEGÍ TURNO":"SCHICHT WÄHLEN","Turno que me solicitó":"Anfragende Schicht","Turno que me cubre":"Vertretende Schicht","Me solicitó":"Fragte mich an","Jornada completa":"Volle Schicht","Horas que cubrí":"Übernommene Stunden","Elegí si pediste el cambio o si te solicitaron cubrir una jornada.":"Wählen Sie, ob Sie getauscht haben oder um Vertretung gebeten wurden.","No asistís: elegí el turno compatible que cubre tus 12 horas.":"Sie fehlen: Wählen Sie die Schicht, die Ihre 12 Stunden übernimmt.","Cubrís 12 horas a otro turno, incluso si estabas de franco.":"Sie übernehmen 12 Stunden für eine andere Schicht, auch am freien Tag.","Elegí el turno correspondiente para registrar el cambio de 12 horas.":"Wählen Sie die Schicht für die Erfassung des 12-Stunden-Tausches.","12 H FIJAS":"12 STD. FEST"});
 Object.assign(I18N.it,{"Tipo de cambio de turno":"Tipo di cambio turno","Pedí un cambio":"Ho chiesto un cambio","Me pidieron un cambio":"Mi hanno chiesto di coprire","Pedí":"Ho chiesto","Me pidieron":"Mi hanno chiesto","ME PIDIERON":"RICHIESTO","PEDÍ":"HO CHIESTO","ELEGÍ TURNO":"SCEGLI TURNO","Turno que me solicitó":"Turno che mi ha chiesto","Turno que me cubre":"Turno che mi copre","Me solicitó":"Mi ha chiesto","Jornada completa":"Turno completo","Horas que cubrí":"Ore coperte","Elegí si pediste el cambio o si te solicitaron cubrir una jornada.":"Scegli se hai chiesto il cambio oppure sei stato chiamato a coprire un turno.","No asistís: elegí el turno compatible que cubre tus 12 horas.":"Non lavori: scegli il turno che copre le tue 12 ore.","Cubrís 12 horas a otro turno, incluso si estabas de franco.":"Copri un altro turno per 12 ore, anche nel tuo giorno libero.","Elegí el turno correspondiente para registrar el cambio de 12 horas.":"Scegli il turno per registrare il cambio di 12 ore.","12 H FIJAS":"12 ORE FISSE"});
 
+
+/* V5.6.3 · traducciones del acuerdo de dos jornadas */
+Object.assign(I18N.en,{"Intercambio pactado · devolución de jornada":"Agreed shift exchange · return shift","Opcional: acordamos dos fechas. Ese turno me cubre un día y yo lo cubro otro día. Son dos jornadas de 12 h, vinculadas.":"Optional: we agree on two dates. We cover each other for one 12-hour shift, on separate days.","Elegir segunda fecha":"Choose second date","Segunda fecha":"Second date","Fecha recíproca":"Reciprocal date","Intercambio pactado":"Agreed shift exchange","Registro vinculado automáticamente":"Automatically linked entry","Para cambiar este acuerdo, editá su primera fecha.":"To change this agreement, edit its first date.","La otra fecha debe ser distinta de la actual.":"The other date must be different from this one.","Ya existe otro cambio de turno en la fecha acordada.":"Another shift change already exists on the agreed date.","Elegí una fecha para la devolución.":"Choose a date for the reciprocal shift.","Se eliminarán las dos coberturas vinculadas.":"Both linked shift entries will be removed."});
+Object.assign(I18N.pt,{"Intercambio pactado · devolución de jornada":"Troca acordada · compensação de jornada","Opcional: acordamos dos fechas. Ese turno me cubre un día y yo lo cubro otro día. Son dos jornadas de 12 h, vinculadas.":"Opcional: combinamos duas datas e nos cobrimos mutuamente em jornadas de 12 horas.","Elegir segunda fecha":"Escolher segunda data","Segunda fecha":"Segunda data","Fecha recíproca":"Data recíproca","Intercambio pactado":"Troca acordada","Registro vinculado automáticamente":"Registro vinculado automaticamente","Para cambiar este acuerdo, editá su primera fecha.":"Para alterar este acordo, edite a primeira data.","La otra fecha debe ser distinta de la actual.":"A outra data deve ser diferente da atual.","Ya existe otro cambio de turno en la fecha acordada.":"Já existe outra troca na data acordada.","Elegí una fecha para la devolución.":"Escolha uma data para a compensação.","Se eliminarán las dos coberturas vinculadas.":"Ambas as coberturas vinculadas serão removidas."});
+Object.assign(I18N.fr,{"Intercambio pactado · devolución de jornada":"Échange convenu · service en retour","Opcional: acordamos dos fechas. Ese turno me cubre un día y yo lo cubro otro día. Son dos jornadas de 12 h, vinculadas.":"Facultatif : deux dates convenues, chacun remplace l’autre pendant un service de 12 h.","Elegir segunda fecha":"Choisir la deuxième date","Segunda fecha":"Deuxième date","Fecha recíproca":"Date réciproque","Intercambio pactado":"Échange convenu","Registro vinculado automáticamente":"Entrée liée automatiquement","Para cambiar este acuerdo, editá su primera fecha.":"Pour modifier cet accord, modifiez la première date.","La otra fecha debe ser distinta de la actual.":"La seconde date doit être différente.","Ya existe otro cambio de turno en la fecha acordada.":"Un autre remplacement existe déjà à cette date.","Elegí una fecha para la devolución.":"Choisissez une date de retour.","Se eliminarán las dos coberturas vinculadas.":"Les deux remplacements liés seront supprimés."});
+Object.assign(I18N.de,{"Intercambio pactado · devolución de jornada":"Vereinbarter Tausch · Gegenschicht","Opcional: acordamos dos fechas. Ese turno me cubre un día y yo lo cubro otro día. Son dos jornadas de 12 h, vinculadas.":"Optional: zwei vereinbarte Termine, gegenseitige Vertretung für je 12 Stunden.","Elegir segunda fecha":"Zweites Datum wählen","Segunda fecha":"Zweites Datum","Fecha recíproca":"Gegentermin","Intercambio pactado":"Vereinbarter Tausch","Registro vinculado automáticamente":"Automatisch verknüpfter Eintrag","Para cambiar este acuerdo, editá su primera fecha.":"Zum Ändern die erste Schicht bearbeiten.","La otra fecha debe ser distinta de la actual.":"Der zweite Termin muss abweichen.","Ya existe otro cambio de turno en la fecha acordada.":"Für den vereinbarten Termin existiert bereits ein Tausch.","Elegí una fecha para la devolución.":"Datum für die Gegenschicht wählen.","Se eliminarán las dos coberturas vinculadas.":"Beide verknüpften Schichten werden entfernt."});
+Object.assign(I18N.it,{"Intercambio pactado · devolución de jornada":"Scambio concordato · turno di restituzione","Opcional: acordamos dos fechas. Ese turno me cubre un día y yo lo cubro otro día. Son dos jornadas de 12 h, vinculadas.":"Facoltativo: due date concordate; ciascuno copre l’altro per un turno di 12 ore.","Elegir segunda fecha":"Scegli la seconda data","Segunda fecha":"Seconda data","Fecha recíproca":"Data reciproca","Intercambio pactado":"Scambio concordato","Registro vinculado automáticamente":"Voce collegata automaticamente","Para cambiar este acuerdo, editá su primera fecha.":"Per modificare l’accordo, modifica la prima data.","La otra fecha debe ser distinta de la actual.":"La seconda data deve essere diversa.","Ya existe otro cambio de turno en la fecha acordada.":"Esiste già un cambio turno in quella data.","Elegí una fecha para la devolución.":"Scegli una data per la restituzione.","Se eliminarán las dos coberturas vinculadas.":"Saranno rimosse entrambe le coperture collegate."});
+
 function tr(text){
  const source=String(text??'');
  if(appLanguage==='es')return source;
@@ -16998,6 +17028,7 @@ let now=new Date(),viewYear=now.getFullYear(),viewMonth=now.getMonth(),selectedD
 let agendaSelectedDate=new Date(selectedDate),agendaEditingId=null,agendaHoldTimer=null,agendaHoldOpened=false,agendaAllExpanded=false;
 let vacationEditingId=null;
 let workdayEditingDate=new Date(selectedDate),workdayEditingTurn=activeTurnKey(),workdayWorkedCode='',workdayChangeType='none',workdayOvertime=0,workdayOvertimeCode='',workdayActiveTab='work';
+let workdaySwapDate='',workdaySwapLocked=false;
 let licenseEditingId=null;
 let worklogStatsDetailMode='changes';
 let swipeStartX=0,swipeStartY=0,swipeStartedAt=0,calendarSwipeMoved=false,calendarSwipeActive=false,monthAnimating=false,yearViewYear=viewYear;
@@ -18085,9 +18116,11 @@ function deleteWorklogById(id,{closeWorkday=false,returnMain=false,ask=true}={})
  if(!current)return false;
 
  const d=parseDateKey(current.date);
- if(ask&&!confirm(`¿Eliminar el registro laboral del ${shortDateFmt.format(d)}?`))return false;
+  if(ask&&!confirm(`¿Eliminar el registro laboral del ${shortDateFmt.format(d)}?`+(current.swapPeerId?'\n'+tr('Se eliminarán las dos coberturas vinculadas.') :'')))return false;
 
- saveWorklogData(loadWorklogData().filter(x=>normalizeWorklog(x).id!==id));
+  let remaining=loadWorklogData().map(normalizeWorklog);
+  remaining=workdayRemoveLinkedChange(remaining,current).filter(x=>x.id!==id);
+  saveWorklogData(remaining);
 
  if(closeWorkday)closeModal('workdayModal');
 
@@ -18132,7 +18165,10 @@ function normalizeWorklog(item){
   date:String(item?.date||''),
   turn:String(item?.turn||''),
   workedCode:['T1','T2','T3','T4','T5A','T5B','M','N','F','D'].includes(item?.workedCode)?item.workedCode:'',
-  changeType:item?.workedCode?(item?.changeType==='received'?'received':'requested'):'',
+   changeType:item?.workedCode?(item?.changeType==='received'?'received':'requested'):'',
+   swapPeerId:String(item?.swapPeerId||''),
+   swapDate:/^\d{4}-\d{2}-\d{2}$/.test(item?.swapDate||'')?item.swapDate:'',
+   swapAuto:Boolean(item?.swapAuto),
   overtime,
   overtimeCode,
   note:String(item?.note||'').trim(),
@@ -18209,7 +18245,8 @@ function worklogChangeCounterpartLabel(record){
 }
 function worklogChangeSummary(record){
  if(!record?.workedCode)return '';
- return `${worklogChangeModeLabel(record)} · ${worklogChangeCounterpartLabel(record)}: ${worklogCodeLabel(record.workedCode)} · 12 h`;
+  const agreement=record.swapDate?` · ${tr('Intercambio pactado')} · ${tr('Fecha recíproca')}: ${reportPickerFormat('swapDate',record.swapDate)}`:'';
+  return `${worklogChangeModeLabel(record)} · ${worklogChangeCounterpartLabel(record)}: ${worklogCodeLabel(record.workedCode)} · 12 h${agreement}`;
 }
 function worklogChangeBreakdown(records){
  const changes=(records||[]).filter(r=>r.workedCode);
@@ -18424,13 +18461,9 @@ function workdayRequestedByOptions(turn,date){
  if(!date)return [];
  // Sólo jornadas M/N (12 horas) de turnos que el usuario puede cubrir,
  // sin superposición con su programación ni descanso mínimo de 12 horas.
- const base=workdayCoverBaseOptions(turn);
- return base.filter(requester=>{
-  const requesterCode=codeFor(requester,date);
-  return (requesterCode==='M'||requesterCode==='N')
-   &&workdayCoverBaseOptions(requester).includes(turn)
-   &&workdayCanCoverTurn(turn,requester,date);
- });
+ // Mostrar los turnos complementarios incluso cuando la heurística de descanso
+ // haya ocultado opciones: permite registrar acuerdos reales o excepciones.
+ return workdayCoverBaseOptions(turn).filter(requester=>requester!==turn);
 }
 function workdayModeOptions(){
  if(workdayChangeType==='requested'){
@@ -18458,7 +18491,8 @@ function setWorkdayChangeType(mode,keepCode=false){
  const label=$('#workdayChangeHoursTitle');
  if(label)label.textContent=tr(workdayChangeType==='received'?'Horas que cubrí':'Jornada completa');
  syncWorkdayCoverTurnButtons();
- setWorkdayWorkedCode(workdayWorkedCode);
+  setWorkdayWorkedCode(workdayWorkedCode);
+  workdaySwapUI();
 }
 
 function syncWorkdayCoverTurnButtons(){
@@ -18481,8 +18515,8 @@ function syncWorkdayCoverTurnButtons(){
   btn.disabled=!value;
   btn.dataset.workCode=value;
   const label=value?scheduleName(value):'';
-  btn.textContent=label;
-  btn.setAttribute('aria-label',value?`${tr(workdayChangeType==='received'?'Me solicitó':'Me cubre')} ${label}`:'');
+   btn.textContent=value&&workdayChangeType==='received'?`${label} · ${codeFor(value,workdayEditingDate)}`:label;
+   btn.setAttribute('aria-label',value?`${tr(workdayChangeType==='received'?'Me solicitó':'Me cubre')} ${label}`:'');
  });
 
  // Sin cambio + opciones visibles ocupan siempre todo el ancho disponible.
@@ -18503,11 +18537,32 @@ function setWorkdayWorkedCode(code){
   ?`${tr(workdayChangeType==='received'?'ME PIDIERON':'PEDÍ')} · ${worklogCodeLabel(workdayWorkedCode)}`
   :tr(workdayChangeType==='none'?'SIN CAMBIO':'ELEGÍ TURNO');
  const duration=$('#workdayChangeDuration');
- if(duration){
-  // Toda cobertura es siempre una jornada completa de 12 horas.
-  duration.textContent=workdayWorkedCode?'12 h':'—';
- }
+  if(duration){
+   // Toda cobertura es siempre una jornada completa de 12 horas.
+   duration.textContent=workdayWorkedCode?'12 h':'—';
+  }
+  workdaySwapUI();
 }
+/* V5.6.3: el acuerdo recíproco registra dos días de 12 h, sin duplicar horas extras. */
+function workdaySwapUI(){
+ const section=$('#workdaySwapAgreement');if(!section)return;
+ section.hidden=workdayChangeType==='none';
+ const enabled=$('#workdaySwapEnabled');
+ const pick=$('#workdaySwapPick');
+ if(workdaySwapLocked){enabled.checked=!!workdaySwapDate;enabled.disabled=true;pick.disabled=true;}
+ else {enabled.disabled=false;pick.disabled=false;}
+ pick.hidden=!enabled.checked;
+ $('#workdaySwapDateText').textContent=workdaySwapDate?reportPickerFormat('swapDate',workdaySwapDate):tr('Elegir segunda fecha');
+ const warning=$('#workdaySwapWarning');
+ warning.hidden=!workdaySwapLocked;
+ warning.textContent=workdaySwapLocked?tr('Registro vinculado automáticamente')+' · '+tr('Para cambiar este acuerdo, editá su primera fecha.'):'';
+}
+function workdaySetSwapDate(value){
+ workdaySwapDate=value||'';
+ $('#workdaySwapInput').value=workdaySwapDate;
+ workdaySwapUI();
+}
+
 
 function syncWorkdayOvertimeTypeUI(){
  const active=workdayOvertime>0;
@@ -18556,6 +18611,12 @@ function renderWorkdayModal(date,turn){
 
  setWorkdayChangeType(existing?.workedCode?worklogChangeMode(existing):'none',false);
  setWorkdayWorkedCode(existing?.workedCode||'');
+ workdaySwapDate=existing?.swapDate||'';
+ $('#workdaySwapInput').value=workdaySwapDate;
+ workdaySwapLocked=!!existing?.swapAuto;
+ $('#workdaySwapEnabled').checked=!!workdaySwapDate;
+ $$('#workdayChangeModes [data-change-mode],#workdayShiftChoices [data-work-code]').forEach(btn=>btn.disabled=workdaySwapLocked);
+ workdaySwapUI();
  setWorkdayOvertime(existing?.overtime||0);
  setWorkdayOvertimeCode(existing?.overtimeCode||'');
  $('#workdayNoteInput').value=existing?.note||'';
@@ -18571,46 +18632,60 @@ function openWorkday(date=selectedDate,turn=activeTurnKey(),tab='work'){
  openModal('workdayModal');
 }
 
+function workdayRemoveLinkedChange(items,record){
+ if(!record?.swapPeerId)return items;
+ const linked=items.find(r=>r.id===record.swapPeerId);
+ if(!linked||linked.swapPeerId!==record.id)return items;
+ // Nunca borrar horas extra ni notas ajenas a la permuta.
+ return items.flatMap(r=>{
+  if(r.id!==linked.id)return [r];
+  const cleared={...r,workedCode:'',changeType:'',swapPeerId:'',swapDate:'',swapAuto:false};
+  return (cleared.overtime>0||cleared.note)?[cleared]:[];
+ });
+}
 function saveWorkdayRecord(){
- const planned=codeFor(workdayEditingTurn,workdayEditingDate);
- // workedCode mantiene el nombre histórico del campo; guarda el turno del compañero que cubre la jornada (T1–T4 y la pareja T5 opuesta cuando corresponde).
- // Incluso si coincide con el código programado, sigue siendo un cambio válido.
  const workedCode=workdayChangeType==='none'?'':workdayWorkedCode;
  const changeType=workedCode?workdayChangeType:'';
- if(workdayChangeType!=='none'&&!workedCode){
-  alert(tr('Elegí el turno correspondiente para registrar el cambio de 12 horas.'));
-  return;
- }
-
+ if(workdayChangeType!=='none'&&!workedCode){alert(tr('Elegí el turno correspondiente para registrar el cambio de 12 horas.'));return;}
  const overtime=workdayOvertime;
  const overtimeCode=overtime>0?workdayOvertimeCode:'';
- if(overtime>0&&!overtimeCode){
-  alert(tr('Elegí si las horas extra fueron turno M o turno N.'));
-  return;
- }
+ if(overtime>0&&!overtimeCode){alert(tr('Elegí si las horas extra fueron turno M o turno N.'));return;}
  const note=$('#workdayNoteInput').value.trim();
  const id=worklogIdFor(workdayEditingDate,workdayEditingTurn);
- let items=loadWorklogData().map(normalizeWorklog).filter(x=>x.id!==id);
-
- if(workedCode||overtime>0||note){
-  items.push({
-   id,
-   date:dateKey(workdayEditingDate),
-   turn:workdayEditingTurn,
-   workedCode,
-   changeType,
-   overtime,
-   overtimeCode,
-   note,
-   updatedAt:new Date().toISOString()
-  });
+ const existing=loadWorklogData().map(normalizeWorklog).find(r=>r.id===id);
+ if(existing?.swapAuto&&(existing.workedCode!==workedCode||worklogChangeMode(existing)!==changeType)){
+  alert(tr('Para cambiar este acuerdo, editá su primera fecha.'));return;
  }
-
+ const wantsSwap=workedCode&&!existing?.swapAuto&&$('#workdaySwapEnabled').checked;
+ const swapDate=wantsSwap?workdaySwapDate:'';
+ if(wantsSwap&&!swapDate){alert(tr('Elegí una fecha para la devolución.'));return;}
+ const currentDate=dateKey(workdayEditingDate);
+ if(wantsSwap&&swapDate===currentDate){alert(tr('La otra fecha debe ser distinta de la actual.'));return;}
+ let items=loadWorklogData().map(normalizeWorklog);
+ // Si se edita la fecha original, deshacer el enlace anterior conservando notas y extras.
+ if(existing&&!existing.swapAuto)items=workdayRemoveLinkedChange(items,existing);
+ items=items.filter(x=>x.id!==id);
+ const linkedId=swapDate?`${swapDate}|${workdayEditingTurn}`:'';
+ let linked=null;
+ if(linkedId){
+  linked=items.find(r=>r.id===linkedId);
+  if(linked?.workedCode){alert(tr('Ya existe otro cambio de turno en la fecha acordada.'));return;}
+ }
+ const stamp=new Date().toISOString();
+ if(workedCode||overtime>0||note){
+  items.push({id,date:currentDate,turn:workdayEditingTurn,workedCode,changeType,
+   overtime,overtimeCode,note,swapPeerId:existing?.swapAuto?existing.swapPeerId:linkedId,
+   swapDate:existing?.swapAuto?existing.swapDate:swapDate,swapAuto:!!existing?.swapAuto,updatedAt:stamp});
+ }
+ if(linkedId){
+  items=items.filter(r=>r.id!==linkedId);
+  items.push({id:linkedId,date:swapDate,turn:workdayEditingTurn,workedCode,
+   changeType:changeType==='received'?'requested':'received',
+   overtime:linked?.overtime||0,overtimeCode:linked?.overtimeCode||'',note:linked?.note||'',
+   swapPeerId:id,swapDate:currentDate,swapAuto:true,updatedAt:stamp});
+ }
  saveWorklogData(items);
- renderAll();
- renderStats();
- closeModal('workdayModal');
- vibrate(20);
+ renderAll();renderStats();closeModal('workdayModal');vibrate(20);
 }
 
 function deleteWorkdayRecord(){
@@ -18997,6 +19072,7 @@ function renderWorklogStatsDetail(mode){
    r.overtime>0?(mode==='overtime'
     ?`${worklogOvertimeText(r.periodOvertime??r.overtime)} h extra${r.overtimeCode?` · ${worklogOvertimeTypeLabel(r.overtimeCode)}`:''}${r.splitAcrossPeriod?` · de ${worklogOvertimeText(r.overtimeTotal??r.overtime)} h registradas`:''}`
     :worklogOvertimeDetailText(r)):'',
+   r.swapDate?`${tr('Intercambio pactado')} · ${tr('Fecha recíproca')}: ${reportPickerFormat('swapDate',r.swapDate)}`:'',
    r.note||''
   ].filter(Boolean).join(' · ');
 
@@ -21034,6 +21110,8 @@ $$('#workdayShiftChoices [data-work-code]').forEach(btn=>{
  btn.onclick=()=>setWorkdayWorkedCode(btn.dataset.workCode);
 });
 
+$('#workdaySwapEnabled').onchange=e=>{if(!e.target.checked)workdaySetSwapDate('');else workdaySwapUI();};
+$('#workdaySwapPick').onclick=()=>reportPickerOpen('swapDate');
 $('#workdayOvertimeMinus').onclick=()=>setWorkdayOvertime(workdayOvertime-.5);
 $('#workdayOvertimePlus').onclick=()=>setWorkdayOvertime(workdayOvertime+.5);
 $$('.workday-overtime-quick [data-overtime]').forEach(btn=>{
@@ -21741,18 +21819,19 @@ reportRefreshIdentityButtons();
 
 /* ===== V5.5.8: Calendario propio para informes, sin panel nativo Android ===== */
 const REPORT_PICKER_I18N={
- es:{month:'Seleccionar mes',start:'Seleccionar fecha inicial',end:'Seleccionar fecha final',cancel:'Cancelar',apply:'Aplicar',vacationStart:'Elegir inicio de vacaciones',vacationEnd:'Elegir fin de vacaciones',licenseStart:'Elegir inicio de licencia',licenseEnd:'Elegir fin de licencia'},
- en:{month:'Select month',start:'Select start date',end:'Select end date',cancel:'Cancel',apply:'Apply',vacationStart:'Select vacation start date',vacationEnd:'Select vacation end date',licenseStart:'Select leave start date',licenseEnd:'Select leave end date'},
- pt:{month:'Selecionar mês',start:'Selecionar data inicial',end:'Selecionar data final',cancel:'Cancelar',apply:'Aplicar',vacationStart:'Selecionar início das férias',vacationEnd:'Selecionar fim das férias',licenseStart:'Selecionar início da licença',licenseEnd:'Selecionar fim da licença'},
- fr:{month:'Choisir un mois',start:'Choisir la date de début',end:'Choisir la date de fin',cancel:'Annuler',apply:'Appliquer',vacationStart:'Choisir le début des vacances',vacationEnd:'Choisir la fin des vacances',licenseStart:'Choisir le début du congé',licenseEnd:'Choisir la fin du congé'},
- de:{month:'Monat auswählen',start:'Startdatum auswählen',end:'Enddatum auswählen',cancel:'Abbrechen',apply:'Übernehmen',vacationStart:'Urlaubsbeginn auswählen',vacationEnd:'Urlaubsende auswählen',licenseStart:'Beginn der Freistellung wählen',licenseEnd:'Ende der Freistellung wählen'},
- it:{month:'Seleziona mese',start:'Seleziona data iniziale',end:'Seleziona data finale',cancel:'Annulla',apply:'Applica',vacationStart:'Seleziona inizio ferie',vacationEnd:'Seleziona fine ferie',licenseStart:'Seleziona inizio permesso',licenseEnd:'Seleziona fine permesso'}
+ es:{month:'Seleccionar mes',start:'Seleccionar fecha inicial',end:'Seleccionar fecha final',cancel:'Cancelar',apply:'Aplicar',vacationStart:'Elegir inicio de vacaciones',vacationEnd:'Elegir fin de vacaciones',licenseStart:'Elegir inicio de licencia',licenseEnd:'Elegir fin de licencia',swapDate:'Elegir fecha de devolución'},
+ en:{month:'Select month',start:'Select start date',end:'Select end date',cancel:'Cancel',apply:'Apply',vacationStart:'Select vacation start date',vacationEnd:'Select vacation end date',licenseStart:'Select leave start date',licenseEnd:'Select leave end date',swapDate:'Select reciprocal date'},
+ pt:{month:'Selecionar mês',start:'Selecionar data inicial',end:'Selecionar data final',cancel:'Cancelar',apply:'Aplicar',vacationStart:'Selecionar início das férias',vacationEnd:'Selecionar fim das férias',licenseStart:'Selecionar início da licença',licenseEnd:'Selecionar fim da licença',swapDate:'Escolher data de compensação'},
+ fr:{month:'Choisir un mois',start:'Choisir la date de début',end:'Choisir la date de fin',cancel:'Annuler',apply:'Appliquer',vacationStart:'Choisir le début des vacances',vacationEnd:'Choisir la fin des vacances',licenseStart:'Choisir le début du congé',licenseEnd:'Choisir la fin du congé',swapDate:'Choisir la date de retour'},
+ de:{month:'Monat auswählen',start:'Startdatum auswählen',end:'Enddatum auswählen',cancel:'Abbrechen',apply:'Übernehmen',vacationStart:'Urlaubsbeginn auswählen',vacationEnd:'Urlaubsende auswählen',licenseStart:'Beginn der Freistellung wählen',licenseEnd:'Ende der Freistellung wählen',swapDate:'Gegentermin auswählen'},
+ it:{month:'Seleziona mese',start:'Seleziona data iniziale',end:'Seleziona data finale',cancel:'Annulla',apply:'Applica',vacationStart:'Seleziona inizio ferie',vacationEnd:'Seleziona fine ferie',licenseStart:'Seleziona inizio permesso',licenseEnd:'Seleziona fine permesso',swapDate:'Scegli data di restituzione'}
 };
 const reportPickerShade=$('#reportPickerShade'),reportPicker=$('#reportDatePicker');
 const reportPickerInputs={
  month:reportMonthEl,start:reportStartEl,end:reportEndEl,
  vacationStart:$('#vacationStartInput'),vacationEnd:$('#vacationEndInput'),
- licenseStart:$('#licenseStartInput'),licenseEnd:$('#licenseEndInput')
+ licenseStart:$('#licenseStartInput'),licenseEnd:$('#licenseEndInput'),
+ swapDate:$('#workdaySwapInput')
 };
 const reportPickerButtons={month:$('#reportMonthPick'),start:$('#reportStartPick'),end:$('#reportEndPick')};
 let reportPickerKind=null, reportPickerYear=2026, reportPickerMonth=0, reportPickerDay=1;
@@ -21864,8 +21943,10 @@ $('#reportPickerApply').onclick=()=>{
  if(!reportPickerKind)return;
  const pad=n=>String(n).padStart(2,'0');
  const value=String(reportPickerYear).padStart(4,'0')+'-'+pad(reportPickerMonth+1)+(reportPickerKind==='month'?'':'-'+pad(reportPickerDay));
- const el=reportPickerInputs[reportPickerKind];el.value=value;
+ const kind=reportPickerKind;
+ const el=reportPickerInputs[kind];el.value=value;
  reportPickerClose();reportPickerUpdateButtons();
+ if(kind==='swapDate')workdaySetSwapDate(value);
  el.dispatchEvent(new Event('change',{bubbles:true}));
 };
 document.addEventListener('keydown',e=>{
@@ -21880,7 +21961,7 @@ new MutationObserver(()=>{
  if(reportPickerKind?.startsWith('vacation') && !$('#vacationModal').classList.contains('open'))reportPickerClose();
 }).observe($('#vacationModal'),{attributes:true,attributeFilter:['class']});
 new MutationObserver(()=>{
- if(reportPickerKind?.startsWith('license') && !$('#workdayModal').classList.contains('open'))reportPickerClose();
+ if((reportPickerKind?.startsWith('license')||reportPickerKind==='swapDate') && !$('#workdayModal').classList.contains('open'))reportPickerClose();
 }).observe($('#workdayModal'),{attributes:true,attributeFilter:['class']});
 reportPickerUpdateButtons();
 document.getElementById('reportMonthPick').dataset.pickerReady='yes';
@@ -21957,9 +22038,9 @@ function reportCollect(){
   const count=worklogChangeBreakdown(changeRecords);
   const rows=changeRecords.map(r=>({
    date:r.date,
-   detail:`${reportTx(worklogChangeMode(r)==='received'?'Me pidieron un cambio':'Pedí un cambio')} · ${reportTx(worklogChangeMode(r)==='received'?'Turno que me solicitó':'Turno que me cubre')}: ${worklogCodeLabel(r.workedCode)}`,
-   value:'12 h',
-   note:`${reportTx('Programado:')} ${codeText(turn,codeFor(turn,parseDateKey(r.date)))}${r.note?' · '+r.note:''}`
+    detail:`${reportTx(worklogChangeMode(r)==='received'?'Me pidieron un cambio':'Pedí un cambio')} · ${reportTx(worklogChangeMode(r)==='received'?'Turno que me solicitó':'Turno que me cubre')}: ${worklogCodeLabel(r.workedCode)}`,
+    value:'12 h',
+    note:`${reportTx('Programado:')} ${codeText(turn,codeFor(turn,parseDateKey(r.date)))}${r.swapDate?' · '+reportTx('Intercambio pactado')+' · '+reportTx('Fecha recíproca')+': '+reportDateText(r.swapDate):''}${r.note?' · '+r.note:''}`
   }));
   result.summary.push(`${reportTx('Cambios de turno:')} ${count.total} · ${reportTx('Pedí')} ${count.requested} · ${reportTx('Me pidieron')} ${count.received} · ${count.hours} h`);
   addSection('changes','CAMBIOS DE TURNO',rows);
