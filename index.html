@@ -2010,13 +2010,13 @@ body.light .event-count{
 #statsModal .salary-copy b{font-size:13px;color:#f5f8fc}
 #statsModal .salary-copy span{font-size:7.5px;color:#93a2b6}
 #statsModal .salary-days{
-  min-width:72px;min-height:70px;border-radius:16px;
+  min-width:68px;min-height:60px;border-radius:16px;padding:6px 8px;
   background:radial-gradient(circle at 75% 18%,rgba(66,214,176,.14),transparent 42%),rgba(66,214,176,.07);
   border:1px solid rgba(66,214,176,.24);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
 }
-#statsModal .salary-days strong{font-size:26px}
-#statsModal .salary-days span{font-size:8px;color:#c9d4df}
+#statsModal .salary-days strong{font-size:24px;line-height:1}
+#statsModal .salary-days span{font-size:8px;line-height:1.05;color:#c9d4df}
 
 @media(max-width:620px){
   #statsModal .stats-modal-window{
@@ -2037,7 +2037,7 @@ body.light .event-count{
   }
   #statsModal .bar-row span{font-size:7.5px}
   #statsModal .off-premium{min-height:62px}
-  #statsModal .salary-days{min-width:66px;min-height:64px}
+  #statsModal .salary-days{min-width:62px;min-height:56px;padding:5px 7px}
 }
 
 
@@ -2067,7 +2067,7 @@ body.light .event-count{
   #statsModal .next-off{font-size:7px}
   #statsModal .salary-copy b{font-size:9px}
   #statsModal .salary-copy span{font-size:6.5px}
-  #statsModal .salary-days{min-width:48px;padding:5px}
+  #statsModal .salary-days{min-width:46px;min-height:42px;padding:4px 5px}
   #statsModal .salary-days strong{font-size:16px}
 }
 
@@ -2228,16 +2228,16 @@ textarea::selection,
     margin-top:4px;
   }
   .salary-days{
-    min-width:78px;
+    min-width:72px;
     text-align:center;
     border-radius:14px;
-    padding:9px 10px;
+    padding:7px 9px;
     background:rgba(66,214,176,.11);
     border:1px solid rgba(66,214,176,.22);
   }
   .salary-days strong{
     display:block;
-    font-size:24px;
+    font-size:22px;
     line-height:1;
   }
   .turn-end-card{
@@ -15653,7 +15653,7 @@ body.dark-blue .topbar #workdayTopBtn{
 }
 
 
-/* ===== V5.7.1 · ESTADÍSTICAS · AJUSTE FINO DE INFORMES PDF =====
+/* ===== V5.7.2 · ESTADÍSTICAS · AJUSTE FINO PRÓXIMO SUELDO =====
    Recupera unos pocos píxeles del espacio disponible al pie, sin tocar
    las demás tarjetas, las métricas ni la lógica del generador PDF.
    Se mantiene un solo desplazamiento vertical para pantallas bajas. */
@@ -17030,7 +17030,7 @@ body.dark-blue .topbar #workdayTopBtn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.7.1';
+const CURRENT_VERSION='5.7.2';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
