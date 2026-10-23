@@ -15612,20 +15612,21 @@ body.dark-blue .topbar #workdayTopBtn{
 }
 #statsModal .stats-salary .salary-days{
   min-width:56px !important;
-  min-height:67px !important;
+  min-height:56px !important;
   height:auto !important;
-  padding:7px 5px 9px !important;
-  gap:4px !important;
+  align-self:center !important;
+  padding:6px 5px 6px !important;
+  gap:3px !important;
   overflow:visible !important;
 }
 #statsModal .stats-salary .salary-days strong{
-  font-size:26px !important;
-  line-height:1.13 !important;
-  padding-bottom:2px !important;
+  font-size:25px !important;
+  line-height:1.04 !important;
+  padding-bottom:0 !important;
 }
 #statsModal .stats-salary .salary-days span{
   font-size:8.5px !important;
-  line-height:1.2 !important;
+  line-height:1.05 !important;
 }
 /* En alemán y otros idiomas de palabras largas, evitar invasión de la pastilla. */
 #statsModal .stats-salary .salary-copy{
@@ -15644,7 +15645,7 @@ body.dark-blue .topbar #workdayTopBtn{
   #statsModal .stat-card small{font-size:6.7px !important;}
   #statsModal .stats-pdf-entry-icon{width:28px !important;height:28px !important;}
   #statsModal .stats-pdf-entry{padding:5px 7px !important;column-gap:5px !important;}
-  #statsModal .stats-salary .salary-days{min-width:51px !important;}
+  #statsModal .stats-salary .salary-days{min-width:51px !important;min-height:52px !important;padding:5px 4px !important;}
 }
 @media(min-width:621px){
   #statsModal .stats-modal-window{gap:8px !important;}
@@ -15653,7 +15654,7 @@ body.dark-blue .topbar #workdayTopBtn{
 }
 
 
-/* ===== V5.7.2 · ESTADÍSTICAS · AJUSTE FINO PRÓXIMO SUELDO =====
+/* ===== V5.7.3 · ESTADÍSTICAS · AJUSTE ALTURA MINI TARJETA SUELDO =====
    Recupera unos pocos píxeles del espacio disponible al pie, sin tocar
    las demás tarjetas, las métricas ni la lógica del generador PDF.
    Se mantiene un solo desplazamiento vertical para pantallas bajas. */
@@ -17030,7 +17031,7 @@ body.dark-blue .topbar #workdayTopBtn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.7.2';
+const CURRENT_VERSION='5.7.3';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
