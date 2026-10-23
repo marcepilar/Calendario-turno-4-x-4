@@ -1,4 +1,4 @@
-const CACHE='turnos4x4-5.6.5';
+const CACHE='turnos4x4-5.6.6';
 const ASSETS=[
   './',
   './index.html',
