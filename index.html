@@ -14999,7 +14999,7 @@ body.light #workdayModal .workday-change-modes button.selected{
   #worklogChangesBreakdown{font-size:7.2px}
 }
 
-/* ===== V5.6.3 · ACUERDO RECÍPROCO DE CAMBIOS ===== */
+/* ===== V5.6.4 · ACUERDO RECÍPROCO DE CAMBIOS ===== */
 #workdayModal .workday-swap-agreement{margin:8px 0 2px;padding:10px;border-radius:13px;
  border:1px solid rgba(101,169,191,.35);background:rgba(45,122,149,.09);}
 #workdayModal .workday-swap-agreement[hidden]{display:none!important}
@@ -15014,6 +15014,70 @@ body.light #workdayModal .workday-change-modes button.selected{
 body.light #workdayModal .workday-swap-agreement{background:#e9f5f7;border-color:#abcad2}
 body.light #workdayModal .workday-swap-alert{color:#92630f}
 body.light #workdayModal .workday-swap-pick{background:#f7fbfe;color:#253549}
+
+
+/* ===== V5.6.4 · JORNADA · DESPLAZAMIENTO VERTICAL NATURAL =====
+   Se preservan la cabecera, resumen y las pestañas; únicamente Jornada se
+   desplaza en un área única. Su historial crece libremente y deja de
+   depender del alto sobrante. Licencias y demás ventanas no se modifican. */
+#workdayModal .workday-modal-window{
+  height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 14px);
+  max-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 14px);
+  overflow:hidden;
+}
+#workdayModal .workday-head,
+#workdayModal .workday-summary,
+#workdayModal .workday-tabs{
+  flex-shrink:0;
+}
+#workdayModal #workdayPane.active{
+  flex:1 1 0%;
+  min-height:0;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  overscroll-behavior-y:contain;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-y;
+  padding:0 3px 12px 0;
+  scrollbar-width:thin;
+  scrollbar-color:var(--line) transparent;
+}
+#workdayModal #workdayPane > .workday-section,
+#workdayModal #workdayPane > .workday-actions,
+#workdayModal #workdayPane > .workday-list-panel,
+#workdayModal #workdayPane > .workday-footnote{
+  flex:0 0 auto !important;
+}
+/* La lista es parte del desplazamiento general, no un segundo scroll. */
+#workdayModal #workdayPane .workday-list-panel{
+  display:block !important;
+  flex:none !important;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  overflow:visible !important;
+  margin-top:8px;
+}
+#workdayModal #workdayPane .workday-saved-list{
+  display:grid;
+  flex:none !important;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  overflow:visible !important;
+  scrollbar-gutter:auto;
+  align-content:start;
+}
+#workdayModal #workdayPane .workday-footnote{
+  display:block !important;
+  padding:9px 4px 8px;
+}
+@media(max-width:620px){
+  #workdayModal .workday-modal-window{
+    height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 12px);
+    max-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 12px);
+  }
+}
 </style>
 </head>
 <body class="notranslate">
@@ -15416,7 +15480,7 @@ body.light #workdayModal .workday-swap-pick{background:#f7fbfe;color:#253549}
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.6.3</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.6.4</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -15648,7 +15712,7 @@ body.light #workdayModal .workday-swap-pick{background:#f7fbfe;color:#253549}
             <div class="help-ip-owner-copy">
               <small>Autor</small>
               <b data-no-i18n>Marcelo Adrian Rodriguez</b>
-              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.6.3</span></span>
+              <span>Calendario de Turnos 4×4 · V<span id="copyrightVersionLabel" data-no-i18n>5.6.4</span></span>
             </div>
           </div>
 
@@ -16322,7 +16386,7 @@ body.light #workdayModal .workday-swap-pick{background:#f7fbfe;color:#253549}
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.6.3';
+const CURRENT_VERSION='5.6.4';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -16750,7 +16814,7 @@ Object.assign(I18N.de,{"Tipo de cambio de turno":"Art des Schichttausches","Ped�
 Object.assign(I18N.it,{"Tipo de cambio de turno":"Tipo di cambio turno","Pedí un cambio":"Ho chiesto un cambio","Me pidieron un cambio":"Mi hanno chiesto di coprire","Pedí":"Ho chiesto","Me pidieron":"Mi hanno chiesto","ME PIDIERON":"RICHIESTO","PEDÍ":"HO CHIESTO","ELEGÍ TURNO":"SCEGLI TURNO","Turno que me solicitó":"Turno che mi ha chiesto","Turno que me cubre":"Turno che mi copre","Me solicitó":"Mi ha chiesto","Jornada completa":"Turno completo","Horas que cubrí":"Ore coperte","Elegí si pediste el cambio o si te solicitaron cubrir una jornada.":"Scegli se hai chiesto il cambio oppure sei stato chiamato a coprire un turno.","No asistís: elegí el turno compatible que cubre tus 12 horas.":"Non lavori: scegli il turno che copre le tue 12 ore.","Cubrís 12 horas a otro turno, incluso si estabas de franco.":"Copri un altro turno per 12 ore, anche nel tuo giorno libero.","Elegí el turno correspondiente para registrar el cambio de 12 horas.":"Scegli il turno per registrare il cambio di 12 ore.","12 H FIJAS":"12 ORE FISSE"});
 
 
-/* V5.6.3 · traducciones del acuerdo de dos jornadas */
+/* V5.6.4 · traducciones del acuerdo de dos jornadas */
 Object.assign(I18N.en,{"Intercambio pactado · devolución de jornada":"Agreed shift exchange · return shift","Opcional: acordamos dos fechas. Ese turno me cubre un día y yo lo cubro otro día. Son dos jornadas de 12 h, vinculadas.":"Optional: we agree on two dates. We cover each other for one 12-hour shift, on separate days.","Elegir segunda fecha":"Choose second date","Segunda fecha":"Second date","Fecha recíproca":"Reciprocal date","Intercambio pactado":"Agreed shift exchange","Registro vinculado automáticamente":"Automatically linked entry","Para cambiar este acuerdo, editá su primera fecha.":"To change this agreement, edit its first date.","La otra fecha debe ser distinta de la actual.":"The other date must be different from this one.","Ya existe otro cambio de turno en la fecha acordada.":"Another shift change already exists on the agreed date.","Elegí una fecha para la devolución.":"Choose a date for the reciprocal shift.","Se eliminarán las dos coberturas vinculadas.":"Both linked shift entries will be removed."});
 Object.assign(I18N.pt,{"Intercambio pactado · devolución de jornada":"Troca acordada · compensação de jornada","Opcional: acordamos dos fechas. Ese turno me cubre un día y yo lo cubro otro día. Son dos jornadas de 12 h, vinculadas.":"Opcional: combinamos duas datas e nos cobrimos mutuamente em jornadas de 12 horas.","Elegir segunda fecha":"Escolher segunda data","Segunda fecha":"Segunda data","Fecha recíproca":"Data recíproca","Intercambio pactado":"Troca acordada","Registro vinculado automáticamente":"Registro vinculado automaticamente","Para cambiar este acuerdo, editá su primera fecha.":"Para alterar este acordo, edite a primeira data.","La otra fecha debe ser distinta de la actual.":"A outra data deve ser diferente da atual.","Ya existe otro cambio de turno en la fecha acordada.":"Já existe outra troca na data acordada.","Elegí una fecha para la devolución.":"Escolha uma data para a compensação.","Se eliminarán las dos coberturas vinculadas.":"Ambas as coberturas vinculadas serão removidas."});
 Object.assign(I18N.fr,{"Intercambio pactado · devolución de jornada":"Échange convenu · service en retour","Opcional: acordamos dos fechas. Ese turno me cubre un día y yo lo cubro otro día. Son dos jornadas de 12 h, vinculadas.":"Facultatif : deux dates convenues, chacun remplace l’autre pendant un service de 12 h.","Elegir segunda fecha":"Choisir la deuxième date","Segunda fecha":"Deuxième date","Fecha recíproca":"Date réciproque","Intercambio pactado":"Échange convenu","Registro vinculado automáticamente":"Entrée liée automatiquement","Para cambiar este acuerdo, editá su primera fecha.":"Pour modifier cet accord, modifiez la première date.","La otra fecha debe ser distinta de la actual.":"La seconde date doit être différente.","Ya existe otro cambio de turno en la fecha acordada.":"Un autre remplacement existe déjà à cette date.","Elegí una fecha para la devolución.":"Choisissez une date de retour.","Se eliminarán las dos coberturas vinculadas.":"Les deux remplacements liés seront supprimés."});
@@ -18365,6 +18429,7 @@ function renderWorkdaySavedList(){
    setWorkdayTab('work');
    const modal=$('#workdayModal .workday-modal-window');
    if(modal)modal.scrollTop=0;
+   $('#workdayPane').scrollTop=0;
   };
  });
 
@@ -18543,7 +18608,7 @@ function setWorkdayWorkedCode(code){
   }
   workdaySwapUI();
 }
-/* V5.6.3: el acuerdo recíproco registra dos días de 12 h, sin duplicar horas extras. */
+/* V5.6.4: el acuerdo recíproco registra dos días de 12 h, sin duplicar horas extras. */
 function workdaySwapUI(){
  const section=$('#workdaySwapAgreement');if(!section)return;
  section.hidden=workdayChangeType==='none';
@@ -18629,6 +18694,7 @@ function renderWorkdayModal(date,turn){
 function openWorkday(date=selectedDate,turn=activeTurnKey(),tab='work'){
  renderWorkdayModal(date,turn);
  setWorkdayTab(tab);
+ $('#workdayPane').scrollTop=0;
  openModal('workdayModal');
 }
 
