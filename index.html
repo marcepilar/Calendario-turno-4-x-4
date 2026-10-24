@@ -16223,6 +16223,7 @@ body.dark-blue .topbar #workdayTopBtn{
             <div><i class="help-shift extra">+H</i><span><b>Horas extra</b><small>Horas adicionales</small></span></div>
           </div>
           <p><strong>Tocar un día:</strong> abre su detalle debajo del calendario.</p>
+          <p><strong>Doble toque:</strong> abre Jornada directamente en esa fecha.</p>
           <p><strong>Mantener 450 ms:</strong> abre rápidamente la Agenda para ese día.</p>
           <p><strong>FER rojo:</strong> feriado completo. <strong>FER rojo/gris diagonal:</strong> ½ feriado (6 h). En turno N ocurre cuando el feriado toma sólo 18:00–24:00 de la primera noche o sólo 00:00–06:00 después de la última noche. <strong>FER azul:</strong> puente/no laborable. El 7 de septiembre se incluye como Día del Metalúrgico para todos los turnos.</p>
           <p><strong>Vista anual:</strong> muestra los 12 meses. Mantené pulsados los controles del año para avanzar más rápido.</p>
@@ -16256,7 +16257,7 @@ body.dark-blue .topbar #workdayTopBtn{
       <section id="help-workday" class="help-section">
         <div class="help-section-title"><span>6</span><div><b>Jornada</b><small>Cambios de turno y horas extra</small></div></div>
         <div class="help-card">
-          <p><strong>Abrir:</strong> podés tocar un día y abrir <strong>JORNADA</strong> desde el detalle, o usar el botón <strong>J</strong> de la cabecera para abrir directamente la Jornada del día seleccionado.</p>
+          <p><strong>Abrir:</strong> hacé doble toque sobre un día para abrir directamente su Jornada. También podés seleccionarlo y abrir <strong>JORNADA</strong> desde el detalle, o usar el botón <strong>J</strong> de la cabecera.</p>
           <p>La app muestra tu turno <strong>Programado</strong>. Si hacés un cambio, ese día no venís y elegís el turno del compañero que te cubre. En T1–T4 la app analiza la rotación de esa fecha y oculta automáticamente al compañero que no puede cubrirte sin encadenar jornadas. Ejemplo: quien termina su última noche a las 06:00 no puede cubrir una mañana que empieza a las 06:00; del mismo modo, quien empieza su primera mañana a las 06:00 no puede cubrir la noche anterior. Se exige un margen mínimo de 12 h entre la jornada propia y la cobertura. T5 UNO y T5 DOS aplican la misma validación para T1–T4 y mantienen disponible la pareja T5 opuesta cuando corresponde. T5 FIJO conserva T1, T2, T3 y T4 disponibles. El ciclo futuro no se modifica.</p>
           <p><strong>Horas cubiertas:</strong> se calculan con tu jornada programada de ese día, no con el turno del compañero que te cubre. Los turnos rotativos son de 12 horas; T5 FIJO = 9 horas; un franco programado = 0 horas.</p>
           <p><strong>Jornadas guardadas:</strong> la insignia identifica el tipo de registro: <strong>C</strong> = cambio de turno, <strong>EXT</strong> = horas extra y <strong>J</strong> = jornada/nota. Si una fecha tiene cambio y extras, se muestran ambas insignias.</p>
@@ -17040,7 +17041,7 @@ body.dark-blue .topbar #workdayTopBtn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.7.6';
+const CURRENT_VERSION='5.8.0';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -17474,6 +17475,13 @@ Object.assign(I18N.pt,{"Intercambio pactado · devolución de jornada":"Troca ac
 Object.assign(I18N.fr,{"Intercambio pactado · devolución de jornada":"Échange convenu · service en retour","Opcional: acordamos dos fechas. Ese turno me cubre un día y yo lo cubro otro día. Son dos jornadas de 12 h, vinculadas.":"Facultatif : deux dates convenues, chacun remplace l’autre pendant un service de 12 h.","Elegir segunda fecha":"Choisir la deuxième date","Segunda fecha":"Deuxième date","Fecha recíproca":"Date réciproque","Intercambio pactado":"Échange convenu","Registro vinculado automáticamente":"Entrée liée automatiquement","Para cambiar este acuerdo, editá su primera fecha.":"Pour modifier cet accord, modifiez la première date.","La otra fecha debe ser distinta de la actual.":"La seconde date doit être différente.","Ya existe otro cambio de turno en la fecha acordada.":"Un autre remplacement existe déjà à cette date.","Elegí una fecha para la devolución.":"Choisissez une date de retour.","Se eliminarán las dos coberturas vinculadas.":"Les deux remplacements liés seront supprimés."});
 Object.assign(I18N.de,{"Intercambio pactado · devolución de jornada":"Vereinbarter Tausch · Gegenschicht","Opcional: acordamos dos fechas. Ese turno me cubre un día y yo lo cubro otro día. Son dos jornadas de 12 h, vinculadas.":"Optional: zwei vereinbarte Termine, gegenseitige Vertretung für je 12 Stunden.","Elegir segunda fecha":"Zweites Datum wählen","Segunda fecha":"Zweites Datum","Fecha recíproca":"Gegentermin","Intercambio pactado":"Vereinbarter Tausch","Registro vinculado automáticamente":"Automatisch verknüpfter Eintrag","Para cambiar este acuerdo, editá su primera fecha.":"Zum Ändern die erste Schicht bearbeiten.","La otra fecha debe ser distinta de la actual.":"Der zweite Termin muss abweichen.","Ya existe otro cambio de turno en la fecha acordada.":"Für den vereinbarten Termin existiert bereits ein Tausch.","Elegí una fecha para la devolución.":"Datum für die Gegenschicht wählen.","Se eliminarán las dos coberturas vinculadas.":"Beide verknüpften Schichten werden entfernt."});
 Object.assign(I18N.it,{"Intercambio pactado · devolución de jornada":"Scambio concordato · turno di restituzione","Opcional: acordamos dos fechas. Ese turno me cubre un día y yo lo cubro otro día. Son dos jornadas de 12 h, vinculadas.":"Facoltativo: due date concordate; ciascuno copre l’altro per un turno di 12 ore.","Elegir segunda fecha":"Scegli la seconda data","Segunda fecha":"Seconda data","Fecha recíproca":"Data reciproca","Intercambio pactado":"Scambio concordato","Registro vinculado automáticamente":"Voce collegata automaticamente","Para cambiar este acuerdo, editá su primera fecha.":"Per modificare l’accordo, modifica la prima data.","La otra fecha debe ser distinta de la actual.":"La seconda data deve essere diversa.","Ya existe otro cambio de turno en la fecha acordada.":"Esiste già un cambio turno in quella data.","Elegí una fecha para la devolución.":"Scegli una data per la restituzione.","Se eliminarán las dos coberturas vinculadas.":"Saranno rimosse entrambe le coperture collegate."});
+
+/* V5.7.7 · Ayuda: gesto de doble toque traducido a los seis idiomas. */
+Object.assign(I18N.en,{"Doble toque:":"Double tap:","abre Jornada directamente en esa fecha.":"opens Workday directly for that date.","hacé doble toque sobre un día para abrir directamente su Jornada. También podés seleccionarlo y abrir ":"double-tap a day to open its Workday directly. You can also select the date and open "," desde el detalle, o usar el botón ":" from the details, or use the "," de la cabecera.":" in the header."});
+Object.assign(I18N.pt,{"Doble toque:":"Toque duplo:","abre Jornada directamente en esa fecha.":"abre a Jornada diretamente nessa data.","hacé doble toque sobre un día para abrir directamente su Jornada. También podés seleccionarlo y abrir ":"toque duas vezes em um dia para abrir diretamente a Jornada. Você também pode selecionar o dia e abrir "," desde el detalle, o usar el botón ":" pelos detalhes ou usar o botão "," de la cabecera.":" no cabeçalho."});
+Object.assign(I18N.fr,{"Doble toque:":"Double appui :","abre Jornada directamente en esa fecha.":"ouvre directement la journée de travail à cette date.","hacé doble toque sobre un día para abrir directamente su Jornada. También podés seleccionarlo y abrir ":"appuyez deux fois sur un jour pour ouvrir directement sa journée de travail. Vous pouvez aussi sélectionner le jour et ouvrir "," desde el detalle, o usar el botón ":" depuis les détails ou utiliser le bouton "," de la cabecera.":" de l’en-tête."});
+Object.assign(I18N.de,{"Doble toque:":"Doppeltippen:","abre Jornada directamente en esa fecha.":"öffnet den Arbeitstag für dieses Datum direkt.","hacé doble toque sobre un día para abrir directamente su Jornada. También podés seleccionarlo y abrir ":"tippe zweimal auf einen Tag, um den Arbeitstag direkt zu öffnen. Du kannst auch einen Tag auswählen und "," desde el detalle, o usar el botón ":" über die Details öffnen oder die Taste "," de la cabecera.":" in der Kopfzeile verwenden."});
+Object.assign(I18N.it,{"Doble toque:":"Doppio tocco:","abre Jornada directamente en esa fecha.":"apre direttamente la giornata lavorativa di quella data.","hacé doble toque sobre un día para abrir directamente su Jornada. También podés seleccionarlo y abrir ":"tocca due volte un giorno per aprire direttamente la relativa giornata lavorativa. Puoi anche selezionare il giorno e aprire "," desde el detalle, o usar el botón ":" dai dettagli oppure usare il pulsante "," de la cabecera.":" nell’intestazione."});
 
 function tr(text){
  const source=String(text??'');
@@ -17925,28 +17933,22 @@ function scheduleMainViewportFit(){
 }
 
 function restoreMainAfterWorkday(){
- // El modal Jornada normalmente se abre después de haber bajado hasta
- // el detalle del día. Al cerrarlo volvemos al inicio de la app y
- // descartamos cualquier alto calculado con un viewport transitorio.
- document.documentElement.style.removeProperty('--main-day-height');
-
- const goHome=()=>{
-  try{
-   window.scrollTo({top:0,left:0,behavior:'auto'});
-  }catch{
-   window.scrollTo(0,0);
-  }
-  document.documentElement.scrollTop=0;
-  document.body.scrollTop=0;
-
-  scheduleMainViewportFit();
-  scheduleBelowFoldLayout();
- };
-
- requestAnimationFrame(goHome);
- setTimeout(goHome,60);
- setTimeout(goHome,180);
- setTimeout(goHome,360);
+ // V5.8.0 · Retorno sin parpadeo.
+ // La altura del calendario ya está congelada para el viewport móvil:
+ // NO quitar --main-day-height al cerrar Jornada. Quitarla fuerza un
+ // frame con casillas de altura por defecto antes del siguiente cálculo.
+ // Tampoco repetir scrollTo en cuatro instantes: genera saltos visuales.
+ // Al ejecutar una sola vez, sin esperar a otro frame, la vuelta al inicio
+ // ocurre en la misma actualización visual que cierra el modal.
+ try{
+  window.scrollTo({top:0,left:0,behavior:'instant'});
+ }catch{
+  window.scrollTo(0,0);
+ }
+ document.documentElement.scrollTop=0;
+ document.body.scrollTop=0;
+ scheduleMainViewportFit();
+ scheduleBelowFoldLayout();
 }
 
 const HAPTICS_KEY='turno4x4.haptics';
@@ -20366,6 +20368,9 @@ function renderCalendar(){
   cell.innerHTML=commonView
    ? `<span class="date">${d.getDate()}</span>${dots}${holidayBadge}${licenseBadge}${vacationBadge}${worklogBadges}`
    : `<span class="date">${d.getDate()}</span><span class="code">${codeText(turn,c)}</span>${showLabels.checked?`<span class="label">${shiftNames[c][0]}</span>`:''}${dots}${holidayBadge}${licenseBadge}${vacationBadge}${worklogBadges}`;
+  // La fecha viaja en la casilla, pero el detector táctil vive en #calendar.
+  // Así ningún redibujado interrumpe la detección de dos toques.
+  cell._calendarDate=d;
   attachDayGestures(cell,d);
   fragment.appendChild(cell);
  }
@@ -20375,9 +20380,101 @@ function renderCalendar(){
  ensureHolidaysForCurrentView();
 }
 
+/* V5.7.9 · Doble toque estable: reconocer touchstart/end sobre #calendar
+   (nodo permanente) y dejar los pointerevents de las casillas para mouse/lápiz.
+   Un render de 42 casillas entre toques nunca destruye el estado del gesto. */
+let lastCalendarDayTap=null;
+
+function selectCalendarDayWithDoubleTap(d){
+ const t=performance.now();
+ const key=dateKey(d);
+ const doubleTap=Boolean(lastCalendarDayTap &&
+  lastCalendarDayTap.key===key && t-lastCalendarDayTap.at<=680);
+ lastCalendarDayTap=doubleTap?null:{key,at:t};
+
+ selectedDate=calendarDate(d.getFullYear(),d.getMonth(),d.getDate());
+ vibrate(20);
+ showDetail(d);
+ renderCalendar();
+ if(doubleTap){
+  markWorkdayFeatureSeen();
+  openWorkday(selectedDate,activeTurnKey(),'work');
+ }
+}
+
+// Estado táctil guardado fuera de cada .day, incluso si se re-renderiza.
+let activeCalendarTouch=null;
+const cancelCalendarTouchHold=g=>{
+ if(g?.timer){clearTimeout(g.timer);g.timer=null}
+};
+
+cal.addEventListener('touchstart',ev=>{
+ if(ev.touches.length!==1){
+  cancelCalendarTouchHold(activeCalendarTouch);
+  activeCalendarTouch=null;
+  lastCalendarDayTap=null;
+  return;
+ }
+ const cell=ev.target instanceof Element ? ev.target.closest('.day') : null;
+ if(!cell || !cal.contains(cell) || monthAnimating)return;
+ const touch=ev.changedTouches[0];
+ cancelCalendarTouchHold(activeCalendarTouch);
+ const g={id:touch.identifier,date:cell._calendarDate,
+  x:touch.clientX,y:touch.clientY,at:performance.now(),moved:false,held:false,timer:null};
+ activeCalendarTouch=g;
+ g.timer=setTimeout(()=>{
+  if(activeCalendarTouch!==g || g.moved || calendarSwipeMoved)return;
+  g.timer=null;
+  g.held=true;
+  lastCalendarDayTap=null;
+  if(hapticsEnabled())vibrate(58,{force:true});
+  else stopVibration();
+  openAgenda(g.date);
+ },450);
+},{capture:true,passive:true});
+
+cal.addEventListener('touchmove',ev=>{
+ const g=activeCalendarTouch;
+ if(!g)return;
+ const touch=Array.from(ev.touches).find(t=>t.identifier===g.id);
+ if(!touch)return;
+ const dx=touch.clientX-g.x,dy=touch.clientY-g.y;
+ if(Math.max(Math.abs(dx),Math.abs(dy))>12)cancelCalendarTouchHold(g);
+ if(Math.max(Math.abs(dx),Math.abs(dy))>26)g.moved=true;
+},{capture:true,passive:true});
+
+cal.addEventListener('touchend',ev=>{
+ const g=activeCalendarTouch;
+ if(!g)return;
+ const touch=Array.from(ev.changedTouches).find(t=>t.identifier===g.id);
+ if(!touch)return;
+ activeCalendarTouch=null;
+ cancelCalendarTouchHold(g);
+ if(g.held)return; // La pulsación larga ya abrió Agenda.
+ const dx=touch.clientX-g.x,dy=touch.clientY-g.y;
+ const elapsed=performance.now()-g.at;
+ // Si hubo gesto real de scroll/deslizamiento, no interpretar como toque.
+ if(calendarSwipeMoved || g.moved || Math.max(Math.abs(dx),Math.abs(dy))>26 || elapsed>=450){
+  if(calendarSwipeMoved || g.moved)lastCalendarDayTap=null;
+  return;
+ }
+ // Inhibir el click sintético y el zoom de doble tap, no el scroll real.
+ if(ev.cancelable)ev.preventDefault();
+ selectCalendarDayWithDoubleTap(g.date);
+},{capture:true,passive:false});
+
+cal.addEventListener('touchcancel',ev=>{
+ const g=activeCalendarTouch;
+ if(!g || !Array.from(ev.changedTouches).some(t=>t.identifier===g.id))return;
+ cancelCalendarTouchHold(g);
+ activeCalendarTouch=null;
+ lastCalendarDayTap=null;
+},{capture:true,passive:true});
+
 function attachDayGestures(cell,d){
  let pressStartedAt=0;
- let pressMoved=false;
+ let pressMoved=false;   // Umbral estricto: desactiva solo pulsación larga.
+ let tapMoved=false;     // Umbral más permisivo: acepta pequeños deslizamientos al tocar.
 
  const cancelHold=()=>{
   if(agendaHoldTimer){
@@ -20388,7 +20485,7 @@ function attachDayGestures(cell,d){
  };
 
  cell.addEventListener('pointerdown',ev=>{
-  if(ev.pointerType==='mouse'&&ev.button!==0)return;
+  if(ev.pointerType==='touch' || (ev.pointerType==='mouse'&&ev.button!==0))return;
 
   // Evita el feedback háptico/contextual nativo de una pulsación larga
   // en navegadores móviles. La vibración queda controlada únicamente
@@ -20399,6 +20496,7 @@ function attachDayGestures(cell,d){
 
   pressStartedAt=performance.now();
   pressMoved=false;
+  tapMoved=false;
   agendaHoldOpened=false;
 
   cancelHold();
@@ -20411,6 +20509,7 @@ function attachDayGestures(cell,d){
 
    agendaHoldTimer=null;
    agendaHoldOpened=true;
+   lastCalendarDayTap=null;
    cell.classList.remove('pending-open');
 
    if(hapticsEnabled()){
@@ -20427,18 +20526,22 @@ function attachDayGestures(cell,d){
  cell.addEventListener('pointermove',ev=>{
   // Small movements are normal finger jitter. Larger movement cancels long press.
   if(!pressStartedAt)return;
-  if(Math.abs(ev.clientX-swipeStartX)>12||Math.abs(ev.clientY-swipeStartY)>12){
+  const drift=Math.max(Math.abs(ev.clientX-swipeStartX),Math.abs(ev.clientY-swipeStartY));
+  if(drift>12){
    pressMoved=true;
-   cancelHold();
+   cancelHold(); // Evita abrir Agenda si el dedo se desplaza.
   }
+  if(drift>26)tapMoved=true; // Un leve temblor no invalida el doble toque.
  });
 
  cell.addEventListener('pointerup',()=>{
+  if(!pressStartedAt)return; // Los toques de Android los procesa el contenedor.
   const elapsed=performance.now()-pressStartedAt;
   pressStartedAt=0;
 
   // A horizontal swipe owns this gesture; do not select/open a day.
   if(calendarSwipeMoved){
+   lastCalendarDayTap=null;
    cancelHold();
    agendaHoldOpened=false;
    return;
@@ -20453,18 +20556,22 @@ function attachDayGestures(cell,d){
 
   cancelHold();
 
-  // Only a short press updates the lower detail panel.
-  if(elapsed < 450){
-   selectedDate=calendarDate(d.getFullYear(),d.getMonth(),d.getDate());
-   vibrate(20);
-   showDetail(d);
-   renderCalendar();
+  // El primer toque mantiene la selección inmediata original. El segundo,
+  // sobre el MISMO día hasta 680 ms después, abre Jornada directamente.
+  // Los toques breves toleran un leve desplazamiento involuntario del dedo.
+  // El estado global sobrevive al redibujado del calendario tras cada toque.
+  if(elapsed < 450 && !tapMoved){
+   selectCalendarDayWithDoubleTap(d);
+  }else if(elapsed>=450 || tapMoved){
+   lastCalendarDayTap=null;
   }
  });
 
  cell.addEventListener('pointercancel',()=>{
+  if(!pressStartedAt)return;
   pressStartedAt=0;
   pressMoved=true;
+  tapMoved=true;
   cancelHold();
   agendaHoldOpened=false;
  });
@@ -20486,6 +20593,7 @@ function attachDayGestures(cell,d){
 }
 
 function shiftViewMonth(delta){
+ lastCalendarDayTap=null;
  viewMonth+=delta;
  if(viewMonth>11){viewMonth=0;viewYear++}
  if(viewMonth<0){viewMonth=11;viewYear--}
@@ -20569,7 +20677,8 @@ cal.addEventListener('pointermove',ev=>{
     return;
   }
 
-  if(Math.abs(dx)>10 && Math.abs(dx)>Math.abs(dy)){
+  // No secuestrar un toque por una oscilación horizontal mínima del dedo.
+  if(Math.abs(dx)>20 && Math.abs(dx)>Math.abs(dy)){
     calendarSwipeMoved=true;
 
     if(agendaHoldTimer){
