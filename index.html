@@ -15766,6 +15766,49 @@ body.calendar-tiles-view #calendarCard .day.today::after{
   height:max(35px,calc(var(--main-day-height,60px) - 3.5px)) !important;
  }
 }
+
+/* V5.8.3 · Ayuda: novedades discretas sin ocupar espacio extra en cabecera. */
+#helpBtn .help-whatsnew-badge{
+ position:absolute;right:-7px;top:-9px;z-index:2;
+ display:inline-flex;align-items:center;justify-content:center;
+ padding:3px 4px;min-width:27px;min-height:13px;
+ font-size:7px;line-height:1;font-weight:950;letter-spacing:.01em;
+ color:#072436;background:#62e0c6;border:1px solid rgba(0,0,0,.18);
+ border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,.23);
+ pointer-events:none;
+}
+#helpBtn .help-whatsnew-badge[hidden]{display:none !important;}
+#helpModal .help-whatsnew-guide{
+ border:1px solid rgba(72,184,222,.34);border-radius:14px;
+ background:linear-gradient(145deg,rgba(30,163,192,.12),rgba(53,177,137,.07)),var(--panel2);
+ padding:10px;margin-bottom:8px;
+}
+#helpModal .help-whatsnew-heading{display:flex;align-items:center;gap:7px;margin-bottom:8px;}
+#helpModal .help-whatsnew-heading b{font-size:12px;line-height:1.3;color:var(--text)}
+#helpModal .help-whatsnew-tag{
+ padding:3px 6px;border-radius:6px;font-size:8px;line-height:1.2;
+ font-weight:950;color:#092431;background:#6de0c6;
+}
+#helpModal .help-whatsnew-guide p{margin:0 0 8px;font-size:11px;line-height:1.48;color:var(--muted)}
+#helpModal .help-whatsnew-guide p:last-child{margin-bottom:0}
+#helpModal .help-whatsnew-gestures{display:grid;gap:5px;margin-bottom:9px}
+#helpModal .help-whatsnew-gesture{
+ display:flex;gap:9px;align-items:center;padding:8px;
+ border:1px solid var(--line);background:var(--panel);border-radius:10px;
+}
+#helpModal .help-gesture-icon{
+ flex:0 0 25px;height:25px;border-radius:8px;
+ display:grid;place-items:center;color:#75dcd6;
+ background:rgba(76,174,208,.12);font-size:17px;font-weight:900;
+}
+#helpModal .help-whatsnew-gesture strong{display:block;font-size:11px;line-height:1.2;color:var(--text)}
+#helpModal .help-whatsnew-gesture small{display:block;margin-top:3px;font-size:10px;line-height:1.4;color:var(--muted)}
+#helpModal .help-shift-changes-guide{
+ border:1px solid var(--line);background:var(--panel);border-radius:10px;
+ padding:10px 10px 5px;margin:5px 0 10px;
+}
+#helpModal .help-shift-changes-guide>b{display:block;font-size:12px;color:var(--text);margin-bottom:8px;}
+#helpModal .help-shift-changes-guide p{font-size:11px;line-height:1.45;}
 </style>
 </head>
 <body class="notranslate">
@@ -15786,7 +15829,7 @@ body.calendar-tiles-view #calendarCard .day.today::after{
           <circle cx="18" cy="18.5" r="2.6"></circle>
         </svg>
       </button>
-      <button id="helpBtn" class="icon-btn help-top-btn" aria-label="Ayuda" title="Ayuda">?</button>
+      <button id="helpBtn" class="icon-btn help-top-btn" aria-label="Ayuda" title="Ayuda">?<span id="helpWhatsNewBadge" class="help-whatsnew-badge" aria-hidden="true">NUEVO</span></button>
       <button id="settingsBtn" class="icon-btn" aria-label="Configuración" title="Configuración">⚙️<i class="update-dot"></i></button>
       <button id="themeBtn" class="icon-btn" aria-label="Cambiar tema">☀️</button>
     </div>
@@ -16161,6 +16204,17 @@ body.calendar-tiles-view #calendarCard .day.today::after{
       </div>
     </div>
 
+    <div class="help-whatsnew-guide" id="helpWhatsNewGuide">
+      <div class="help-whatsnew-heading"><span class="help-whatsnew-tag">NUEVO</span><b>Gestos rápidos del calendario</b></div>
+      <p>Tocá directamente cualquier fecha del calendario:</p>
+      <div class="help-whatsnew-gestures">
+        <div class="help-whatsnew-gesture"><span class="help-gesture-icon" aria-hidden="true">①</span><div><strong>Un toque</strong><small>Selecciona el día y muestra sus detalles debajo del calendario.</small></div></div>
+        <div class="help-whatsnew-gesture"><span class="help-gesture-icon" aria-hidden="true">②</span><div><strong>Doble toque</strong><small>Abre directamente Jornada con esa fecha seleccionada.</small></div></div>
+        <div class="help-whatsnew-gesture"><span class="help-gesture-icon" aria-hidden="true">◷</span><div><strong>Mantener 450 ms</strong><small>Abre la Agenda de ese día.</small></div></div>
+      </div>
+      <p>En la sección Jornada también se explican los cambios de turno y las devoluciones pactadas.</p>
+    </div>
+
     <div class="help-version-box">
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
@@ -16285,9 +16339,9 @@ body.calendar-tiles-view #calendarCard .day.today::after{
             <div><i class="help-shift change">C</i><span><b>Cambio</b><small>Cambio de turno</small></span></div>
             <div><i class="help-shift extra">+H</i><span><b>Horas extra</b><small>Horas adicionales</small></span></div>
           </div>
-          <p><strong>Tocar un día:</strong> abre su detalle debajo del calendario.</p>
-          <p><strong>Doble toque:</strong> abre Jornada directamente en esa fecha.</p>
-          <p><strong>Mantener 450 ms:</strong> abre rápidamente la Agenda para ese día.</p>
+          <p><strong>Un toque:</strong> selecciona el día y muestra su detalle debajo del calendario.</p>
+          <p><strong>Doble toque:</strong> abre directamente Jornada con ese día seleccionado.</p>
+          <p><strong>Mantener 450 ms:</strong> abre directamente la Agenda de ese día.</p>
           <p><strong>FER rojo:</strong> feriado completo. <strong>FER rojo/gris diagonal:</strong> ½ feriado (6 h). En turno N ocurre cuando el feriado toma sólo 18:00–24:00 de la primera noche o sólo 00:00–06:00 después de la última noche. <strong>FER azul:</strong> puente/no laborable. El 7 de septiembre se incluye como Día del Metalúrgico para todos los turnos.</p>
           <p><strong>Vista anual:</strong> muestra los 12 meses. Mantené pulsados los controles del año para avanzar más rápido.</p>
         </div>
@@ -16320,7 +16374,15 @@ body.calendar-tiles-view #calendarCard .day.today::after{
       <section id="help-workday" class="help-section">
         <div class="help-section-title"><span>6</span><div><b>Jornada</b><small>Cambios de turno y horas extra</small></div></div>
         <div class="help-card">
-          <p><strong>Abrir:</strong> hacé doble toque sobre un día para abrir directamente su Jornada. También podés seleccionarlo y abrir <strong>JORNADA</strong> desde el detalle, o usar el botón <strong>J</strong> de la cabecera.</p>
+          <p><strong>Abrir:</strong> hacé doble toque sobre un día para abrir Jornada en esa fecha. También podés usar el botón Jornada de la cabecera.</p>
+          <div class="help-shift-changes-guide">
+            <b>Cómo registrar los cambios de turno</b>
+            <p><strong>Sin cambio:</strong> mantenés tu turno programado para esa fecha.</p>
+            <p><strong>Pedí un cambio:</strong> no asistís a tu jornada y seleccionás al compañero o turno que te cubre.</p>
+            <p><strong>Me pidieron un cambio:</strong> vos cubrís la jornada de otro compañero, incluso si ese día estabas de franco.</p>
+            <p><strong>Devolución pactada:</strong> si después devolvés el favor en otra fecha, podés vincular ambas jornadas para que quede registrado el acuerdo.</p>
+            <p><strong>Seguridad de turnos:</strong> la aplicación evita coberturas que encadenen jornadas sin descanso suficiente. Los registros no modifican el ciclo futuro.</p>
+          </div>
           <p>La app muestra tu turno <strong>Programado</strong>. Si hacés un cambio, ese día no venís y elegís el turno del compañero que te cubre. En T1–T4 la app analiza la rotación de esa fecha y oculta automáticamente al compañero que no puede cubrirte sin encadenar jornadas. Ejemplo: quien termina su última noche a las 06:00 no puede cubrir una mañana que empieza a las 06:00; del mismo modo, quien empieza su primera mañana a las 06:00 no puede cubrir la noche anterior. Se exige un margen mínimo de 12 h entre la jornada propia y la cobertura. T5 UNO y T5 DOS aplican la misma validación para T1–T4 y mantienen disponible la pareja T5 opuesta cuando corresponde. T5 FIJO conserva T1, T2, T3 y T4 disponibles. El ciclo futuro no se modifica.</p>
           <p><strong>Horas cubiertas:</strong> se calculan con tu jornada programada de ese día, no con el turno del compañero que te cubre. Los turnos rotativos son de 12 horas; T5 FIJO = 9 horas; un franco programado = 0 horas.</p>
           <p><strong>Jornadas guardadas:</strong> la insignia identifica el tipo de registro: <strong>C</strong> = cambio de turno, <strong>EXT</strong> = horas extra y <strong>J</strong> = jornada/nota. Si una fecha tiene cambio y extras, se muestran ambas insignias.</p>
@@ -17104,7 +17166,7 @@ body.calendar-tiles-view #calendarCard .day.today::after{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.8.2';
+const CURRENT_VERSION='5.8.3';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -17606,6 +17668,14 @@ Object.assign(I18N.pt,{"Elegí el estilo del calendario":"Escolha o estilo do ca
 Object.assign(I18N.fr,{"Elegí el estilo del calendario":"Choisissez le style du calendrier","TARJETAS":"CARTES","TARJETAS:":"CARTES:","muestra M/N/F en recuadros individuales redondeados, como en Órbita A2, conservando el calendario original, los colores elegidos y todas las marcas de feriados, vacaciones, licencias, Jornada y Agenda. Podés volver a TURNOS o COMÚN cuando quieras.":"affiche M/N/F dans des cases individuelles arrondies, comme dans Órbita A2, en conservant le calendrier original, les couleurs choisies et les indicateurs de jours fériés, congés, absences, journées et agenda. Revenez aux vues ÉQUIPES ou CLASSIQUE à tout moment."});
 Object.assign(I18N.de,{"Elegí el estilo del calendario":"Wähle die Kalenderansicht","TARJETAS":"KACHELN","TARJETAS:":"KACHELN:","muestra M/N/F en recuadros individuales redondeados, como en Órbita A2, conservando el calendario original, los colores elegidos y todas las marcas de feriados, vacaciones, licencias, Jornada y Agenda. Podés volver a TURNOS o COMÚN cuando quieras.":"zeigt M/N/F in einzelnen abgerundeten Kacheln wie bei Órbita A2. Der ursprüngliche Kalender, gewählte Farben sowie Feiertags-, Urlaubs-, Abwesenheits-, Arbeitstags- und Termineinträge bleiben erhalten. Wechsle jederzeit zur Schicht- oder Standardansicht zurück."});
 Object.assign(I18N.it,{"Elegí el estilo del calendario":"Scegli lo stile del calendario","TARJETAS":"SCHEDE","TARJETAS:":"SCHEDE:","muestra M/N/F en recuadros individuales redondeados, como en Órbita A2, conservando el calendario original, los colores elegidos y todas las marcas de feriados, vacaciones, licencias, Jornada y Agenda. Podés volver a TURNOS o COMÚN cuando quieras.":"mostra M/N/F in riquadri singoli arrotondati, come in Órbita A2, mantenendo il calendario originale, i colori scelti e gli indicatori di festività, ferie, permessi, giornate e agenda. Puoi tornare a TURNI o NORMALE quando vuoi."});
+
+
+/* V5.8.3: Ayuda de gestos y cambios de turno, seis idiomas. */
+Object.assign(I18N.en,{"Gestos rápidos del calendario":"Quick calendar gestures","Tocá directamente cualquier fecha del calendario:":"Tap any date directly in the calendar:","Un toque":"Single tap","Selecciona el día y muestra sus detalles debajo del calendario.":"Selects a date and shows its details below the calendar.","Doble toque":"Double tap","Abre directamente Jornada con esa fecha seleccionada.":"Opens Workday directly for that selected date.","Mantener 450 ms":"Hold for 450 ms","Abre la Agenda de ese día.":"Opens the Agenda for that date.","En la sección Jornada también se explican los cambios de turno y las devoluciones pactadas.":"The Workday section also explains shift swaps and agreed return shifts.","Un toque:":"Single tap:","selecciona el día y muestra su detalle debajo del calendario.":"selects a date and displays its details below the calendar.","abre directamente Jornada con ese día seleccionado.":"opens Workday directly for that date.","abre directamente la Agenda de ese día.":"opens the Agenda directly for that date.","hacé doble toque sobre un día para abrir Jornada en esa fecha. También podés usar el botón Jornada de la cabecera.":"double-tap a date to open its Workday. You can also use the Workday button in the header.","Cómo registrar los cambios de turno":"How to record shift swaps","Sin cambio:":"No change:","mantenés tu turno programado para esa fecha.":"your scheduled shift stays unchanged for that date.","Pedí un cambio:":"I requested a swap:","no asistís a tu jornada y seleccionás al compañero o turno que te cubre.":"you do not work your scheduled shift; select the coworker or shift covering for you.","Me pidieron un cambio:":"I was asked to cover:","vos cubrís la jornada de otro compañero, incluso si ese día estabas de franco.":"you cover a coworker’s shift, including on your day off.","Devolución pactada:":"Agreed return shift:","si después devolvés el favor en otra fecha, podés vincular ambas jornadas para que quede registrado el acuerdo.":"if you return the favor on another date, link both workdays to document the agreement.","Seguridad de turnos:":"Shift safety:","la aplicación evita coberturas que encadenen jornadas sin descanso suficiente. Los registros no modifican el ciclo futuro.":"the app prevents coverage that would lead to back-to-back shifts without enough rest. Records do not change the future rotation."});
+Object.assign(I18N.pt,{"Gestos rápidos del calendario":"Gestos rápidos do calendário","Tocá directamente cualquier fecha del calendario:":"Toque diretamente em qualquer data do calendário:","Un toque":"Um toque","Selecciona el día y muestra sus detalles debajo del calendario.":"Seleciona o dia e mostra os detalhes abaixo do calendário.","Doble toque":"Toque duplo","Abre directamente Jornada con esa fecha seleccionada.":"Abre diretamente Jornada na data selecionada.","Mantener 450 ms":"Manter por 450 ms","Abre la Agenda de ese día.":"Abre a Agenda desse dia.","En la sección Jornada también se explican los cambios de turno y las devoluciones pactadas.":"Na seção Jornada também são explicadas as trocas de turno e as compensações combinadas.","Un toque:":"Um toque:","selecciona el día y muestra su detalle debajo del calendario.":"seleciona o dia e mostra os detalhes abaixo do calendário.","abre directamente Jornada con ese día seleccionado.":"abre diretamente Jornada com esse dia selecionado.","abre directamente la Agenda de ese día.":"abre diretamente a Agenda desse dia.","hacé doble toque sobre un día para abrir Jornada en esa fecha. También podés usar el botón Jornada de la cabecera.":"toque duas vezes em um dia para abrir Jornada nessa data. Também é possível usar o botão Jornada no cabeçalho.","Cómo registrar los cambios de turno":"Como registrar trocas de turno","Sin cambio:":"Sem troca:","mantenés tu turno programado para esa fecha.":"seu turno programado permanece o mesmo nessa data.","Pedí un cambio:":"Pedi uma troca:","no asistís a tu jornada y seleccionás al compañero o turno que te cubre.":"você não trabalha no seu turno e seleciona quem irá cobri-lo.","Me pidieron un cambio:":"Me pediram uma troca:","vos cubrís la jornada de otro compañero, incluso si ese día estabas de franco.":"você cobre o turno de um colega, mesmo em dia de folga.","Devolución pactada:":"Compensação combinada:","si después devolvés el favor en otra fecha, podés vincular ambas jornadas para que quede registrado el acuerdo.":"se houver uma compensação em outra data, vincule as duas jornadas para registrar o acordo.","Seguridad de turnos:":"Segurança dos turnos:","la aplicación evita coberturas que encadenen jornadas sin descanso suficiente. Los registros no modifican el ciclo futuro.":"o aplicativo impede coberturas consecutivas sem descanso suficiente. Os registros não alteram o ciclo futuro."});
+Object.assign(I18N.fr,{"Gestos rápidos del calendario":"Gestes rapides du calendrier","Tocá directamente cualquier fecha del calendario:":"Touchez directement une date du calendrier :","Un toque":"Un appui","Selecciona el día y muestra sus detalles debajo del calendario.":"Sélectionne la date et affiche ses détails sous le calendrier.","Doble toque":"Double appui","Abre directamente Jornada con esa fecha seleccionada.":"Ouvre directement la journée de travail à la date sélectionnée.","Mantener 450 ms":"Maintenir 450 ms","Abre la Agenda de ese día.":"Ouvre l’agenda de cette journée.","En la sección Jornada también se explican los cambios de turno y las devoluciones pactadas.":"La section Journée explique aussi les échanges de service et les compensations convenues.","Un toque:":"Un appui :","selecciona el día y muestra su detalle debajo del calendario.":"sélectionne la date et affiche ses détails sous le calendrier.","abre directamente Jornada con ese día seleccionado.":"ouvre directement la journée de travail à cette date.","abre directamente la Agenda de ese día.":"ouvre directement l’agenda de cette date.","hacé doble toque sobre un día para abrir Jornada en esa fecha. También podés usar el botón Jornada de la cabecera.":"touchez deux fois une date pour ouvrir sa journée de travail. Vous pouvez également utiliser le bouton Journée dans l’en-tête.","Cómo registrar los cambios de turno":"Comment enregistrer les échanges de service","Sin cambio:":"Sans changement :","mantenés tu turno programado para esa fecha.":"votre service prévu reste inchangé à cette date.","Pedí un cambio:":"J’ai demandé un échange :","no asistís a tu jornada y seleccionás al compañero o turno que te cubre.":"vous ne travaillez pas ce jour-là et choisissez la personne ou l’équipe qui vous remplace.","Me pidieron un cambio:":"On m’a demandé de remplacer :","vos cubrís la jornada de otro compañero, incluso si ese día estabas de franco.":"vous remplacez un collègue, y compris pendant votre repos.","Devolución pactada:":"Compensation convenue :","si después devolvés el favor en otra fecha, podés vincular ambas jornadas para que quede registrado el acuerdo.":"si vous rendez ce service à une autre date, vous pouvez lier les deux journées.","Seguridad de turnos:":"Sécurité des services :","la aplicación evita coberturas que encadenen jornadas sin descanso suficiente. Los registros no modifican el ciclo futuro.":"l’application empêche les remplacements consécutifs sans repos suffisant. Les saisies ne modifient pas le cycle futur."});
+Object.assign(I18N.de,{"Gestos rápidos del calendario":"Schnellgesten im Kalender","Tocá directamente cualquier fecha del calendario:":"Tippe direkt auf ein beliebiges Kalenderdatum:","Un toque":"Einmal tippen","Selecciona el día y muestra sus detalles debajo del calendario.":"Wählt den Tag aus und zeigt seine Details unter dem Kalender.","Doble toque":"Doppeltippen","Abre directamente Jornada con esa fecha seleccionada.":"Öffnet direkt den Arbeitstag für das gewählte Datum.","Mantener 450 ms":"450 ms gedrückt halten","Abre la Agenda de ese día.":"Öffnet die Termine für diesen Tag.","En la sección Jornada también se explican los cambios de turno y las devoluciones pactadas.":"Im Bereich Arbeitstag werden auch Schichttausch und vereinbarte Gegenleistungen erklärt.","Un toque:":"Einmal tippen:","selecciona el día y muestra su detalle debajo del calendario.":"wählt den Tag aus und zeigt seine Details unter dem Kalender.","abre directamente Jornada con ese día seleccionado.":"öffnet direkt den Arbeitstag für diesen Tag.","abre directamente la Agenda de ese día.":"öffnet direkt die Termine für diesen Tag.","hacé doble toque sobre un día para abrir Jornada en esa fecha. También podés usar el botón Jornada de la cabecera.":"Tippe zweimal auf einen Tag, um den Arbeitstag zu öffnen. Alternativ nutze die Schaltfläche Arbeitstag oben.","Cómo registrar los cambios de turno":"Schichttausch erfassen","Sin cambio:":"Kein Tausch:","mantenés tu turno programado para esa fecha.":"deine geplante Schicht bleibt an diesem Datum unverändert.","Pedí un cambio:":"Ich habe um Tausch gebeten:","no asistís a tu jornada y seleccionás al compañero o turno que te cubre.":"du arbeitest nicht selbst und wählst die vertretende Person oder Schicht aus.","Me pidieron un cambio:":"Ich soll vertreten:","vos cubrís la jornada de otro compañero, incluso si ese día estabas de franco.":"du vertrittst jemanden, auch an deinem freien Tag.","Devolución pactada:":"Vereinbarte Gegenleistung:","si después devolvés el favor en otra fecha, podés vincular ambas jornadas para que quede registrado el acuerdo.":"wenn du später vertrittst, verknüpfe beide Arbeitstage zur Dokumentation.","Seguridad de turnos:":"Schichtsicherheit:","la aplicación evita coberturas que encadenen jornadas sin descanso suficiente. Los registros no modifican el ciclo futuro.":"die App verhindert Schichten ohne ausreichende Ruhezeit. Einträge ändern die künftige Rotation nicht."});
+Object.assign(I18N.it,{"Gestos rápidos del calendario":"Gesti rapidi del calendario","Tocá directamente cualquier fecha del calendario:":"Tocca direttamente una data del calendario:","Un toque":"Un tocco","Selecciona el día y muestra sus detalles debajo del calendario.":"Seleziona il giorno e mostra i dettagli sotto il calendario.","Doble toque":"Doppio tocco","Abre directamente Jornada con esa fecha seleccionada.":"Apre direttamente Giornata con la data selezionata.","Mantener 450 ms":"Tieni premuto 450 ms","Abre la Agenda de ese día.":"Apre l’Agenda di quel giorno.","En la sección Jornada también se explican los cambios de turno y las devoluciones pactadas.":"La sezione Giornata spiega anche gli scambi di turno e le restituzioni concordate.","Un toque:":"Un tocco:","selecciona el día y muestra su detalle debajo del calendario.":"seleziona il giorno e mostra i dettagli sotto il calendario.","abre directamente Jornada con ese día seleccionado.":"apre direttamente Giornata per quel giorno.","abre directamente la Agenda de ese día.":"apre direttamente l’Agenda di quel giorno.","hacé doble toque sobre un día para abrir Jornada en esa fecha. También podés usar el botón Jornada de la cabecera.":"tocca due volte una data per aprire Giornata. Puoi anche usare il pulsante Giornata nell’intestazione.","Cómo registrar los cambios de turno":"Come registrare gli scambi di turno","Sin cambio:":"Nessuno scambio:","mantenés tu turno programado para esa fecha.":"il turno previsto per quella data resta invariato.","Pedí un cambio:":"Ho chiesto uno scambio:","no asistís a tu jornada y seleccionás al compañero o turno que te cubre.":"non lavori il tuo turno e scegli il collega o turno che ti sostituisce.","Me pidieron un cambio:":"Mi hanno chiesto uno scambio:","vos cubrís la jornada de otro compañero, incluso si ese día estabas de franco.":"copri il turno di un collega, anche durante il riposo.","Devolución pactada:":"Restituzione concordata:","si después devolvés el favor en otra fecha, podés vincular ambas jornadas para que quede registrado el acuerdo.":"se restituisci il favore in un’altra data, collega le due giornate per documentare l’accordo.","Seguridad de turnos:":"Sicurezza dei turni:","la aplicación evita coberturas que encadenen jornadas sin descanso suficiente. Los registros no modifican el ciclo futuro.":"l’app impedisce sostituzioni consecutive senza riposo sufficiente. I dati non modificano la rotazione futura."});
 
 function shouldSkipI18nNode(node){
  const p=node?.parentElement;
@@ -21937,7 +22007,18 @@ $('#shareWhatsAppBtn').onclick=shareByWhatsApp;
 $('#shareNativeBtn').onclick=shareWithSystem;
 $('#shareCopyBtn').onclick=copyShareLink;
 $('#shareQrBtn').onclick=toggleShareQr;
+const HELP_WHATS_NEW_SEEN_KEY='turno4x4.helpWhatsNewSeen.v5.8.3';
+function syncHelpWhatsNewBadge(){
+ const badge=document.getElementById('helpWhatsNewBadge');
+ if(!badge)return;
+ let seen=false;
+ try{seen=localStorage.getItem(HELP_WHATS_NEW_SEEN_KEY)==='true';}catch{}
+ badge.hidden=seen;
+}
+syncHelpWhatsNewBadge();
 helpBtn.onclick=()=>{
+ try{localStorage.setItem(HELP_WHATS_NEW_SEEN_KEY,'true');}catch{}
+ syncHelpWhatsNewBadge();
  const hv=$('#helpVersionLabel');
  if(hv)hv.textContent=CURRENT_VERSION;
  const cv=$('#copyrightVersionLabel');
