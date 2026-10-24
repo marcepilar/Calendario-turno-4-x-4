@@ -15839,10 +15839,6 @@ body.calendar-tiles-view #calendarCard .day.today::after{
         <div class="hold-hint">Mantener 450 ms → Agenda</div>
         <div class="workday-detail-buttons">
           <button id="worklogDeleteQuickBtn" class="worklog-delete-quick-btn" type="button" aria-label="Eliminar registro laboral">🗑 Eliminar</button>
-          <button id="workdayOpenBtn" class="workday-open-btn is-new" type="button">
-            <span class="workday-new-pill">NUEVO</span>
-            <span class="workday-open-label">🛠 JORNADA</span>
-          </button>
         </div>
       </div>
     </div>
@@ -17108,7 +17104,7 @@ body.calendar-tiles-view #calendarCard .day.today::after{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.8.1';
+const CURRENT_VERSION='5.8.2';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -21996,10 +21992,6 @@ $('#resetSettingsBtn').onclick=()=>{
  scheduleViewportLayout();
 };
 $('#agendaSaveBtn').onclick=saveAgenda;$('#agendaClearBtn').onclick=clearAgendaForm;$('#agendaNotifyBtn').onclick=requestNotificationPermission;
-$('#workdayOpenBtn').onclick=()=>{
- markWorkdayFeatureSeen();
- openWorkday(selectedDate,activeTurnKey(),'work');
-};
 
 $('#workdayTopBtn').onclick=()=>{
  markWorkdayFeatureSeen();
