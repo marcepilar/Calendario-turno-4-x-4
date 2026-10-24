@@ -9799,6 +9799,14 @@ body.light #statsModal .worklog-stat-btn.period-holidays{
 }
 
 
+
+/* V5.8.4 · Nuevos mensajes del historial de novedades: seis idiomas. */
+Object.assign(I18N.en,{"Novedades recientes":"Recent updates","Gestos y cambios de turno":"Gestures and shift swaps","Un toque selecciona el día; dos toques abren Jornada; mantener 450 ms abre Agenda. Se amplió la explicación de cambios de turno.":"One tap selects the date; double tap opens Workday; hold for 450 ms to open Agenda. Shift swaps are explained in more detail.","Avisos automáticos de novedades":"Automatic new-feature alerts","Cuando agreguemos nuevas funciones, Ayuda mostrará el aviso NUEVO hasta que leas las novedades. Las correcciones sin novedades no volverán a activarlo.":"When new features are added, Help shows the NEW badge until you read the updates. Fix-only releases will not reactivate it."});
+Object.assign(I18N.pt,{"Novedades recientes":"Novidades recentes","Gestos y cambios de turno":"Gestos e trocas de turno","Un toque selecciona el día; dos toques abren Jornada; mantener 450 ms abre Agenda. Se amplió la explicación de cambios de turno.":"Um toque seleciona o dia; dois toques abrem Jornada; segurar por 450 ms abre a Agenda. As trocas de turno são explicadas com mais detalhes.","Avisos automáticos de novedades":"Avisos automáticos de novidades","Cuando agreguemos nuevas funciones, Ayuda mostrará el aviso NUEVO hasta que leas las novedades. Las correcciones sin novedades no volverán a activarlo.":"Quando novas funções forem adicionadas, a Ajuda exibirá o aviso NOVO até você ler as novidades. Atualizações só com correções não o reativam."});
+Object.assign(I18N.fr,{"Novedades recientes":"Nouveautés récentes","Gestos y cambios de turno":"Gestes et échanges de service","Un toque selecciona el día; dos toques abren Jornada; mantener 450 ms abre Agenda. Se amplió la explicación de cambios de turno.":"Un toucher sélectionne le jour ; un double toucher ouvre Journée ; maintenir 450 ms ouvre Agenda. Les échanges de service sont expliqués plus en détail.","Avisos automáticos de novedades":"Alertes automatiques de nouveautés","Cuando agreguemos nuevas funciones, Ayuda mostrará el aviso NUEVO hasta que leas las novedades. Las correcciones sin novedades no volverán a activarlo.":"Quand de nouvelles fonctions sont ajoutées, Aide affiche NOUVEAU jusqu’à leur consultation. Les simples corrections ne réactivent pas l’alerte."});
+Object.assign(I18N.de,{"Novedades recientes":"Neueste Änderungen","Gestos y cambios de turno":"Gesten und Schichttausch","Un toque selecciona el día; dos toques abren Jornada; mantener 450 ms abre Agenda. Se amplió la explicación de cambios de turno.":"Ein Tippen wählt den Tag; Doppeltippen öffnet Arbeitstag; 450 ms gedrückt halten öffnet Agenda. Der Schichttausch wird ausführlicher erklärt.","Avisos automáticos de novedades":"Automatische Hinweise auf Neuerungen","Cuando agreguemos nuevas funciones, Ayuda mostrará el aviso NUEVO hasta que leas las novedades. Las correcciones sin novedades no volverán a activarlo.":"Bei neuen Funktionen erscheint in Hilfe der Hinweis NEU, bis du die Neuerungen liest. Reine Fehlerkorrekturen aktivieren ihn nicht erneut."});
+Object.assign(I18N.it,{"Novedades recientes":"Novità recenti","Gestos y cambios de turno":"Gesti e cambi di turno","Un toque selecciona el día; dos toques abren Jornada; mantener 450 ms abre Agenda. Se amplió la explicación de cambios de turno.":"Un tocco seleziona il giorno; un doppio tocco apre Giornata; tenere premuto per 450 ms apre Agenda. I cambi di turno sono spiegati più in dettaglio.","Avisos automáticos de novedades":"Avvisi automatici delle novità","Cuando agreguemos nuevas funciones, Ayuda mostrará el aviso NUEVO hasta que leas las novedades. Las correcciones sin novedades no volverán a activarlo.":"Quando aggiungiamo nuove funzioni, Aiuto mostra l’avviso NUOVO finché non leggi le novità. Le sole correzioni non lo riattiveranno."});
+
 /* ===== V4.11.3 · PERFORMANCE · SIN CAMBIOS VISUALES ===== */
 
 /* Las ventanas ocultas quedan completamente fuera de layout/pintura. */
@@ -15809,6 +15817,21 @@ body.calendar-tiles-view #calendarCard .day.today::after{
 }
 #helpModal .help-shift-changes-guide>b{display:block;font-size:12px;color:var(--text);margin-bottom:8px;}
 #helpModal .help-shift-changes-guide p{font-size:11px;line-height:1.45;}
+/* V5.8.4 · Registro automático de novedades de Ayuda. */
+#helpModal .help-news-history{
+ border:1px solid var(--line);border-radius:13px;
+ background:var(--panel2);padding:10px;margin-bottom:9px;
+}
+#helpModal .help-news-history-title{font-size:12px;line-height:1.35;color:var(--text);margin-bottom:7px;}
+#helpModal .help-news-entries{display:grid;gap:7px;}
+#helpModal .help-news-entry{border:1px solid var(--line);border-radius:9px;padding:8px;background:var(--panel);}
+#helpModal .help-news-entry-top{display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+#helpModal .help-news-entry-version{font-size:10px;color:var(--muted);font-weight:700;}
+#helpModal .help-news-entry-name{font-size:11px;line-height:1.3;color:var(--text);font-weight:850;}
+#helpModal .help-news-entry-desc{font-size:10px;line-height:1.45;color:var(--muted);margin:4px 0 0;}
+#helpModal .help-news-entry-unread{display:none;padding:2px 4px;border-radius:5px;
+ background:#65dac6;color:#092d37;font-size:8px;font-weight:900;}
+#helpModal .help-news-entry[data-unread="true"] .help-news-entry-unread{display:inline-flex;}
 </style>
 </head>
 <body class="notranslate">
@@ -16213,6 +16236,12 @@ body.calendar-tiles-view #calendarCard .day.today::after{
         <div class="help-whatsnew-gesture"><span class="help-gesture-icon" aria-hidden="true">◷</span><div><strong>Mantener 450 ms</strong><small>Abre la Agenda de ese día.</small></div></div>
       </div>
       <p>En la sección Jornada también se explican los cambios de turno y las devoluciones pactadas.</p>
+    </div>
+
+    <!-- V5.8.4: registro de novedades; no afecta registros del usuario. -->
+    <div id="helpNewsHistory" class="help-news-history" aria-label="Novedades recientes">
+      <div class="help-news-history-title"><b>Novedades recientes</b></div>
+      <div id="helpNewsEntries" class="help-news-entries"></div>
     </div>
 
     <div class="help-version-box">
@@ -17166,7 +17195,7 @@ body.calendar-tiles-view #calendarCard .day.today::after{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.8.3';
+const CURRENT_VERSION='5.8.4';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -22007,18 +22036,74 @@ $('#shareWhatsAppBtn').onclick=shareByWhatsApp;
 $('#shareNativeBtn').onclick=shareWithSystem;
 $('#shareCopyBtn').onclick=copyShareLink;
 $('#shareQrBtn').onclick=toggleShareQr;
-const HELP_WHATS_NEW_SEEN_KEY='turno4x4.helpWhatsNewSeen.v5.8.3';
+/* V5.8.4 · Ayuda: novedades pendientes por contenido, no por cada actualización.
+   REGLA PARA FUTURAS VERSIONES:
+   Al incorporar una función nueva, agregar un objeto al final de HELP_NEWS con
+   un id de versión creciente, un título y una descripción (en español), y sus
+   traducciones al bloque I18N correspondiente. NO modificar esta lógica.
+   Una versión sin nuevas funciones no necesita agregar entrada y no reabre el aviso.
+   Este mecanismo usa una sola clave exclusiva de Ayuda y no altera los demás datos. */
+const HELP_NEWS_STORAGE_KEY='turno4x4.helpLastReadNewsVersion.v1';
+const HELP_LEGACY_583_SEEN_KEY='turno4x4.helpWhatsNewSeen.v5.8.3';
+const HELP_NEWS=[
+ {version:'5.8.3',title:'Gestos y cambios de turno',description:'Un toque selecciona el día; dos toques abren Jornada; mantener 450 ms abre Agenda. Se amplió la explicación de cambios de turno.'},
+ {version:'5.8.4',title:'Avisos automáticos de novedades',description:'Cuando agreguemos nuevas funciones, Ayuda mostrará el aviso NUEVO hasta que leas las novedades. Las correcciones sin novedades no volverán a activarlo.'}
+];
+function compareHelpNewsVersion(a,b){
+ const aa=String(a||'0').split('.').map(v=>Number(v)||0);
+ const bb=String(b||'0').split('.').map(v=>Number(v)||0);
+ for(let i=0;i<Math.max(aa.length,bb.length);i++){
+  const diff=(aa[i]||0)-(bb[i]||0);
+  if(diff)return diff>0?1:-1;
+ }
+ return 0;
+}
+function lastReadHelpNews(){
+ try{
+  const value=localStorage.getItem(HELP_NEWS_STORAGE_KEY);
+  if(value!==null)return value;
+  // Quien ya leyó Ayuda V5.8.3 solo recibe el aviso de las funciones posteriores.
+  if(localStorage.getItem(HELP_LEGACY_583_SEEN_KEY)==='true')return '5.8.3';
+ }catch{}
+ return '0.0.0';
+}
+function pendingHelpNews(){
+ const last=lastReadHelpNews();
+ return HELP_NEWS.filter(item=>compareHelpNewsVersion(item.version,last)>0);
+}
 function syncHelpWhatsNewBadge(){
  const badge=document.getElementById('helpWhatsNewBadge');
  if(!badge)return;
- let seen=false;
- try{seen=localStorage.getItem(HELP_WHATS_NEW_SEEN_KEY)==='true';}catch{}
- badge.hidden=seen;
+ badge.hidden=pendingHelpNews().length===0;
+}
+function renderHelpNewsHistory(){
+ const root=document.getElementById('helpNewsEntries');
+ if(!root)return;
+ root.replaceChildren();
+ const unread=new Set(pendingHelpNews().map(item=>item.version));
+ for(const note of [...HELP_NEWS].reverse()){
+  const entry=document.createElement('div');entry.className='help-news-entry';
+  entry.dataset.unread=unread.has(note.version)?'true':'false';
+  const head=document.createElement('div');head.className='help-news-entry-top';
+  const ver=document.createElement('span');ver.className='help-news-entry-version';ver.textContent='V'+note.version;
+  const name=document.createElement('b');name.className='help-news-entry-name';name.textContent=note.title;
+  const tag=document.createElement('span');tag.className='help-news-entry-unread';tag.textContent='NUEVO';
+  const desc=document.createElement('p');desc.className='help-news-entry-desc';desc.textContent=note.description;
+  head.append(ver,name,tag);entry.append(head,desc);root.append(entry);
+ }
+ // El traductor principal actualiza estas descripciones junto con el resto de Ayuda.
+ if(appLanguage!=='es' && typeof translateTree==='function')translateTree(root);
+}
+function markHelpNewsRead(){
+ const last=HELP_NEWS[HELP_NEWS.length-1];
+ if(!last)return;
+ try{localStorage.setItem(HELP_NEWS_STORAGE_KEY,last.version);}catch{}
+ syncHelpWhatsNewBadge();
 }
 syncHelpWhatsNewBadge();
 helpBtn.onclick=()=>{
- try{localStorage.setItem(HELP_WHATS_NEW_SEEN_KEY,'true');}catch{}
- syncHelpWhatsNewBadge();
+ renderHelpNewsHistory();
+ markHelpNewsRead();
  const hv=$('#helpVersionLabel');
  if(hv)hv.textContent=CURRENT_VERSION;
  const cv=$('#copyrightVersionLabel');
