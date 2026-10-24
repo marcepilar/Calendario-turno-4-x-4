@@ -15701,6 +15701,71 @@ body.dark-blue .topbar #workdayTopBtn{
   letter-spacing:0 !important;
 }
 
+
+/* ===== V5.8.1 · TARJETAS REDONDEADAS (ÓRBITA A2) · OPCIONAL =====
+   Aplica SÓLO a la vista mensual con clase calendar-tiles-view.
+   No modifica Turnos, Común ni el calendario anual. */
+#settingsModal .calendar-view-segment{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  min-width:0;
+}
+#settingsModal .calendar-view-btn{
+  min-width:0 !important;
+  padding-left:5px !important;
+  padding-right:5px !important;
+}
+#settingsModal .calendar-view-setting{gap:6px;}
+@media(max-width:620px){
+ #settingsModal .calendar-view-btn{
+   padding-left:3px !important;
+   padding-right:3px !important;
+   font-size:clamp(8px,2vw,8.6px) !important;
+   letter-spacing:0;
+ }
+ #settingsModal .calendar-view-setting-copy small{
+   line-height:1.1;
+ }
+}
+@media(max-width:365px){
+ #settingsModal .calendar-view-setting{grid-template-columns:1fr;gap:3px;}
+ #settingsModal .calendar-view-segment{width:100%;}
+ #settingsModal .calendar-view-btn{font-size:8.2px!important;}
+}
+/* Inspirado en el mosaico de Órbita A2, conservando altura dinámica V5.8.0. */
+body.calendar-tiles-view #calendarCard .calendar-grid{
+  gap:3px !important;
+  padding:2px 2px 3px !important;
+  background:var(--panel) !important;
+}
+body.calendar-tiles-view #calendarCard .day,
+body.calendar-tiles-view #calendarCard .day:nth-child(7n){
+  border:0 !important;
+  border-radius:11px !important;
+  margin:0 !important;
+  min-width:0 !important;
+  box-shadow:inset 0 0 0 1px rgba(20,18,36,.12) !important;
+}
+body.calendar-tiles-view #calendarCard .day.other{
+  opacity:.35 !important;
+  filter:saturate(.65);
+}
+body.calendar-tiles-view #calendarCard .day.selected-day{
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.95),0 0 0 1px var(--accent) !important;
+}
+body.light.calendar-tiles-view #calendarCard .day.selected-day{
+  box-shadow:inset 0 0 0 2px rgba(30,40,55,.86),0 0 0 1px var(--accent) !important;
+}
+body.calendar-tiles-view #calendarCard .day.today::after{
+  border-radius:9px !important;
+}
+@media(max-width:620px){
+ /* El gap de las seis filas NO debe quitar visibilidad al mes. */
+ body.calendar-tiles-view.main-calendar-fit #calendarCard .day,
+ body.calendar-tiles-view.main-t5-active #calendarCard .day{
+  min-height:max(35px,calc(var(--main-day-height,60px) - 3.5px)) !important;
+  height:max(35px,calc(var(--main-day-height,60px) - 3.5px)) !important;
+ }
+}
 </style>
 </head>
 <body class="notranslate">
@@ -15846,11 +15911,12 @@ body.dark-blue .topbar #workdayTopBtn{
   <div class="calendar-view-setting">
     <div class="calendar-view-setting-copy">
       <b>Vista del calendario</b>
-      <small>Elegí entre turnos o calendario común</small>
+      <small>Elegí el estilo del calendario</small>
     </div>
     <div class="calendar-view-segment" role="group" aria-label="Vista del calendario">
       <button id="calendarViewShiftsBtn" type="button" class="calendar-view-btn active" data-calendar-view="shifts">TURNOS</button>
       <button id="calendarViewCommonBtn" type="button" class="calendar-view-btn" data-calendar-view="common">COMÚN</button>
+      <button id="calendarViewTilesBtn" type="button" class="calendar-view-btn" data-calendar-view="tiles">TARJETAS</button>
     </div>
   </div>
 
@@ -16130,6 +16196,7 @@ body.dark-blue .topbar #workdayTopBtn{
           <p><strong>T5 FIJO:</strong> lunes a viernes, 07:30–16:30. <strong>T5 UNO / T5 DOS:</strong> ciclo 4×4 de 12 horas, 06:00–18:00.</p>
           <p><strong>HOY:</strong> vuelve al día actual. <strong>AÑO:</strong> abre los 12 meses. Las flechas ‹ › cambian de mes.</p>
           <p><strong>Vista del calendario:</strong> en Configuración podés elegir <strong>TURNOS</strong> para ver M/N/F o <strong>COMÚN</strong> para mostrar solamente el número del día. En COMÚN, sábados y domingos usan un color diferente y la lógica interna del turno sigue funcionando normalmente.</p>
+          <p><strong>TARJETAS:</strong> muestra M/N/F en recuadros individuales redondeados, como en Órbita A2, conservando el calendario original, los colores elegidos y todas las marcas de feriados, vacaciones, licencias, Jornada y Agenda. Podés volver a TURNOS o COMÚN cuando quieras.</p>
           <p><strong>Compartir app:</strong> tocá el símbolo de los tres puntos unidos de la cabecera. <strong>Compartir por WhatsApp</strong> intenta abrir directamente la aplicación de WhatsApp, sin pasar por una página web intermedia. También podés usar el menú de compartir del teléfono, copiar el enlace o mostrar un <strong>código QR</strong> para escanearlo desde otro teléfono.</p>
           <p class="help-tip">La rotación base nunca se altera por Vacaciones, Jornada, Licencias, Agenda o Feriados.</p>
         </div>
@@ -17041,7 +17108,7 @@ body.dark-blue .topbar #workdayTopBtn{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.8.0';
+const CURRENT_VERSION='5.8.1';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -17071,7 +17138,7 @@ const agendaSheet=$('#agendaSheet'),agendaDateText=$('#agendaDateText'),agendaSh
 const agendaTitleInput=$('#agendaTitleInput'),agendaTimeInput=$('#agendaTimeInput'),agendaCategoryInput=$('#agendaCategoryInput'),agendaReminderInput=$('#agendaReminderInput'),agendaRepeatInput=$('#agendaRepeatInput'),agendaNotesInput=$('#agendaNotesInput');
 const agendaSearchInput=$('#agendaSearchInput'),agendaFilterInput=$('#agendaFilterInput'),backupStatus=$('#backupStatus');
 const settingsBtn=$('#settingsBtn'),morningColor=$('#morningColor'),nightColor=$('#nightColor'),offColor=$('#offColor'),codeSize=$('#codeSize'),codeSizeValue=$('#codeSizeValue'),showLabels=$('#showLabels'),showHolidays=$('#showHolidays'),hapticsToggle=$('#hapticsToggle');
-const calendarViewShiftsBtn=$('#calendarViewShiftsBtn'),calendarViewCommonBtn=$('#calendarViewCommonBtn'),languageCycleBtn=$('#languageCycleBtn');
+const calendarViewShiftsBtn=$('#calendarViewShiftsBtn'),calendarViewCommonBtn=$('#calendarViewCommonBtn'),calendarViewTilesBtn=$('#calendarViewTilesBtn'),languageCycleBtn=$('#languageCycleBtn');
 const plantSelectBtn=$('#plantSelectBtn'),plantSelectLabel=$('#plantSelectLabel');
 const morningColorRow=$('#morningColorRow'),nightColorRow=$('#nightColorRow'),offColorRow=$('#offColorRow'),colorProfileTitle=$('#colorProfileTitle'),colorProfileText=$('#colorProfileText'),morningColorTitle=$('#morningColorTitle'),morningColorNote=$('#morningColorNote');
 const AGENDA_KEY='turno4x4.agenda.v1', NOTIFIED_KEY='turno4x4.agenda.notified.v1', BACKUP_KEY='turno4x4.agenda.lastBackup';
@@ -17536,6 +17603,13 @@ Object.assign(I18N.pt,{"Informes PDF":"Relatórios PDF","Cómo preparar un infor
 Object.assign(I18N.fr,{"Informes PDF":"Rapports PDF","Cómo preparar un informe según cada situación":"Comment préparer un rapport selon la situation","Desde Estadísticas tocá CREAR INFORMES PDF. Esta herramienta genera un documento personal con los registros guardados en tu dispositivo.":"Dans Statistiques, touchez CRÉER DES RAPPORTS PDF. Cet outil crée un document personnel à partir des enregistrements de votre appareil.","Preparar y descargar":"Préparer et télécharger","1. Elegí una o varias categorías: horas extra, cambios de turno, licencias, vacaciones o agenda. Podés seleccionar todas o quitar las que no necesites.":"1. Choisissez une ou plusieurs catégories : heures supplémentaires, changements d’équipe, absences, congés ou agenda. Vous pouvez tout sélectionner ou retirer les catégories inutiles.","2. Si querés, completá legajo, nombre y apellido. Son opcionales; solo se recuerdan en el dispositivo si activás la casilla correspondiente.":"2. Renseignez éventuellement votre matricule, prénom et nom. Ils ne sont mémorisés sur cet appareil que si vous activez cette option.","3. Seleccioná el período, el mes a consultar y el contenido: Resumen + detalle por fecha o Solo resumen.":"3. Choisissez la période, le mois et le contenu : Résumé + détail par date ou Résumé uniquement.","4. Revisá la vista previa y tocá GENERAR PDF. La descarga se realiza localmente; no se envían tus registros a un servidor.":"4. Vérifiez l’aperçu et touchez CRÉER LE PDF. Le téléchargement est local ; vos données ne sont pas envoyées à un serveur.","Qué período elegir":"Quelle période choisir ?","Laboral (24 → 23): incluye del día 24 del mes anterior hasta el día 23 del mes seleccionado, para todas las categorías. Ejemplo: octubre 2026 = 24/09 al 23/10.":"Période de paie (24 → 23) : du 24 du mois précédent au 23 du mois sélectionné, pour toutes les catégories. Exemple : octobre 2026 = du 24/09 au 23/10.","Mes calendario: incluye del día 1 al último día del mes elegido, para todas las categorías. Ejemplo: octubre 2026 = 01/10 al 31/10.":"Mois civil : du 1er au dernier jour du mois choisi, pour toutes les catégories. Exemple : octobre 2026 = du 01/10 au 31/10.","Personalizado: elegí las fechas Desde y Hasta. Todas las categorías seleccionadas usan ese mismo rango.":"Personnalisé : choisissez les dates Du et Au. Toutes les catégories sélectionnées utilisent la même plage.","Combinado: usa el período laboral (24 → 23) para horas extra y el mes calendario (1 → último) para cambios de turno. Licencias, vacaciones y agenda usan el período laboral.":"Combiné : période de paie (24 → 23) pour les heures supplémentaires et mois civil (1 → dernier) pour les changements d’équipe. Absences, congés et agenda utilisent la période de paie.","Ejemplo: informe combinado de octubre de 2026":"Exemple : rapport combiné d’octobre 2026","Horas extra: 24/09/2026 → 23/10/2026. Cambios de turno: 01/10/2026 → 31/10/2026. Así, un cambio del 26 de octubre aparece en el PDF sin excluir las horas extra del cierre laboral.":"Heures supplémentaires : 24/09/2026 → 23/10/2026. Changements d’équipe : 01/10/2026 → 31/10/2026. Un changement le 26 octobre figure ainsi dans le PDF sans exclure les heures supplémentaires de la clôture.","Cómo se registran los cambios pactados":"Comment sont enregistrés les échanges convenus","Pedí un cambio significa que otro turno me cubre; Me pidieron un cambio significa que yo cubro a otro turno, incluso estando de franco. Cada movimiento representa 12 horas y es independiente de las horas extra.":"J’ai demandé un changement signifie qu’une autre équipe me remplace ; On m’a demandé de couvrir signifie que je remplace une autre équipe, même en repos. Chaque mouvement représente 12 heures, distinctes des heures supplémentaires.","Si pactaron una devolución en otra fecha, podés vincular las dos jornadas. El informe muestra cada movimiento en su fecha, aunque pertenezcan a meses diferentes; no se duplican las horas extra.":"Si vous avez convenu d’une contrepartie à une autre date, vous pouvez lier les deux journées. Le rapport affiche chaque mouvement à sa propre date, même sur deux mois ; les heures supplémentaires ne sont pas doublées.","Formato del documento":"Format du document","Resumen + detalle por fecha permite revisar cada registro individual. Solo resumen muestra los totales sin el listado de fechas.":"Résumé + détail par date liste chaque enregistrement. Résumé uniquement affiche les totaux sans liste des dates.","El PDF es un informe personal de los datos ingresados. No es una constancia oficial de Recursos Humanos ni reemplaza la liquidación de haberes.":"Ce PDF est un rapport personnel établi à partir de données saisies. Il ne constitue pas une attestation officielle des RH et ne remplace pas la fiche de paie.","CREAR INFORMES PDF ›":"CRÉER DES RAPPORTS PDF ›","Exportá tus registros laborales por categoría y período.":"Exportez vos données de travail par catégorie et période.","Turnos, calendario, instalación, Agenda, Vacaciones, Jornada, Licencias, Estadísticas, Informes PDF y Configuración.":"Équipes, calendrier, installation, agenda, congés, journées, absences, statistiques, rapports PDF et paramètres."});
 Object.assign(I18N.de,{"Informes PDF":"PDF-Berichte","Cómo preparar un informe según cada situación":"So erstellst du für jeden Fall den passenden Bericht","Desde Estadísticas tocá CREAR INFORMES PDF. Esta herramienta genera un documento personal con los registros guardados en tu dispositivo.":"Tippe in der Statistik auf PDF-BERICHTE ERSTELLEN. Das Tool erstellt ein persönliches Dokument aus den auf deinem Gerät gespeicherten Einträgen.","Preparar y descargar":"Vorbereiten und herunterladen","1. Elegí una o varias categorías: horas extra, cambios de turno, licencias, vacaciones o agenda. Podés seleccionar todas o quitar las que no necesites.":"1. Wähle eine oder mehrere Kategorien: Überstunden, Schichtwechsel, Abwesenheiten, Urlaub oder Termine. Du kannst alle wählen oder nicht benötigte entfernen.","2. Si querés, completá legajo, nombre y apellido. Son opcionales; solo se recuerdan en el dispositivo si activás la casilla correspondiente.":"2. Optional kannst du Personalnummer, Vorname und Nachname eingeben. Sie werden nur auf dem Gerät gespeichert, wenn du die Merken-Option aktivierst.","3. Seleccioná el período, el mes a consultar y el contenido: Resumen + detalle por fecha o Solo resumen.":"3. Wähle Zeitraum, Berichtsmonat und Inhalt: Zusammenfassung + Details nach Datum oder Nur Zusammenfassung.","4. Revisá la vista previa y tocá GENERAR PDF. La descarga se realiza localmente; no se envían tus registros a un servidor.":"4. Prüfe die Vorschau und tippe auf PDF ERSTELLEN. Der Download erfolgt lokal; deine Einträge werden nicht an einen Server gesendet.","Qué período elegir":"Welchen Zeitraum wählen?","Laboral (24 → 23): incluye del día 24 del mes anterior hasta el día 23 del mes seleccionado, para todas las categorías. Ejemplo: octubre 2026 = 24/09 al 23/10.":"Abrechnungszeitraum (24 → 23): vom 24. des Vormonats bis zum 23. des gewählten Monats, für alle Kategorien. Beispiel: Oktober 2026 = 24.09. bis 23.10.","Mes calendario: incluye del día 1 al último día del mes elegido, para todas las categorías. Ejemplo: octubre 2026 = 01/10 al 31/10.":"Kalendermonat: vom 1. bis zum letzten Tag des gewählten Monats, für alle Kategorien. Beispiel: Oktober 2026 = 01.10. bis 31.10.","Personalizado: elegí las fechas Desde y Hasta. Todas las categorías seleccionadas usan ese mismo rango.":"Benutzerdefiniert: Wähle die Daten Von und Bis. Alle gewählten Kategorien nutzen denselben Zeitraum.","Combinado: usa el período laboral (24 → 23) para horas extra y el mes calendario (1 → último) para cambios de turno. Licencias, vacaciones y agenda usan el período laboral.":"Kombiniert: Abrechnungszeitraum (24 → 23) für Überstunden und Kalendermonat (1 → Monatsende) für Schichtwechsel. Abwesenheiten, Urlaub und Termine nutzen den Abrechnungszeitraum.","Ejemplo: informe combinado de octubre de 2026":"Beispiel: kombinierter Bericht für Oktober 2026","Horas extra: 24/09/2026 → 23/10/2026. Cambios de turno: 01/10/2026 → 31/10/2026. Así, un cambio del 26 de octubre aparece en el PDF sin excluir las horas extra del cierre laboral.":"Überstunden: 24.09.2026 → 23.10.2026. Schichtwechsel: 01.10.2026 → 31.10.2026. So erscheint ein Wechsel am 26. Oktober im PDF, ohne Überstunden aus dem Abrechnungszeitraum auszuschließen.","Cómo se registran los cambios pactados":"So werden vereinbarte Schichttausche erfasst","Pedí un cambio significa que otro turno me cubre; Me pidieron un cambio significa que yo cubro a otro turno, incluso estando de franco. Cada movimiento representa 12 horas y es independiente de las horas extra.":"Ich bat um einen Wechsel bedeutet, dass eine andere Schicht mich vertritt; Ich wurde um Vertretung gebeten bedeutet, dass ich eine andere Schicht vertrete, auch an freien Tagen. Jeder Vorgang umfasst 12 Stunden und zählt nicht automatisch als Überstunden.","Si pactaron una devolución en otra fecha, podés vincular las dos jornadas. El informe muestra cada movimiento en su fecha, aunque pertenezcan a meses diferentes; no se duplican las horas extra.":"Wenn eine Gegenleistung an einem anderen Tag vereinbart wurde, kannst du beide Arbeitstage verknüpfen. Der Bericht zeigt jeden Vorgang an seinem Datum, auch in verschiedenen Monaten; Überstunden werden nicht doppelt gezählt.","Formato del documento":"Dokumentformat","Resumen + detalle por fecha permite revisar cada registro individual. Solo resumen muestra los totales sin el listado de fechas.":"Zusammenfassung + Details nach Datum zeigt jeden Eintrag. Nur Zusammenfassung zeigt Gesamtsummen ohne datierte Einträge.","El PDF es un informe personal de los datos ingresados. No es una constancia oficial de Recursos Humanos ni reemplaza la liquidación de haberes.":"Dieses PDF ist ein persönlicher Bericht aus eingegebenen Daten. Es ist kein offizieller Personalnachweis und ersetzt keine Gehaltsabrechnung.","CREAR INFORMES PDF ›":"PDF-BERICHTE ERSTELLEN ›","Exportá tus registros laborales por categoría y período.":"Exportiere deine Arbeitsdaten nach Kategorie und Zeitraum.","Turnos, calendario, instalación, Agenda, Vacaciones, Jornada, Licencias, Estadísticas, Informes PDF y Configuración.":"Schichten, Kalender, Installation, Termine, Urlaub, Arbeitstage, Abwesenheiten, Statistiken, PDF-Berichte und Einstellungen."});
 Object.assign(I18N.it,{"Informes PDF":"Report PDF","Cómo preparar un informe según cada situación":"Come preparare un report per ogni situazione","Desde Estadísticas tocá CREAR INFORMES PDF. Esta herramienta genera un documento personal con los registros guardados en tu dispositivo.":"Da Statistiche tocca CREA REPORT PDF. Lo strumento crea un documento personale usando le registrazioni salvate sul dispositivo.","Preparar y descargar":"Preparazione e download","1. Elegí una o varias categorías: horas extra, cambios de turno, licencias, vacaciones o agenda. Podés seleccionar todas o quitar las que no necesites.":"1. Scegli una o più categorie: straordinari, cambi turno, permessi, ferie o agenda. Puoi selezionarle tutte o rimuovere quelle non necessarie.","2. Si querés, completá legajo, nombre y apellido. Son opcionales; solo se recuerdan en el dispositivo si activás la casilla correspondiente.":"2. Puoi inserire matricola, nome e cognome. Sono facoltativi e vengono memorizzati solo se attivi la relativa opzione.","3. Seleccioná el período, el mes a consultar y el contenido: Resumen + detalle por fecha o Solo resumen.":"3. Seleziona il periodo, il mese e il contenuto: Riepilogo + dettagli per data oppure Solo riepilogo.","4. Revisá la vista previa y tocá GENERAR PDF. La descarga se realiza localmente; no se envían tus registros a un servidor.":"4. Controlla l’anteprima e tocca CREA PDF. Il download avviene in locale; i tuoi dati non vengono inviati a un server.","Qué período elegir":"Quale periodo scegliere?","Laboral (24 → 23): incluye del día 24 del mes anterior hasta el día 23 del mes seleccionado, para todas las categorías. Ejemplo: octubre 2026 = 24/09 al 23/10.":"Periodo lavorativo (24 → 23): dal 24 del mese precedente al 23 del mese selezionato, per tutte le categorie. Esempio: ottobre 2026 = 24/09–23/10.","Mes calendario: incluye del día 1 al último día del mes elegido, para todas las categorías. Ejemplo: octubre 2026 = 01/10 al 31/10.":"Mese di calendario: dal 1° all’ultimo giorno del mese scelto, per tutte le categorie. Esempio: ottobre 2026 = 01/10–31/10.","Personalizado: elegí las fechas Desde y Hasta. Todas las categorías seleccionadas usan ese mismo rango.":"Personalizzato: scegli le date Dal e Al. Tutte le categorie selezionate utilizzano lo stesso intervallo.","Combinado: usa el período laboral (24 → 23) para horas extra y el mes calendario (1 → último) para cambios de turno. Licencias, vacaciones y agenda usan el período laboral.":"Combinato: usa il periodo lavorativo (24 → 23) per gli straordinari e il mese di calendario (1 → ultimo giorno) per i cambi turno. Permessi, ferie e agenda utilizzano il periodo lavorativo.","Ejemplo: informe combinado de octubre de 2026":"Esempio: report combinato di ottobre 2026","Horas extra: 24/09/2026 → 23/10/2026. Cambios de turno: 01/10/2026 → 31/10/2026. Así, un cambio del 26 de octubre aparece en el PDF sin excluir las horas extra del cierre laboral.":"Straordinari: 24/09/2026 → 23/10/2026. Cambi turno: 01/10/2026 → 31/10/2026. Così un cambio del 26 ottobre compare nel PDF senza escludere gli straordinari del periodo lavorativo.","Cómo se registran los cambios pactados":"Come vengono registrati gli scambi concordati","Pedí un cambio significa que otro turno me cubre; Me pidieron un cambio significa que yo cubro a otro turno, incluso estando de franco. Cada movimiento representa 12 horas y es independiente de las horas extra.":"Ho chiesto un cambio significa che un altro turno mi copre; Mi hanno chiesto un cambio significa che copro un altro turno, anche se sono di riposo. Ogni movimento vale 12 ore ed è indipendente dagli straordinari.","Si pactaron una devolución en otra fecha, podés vincular las dos jornadas. El informe muestra cada movimiento en su fecha, aunque pertenezcan a meses diferentes; no se duplican las horas extra.":"Se è previsto un cambio di restituzione in un’altra data, puoi collegare le due giornate. Il report mostra ogni movimento alla sua data, anche in mesi diversi; gli straordinari non vengono duplicati.","Formato del documento":"Formato del documento","Resumen + detalle por fecha permite revisar cada registro individual. Solo resumen muestra los totales sin el listado de fechas.":"Riepilogo + dettagli per data mostra ogni registrazione. Solo riepilogo mostra i totali senza l’elenco delle date.","El PDF es un informe personal de los datos ingresados. No es una constancia oficial de Recursos Humanos ni reemplaza la liquidación de haberes.":"Il PDF è un report personale basato sui dati inseriti. Non è una certificazione ufficiale delle Risorse Umane e non sostituisce la busta paga.","CREAR INFORMES PDF ›":"CREA REPORT PDF ›","Exportá tus registros laborales por categoría y período.":"Esporta le registrazioni di lavoro per categoria e periodo.","Turnos, calendario, instalación, Agenda, Vacaciones, Jornada, Licencias, Estadísticas, Informes PDF y Configuración.":"Turni, calendario, installazione, agenda, ferie, giornate, permessi, statistiche, report PDF e impostazioni."});
+
+/* V5.8.1 · Traducciones de la nueva vista TARJETAS */
+Object.assign(I18N.en,{"Elegí el estilo del calendario":"Choose the calendar style","TARJETAS":"TILES","TARJETAS:":"TILES:","muestra M/N/F en recuadros individuales redondeados, como en Órbita A2, conservando el calendario original, los colores elegidos y todas las marcas de feriados, vacaciones, licencias, Jornada y Agenda. Podés volver a TURNOS o COMÚN cuando quieras.":"shows M/N/F in individual rounded tiles, as in Órbita A2, keeping the original calendar, your chosen colors and all holiday, vacation, leave, Workday and Agenda markers. Switch back to SHIFTS or REGULAR anytime."});
+Object.assign(I18N.pt,{"Elegí el estilo del calendario":"Escolha o estilo do calendário","TARJETAS":"CARTÕES","TARJETAS:":"CARTÕES:","muestra M/N/F en recuadros individuales redondeados, como en Órbita A2, conservando el calendario original, los colores elegidos y todas las marcas de feriados, vacaciones, licencias, Jornada y Agenda. Podés volver a TURNOS o COMÚN cuando quieras.":"mostra M/N/F em cartões individuais arredondados, como no Órbita A2, preservando o calendário original, suas cores e todas as marcas de feriados, férias, licenças, jornada e agenda. Você pode voltar a TURNOS ou COMUM quando quiser."});
+Object.assign(I18N.fr,{"Elegí el estilo del calendario":"Choisissez le style du calendrier","TARJETAS":"CARTES","TARJETAS:":"CARTES:","muestra M/N/F en recuadros individuales redondeados, como en Órbita A2, conservando el calendario original, los colores elegidos y todas las marcas de feriados, vacaciones, licencias, Jornada y Agenda. Podés volver a TURNOS o COMÚN cuando quieras.":"affiche M/N/F dans des cases individuelles arrondies, comme dans Órbita A2, en conservant le calendrier original, les couleurs choisies et les indicateurs de jours fériés, congés, absences, journées et agenda. Revenez aux vues ÉQUIPES ou CLASSIQUE à tout moment."});
+Object.assign(I18N.de,{"Elegí el estilo del calendario":"Wähle die Kalenderansicht","TARJETAS":"KACHELN","TARJETAS:":"KACHELN:","muestra M/N/F en recuadros individuales redondeados, como en Órbita A2, conservando el calendario original, los colores elegidos y todas las marcas de feriados, vacaciones, licencias, Jornada y Agenda. Podés volver a TURNOS o COMÚN cuando quieras.":"zeigt M/N/F in einzelnen abgerundeten Kacheln wie bei Órbita A2. Der ursprüngliche Kalender, gewählte Farben sowie Feiertags-, Urlaubs-, Abwesenheits-, Arbeitstags- und Termineinträge bleiben erhalten. Wechsle jederzeit zur Schicht- oder Standardansicht zurück."});
+Object.assign(I18N.it,{"Elegí el estilo del calendario":"Scegli lo stile del calendario","TARJETAS":"SCHEDE","TARJETAS:":"SCHEDE:","muestra M/N/F en recuadros individuales redondeados, como en Órbita A2, conservando el calendario original, los colores elegidos y todas las marcas de feriados, vacaciones, licencias, Jornada y Agenda. Podés volver a TURNOS o COMÚN cuando quieras.":"mostra M/N/F in riquadri singoli arrotondati, come in Órbita A2, mantenendo il calendario originale, i colori scelti e gli indicatori di festività, ferie, permessi, giornate e agenda. Puoi tornare a TURNI o NORMALE quando vuoi."});
 
 function shouldSkipI18nNode(node){
  const p=node?.parentElement;
@@ -18174,6 +18248,9 @@ function loadActiveColorProfile(){
 function isCommonCalendarView(){
  return calendarViewMode==='common';
 }
+function isTilesCalendarView(){
+ return calendarViewMode==='tiles';
+}
 
 function syncCalendarViewButtons(){
  if(calendarViewShiftsBtn){
@@ -18184,16 +18261,21 @@ function syncCalendarViewButtons(){
   calendarViewCommonBtn.classList.toggle('active',calendarViewMode==='common');
   calendarViewCommonBtn.setAttribute('aria-pressed',calendarViewMode==='common'?'true':'false');
  }
+ if(calendarViewTilesBtn){
+  calendarViewTilesBtn.classList.toggle('active',isTilesCalendarView());
+  calendarViewTilesBtn.setAttribute('aria-pressed',isTilesCalendarView()?'true':'false');
+ }
 }
 
 function applyCalendarViewMode(){
  document.body.classList.toggle('calendar-common-view',isCommonCalendarView());
+ document.body.classList.toggle('calendar-tiles-view',isTilesCalendarView());
  syncCalendarViewButtons();
  scheduleViewportLayout();
 }
 
 function setCalendarViewMode(mode,{persist=true,render=true}={}){
- calendarViewMode=mode==='common'?'common':'shifts';
+ calendarViewMode=['shifts','common','tiles'].includes(mode)?mode:'shifts';
 
  if(persist){
   localStorage.setItem(CALENDAR_VIEW_KEY,calendarViewMode);
@@ -18318,7 +18400,7 @@ function loadSettings(){
  const storedT5=localStorage.getItem('turno4x4.turno5');if(storedT5&&['T5LV','T5A','T5B'].includes(storedT5))turn5Select.value=storedT5;
  updateTurn5Visibility();
  const storedCalendarView=localStorage.getItem(CALENDAR_VIEW_KEY);
- calendarViewMode=storedCalendarView==='common'?'common':'shifts';
+ calendarViewMode=['shifts','common','tiles'].includes(storedCalendarView)?storedCalendarView:'shifts';
  applyCalendarViewMode();
  applyTheme(localStorage.getItem(THEME_KEY)||'dark',{persist:false});
  let size=Number(localStorage.getItem('turno4x4.codeSize')||defaults.codeSize);if(!Number.isFinite(size)||size<14||size>24)size=18;
@@ -21882,6 +21964,7 @@ $$('.plant-profile-btn[data-plant-profile]').forEach(btn=>{
 
 calendarViewShiftsBtn?.addEventListener('click',()=>setCalendarViewMode('shifts'));
 calendarViewCommonBtn?.addEventListener('click',()=>setCalendarViewMode('common'));
+calendarViewTilesBtn?.addEventListener('click',()=>setCalendarViewMode('tiles'));
 languageCycleBtn?.addEventListener('click',cycleLanguage);
 
 [morningColor,nightColor,offColor].forEach(x=>x.oninput=()=>{saveSettings();renderQuickPalette()});
