@@ -24488,5 +24488,61 @@ if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serv
 })();
 </script>
 
+
+<script>
+/* V5.8.5 candidata · HOY y selector de turno: respuesta táctil al toque breve.
+   Sólo se añaden dos activadores; no se reescriben sus acciones originales.
+   touchend confirma el gesto y evita que el clic sintético tardío lo repita.
+   Click con mouse, teclado y accesibilidad siguen usando sus handlers previos. */
+(function(){
+  'use strict';
+  function installOneTap(target){
+    if(!target||target.dataset.singleTouchReady==='true')return;
+    target.dataset.singleTouchReady='true';
+    let start=null, lastTouchTime=-10000, internalClick=false, pending=null;
+    const maxMotion=18;
+    target.style.touchAction='manipulation';
+    target.addEventListener('touchstart',event=>{
+      if(event.touches.length!==1){start=null;return;}
+      const t=event.changedTouches[0];
+      start={identifier:t.identifier,x:t.clientX,y:t.clientY,moved:false};
+    },{passive:true});
+    target.addEventListener('touchmove',event=>{
+      if(!start)return;
+      const t=[...event.touches].find(t=>t.identifier===start.identifier);
+      if(!t||Math.hypot(t.clientX-start.x,t.clientY-start.y)>maxMotion)start.moved=true;
+    },{passive:true});
+    target.addEventListener('touchcancel',()=>{start=null;},{passive:true});
+    target.addEventListener('touchend',event=>{
+      if(!start)return;
+      const t=[...event.changedTouches].find(t=>t.identifier===start.identifier);
+      const valid=t&&!start.moved&&Math.hypot(t.clientX-start.x,t.clientY-start.y)<=maxMotion;
+      start=null;
+      if(!valid)return;
+      if(event.cancelable)event.preventDefault();
+      // Esperamos a que termine la síntesis de eventos del mismo toque.
+      lastTouchTime=performance.now();
+      if(pending!==null)clearTimeout(pending);
+      pending=setTimeout(()=>{
+        pending=null;
+        if(!target.isConnected)return;
+        internalClick=true;
+        try{target.click();}finally{internalClick=false;}
+      },36);
+    },{passive:false});
+    // Evita que un click adicional de Android repita HOY o cierre el selector.
+    target.addEventListener('click',event=>{
+      if(internalClick)return;
+      if(performance.now()-lastTouchTime<650){
+        event.preventDefault();
+        event.stopImmediatePropagation();
+      }
+    },true);
+  }
+  installOneTap(document.getElementById('todayBtn'));
+  installOneTap(document.querySelector('#turnSelect + .app-select-tap-target'));
+})();
+</script>
+
 </body>
 </html>
