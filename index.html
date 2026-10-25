@@ -16648,6 +16648,44 @@ body:not(.light):not(.dark-blue) #statsModal .worklog-stat-btn {
 }
 /* Colores indicadores mañanas/noches/francos/PDF permanecen intactos. */
 </style>
+
+<style id="vacation-neutral-icons-v586">
+/* V5.8.6: la V de la cabecera, la de los períodos guardados y la
+   de la leyenda son distintivos de interfaz, NO indicadores del color
+   personalizable de las fechas. Sólo Color V usa --vacation-icon.
+   No modifica el motor del calendario ni los datos persistidos. */
+#vacationModal .vacation-head-icon,
+#vacationModal .vacation-item-v,
+#vacationModal .vacation-legend-v{
+  background:#252d37 !important;
+  background-image:none !important;
+  color:#f4f6fa !important;
+  border:1px solid rgba(171,183,199,.22) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 3px 9px rgba(0,0,0,.14) !important;
+}
+/* BLUE: los tres distintivos usan una misma superficie azul de interfaz. */
+body.dark-blue #vacationModal .vacation-head-icon,
+body.dark-blue #vacationModal .vacation-item-v,
+body.dark-blue #vacationModal .vacation-legend-v{
+  background:linear-gradient(145deg,#234c73,#173653) !important;
+  background-image:linear-gradient(145deg,#234c73,#173653) !important;
+  color:#f5f9ff !important;
+  border-color:rgba(112,177,241,.28) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 4px 11px rgba(0,5,18,.17) !important;
+}
+/* CLARO: fondo neutro de tarjeta, con la V oscura y legible. */
+body.light #vacationModal .vacation-head-icon,
+body.light #vacationModal .vacation-item-v,
+body.light #vacationModal .vacation-legend-v{
+  background:linear-gradient(180deg,#f0f5fa,#e1eaf3) !important;
+  background-image:linear-gradient(180deg,#f0f5fa,#e1eaf3) !important;
+  color:#243a51 !important;
+  border-color:rgba(62,82,106,.18) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 3px 9px rgba(31,52,72,.09) !important;
+}
+/* Se excluye deliberadamente .vacation-summary-v: conserva el color
+   elegido por el usuario, igual que las V marcadas en el calendario. */
+</style>
 </head>
 <body class="notranslate">
 <div id="splash" class="splash">
@@ -18010,8 +18048,8 @@ body:not(.light):not(.dark-blue) #statsModal .worklog-stat-btn {
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.8.5';
-const CURRENT_BUILD='5.8.5-update-watch-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
+const CURRENT_VERSION='5.8.6';
+const CURRENT_BUILD='5.8.6-vacation-icons-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};

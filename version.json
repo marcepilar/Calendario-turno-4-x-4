@@ -1,5 +1,5 @@
 {
-  "version": "5.8.5",
-  "build": "5.8.5-update-watch-rc1",
+  "version": "5.8.6",
+  "build": "5.8.6-vacation-icons-rc1",
   "updateCheck": "version-and-build"
 }
