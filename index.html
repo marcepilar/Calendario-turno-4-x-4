@@ -18011,6 +18011,7 @@ body:not(.light):not(.dark-blue) #statsModal .worklog-stat-btn {
 'use strict';
 
 const CURRENT_VERSION='5.8.5';
+const CURRENT_BUILD='5.8.5-update-watch-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -23260,38 +23261,92 @@ bindYearHold($('#yearNext'),1);
    Una N del día 23 se divide 18:00–24:00 / 00:00–06:00 entre meses. */
 
 let latestVersion=CURRENT_VERSION;
+let latestBuild=CURRENT_BUILD;
+let latestUpdateId='';
+let updateCheckPromise=null;
 const UPDATE_DISMISS_KEY='turno4x4.updateDismissedVersion';
 
+function compareAppVersions(a,b){
+ const left=String(a||'0').split('.').map(v=>Number.parseInt(v,10)||0);
+ const right=String(b||'0').split('.').map(v=>Number.parseInt(v,10)||0);
+ for(let i=0;i<Math.max(left.length,right.length);i++){
+  if((left[i]||0)!==(right[i]||0))return (left[i]||0)>(right[i]||0)?1:-1;
+ }
+ return 0;
+}
+
+/*
+  La actualización se identifica por versión + compilación. Esto permite publicar
+  correcciones entre candidatas 5.8.5 sin falsear la correlatividad oficial.
+  Se consulta también al recuperar el primer plano; no depende de un temporizador
+  ni del evento focus, que algunos Android/PWA no emiten al volver de segundo plano.
+*/
 async function checkUpdate(){
- try{
-  const r=await fetch('./version.json?t='+Date.now(),{cache:'no-store'});
-  if(!r.ok)return;
-  const data=await r.json();
-  const remote=String(data.version||'').trim();
-
-  if(remote&&remote!==CURRENT_VERSION){
-   latestVersion=remote;
-   const dismissed=sessionStorage.getItem(UPDATE_DISMISS_KEY);
-   $('#updateVersionText').textContent=`Versión ${remote} disponible.`;
-   settingsBtn.classList.add('has-update');
-   $('#updateStatusText').textContent=`Nueva versión ${remote} disponible.`;
-
-   // Si el usuario tocó "Más tarde", no volver a mostrar la misma versión
-   // durante esta sesión. Una versión posterior sí volverá a avisar.
-   if(dismissed!==remote){
-    $('#updateBanner').classList.add('show');
+ if(updateCheckPromise)return updateCheckPromise;
+ updateCheckPromise=(async()=>{
+  try{
+   // Consulta liviana y directa: no dependemos de que el SW ya haya terminado de instalarse.
+   const r=await fetch('./version.json?t='+Date.now(),{cache:'no-store'});
+   if(!r.ok)return;
+   const data=await r.json();
+   const remote=String(data.version||'').trim();
+   const remoteBuild=String(data.build||'').trim();
+   if(!/^\d+\.\d+\.\d+$/.test(remote))return;
+   const versionOrder=compareAppVersions(remote,CURRENT_VERSION);
+   const hasNewVersion=versionOrder>0;
+   const hasNewBuild=versionOrder===0 && !!remoteBuild && remoteBuild!==CURRENT_BUILD;
+   if(hasNewVersion||hasNewBuild){
+    latestVersion=remote;
+    latestBuild=remoteBuild;
+    latestUpdateId=remote+'|'+(remoteBuild||'');
+    const dismissed=sessionStorage.getItem(UPDATE_DISMISS_KEY);
+    $('#updateVersionText').textContent=hasNewVersion
+     ? `Versión ${remote} disponible.`
+     : `Hay una actualización de V${remote} disponible.`;
+    settingsBtn.classList.add('has-update');
+    $('#updateStatusText').textContent=hasNewVersion
+     ? `Nueva versión ${remote} disponible.`
+     : `Actualización de V${remote} disponible.`;
+    if(dismissed!==latestUpdateId){
+     $('#updateBanner').classList.add('show');
+    }else{
+     $('#updateBanner').classList.remove('show');
+    }
+   }else{
+    // Si el servidor ofrece una versión anterior (p. ej. durante el deploy), no invitar a volver atrás.
+    if(versionOrder<0)return;
+    latestVersion=CURRENT_VERSION;
+    latestBuild=CURRENT_BUILD;
+    latestUpdateId='';
+    $('#updateBanner').classList.remove('show');
+    settingsBtn.classList.remove('has-update');
+    sessionStorage.removeItem(UPDATE_DISMISS_KEY);
+    $('#updateStatusText').textContent='Aplicación actualizada.';
    }
-  }else{
-   $('#updateBanner').classList.remove('show');
-   settingsBtn.classList.remove('has-update');
-   sessionStorage.removeItem(UPDATE_DISMISS_KEY);
-   $('#updateStatusText').textContent='Aplicación actualizada.';
+  }catch(error){
+   // En segundo plano o sin conexión no ocultar un aviso ya visible.
   }
- }catch{}
+ })().finally(()=>{updateCheckPromise=null});
+ return updateCheckPromise;
+}
+
+// Los eventos focus, pageshow y visibilitychange se complementan en Android/PWA.
+let lastResumeUpdateCheck=0;
+function checkUpdatesOnResume(){
+ if(document.hidden)return;
+ // Evita solicitudes repetidas por focus + visibilitychange + pageshow simultáneos.
+ const now=Date.now();
+ if(now-lastResumeUpdateCheck<1200)return;
+ lastResumeUpdateCheck=now;
+ checkUpdate();
+ // El registro SW puede actualizarse de forma independiente del aviso.
+ if('serviceWorker' in navigator){
+  navigator.serviceWorker.getRegistration().then(reg=>reg?.update()).catch(()=>{});
+ }
 }
 
 $('#updateLaterBtn').onclick=()=>{
- if(latestVersion)sessionStorage.setItem(UPDATE_DISMISS_KEY,latestVersion);
+ if(latestUpdateId)sessionStorage.setItem(UPDATE_DISMISS_KEY,latestUpdateId);
  $('#updateBanner').classList.remove('show');
 };
 
@@ -23301,7 +23356,6 @@ $('#updateNowBtn').onclick=async()=>{
  b.textContent='ACTUALIZANDO…';
  $('#updateBanner').classList.remove('show');
  sessionStorage.removeItem(UPDATE_DISMISS_KEY);
-
  try{
   const reg=await navigator.serviceWorker?.getRegistration();
   if(reg){
@@ -23309,14 +23363,12 @@ $('#updateNowBtn').onclick=async()=>{
    if(reg.waiting)reg.waiting.postMessage({type:'SKIP_WAITING'});
   }
  }catch{}
-
- // Cache-busting fuerte para que el navegador no vuelva a cargar el index viejo.
+ // Preservar localStorage y usar navegación con parámetro único para evitar un index obsoleto.
  setTimeout(()=>{
-  const target=`./index.html?update=${Date.now()}&v=${encodeURIComponent(latestVersion||'')}`;
+  const target=`./index.html?update=${Date.now()}&v=${encodeURIComponent(latestVersion||'')}&b=${encodeURIComponent(latestBuild||'')}`;
   location.replace(target);
  },900);
 };
-
 
 let belowFoldAnchorWidth=0;
 let belowFoldAnchorHeight=0;
@@ -23486,7 +23538,7 @@ window.addEventListener('focus',()=>{
  ensurePersistentTurnPulses();
  startHolidayBadgePulses();
  ensureHolidaysForCurrentView();
- checkUpdate();
+ checkUpdatesOnResume();
  checkReminders();
  if($('#statsModal')?.classList.contains('open'))renderTurnEndCard(activeTurnKey());
 });
@@ -23498,10 +23550,12 @@ document.addEventListener('visibilitychange',()=>{
   ensurePersistentTurnPulses();
   startHolidayBadgePulses();
   ensureHolidaysForCurrentView();
+  checkUpdatesOnResume();
   checkReminders();
   scheduleViewportLayout();
  }
 });
+window.addEventListener('pageshow',checkUpdatesOnResume,{passive:true});
 
 if(window.visualViewport){
  window.visualViewport.addEventListener('resize',scheduleViewportLayout,{passive:true});

@@ -1,1 +1,5 @@
-{"version":"5.8.5"}
+{
+  "version": "5.8.5",
+  "build": "5.8.5-update-watch-rc1",
+  "updateCheck": "version-and-build"
+}
