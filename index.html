@@ -16274,6 +16274,67 @@ html:not([lang="es"]) #statsModal .stat-card small{
 }
 @media(max-width:340px){#statsModal .stat-card i{display:none !important;}}
 
+
+/* V5.8.5 / Estadísticas: BLACK grafito. Sólo BLACK, jamás BLUE ni CLARO.
+   Corrección cromática sobre la candidata; no cambia estructura ni datos. */
+body:not(.light):not(.dark-blue) #statsModal {
+  --stats-surface:#161c24;
+  --stats-tile:#202831;
+  --stats-stroke:rgba(167,181,198,.18);
+  --stats-strong:#f4f6f9;
+  --stats-muted:#abb6c4;
+}
+body:not(.light):not(.dark-blue) #statsModal .stats-modal-window {
+  background:linear-gradient(160deg,#10151c 0%,#0b1016 66%,#090d13 100%) !important;
+  border-color:rgba(162,176,194,.22) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 20px 55px rgba(0,0,0,.52) !important;
+}
+body:not(.light):not(.dark-blue) #statsModal .stats-head {
+  border-bottom-color:rgba(166,180,198,.17) !important;
+}
+body:not(.light):not(.dark-blue) #statsModal .stats-head-icon {
+  background:linear-gradient(145deg,#35404c,#222b35) !important;
+  border-color:rgba(184,201,219,.20) !important;
+  color:#ecf1f7 !important;
+}
+body:not(.light):not(.dark-blue) #statsModal .stats-head .close-btn {
+  background:#252d37 !important;
+  border-color:rgba(171,183,199,.23) !important;
+  color:#f4f6fa !important;
+}
+body:not(.light):not(.dark-blue) #statsModal .stats-turn-end > h3 {
+  color:#dce2e9 !important;
+}
+body:not(.light):not(.dark-blue) #statsModal .stats-title-mark {
+  background:#293440 !important;
+  border-color:rgba(170,187,206,.23) !important;
+  color:#d8e3ef !important;
+}
+body:not(.light):not(.dark-blue) #statsModal .turn-end-badge,
+body:not(.light):not(.dark-blue) #statsModal .stats-salary .salary-days {
+  background:#242e39 !important;
+  border-color:rgba(166,182,201,.20) !important;
+  box-shadow:none !important;
+}
+body:not(.light):not(.dark-blue) #statsModal .stats-pdf-entry {
+  background:linear-gradient(110deg,#192a29,#162322) !important;
+  border-color:rgba(73,169,151,.26) !important;
+}
+body:not(.light):not(.dark-blue) #statsModal .stats-pdf-entry-icon {
+  background:rgba(53,163,141,.12) !important;
+  border-color:rgba(96,190,168,.24) !important;
+}
+body:not(.light):not(.dark-blue) #statsModal .stats-pdf-entry-copy small {
+  color:#a8bbb9 !important;
+}
+body:not(.light):not(.dark-blue) #statsModal .holiday-work-chip,
+body:not(.light):not(.dark-blue) #statsModal .worklog-stat-btn {
+  background:var(--stats-tile) !important;
+  border-top-color:rgba(161,178,197,.14) !important;
+  border-right-color:rgba(161,178,197,.14) !important;
+  border-bottom-color:rgba(161,178,197,.14) !important;
+}
+/* Colores indicadores mañanas/noches/francos/PDF permanecen intactos. */
 </style>
 </head>
 <body class="notranslate">
