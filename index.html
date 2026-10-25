@@ -15832,6 +15832,132 @@ body.calendar-tiles-view #calendarCard .day.today::after{
 #helpModal .help-news-entry-unread{display:none;padding:2px 4px;border-radius:5px;
  background:#65dac6;color:#092d37;font-size:8px;font-weight:900;}
 #helpModal .help-news-entry[data-unread="true"] .help-news-entry-unread{display:inline-flex;}
+
+/* =============================================================
+   V5.8.5 CANDIDATA | COHERENCIA CROMATICA BLACK
+   Paleta neutra tomada de Estadisticas BLACK.
+   Cambia solo superficies de VENTANAS, nunca pantalla principal,
+   el modo BLUE/CLARO, logica, almacenamiento ni geometria.
+   Mantener los colores funcionales: M/N/F, V, estados, alertas y acciones.
+   ============================================================= */
+body:not(.light):not(.dark-blue) .backdrop,
+body:not(.light):not(.dark-blue) .sheet-backdrop{
+  --black-pane:#10151c;
+  --black-surface:#161c24;
+  --black-tile:#202831;
+  --black-field:#26313d;
+  --black-outline:rgba(167,181,198,.18);
+  --black-muted:#abb6c4;
+}
+/* Los componentes que heredan variables también deben respetar BLACK. */
+body:not(.light):not(.dark-blue) .backdrop:not(#statsModal),
+body:not(.light):not(.dark-blue) #agendaSheet{
+  --panel:rgba(22,28,36,.96);
+  --panel2:rgba(32,40,49,.94);
+  --panel3:#26313d;
+  --line:rgba(167,181,198,.18);
+}
+
+/* Todas las ventanas modales usan la misma base grafito de Estadisticas. */
+body:not(.light):not(.dark-blue) .backdrop > .modal.glass,
+body:not(.light):not(.dark-blue) #agendaSheet > .sheet.glass{
+  background:linear-gradient(160deg,#10151c 0%,#0b1016 66%,#090d13 100%) !important;
+  border-color:rgba(162,176,194,.22) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 20px 55px rgba(0,0,0,.52) !important;
+}
+/* Cabeceras: no deben seguir con el azul anterior. */
+body:not(.light):not(.dark-blue) .backdrop > .modal .modal-head,
+body:not(.light):not(.dark-blue) #agendaSheet .sheet-head{
+  background:transparent !important;
+  border-bottom-color:var(--black-outline) !important;
+}
+body:not(.light):not(.dark-blue) .backdrop > .modal .close-btn,
+body:not(.light):not(.dark-blue) #agendaSheet .close-btn{
+  background:#252d37 !important;
+  border-color:rgba(171,183,199,.23) !important;
+  color:#f4f6fa !important;
+}
+/* Iconos neutros en cabeceras. Respeta los distintivos V, colores y los acentos funcionales. */
+body:not(.light):not(.dark-blue) #helpModal .help-head-icon,
+body:not(.light):not(.dark-blue) #workdayModal .workday-head-icon,
+body:not(.light):not(.dark-blue) #vacationModal .vacation-head-icon{
+  background:#252d37 !important;
+  border-color:rgba(171,183,199,.22) !important;
+}
+/* Agenda: contadores, secciones, formulario y listado. */
+body:not(.light):not(.dark-blue) #agendaSheet .agenda-shift,
+body:not(.light):not(.dark-blue) #agendaSheet .agenda-all-box,
+body:not(.light):not(.dark-blue) #agendaSheet .agenda-form,
+body:not(.light):not(.dark-blue) #agendaSheet .reminder-guide-card{
+  background:var(--black-tile) !important;
+  border-color:var(--black-outline) !important;
+}
+body:not(.light):not(.dark-blue) #agendaSheet .agenda-overview-card,
+body:not(.light):not(.dark-blue) #agendaSheet .agenda-panel{
+  background:var(--black-surface) !important;
+  border-color:var(--black-outline) !important;
+}
+body:not(.light):not(.dark-blue) #agendaSheet .agenda-fixed-actions{
+  background:rgba(16,21,28,.96) !important;
+  border-color:var(--black-outline) !important;
+}
+/* Vacaciones: cambiar el fondo azulado, NO el distintivo V configurable. */
+body:not(.light):not(.dark-blue) #vacationModal .vacation-summary > div,
+body:not(.light):not(.dark-blue) #vacationModal .vacation-visibility-row,
+body:not(.light):not(.dark-blue) #vacationModal .vacation-editor,
+body:not(.light):not(.dark-blue) #vacationModal .vacation-saved-panel{
+  background:var(--black-surface) !important;
+  border-color:var(--black-outline) !important;
+}
+body:not(.light):not(.dark-blue) #vacationModal .vacation-color-card,
+body:not(.light):not(.dark-blue) #vacationModal .vacation-summary-accent{
+  background:var(--black-tile) !important;
+  border-color:var(--black-outline) !important;
+}
+/* Resto de ventanas: superficies de lectura y campos en paleta neutra. */
+body:not(.light):not(.dark-blue) #settingsModal .plant-setting,
+body:not(.light):not(.dark-blue) #settingsModal .language-setting,
+body:not(.light):not(.dark-blue) #settingsModal .setting-row,
+body:not(.light):not(.dark-blue) #settingsModal .settings-preview,
+body:not(.light):not(.dark-blue) #workdayModal .workday-section,
+body:not(.light):not(.dark-blue) #workdayModal .workday-list-panel,
+body:not(.light):not(.dark-blue) #workdayModal .workday-planned-card,
+body:not(.light):not(.dark-blue) #helpModal .help-intro,
+body:not(.light):not(.dark-blue) #helpModal .help-section,
+body:not(.light):not(.dark-blue) #helpModal .help-version-box,
+body:not(.light):not(.dark-blue) #helpModal .help-news-history,
+body:not(.light):not(.dark-blue) #reportModal .report-card,
+body:not(.light):not(.dark-blue) #plantModal .plant-card,
+body:not(.light):not(.dark-blue) #shareModal .share-card,
+body:not(.light):not(.dark-blue) #worklogStatsDetailModal .worklog-stats-detail-card,
+body:not(.light):not(.dark-blue) #holidayStatsDetailModal .holiday-stats-detail-card{
+  background:var(--black-surface) !important;
+  background-image:none !important;
+  border-color:var(--black-outline) !important;
+}
+/* Controles con fondo oscuro uniforme. Inputs permanecen con suficiente contraste. */
+body:not(.light):not(.dark-blue) #agendaSheet .form-field :is(input,select,textarea),
+body:not(.light):not(.dark-blue) #agendaSheet .agenda-search-shell :is(input,select),
+body:not(.light):not(.dark-blue) #vacationModal .vacation-field :is(input:not([type="color"]),textarea,select),
+body:not(.light):not(.dark-blue) #vacationModal .vacation-date-button,
+body:not(.light):not(.dark-blue) #workdayModal .license-field :is(input,textarea,select),
+body:not(.light):not(.dark-blue) #reportModal .report-employee-field :is(input,select),
+body:not(.light):not(.dark-blue) #settingsModal select{
+  background:var(--black-field) !important;
+  border-color:var(--black-outline) !important;
+  color:#f4f6fa !important;
+}
+/* Pestañas de Jornada y previsiones: se elimina el azul de las superficies base,
+   pero NO se alteran las pestañas seleccionadas ni los marcadores. */
+body:not(.light):not(.dark-blue) #workdayModal .workday-tabs{
+  background:linear-gradient(180deg,#202831,#171e27) !important;
+  border-color:var(--black-outline) !important;
+}
+body:not(.light):not(.dark-blue) #reportModal .report-preview{
+  background:linear-gradient(120deg,rgba(41,116,99,.16),rgba(18,34,38,.35)) !important;
+}
+/* Estadisticas ya define su modo BLACK y NO es modificado en sus paneles. */
+
 </style>
 <style id="stats-premium-v585">
 /* ================================================================
