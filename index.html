@@ -15833,6 +15833,448 @@ body.calendar-tiles-view #calendarCard .day.today::after{
  background:#65dac6;color:#092d37;font-size:8px;font-weight:900;}
 #helpModal .help-news-entry[data-unread="true"] .help-news-entry-unread{display:inline-flex;}
 </style>
+<style id="stats-premium-v585">
+/* ================================================================
+   V5.8.5 CANDIDATA · ESTADÍSTICAS PREMIUM COMPACTAS
+   Alcance EXCLUSIVO #statsModal. Basada en V5.8.4 estable.
+   Distribución de una pantalla, sin tocar datos, navegación ni motor.
+   ================================================================ */
+#statsModal {
+  --stats-surface: #122b46;
+  --stats-tile: #183752;
+  --stats-stroke: rgba(133,175,209,.19);
+  --stats-strong: #f2f8ff;
+  --stats-muted: #a2bbd0;
+  overflow: hidden !important;
+}
+#statsModal .stats-modal-window{
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  grid-template-areas:
+    "head head" "cards cards" "pdf pdf" "turn turn"
+    "holidays holidays" "worklog worklog" "off salary" !important;
+  grid-template-rows:
+    48px 59px 61px minmax(85px,.67fr)
+    minmax(110px,.88fr) minmax(155px,1.27fr)
+    minmax(108px,.89fr) !important;
+  grid-auto-rows:0px !important;
+  align-content:stretch !important;
+  align-items:stretch !important;
+  gap:clamp(4px,.7dvh,7px) !important;
+  width:min(100vw - 4px,680px) !important;
+  height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 4px) !important;
+  min-height:0 !important;
+  max-height:100dvh !important;
+  padding:6px 10px 9px !important;
+  overflow:hidden !important;
+  background:linear-gradient(160deg,#0d223a 0%,#0b1c31 65%,#0a192c 100%) !important;
+  border:1px solid rgba(114,160,203,.23) !important;
+  border-radius:23px !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 20px 55px rgba(0,4,15,.42) !important;
+}
+/* Cabecera: información primero, decoración después. */
+#statsModal .stats-head{
+  grid-area:head !important;
+  min-height:0 !important;
+  padding:1px 0 6px !important;
+  border-bottom:1px solid rgba(132,179,217,.16) !important;
+  align-items:center !important;
+}
+#statsModal .stats-head h2{font-size:20px !important;line-height:1.05 !important;letter-spacing:-.035em !important;}
+#statsModal .stats-head small{font-size:9.4px !important;line-height:1.14 !important;opacity:.92;}
+#statsModal .stats-head-icon{
+  width:27px !important;height:27px !important;
+  background:linear-gradient(145deg,#2362a0,#1a4777) !important;
+  box-shadow:none !important;border:1px solid rgba(114,184,243,.3) !important;
+  border-radius:9px !important;font-size:14px !important;
+}
+#statsModal .stats-head .close-btn{
+  width:41px !important;height:41px !important;
+  border-radius:14px !important;
+  background:#1a3957 !important;
+  border:1px solid rgba(137,188,228,.22) !important;
+  box-shadow:none !important;font-size:23px !important;
+}
+/* Resumen: cuatro cifras claras con acentos finos. */
+#statsModal .stats-grid{grid-area:cards !important;gap:6px !important;min-height:0 !important;}
+#statsModal .stat-card{
+  min-height:0 !important;height:100% !important;
+  padding:8px 8px 7px !important;
+  justify-content:center !important;
+  gap:0 !important;
+  background:var(--stats-surface) !important;
+  border:1px solid var(--stats-stroke) !important;
+  border-radius:13px !important;
+  box-shadow:none !important;
+}
+#statsModal .stat-card::after{
+  left:12px !important;right:12px !important;bottom:0 !important;
+  height:2px !important;border-radius:4px 4px 0 0 !important;
+  box-shadow:none !important;opacity:.85 !important;
+}
+#statsModal .stat-card::before{display:none !important;}
+#statsModal .stat-card i{
+  width:18px !important;height:18px !important;
+  right:6px !important;top:6px !important;
+  box-shadow:none !important;opacity:.85 !important;
+  border-radius:6px !important;
+}
+#statsModal .stat-card small{
+  font-size:7.8px !important;line-height:1.1 !important;
+  letter-spacing:.02em !important;color:var(--stats-muted) !important;
+}
+#statsModal .stat-card b{
+  font-size:23px !important;line-height:1 !important;
+  letter-spacing:-.035em !important;margin-top:4px !important;
+  color:var(--stats-strong) !important;
+}
+/* Informe: única acción destacada, sin robar altura al contenido. */
+#statsModal .stats-pdf-entry{
+  grid-area:pdf !important;
+  min-height:0 !important;height:100% !important;
+  padding:7px 9px !important;column-gap:8px !important;
+  background:linear-gradient(110deg,#103c47,#123446) !important;
+  border:1px solid rgba(49,174,163,.28) !important;
+  border-radius:14px !important;
+  box-shadow:none !important;
+}
+#statsModal .stats-pdf-entry-icon{
+  flex:0 0 31px !important;width:31px !important;height:31px !important;
+  border-radius:10px !important;box-shadow:none !important;
+  background:rgba(25,173,155,.12) !important;border:1px solid rgba(87,205,186,.22) !important;
+}
+#statsModal .stats-pdf-entry-copy b{font-size:12px !important;line-height:1.1 !important;color:var(--stats-strong) !important;}
+#statsModal .stats-pdf-entry-copy small{font-size:8.1px !important;line-height:1.25 !important;color:#a7c9cf !important;}
+#statsModal #openReportBtn.stats-pdf-entry-action{
+  flex:0 0 35% !important;min-height:41px !important;max-width:143px !important;
+  padding:6px 5px !important;border-radius:11px !important;
+  background:linear-gradient(125deg,#169e91,#118c87) !important;
+  border:1px solid rgba(116,234,210,.23) !important;
+  font-size:9px !important;letter-spacing:-.015em !important;
+  box-shadow:none !important;
+}
+/* Tarjeta de turno: título correcto para estados activos e inactivos. */
+#statsModal .stats-turn-end{grid-area:turn !important;min-width:0 !important;min-height:0 !important;height:100% !important;}
+#statsModal .stats-turn-end > h3{font-size:11.1px !important;margin:0 0 4px !important;line-height:1.05 !important;color:#d9e7f4 !important;}
+#statsModal .stats-title-dot{width:6px !important;height:6px !important;box-shadow:none !important;}
+#statsModal .turn-end-card{
+  min-height:0 !important;height:100% !important;
+  flex:1 1 auto !important;
+  padding:8px 12px !important;border-radius:14px !important;
+  border:1px solid var(--stats-stroke) !important;
+  background:var(--stats-surface) !important;box-shadow:none !important;
+}
+#statsModal .turn-end-card::before{display:none !important;}
+#statsModal .turn-end-copy small{
+  font-size:8.5px !important;line-height:1.1 !important;color:var(--stats-muted) !important;
+  letter-spacing:.04em !important;
+}
+#statsModal .turn-end-copy b,
+#statsModal .turn-end-card.is-inactive .turn-end-copy b{
+  font-size:clamp(18px,4.5vw,23px) !important;
+  line-height:1.06 !important;letter-spacing:-.035em !important;
+  margin-top:5px !important;color:var(--stats-strong) !important;
+}
+#statsModal .turn-end-copy span{
+  font-size:8.8px !important;line-height:1.2 !important;
+  color:var(--stats-muted) !important;margin-top:5px !important;
+}
+#statsModal .turn-end-badge{
+  width:54px !important;height:54px !important;
+  min-width:54px !important;min-height:54px !important;
+  padding:4px !important;border-radius:12px !important;
+  background:#1a3d5c !important;border:1px solid rgba(123,174,213,.23) !important;
+  box-shadow:none !important;font-size:24px !important;
+}
+/* Feriados: el contraste lo dan los números, no siete marcos brillantes. */
+#statsModal .stats-holidays,
+#statsModal .stats-worklog,
+#statsModal .stats-off,
+#statsModal .stats-salary{
+  min-width:0 !important;min-height:0 !important;
+  height:100% !important;
+  padding:8px 10px !important;
+  border:1px solid var(--stats-stroke) !important;
+  border-radius:16px !important;
+  background:var(--stats-surface) !important;
+  box-shadow:none !important;
+}
+#statsModal .stats-holidays{grid-area:holidays !important;justify-content:center !important;}
+#statsModal .stats-worklog{grid-area:worklog !important;justify-content:center !important;}
+#statsModal .stats-off{grid-area:off !important;}
+#statsModal .stats-salary{grid-area:salary !important;}
+#statsModal .stats-section h3{
+  font-size:12px !important;line-height:1.08 !important;
+  letter-spacing:-.018em !important;
+  color:var(--stats-strong) !important;margin:0 0 5px !important;gap:6px !important;
+}
+#statsModal .stats-title-mark,
+#statsModal .stats-holidays .stats-title-mark,
+#statsModal .stats-worklog .stats-title-mark,
+#statsModal .stats-off .stats-title-mark,
+#statsModal .stats-salary .stats-title-mark{
+  width:24px !important;height:24px !important;min-width:24px !important;
+  font-size:10px !important;line-height:1 !important;border-radius:8px !important;
+  background:#1b466c !important;border:1px solid rgba(119,181,230,.26) !important;
+  color:#baddfc !important;box-shadow:none !important;
+}
+#statsModal .holiday-work-grid{gap:5px !important;min-height:0 !important;}
+#statsModal .holiday-work-chip{
+  min-height:0 !important;height:48px !important;
+  padding:6px 1px 4px !important;border-radius:10px !important;
+  background:var(--stats-tile) !important;
+  border:1px solid rgba(136,179,214,.13) !important;box-shadow:none !important;
+}
+#statsModal .holiday-work-chip span{font-size:8px !important;line-height:1.05 !important;color:var(--stats-muted) !important;}
+#statsModal .holiday-work-chip b{font-size:20px !important;line-height:1 !important;margin-top:2px !important;color:var(--stats-strong) !important;}
+#statsModal .holiday-work-chip::after{opacity:.5 !important;right:2px !important;}
+#statsModal .holiday-work-note{
+  font-size:8px !important;line-height:1.15 !important;
+  font-weight:500 !important;color:var(--stats-muted) !important;
+  margin-top:5px !important;
+}
+/* Registro laboral: un mismo lenguaje para las cuatro tarjetas. */
+#statsModal .worklog-stats-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  grid-template-rows:repeat(2,minmax(0,1fr)) !important;
+  flex:1 1 auto !important;min-height:0 !important;gap:5px !important;
+}
+#statsModal .worklog-stat-btn{
+  min-height:0 !important;height:100% !important;
+  padding:6px 9px !important;gap:3px 6px !important;
+  border-radius:11px !important;
+  background:var(--stats-tile) !important;
+  border:1px solid rgba(136,179,214,.12) !important;
+  border-left:2px solid rgba(129,183,220,.52) !important;
+  box-shadow:none !important;
+}
+#statsModal .worklog-stat-btn.changes{border-left-color:#dca96a !important;}
+#statsModal .worklog-stat-btn.overtime{border-left-color:#63b9e6 !important;}
+#statsModal .worklog-stat-btn.licenses{border-left-color:#cf91b5 !important;}
+#statsModal .worklog-stat-btn.period-holidays{border-left-color:#e195a3 !important;}
+#statsModal .worklog-stat-btn::before,
+#statsModal .worklog-stat-btn::after{content:none !important;display:none !important;}
+#statsModal .worklog-stat-btn small{
+  font-size:10px !important;line-height:1.07 !important;
+  color:#b5c8d9 !important;font-weight:750 !important;
+}
+#statsModal .worklog-stat-btn b{
+  font-size:23px !important;line-height:1 !important;
+  color:var(--stats-strong) !important;text-shadow:none !important;
+}
+#statsModal .worklog-stat-btn > span{
+  font-size:8.8px !important;line-height:1.1 !important;
+  color:#9cb7ca !important;font-weight:650 !important;
+}
+#statsModal .worklog-stat-btn > span strong{font-size:inherit !important;}
+#statsModal .worklog-stat-btn em{
+  font-size:8.4px !important;line-height:1.1 !important;
+  color:#9db9ce !important;
+}
+#statsModal #worklogOvertimeLabel{font-size:9.3px !important;white-space:normal !important;}
+#statsModal #worklogHolidaysRange{font-size:8.4px !important;}
+/* Descanso y sueldo: tarjetas gemelas, información sin marcos anidados. */
+#statsModal .stats-off,
+#statsModal .stats-salary{
+  padding:9px 10px !important;
+  justify-content:flex-start !important;
+}
+#statsModal .stats-off > h3,
+#statsModal .stats-salary > h3{
+  font-size:11.1px !important;line-height:1.15 !important;margin-bottom:7px !important;
+  white-space:normal !important;
+}
+#statsModal .stats-off .next-off,
+#statsModal .stats-salary .salary-card{
+  flex:1 1 auto !important;min-height:0 !important;height:auto !important;
+  border:0 !important;padding:0 !important;margin:0 !important;
+  background:transparent !important;box-shadow:none !important;
+}
+#statsModal .off-premium{
+  min-height:0 !important;padding:2px 1px !important;
+  border:0 !important;background:transparent !important;box-shadow:none !important;
+}
+#statsModal .stats-salary .salary-top{gap:7px !important;align-items:center !important;}
+#statsModal .salary-copy small{font-size:8.3px !important;color:var(--stats-muted) !important;line-height:1.1 !important;}
+#statsModal .salary-copy b{font-size:13.5px !important;color:var(--stats-strong) !important;line-height:1.05 !important;}
+#statsModal .salary-copy span{font-size:8px !important;color:var(--stats-muted) !important;line-height:1.1 !important;}
+#statsModal .stats-salary .salary-days{
+  flex:0 0 49px !important;width:49px !important;min-width:49px !important;
+  height:54px !important;min-height:54px !important;padding:5px !important;
+  border-radius:11px !important;background:#1a3d5b !important;
+  border:1px solid rgba(132,181,218,.19) !important;box-shadow:none !important;
+}
+#statsModal .salary-days strong{font-size:25px !important;line-height:1 !important;color:#ecf6ff !important;}
+#statsModal .salary-days span{font-size:8.2px !important;line-height:1 !important;}
+/* Modo claro respeta el resto de la app. */
+body.light #statsModal{
+ --stats-surface:#f4f8fc;--stats-tile:#ebf2f9;--stats-stroke:rgba(55,93,132,.17);
+ --stats-strong:#17334e;--stats-muted:#607e96;
+}
+body.light #statsModal .stats-modal-window{
+ background:linear-gradient(165deg,#e3edf7,#d6e5f3) !important;
+ border-color:rgba(62,99,137,.27) !important;
+}
+body.light #statsModal .stat-card,
+body.light #statsModal .turn-end-card,
+body.light #statsModal .stats-holidays,
+body.light #statsModal .stats-worklog,
+body.light #statsModal .stats-off,
+body.light #statsModal .stats-salary{background:var(--stats-surface) !important;border-color:var(--stats-stroke) !important;}
+body.light #statsModal .stats-pdf-entry{background:#d5f2ec !important;border-color:#97cec2 !important;}
+body.light #statsModal .stats-pdf-entry-copy b{color:#173e43 !important;}
+body.light #statsModal .stats-pdf-entry-copy small{color:#547879 !important;}
+body.light #statsModal .holiday-work-chip,
+body.light #statsModal .worklog-stat-btn{background:var(--stats-tile) !important;}
+body.light #statsModal .stats-section h3,
+body.light #statsModal .stats-head h2,
+body.light #statsModal .stat-card b,
+body.light #statsModal .turn-end-copy b,
+body.light #statsModal .turn-end-card.is-inactive .turn-end-copy b,
+body.light #statsModal .holiday-work-chip b,
+body.light #statsModal .worklog-stat-btn b,
+body.light #statsModal .salary-copy b{color:var(--stats-strong) !important;}
+body.light #statsModal .stats-head small,
+body.light #statsModal .turn-end-copy span,
+body.light #statsModal .turn-end-copy small,
+body.light #statsModal .worklog-stat-btn small,
+body.light #statsModal .worklog-stat-btn > span,
+body.light #statsModal .worklog-stat-btn em,
+body.light #statsModal .holiday-work-note,
+body.light #statsModal .holiday-work-chip span,
+body.light #statsModal .salary-copy small,
+body.light #statsModal .salary-copy span{color:var(--stats-muted) !important;}
+body.light #statsModal .off-premium{background:transparent !important;}
+/* Altura menor: compactar espacios, no ocultar datos. */
+@media(max-height:770px){
+ #statsModal .stats-modal-window{
+  grid-template-rows:43px 53px 54px minmax(78px,.65fr)
+     minmax(94px,.85fr) minmax(132px,1.25fr) minmax(91px,.85fr) !important;
+  gap:4px !important;padding:4px 7px 6px !important;
+ }
+ #statsModal .stats-head h2{font-size:18px !important;}
+ #statsModal .stats-head .close-btn{width:36px !important;height:36px !important;}
+ #statsModal .stat-card{padding:5px 6px !important;}
+ #statsModal .stat-card b{font-size:21px !important;}
+ #statsModal .stats-pdf-entry{padding:5px 7px !important;}
+ #statsModal .stats-pdf-entry-copy b{font-size:10px !important;}
+ #statsModal .stats-pdf-entry-copy small{font-size:7px !important;}
+ #statsModal #openReportBtn.stats-pdf-entry-action{min-height:35px !important;font-size:8px !important;}
+ #statsModal .stats-section h3{font-size:10px !important;margin-bottom:3px !important;}
+ #statsModal .stats-title-mark,#statsModal .stats-holidays .stats-title-mark,#statsModal .stats-worklog .stats-title-mark{
+  width:21px !important;height:21px !important;min-width:21px !important;
+ }
+ #statsModal .turn-end-card{padding:5px 8px !important;}
+ #statsModal .turn-end-copy b,#statsModal .turn-end-card.is-inactive .turn-end-copy b{font-size:18px !important;}
+ #statsModal .turn-end-copy span{font-size:7.7px !important;margin-top:3px !important;}
+ #statsModal .turn-end-badge{min-width:45px !important;width:45px !important;min-height:45px !important;height:45px !important;}
+ #statsModal .stats-holidays,#statsModal .stats-worklog{padding:5px 7px !important;}
+ #statsModal .holiday-work-chip{height:39px !important;padding:3px 1px !important;}
+ #statsModal .holiday-work-chip b{font-size:16px !important;}
+ #statsModal .holiday-work-chip span{font-size:7px !important;}
+ #statsModal .holiday-work-note{font-size:6.8px !important;margin-top:3px !important;}
+ #statsModal .worklog-stat-btn{padding:4px 6px !important;gap:2px 4px !important;}
+ #statsModal .worklog-stat-btn small{font-size:8.5px !important;}
+ #statsModal .worklog-stat-btn b{font-size:19px !important;}
+ #statsModal .worklog-stat-btn > span{font-size:7.2px !important;}
+ #statsModal .worklog-stat-btn em{font-size:6.9px !important;}
+ #statsModal .stats-off,#statsModal .stats-salary{padding:5px 6px !important;}
+ #statsModal .stats-salary .salary-days{min-height:44px !important;height:44px !important;min-width:42px !important;flex-basis:42px !important;}
+ #statsModal .salary-copy b{font-size:11px !important;}
+ #statsModal .salary-copy span{font-size:7px !important;}
+}
+@media(max-width:360px){
+ #statsModal .stats-modal-window{padding-left:6px !important;padding-right:6px !important;}
+ #statsModal .stats-grid{gap:4px !important;}
+ #statsModal .stat-card{padding-left:5px !important;padding-right:5px !important;}
+ #statsModal .stat-card small{font-size:6.7px !important;}
+ #statsModal .stat-card b{font-size:20px !important;}
+ #statsModal .stats-pdf-entry-icon{display:none !important;}
+ #statsModal .stats-pdf-entry-copy b{font-size:11px !important;}
+ #statsModal #openReportBtn.stats-pdf-entry-action{flex-basis:39% !important;font-size:7.8px !important;}
+ #statsModal .holiday-work-grid{gap:3px !important;}
+ #statsModal .holiday-work-chip span{font-size:7.1px !important;}
+ #statsModal .holiday-work-chip b{font-size:17px !important;}
+ #statsModal .worklog-stat-btn small{font-size:8.6px !important;}
+ #statsModal #worklogOvertimeLabel{font-size:7.9px !important;}
+ #statsModal .stats-off > h3,#statsModal .stats-salary > h3{font-size:10.5px !important;}
+ #statsModal .salary-copy small{font-size:7.2px !important;}
+ #statsModal .salary-copy span{font-size:6.9px !important;}
+}
+@media(max-height:665px){
+ /* Pantallas extremadamente bajas: en vez de recortar registros habilitamos scroll. */
+ #statsModal .stats-modal-window{
+   grid-template-rows:43px 53px 54px minmax(75px,max-content) minmax(93px,max-content) minmax(132px,max-content) minmax(88px,max-content) !important;
+   align-content:start !important;overflow-y:auto !important;
+ }
+}
+
+/* Acento cromático fino, en lugar de un borde completo. */
+#statsModal .stat-card::after,
+body.dark-blue #statsModal .stat-card::after{
+ content:"" !important;display:block !important;
+ position:absolute !important;left:12px !important;right:12px !important;
+ bottom:0 !important;height:2px !important;
+ background:var(--stat-accent,var(--accent2)) !important;
+ opacity:.65 !important;box-shadow:none !important;
+}
+/* Blue: la estética compacta también prevalece sobre estilos Blue anteriores. */
+body.dark-blue #statsModal .stat-card,
+body.dark-blue #statsModal .turn-end-card,
+body.dark-blue #statsModal .stats-holidays,
+body.dark-blue #statsModal .stats-worklog,
+body.dark-blue #statsModal .stats-off,
+body.dark-blue #statsModal .stats-salary{
+ background:var(--stats-surface) !important;
+ border-color:var(--stats-stroke) !important;
+ box-shadow:none !important;
+}
+body.dark-blue #statsModal .stat-card{
+ border-bottom:1px solid var(--stats-stroke) !important;
+}
+body.dark-blue #statsModal .stats-turn-end{
+ background:transparent !important;
+ border:0 !important;
+ box-shadow:none !important;
+}
+body.dark-blue #statsModal .stats-holidays,
+body.dark-blue #statsModal .stats-worklog{
+ border-color:var(--stats-stroke) !important;
+}
+body.dark-blue #statsModal .holiday-work-chip,
+body.dark-blue #statsModal .worklog-stat-btn{
+ background:var(--stats-tile) !important;
+ border-top-color:rgba(136,179,214,.13) !important;
+ border-right-color:rgba(136,179,214,.13) !important;
+ border-bottom-color:rgba(136,179,214,.13) !important;
+ box-shadow:none !important;
+}
+body.dark-blue #statsModal .worklog-stat-btn.changes{border-left-color:#dca96a !important;}
+body.dark-blue #statsModal .worklog-stat-btn.overtime{border-left-color:#63b9e6 !important;}
+body.dark-blue #statsModal .worklog-stat-btn.licenses{border-left-color:#cf91b5 !important;}
+body.dark-blue #statsModal .worklog-stat-btn.period-holidays{border-left-color:#e195a3 !important;}
+body.dark-blue #statsModal .turn-end-badge,
+body.dark-blue #statsModal .salary-days{
+ background:#1a3d5b !important;
+ border-color:rgba(132,181,218,.19) !important;
+ box-shadow:none !important;
+}
+body.dark-blue #statsModal .off-premium{
+ background:transparent !important;border-color:transparent !important;box-shadow:none !important;
+}
+body.dark-blue #statsModal .stats-pdf-entry{
+ background:linear-gradient(110deg,#103c47,#123446) !important;
+ border-color:rgba(49,174,163,.28) !important;
+ box-shadow:none !important;
+}
+/* En traducciones largas, priorizar la legibilidad de la métrica. */
+html:not([lang="es"]) #statsModal .stat-card i{display:none !important;}
+html:not([lang="es"]) #statsModal .stat-card small{
+ font-size:7.2px !important;letter-spacing:-.015em !important;overflow-wrap:anywhere !important;
+}
+@media(max-width:340px){#statsModal .stat-card i{display:none !important;}}
+
+</style>
 </head>
 <body class="notranslate">
 <div id="splash" class="splash">
@@ -16929,7 +17371,7 @@ body.calendar-tiles-view #calendarCard .day.today::after{
     <button type="button" id="openReportBtn" class="stats-pdf-entry-action" aria-label="Crear Informes PDF">CREAR INFORMES PDF ›</button>
   </div>
   <div class="stats-section stats-turn-end">
-    <h3><span class="stats-title-dot"></span>Tu turno termina en</h3>
+    <h3><span class="stats-title-dot"></span>Estado del turno</h3>
     <div id="turnEndCard" class="turn-end-card">
       <div class="turn-end-top">
         <div class="turn-end-copy">
@@ -17195,7 +17637,7 @@ body.calendar-tiles-view #calendarCard .day.today::after{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.8.4';
+const CURRENT_VERSION='5.8.5';
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -17636,6 +18078,13 @@ Object.assign(I18N.pt,{"Doble toque:":"Toque duplo:","abre Jornada directamente 
 Object.assign(I18N.fr,{"Doble toque:":"Double appui :","abre Jornada directamente en esa fecha.":"ouvre directement la journée de travail à cette date.","hacé doble toque sobre un día para abrir directamente su Jornada. También podés seleccionarlo y abrir ":"appuyez deux fois sur un jour pour ouvrir directement sa journée de travail. Vous pouvez aussi sélectionner le jour et ouvrir "," desde el detalle, o usar el botón ":" depuis les détails ou utiliser le bouton "," de la cabecera.":" de l’en-tête."});
 Object.assign(I18N.de,{"Doble toque:":"Doppeltippen:","abre Jornada directamente en esa fecha.":"öffnet den Arbeitstag für dieses Datum direkt.","hacé doble toque sobre un día para abrir directamente su Jornada. También podés seleccionarlo y abrir ":"tippe zweimal auf einen Tag, um den Arbeitstag direkt zu öffnen. Du kannst auch einen Tag auswählen und "," desde el detalle, o usar el botón ":" über die Details öffnen oder die Taste "," de la cabecera.":" in der Kopfzeile verwenden."});
 Object.assign(I18N.it,{"Doble toque:":"Doppio tocco:","abre Jornada directamente en esa fecha.":"apre direttamente la giornata lavorativa di quella data.","hacé doble toque sobre un día para abrir directamente su Jornada. También podés seleccionarlo y abrir ":"tocca due volte un giorno per aprire direttamente la relativa giornata lavorativa. Puoi anche selezionare il giorno e aprire "," desde el detalle, o usar el botón ":" dai dettagli oppure usare il pulsante "," de la cabecera.":" nell’intestazione."});
+
+/* V5.8.5 · Título neutral de estado en Estadísticas */
+Object.assign(I18N.en,{'Estado del turno':'Shift status'});
+Object.assign(I18N.pt,{'Estado del turno':'Estado do turno'});
+Object.assign(I18N.fr,{'Estado del turno':'État du poste'});
+Object.assign(I18N.de,{'Estado del turno':'Schichtstatus'});
+Object.assign(I18N.it,{'Estado del turno':'Stato del turno'});
 
 function tr(text){
  const source=String(text??'');
