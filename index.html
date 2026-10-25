@@ -16867,6 +16867,27 @@ body.light #statsModal .worklog-stat-btn > span,
 body.light #statsModal .worklog-stat-btn em{color:#687a8c !important;}
 body.light #statsModal .worklog-stat-btn b{color:#192d41 !important;-webkit-text-fill-color:#192d41 !important;}
 /* Mantener inalteradas la altura, las filas y la interactividad. */
+
+/* ===== V5.8.9 · MITAD DE FERIADO (½) VISIBLE EN MODO CLARO =====
+   El distintivo heredaba -webkit-text-fill-color:#fff del badge FER en tema claro.
+   Se corrige solo el texto y contraste del círculo de media jornada.
+   No se tocan las reglas de turnos, cálculos ni otros temas. */
+body.light #holidayStatsDetailModal .holiday-list-badge.holiday-half::after{
+  content:'½';
+  background:#e9eef3;
+  color:#253849;
+  -webkit-text-fill-color:#253849;
+  text-shadow:none;
+  font-size:11px;
+  font-weight:950;
+  width:18px;
+  height:18px;
+  line-height:1;
+  border:1px solid #a8b5c2;
+  border-radius:50%;
+  box-shadow:0 2px 6px rgba(32,48,64,.18);
+}
+
 </style>
 </head>
 <body class="notranslate">
@@ -18229,8 +18250,8 @@ body.light #statsModal .worklog-stat-btn b{color:#192d41 !important;-webkit-text
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.8.8';
-const CURRENT_BUILD='5.8.8-stats-light-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
+const CURRENT_VERSION='5.8.9';
+const CURRENT_BUILD='5.8.9-half-holiday-light-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
