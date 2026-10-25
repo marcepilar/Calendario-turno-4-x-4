@@ -16129,6 +16129,21 @@ body.light .app-select-option{border-color:rgba(62,82,106,.12);background:linear
   .app-select-option{min-height:49px;padding:13px;font-size:14px;border-radius:15px}
 }
 
+
+/* V5.8.5: un único toque abre el selector sin activar el menú nativo.
+   Superficie transparente: conserva el aspecto y geometría de cada select. */
+.app-select-control{display:block;position:relative;width:100%;max-width:100%;min-width:0}
+.app-select-control > select{pointer-events:none}
+.app-select-tap-target{
+  position:absolute;inset:0;width:100%;height:100%;z-index:8;
+  display:block;padding:0;margin:0;border:0;border-radius:inherit;
+  background:transparent;color:transparent;opacity:1;cursor:pointer;
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+}
+.app-select-tap-target:focus-visible{
+  outline:2px solid var(--accent2);outline-offset:-2px;border-radius:12px;
+}
+
 </style>
 <style id="stats-premium-v585">
 /* ================================================================
@@ -24318,15 +24333,39 @@ if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serv
   const captionEl=document.getElementById('appSelectCaption');
   const listEl=document.getElementById('appSelectList');
   const closeBtn=document.getElementById('appSelectClose');
-  let activeSelect=null, lastFocused=null;
+  let activeSelect=null, lastFocused=null, previousBodyOverflow=null;
 
   function isCustomSelect(el){
     return !!el && el.tagName==='SELECT' && CUSTOM_SELECT_IDS.includes(el.id);
   }
 
+  /* Se crean botones táctiles independientes encima de los selects.
+     El select real permanece en el DOM para conservar valor, traducciones y eventos. */
+  const triggers=new Map();
   CUSTOM_SELECT_IDS.forEach(id=>{
     const el=document.getElementById(id);
-    if(el) el.classList.add('custom-select-ready');
+    if(!el || el.closest('.app-select-control')) return;
+    el.classList.add('custom-select-ready');
+    const wrapper=document.createElement('span');
+    wrapper.className='app-select-control';
+    el.before(wrapper);
+    wrapper.appendChild(el);
+    const trigger=document.createElement('button');
+    trigger.type='button';
+    trigger.className='app-select-tap-target';
+    trigger.setAttribute('aria-haspopup','dialog');
+    trigger.setAttribute('aria-controls','appSelectSheet');
+    trigger.setAttribute('aria-expanded','false');
+    trigger.setAttribute('aria-label', extractSelectLabel(el));
+    // No interceptamos el comienzo del toque: se abre sólo con el click final.
+    trigger.addEventListener('click',ev=>{
+      ev.preventDefault();
+      ev.stopPropagation();
+      openCustomSelect(el);
+    });
+    wrapper.appendChild(trigger);
+    el.tabIndex=-1;
+    triggers.set(el,trigger);
   });
 
   function extractSelectLabel(select){
@@ -24359,8 +24398,11 @@ if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serv
     backdrop.classList.remove('open');
     sheet.hidden=true;
     backdrop.hidden=true;
+    const closingSelect=activeSelect;
+    if(closingSelect) triggers.get(closingSelect)?.setAttribute('aria-expanded','false');
     activeSelect=null;
-    document.body.style.overflow='';
+    document.body.style.overflow=previousBodyOverflow ?? '';
+    previousBodyOverflow=null;
     if(restoreFocus && lastFocused && typeof lastFocused.focus==='function'){
       setTimeout(()=>{ try{ lastFocused.focus({preventScroll:true}); }catch(_){ try{lastFocused.focus();}catch(__){}} },30);
     }
@@ -24410,8 +24452,12 @@ if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serv
 
   function openCustomSelect(select){
     if(!isCustomSelect(select) || !sheet || !backdrop) return;
+    if(activeSelect===select && !sheet.hidden) return;
+    if(activeSelect) closeCustomSelect(false);
     activeSelect=select;
     lastFocused=document.activeElement;
+    previousBodyOverflow=document.body.style.overflow;
+    triggers.get(select)?.setAttribute('aria-expanded','true');
     titleEl.textContent=extractSelectLabel(select);
     captionEl.textContent=extractSelectCaption(select);
     renderOptions(select);
@@ -24425,27 +24471,9 @@ if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serv
     setTimeout(()=>{ try{ closeBtn.focus({preventScroll:true}); }catch(_){ closeBtn.focus(); } },20);
   }
 
-  function interceptSelectEvent(ev){
-    const select=ev.target?.closest?.('select');
-    if(!isCustomSelect(select)) return;
-    ev.preventDefault();
-    ev.stopPropagation();
-    if(ev.type==='click' || ev.type==='pointerdown' || ev.type==='mousedown' || ev.type==='touchstart'){
-      openCustomSelect(select);
-    }
-  }
-
-  ['pointerdown','mousedown','touchstart','click'].forEach(type=>{
-    document.addEventListener(type,interceptSelectEvent,true);
-  });
-
+  /* Sin listeners duplicados pointerdown/touchstart/mousedown/click:
+     el botón superpuesto ya concentra un único evento de apertura. */
   document.addEventListener('keydown',ev=>{
-    const select=ev.target?.closest?.('select');
-    if(isCustomSelect(select) && (ev.key==='Enter' || ev.key===' ' || ev.key==='ArrowDown' || ev.key==='ArrowUp')){
-      ev.preventDefault();
-      openCustomSelect(select);
-      return;
-    }
     if(ev.key==='Escape' && activeSelect){
       ev.preventDefault();
       closeCustomSelect();
@@ -24457,7 +24485,6 @@ if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serv
 
   // Si la vista cambia o se abre otro modal, cerramos el selector.
   window.addEventListener('orientationchange',()=>activeSelect&&closeCustomSelect(false),{passive:true});
-  window.visualViewport?.addEventListener('resize',()=>activeSelect&&closeCustomSelect(false),{passive:true});
 })();
 </script>
 
