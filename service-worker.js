@@ -1,4 +1,4 @@
-const CACHE='turnos4x4-5.8.6-vacation-icons-rc1';
+const CACHE='turnos4x4-5.8.8-stats-light-rc1';
 const ASSETS=[
   './',
   './index.html',

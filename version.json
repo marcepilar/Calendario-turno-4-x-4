@@ -1,5 +1,5 @@
 {
-  "version": "5.8.6",
-  "build": "5.8.6-vacation-icons-rc1",
+  "version": "5.8.8",
+  "build": "5.8.8-stats-light-rc1",
   "updateCheck": "version-and-build"
 }

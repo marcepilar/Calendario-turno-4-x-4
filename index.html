@@ -16686,6 +16686,188 @@ body.light #vacationModal .vacation-legend-v{
 /* Se excluye deliberadamente .vacation-summary-v: conserva el color
    elegido por el usuario, igual que las V marcadas en el calendario. */
 </style>
+
+<style id="vacation-premium-clean-v587">
+/* V5.8.7: pulido LOCAL de Vacaciones, mantiene la ventana a pantalla completa.
+   Panel de períodos de altura natural hasta su máximo, y scroll interno si
+   se acumulan registros. No altera datos ni la rotación. */
+#vacationModal .vacation-modal-window{
+  /* La altura original 100dvh sigue intacta; sólo cambia el interior. */
+  min-height:0;
+}
+#vacationModal .vacation-saved-panel{
+  flex:0 1 auto !important;
+  min-height:0 !important;
+  max-height:min(38dvh,344px) !important;
+  overflow:hidden;
+  /* La tarjeta abraza sus registros, sin un gran rectángulo vacío. */
+}
+#vacationModal .vacation-list{
+  flex:0 1 auto !important;
+  min-height:0 !important;
+  max-height:min(31dvh,288px);
+  overflow-y:auto;
+  overscroll-behavior:contain;
+}
+#vacationModal .vacation-empty{
+  height:auto;
+  min-height:82px;
+}
+#vacationModal .vacation-legend{
+  flex:0 0 auto;
+  margin-top:auto;
+  margin-bottom:0;
+  padding:12px 12px 4px;
+  display:block;
+  width:100%;
+  text-align:center;
+  line-height:1.35;
+  font-size:clamp(8px,2.15vw,10px);
+  font-weight:500;
+  color:var(--muted) !important;
+  background:transparent !important;
+  background-image:none !important;
+  border:0 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+body.dark-blue #vacationModal .vacation-modal-window .vacation-legend{color:#a3c1de !important;background:transparent!important;background-image:none!important;border:0!important;box-shadow:none!important}
+body.light #vacationModal .vacation-legend{color:#64758a !important}
+@media(max-height:690px){
+  #vacationModal .vacation-saved-panel{max-height:min(29dvh,220px) !important}
+  #vacationModal .vacation-list{max-height:min(22dvh,175px)}
+  #vacationModal .vacation-legend{padding-top:7px;padding-bottom:2px;font-size:8px}
+}
+</style>
+<style id="stats-light-polish-v588">
+/* V5.8.8 RC1 — ACABADO CLARO EXCLUSIVO DE ESTADÍSTICAS.
+   Conserva íntegramente la grilla compacta y la distribución; nunca afecta BLACK/BLUE.
+   No se cambian las funciones, datos, cálculos ni estados de la PWA. */
+body.light #statsModal{
+  --stats-surface:#ffffff;
+  --stats-tile:#f5f7fa;
+  --stats-stroke:rgba(75,94,117,.15);
+  --stats-strong:#182b3f;
+  --stats-muted:#607286;
+}
+/* Marco exterior: blanco perla, sin dominante azul. */
+body.light #statsModal .stats-modal-window{
+  background:linear-gradient(158deg,#f5f7fa 0%,#eff3f7 56%,#e9eef5 100%) !important;
+  border-color:rgba(83,103,126,.19) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.96),0 16px 45px rgba(32,45,63,.15) !important;
+}
+body.light #statsModal .stats-head{
+  border-bottom-color:rgba(91,111,131,.14) !important;
+}
+body.light #statsModal .stats-head h2{
+  color:#182b3f !important;
+  -webkit-text-fill-color:#182b3f !important;
+}
+body.light #statsModal .stats-head small{
+  color:#64778b !important;opacity:1 !important;
+}
+body.light #statsModal .stats-head-icon{
+  background:linear-gradient(155deg,#eaf1f8,#dae6f1) !important;
+  background-image:linear-gradient(155deg,#eaf1f8,#dae6f1) !important;
+  border-color:rgba(59,96,132,.20) !important;
+  color:#264a69 !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.86) !important;
+}
+body.light #statsModal .stats-head .close-btn{
+  background:linear-gradient(160deg,#ffffff,#e9eff5) !important;
+  color:#26394c !important;-webkit-text-fill-color:#26394c !important;
+  border-color:rgba(77,99,121,.19) !important;
+  box-shadow:0 2px 7px rgba(35,52,72,.06) !important;
+}
+/* Todos los paneles comparten superficie blanca; la jerarquía la dan los contrastes. */
+body.light #statsModal :is(.stat-card,.turn-end-card,.stats-holidays,.stats-worklog,.stats-off,.stats-salary){
+  background:#ffffff !important;
+  background-image:none !important;
+  border-color:var(--stats-stroke) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 2px 9px rgba(32,47,64,.045) !important;
+}
+body.light #statsModal .stat-card::after{opacity:.56 !important;height:2px !important;}
+body.light #statsModal .stat-card small{color:#667789 !important;}
+body.light #statsModal .stat-card b{color:#1c2d3f !important;-webkit-text-fill-color:#1c2d3f !important;}
+body.light #statsModal .stat-card i{
+  background:color-mix(in srgb,var(--stat-accent) 9%,white 91%) !important;
+  border-color:color-mix(in srgb,var(--stat-accent) 20%,#dbe4ed 80%) !important;
+  color:color-mix(in srgb,var(--stat-accent) 75%,#29445f 25%) !important;
+  opacity:.75 !important;
+}
+/* PDF: verde muy pálido, con CTA visible pero menos pesado. */
+body.light #statsModal .stats-pdf-entry{
+  background:linear-gradient(116deg,#edf8f4,#e5f4ef) !important;
+  background-image:linear-gradient(116deg,#edf8f4,#e5f4ef) !important;
+  border-color:rgba(29,146,121,.21) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7) !important;
+}
+body.light #statsModal .stats-pdf-entry-icon{
+  background:#d5efe5 !important;
+  color:#187c70 !important;
+  border-color:rgba(27,142,121,.20) !important;
+}
+body.light #statsModal .stats-pdf-entry-copy b{color:#23463f !important;}
+body.light #statsModal .stats-pdf-entry-copy small{color:#5d756f !important;}
+body.light #statsModal #openReportBtn.stats-pdf-entry-action{
+  background:linear-gradient(125deg,#159e8d,#128978) !important;
+  border-color:rgba(12,122,109,.27) !important;
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+  text-shadow:none !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 3px 10px rgba(26,134,118,.12) !important;
+}
+/* Estado del turno y numerador de sueldo: gris cálido, sin caja azul brillante. */
+body.light #statsModal .stats-turn-end > h3{color:#34495e !important;}
+body.light #statsModal .turn-end-badge,
+body.light #statsModal .stats-salary .salary-days{
+  background:linear-gradient(160deg,#f7f9fc,#e9eef3) !important;
+  background-image:linear-gradient(160deg,#f7f9fc,#e9eef3) !important;
+  border-color:rgba(75,97,120,.19) !important;
+  color:#233a4f !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.85) !important;
+}
+body.light #statsModal .salary-days strong{color:#22364a !important;-webkit-text-fill-color:#22364a !important;}
+body.light #statsModal .salary-days span{color:#596e80 !important;}
+/* Marcadores FER, J, Descanso, Sueldo: neutrales y consistentes. */
+body.light #statsModal :is(.stats-title-mark,.stats-holidays .stats-title-mark,.stats-worklog .stats-title-mark,.stats-off .stats-title-mark,.stats-salary .stats-title-mark){
+  background:linear-gradient(145deg,#eef3f8,#e0e8f0) !important;
+  background-image:linear-gradient(145deg,#eef3f8,#e0e8f0) !important;
+  color:#34536e !important;
+  border-color:rgba(77,105,130,.18) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9) !important;
+}
+/* Feriados: siete celdas de la misma familia cromática, sin brillo sobrante. */
+body.light #statsModal .holiday-work-chip{
+  background:#f5f7fa !important;
+  background-image:none !important;
+  border-color:rgba(84,103,124,.14) !important;
+  box-shadow:none !important;
+}
+body.light #statsModal .holiday-work-chip span{color:#66788a !important;}
+body.light #statsModal .holiday-work-chip b{color:#1d3044 !important;-webkit-text-fill-color:#1d3044 !important;}
+body.light #statsModal .holiday-work-note{color:#647589 !important;}
+/* Registro laboral: acento lateral fino con cuatro superficies idénticas. */
+body.light #statsModal .worklog-stat-btn{
+  background:#f6f8fa !important;
+  background-image:none !important;
+  border-top-color:rgba(87,109,134,.13) !important;
+  border-right-color:rgba(87,109,134,.13) !important;
+  border-bottom-color:rgba(87,109,134,.13) !important;
+  box-shadow:none !important;
+}
+body.light #statsModal .worklog-stat-btn.changes{border-left-color:#d3a06c !important;}
+body.light #statsModal .worklog-stat-btn.overtime{border-left-color:#69b8da !important;}
+body.light #statsModal .worklog-stat-btn.licenses{border-left-color:#cf94b1 !important;}
+body.light #statsModal .worklog-stat-btn.period-holidays{border-left-color:#e199a5 !important;}
+body.light #statsModal .worklog-stat-btn small{color:#53697c !important;}
+body.light #statsModal .worklog-stat-btn > span,
+body.light #statsModal .worklog-stat-btn em{color:#687a8c !important;}
+body.light #statsModal .worklog-stat-btn b{color:#192d41 !important;-webkit-text-fill-color:#192d41 !important;}
+/* Mantener inalteradas la altura, las filas y la interactividad. */
+</style>
 </head>
 <body class="notranslate">
 <div id="splash" class="splash">
@@ -17666,7 +17848,6 @@ body.light #vacationModal .vacation-legend-v{
     </div>
 
     <div class="vacation-legend">
-      <span class="vacation-legend-v">V</span>
       <span>En el calendario la V aparece abajo a la derecha y el turno original sigue visible.</span>
     </div>
   </div>
@@ -18048,8 +18229,8 @@ body.light #vacationModal .vacation-legend-v{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.8.6';
-const CURRENT_BUILD='5.8.6-vacation-icons-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
+const CURRENT_VERSION='5.8.8';
+const CURRENT_BUILD='5.8.8-stats-light-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
