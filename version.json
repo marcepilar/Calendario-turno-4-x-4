@@ -1,5 +1,5 @@
 {
-  "version": "5.9.0",
-  "build": "5.9.0-help-bottom-safe-rc1",
+  "version": "5.9.1",
+  "build": "5.9.1-autor-fit-rc1",
   "updateCheck": "version-and-build"
 }

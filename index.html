@@ -16899,6 +16899,65 @@ body.light #holidayStatsDetailModal .holiday-list-badge.holiday-half::after{
   scroll-padding-bottom: max(42px, calc(env(safe-area-inset-bottom, 0px) + 24px));
 }
 </style>
+<style id="help-author-fit-v591">
+/* V5.9.1 - Ajuste exclusivo de Autor en Ayuda.
+   El contenido de propiedad intelectual NO se elimina, la cabecera y el
+   índice mantienen su posición; se evita el copyright duplicado al entrar
+   desde Autor y se compactan espacios en este destino. */
+#helpModal.help-author-focus .help-copyright-footer{
+  display:none;
+}
+#helpModal.help-author-focus .help-modal-window{
+  padding-bottom:max(22px,calc(env(safe-area-inset-bottom,0px) + 16px)) !important;
+  scroll-padding-bottom:max(22px,calc(env(safe-area-inset-bottom,0px) + 16px));
+}
+#helpModal.help-author-focus #help-ip .help-section-title{
+  padding-top:6px;
+  padding-bottom:5px;
+}
+#helpModal.help-author-focus #help-ip .help-card{
+  padding-top:1px;
+  padding-bottom:8px;
+}
+#helpModal.help-author-focus #help-ip .help-ip-owner{
+  padding:7px 9px;
+  margin-bottom:7px;
+}
+#helpModal.help-author-focus #help-ip .help-ip-dnda{
+  margin:7px 0 8px;
+  padding:9px 11px;
+}
+#helpModal.help-author-focus #help-ip .help-ip-dnda-head{margin-bottom:5px}
+#helpModal.help-author-focus #help-ip .help-ip-dnda-desc{
+  margin-bottom:6px;
+  line-height:1.4;
+}
+#helpModal.help-author-focus #help-ip .help-ip-dnda-version{
+  margin-top:6px;
+  padding-top:6px;
+}
+#helpModal.help-author-focus #help-ip .help-card > p:not(.help-tip){
+  margin-bottom:5px;
+}
+#helpModal.help-author-focus #help-ip .help-tip{padding:6px 8px}
+#helpModal.help-author-focus #helpTopBtn{margin-top:4px}
+/* Pantallas bajas o compactas: aire seguro sin reducir tipografía. */
+@media (max-height:780px), (max-width:360px){
+  #helpModal.help-author-focus #help-ip .help-ip-owner{
+    padding:6px 8px;
+    margin-bottom:6px;
+  }
+  #helpModal.help-author-focus #help-ip .help-ip-dnda{
+    margin:6px 0 6px;
+    padding:8px 9px;
+  }
+  #helpModal.help-author-focus #help-ip .help-ip-dnda-desc{line-height:1.35}
+  #helpModal.help-author-focus #help-ip .help-card{padding-bottom:6px}
+  #helpModal.help-author-focus .help-modal-window{
+    padding-bottom:max(18px,calc(env(safe-area-inset-bottom,0px) + 12px)) !important;
+  }
+}
+</style>
 </head>
 <body class="notranslate">
 <div id="splash" class="splash">
@@ -18260,8 +18319,8 @@ body.light #holidayStatsDetailModal .holiday-list-badge.holiday-half::after{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.9.0';
-const CURRENT_BUILD='5.9.0-help-bottom-safe-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
+const CURRENT_VERSION='5.9.1';
+const CURRENT_BUILD='5.9.1-autor-fit-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -23175,6 +23234,7 @@ function markHelpNewsRead(){
 }
 syncHelpWhatsNewBadge();
 helpBtn.onclick=()=>{
+ $('#helpModal')?.classList.remove('help-author-focus');
  renderHelpNewsHistory();
  markHelpNewsRead();
  const hv=$('#helpVersionLabel');
@@ -23374,6 +23434,9 @@ $$('[data-help-go]').forEach(btn=>{
  btn.onclick=()=>{
   const target=$('#'+btn.dataset.helpGo);
   if(!target)return;
+  const help=$('#helpModal');
+  // Solo el destino Autor requiere compactación; los demás se conservan.
+  help?.classList.toggle('help-author-focus',btn.dataset.helpGo==='help-ip');
   target.scrollIntoView({behavior:'smooth',block:'start'});
  };
 });
@@ -23381,6 +23444,8 @@ $$('[data-help-go]').forEach(btn=>{
 $('#helpTopBtn').onclick=()=>{
  const modal=$('#helpModal .help-modal-window');
  if(!modal)return;
+ // Restituir el espacio original al volver al inicio.
+ $('#helpModal')?.classList.remove('help-author-focus');
  try{modal.scrollTo({top:0,behavior:'smooth'})}
  catch{modal.scrollTop=0}
 };
