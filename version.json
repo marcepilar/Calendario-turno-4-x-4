@@ -1,5 +1,5 @@
 {
-  "version": "5.9.1",
-  "build": "5.9.1-autor-fit-rc1",
+  "version": "5.9.2",
+  "build": "5.9.2-feriado-ba-11nov-rc1",
   "updateCheck": "version-and-build"
 }

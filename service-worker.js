@@ -1,4 +1,4 @@
-const CACHE='turnos4x4-5.9.1-autor-fit-rc1';
+const CACHE='turnos4x4-5.9.2-feriado-ba-11nov-rc1';
 const ASSETS=[
   './',
   './index.html',

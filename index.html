@@ -18319,8 +18319,8 @@ body.light #holidayStatsDetailModal .holiday-list-badge.holiday-half::after{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.9.1';
-const CURRENT_BUILD='5.9.1-autor-fit-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
+const CURRENT_VERSION='5.9.2';
+const CURRENT_BUILD='5.9.2-feriado-ba-11nov-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -19821,6 +19821,7 @@ function scheduleCycleBoundaryRefresh(){
 
 
 
+/* ===== V5.9.2 · FERIADO PROVINCIA BUENOS AIRES · 11 NOVIEMBRE 2026 ===== */
 /* ===== FERIADOS ARGENTINA · ONLINE + OFFLINE ===== */
 const HOLIDAY_API_BASE='https://api.argentinadatos.com/v1/feriados';
 const HOLIDAY_CACHE_PREFIX='turno4x4.holidays.v1.';
@@ -19844,6 +19845,7 @@ const HOLIDAY_FALLBACK_2026=[
  {fecha:'2026-08-17',tipo:'trasladable',nombre:'Paso a la Inmortalidad del Gral. José de San Martín'},
  {fecha:'2026-10-12',tipo:'trasladable',nombre:'Día del Respeto a la Diversidad Cultural'},
  {fecha:'2026-11-09',tipo:'inamovible',nombre:'Visita del papa León XIV'},
+ /* 11/11: feriado provincial exclusivo de Buenos Aires; se suma por perfil activo, no como nacional */
  {fecha:'2026-11-23',tipo:'trasladable',nombre:'Día de la Soberanía Nacional (20/11)'},
  {fecha:'2026-12-07',tipo:'puente',nombre:'Puente turístico no laborable'},
  {fecha:'2026-12-08',tipo:'inamovible',nombre:'Día de la Inmaculada Concepción de María'},
@@ -19919,6 +19921,18 @@ function holidayNameForLanguage(name){
 
 function holidayTypeForLanguage(typeText){
  const raw=String(typeText||'');
+ if(raw.includes('Feriado provincial · Buenos Aires')){
+  const labels={
+   es:'Feriado provincial · Buenos Aires',
+   en:'Provincial holiday · Buenos Aires',
+   pt:'Feriado provincial · Buenos Aires',
+   fr:'Jour férié provincial · Buenos Aires',
+   de:'Provinzieller Feiertag · Buenos Aires',
+   it:'Festività provinciale · Buenos Aires'
+  };
+  return raw.replace('Feriado provincial · Buenos Aires',labels[appLanguage]||labels.es)
+   .replace('½ feriado',appLanguage==='en'?'½ holiday':appLanguage==='fr'?'½ jour férié':appLanguage==='de'?'½ Feiertag':appLanguage==='it'?'½ festività':'½ feriado');
+ }
  if(appLanguage==='es')return raw;
 
  if(appLanguage==='en'){
@@ -19959,9 +19973,20 @@ function normalizeHolidayItems(items){
   .map(x=>({fecha:String(x.fecha),tipo:String(x.tipo||'feriado'),nombre:String(x.nombre).trim()}));
 }
 
-function holidayItemsToMap(items){
+/* Los feriados locales se aplican después de leer la caché o la API.
+   Así no desaparecen cuando un proveedor devuelve solo feriados nacionales. */
+const HOLIDAY_PILAR_2026={
+ fecha:'2026-11-11',
+ tipo:'provincial',
+ nombre:'Visita del papa León XIV',
+ alcance:'Provincia de Buenos Aires'
+};
+function holidayItemsToMap(items,year){
  const map={};
  normalizeHolidayItems(items).forEach(x=>{map[x.fecha]=x});
+ if(Number(year)===2026 && plantProfile==='ar-pilar'){
+  map[HOLIDAY_PILAR_2026.fecha]={...HOLIDAY_PILAR_2026};
+ }
  return map;
 }
 
@@ -19973,7 +19998,7 @@ function loadHolidayYear(year){
   if(saved)items=normalizeHolidayItems(JSON.parse(saved));
  }catch{}
  if(!items.length&&year===2026)items=HOLIDAY_FALLBACK_2026.slice();
- holidayMemory[year]=holidayItemsToMap(items);
+ holidayMemory[year]=holidayItemsToMap(items,year);
  return holidayMemory[year];
 }
 
@@ -20047,7 +20072,7 @@ async function ensureHolidayYear(year){
    const items=normalizeHolidayItems(await response.json());
    if(!items.length)throw new Error('Lista de feriados vacía');
 
-   holidayMemory[year]=holidayItemsToMap(items);
+   holidayMemory[year]=holidayItemsToMap(items,year);
    try{
     localStorage.setItem(HOLIDAY_CACHE_PREFIX+year,JSON.stringify(items));
     localStorage.setItem(HOLIDAY_CHECK_PREFIX+year,String(Date.now()));
@@ -20946,7 +20971,7 @@ function payrollHolidayDetails(turn,year,month){
    national:Boolean(national),
    name:names.join(' · '),
    type:national
-    ?(bridge?'Puente / no laborable':'Feriado nacional')
+    ?(bridge?'Puente / no laborable':(national.tipo==='provincial'?'Feriado provincial · Buenos Aires':'Feriado nacional'))
     :'Feriado gremial'
   });
  }
@@ -22080,7 +22105,7 @@ function showDetail(d){
    const halfHoliday=Boolean(!isBridgeHoliday(holiday)&&isHalfHolidayForTurnDate(active,d));
    holidayType.textContent=(holiday.custom
     ? 'Feriado gremial · Todos los turnos'
-    : 'Feriado nacional · Argentina') + (halfHoliday?' · ½ feriado · 6 h':'');
+    : (holiday.tipo==='provincial'?'Feriado provincial · Buenos Aires':'Feriado nacional · Argentina')) + (halfHoliday?' · ½ feriado · 6 h':'');
    holidayName.textContent=`(${holiday.nombre})`;
   }else{
    holidayType.textContent='Feriado nacional · Argentina';
@@ -22920,7 +22945,7 @@ function holidayWorkDetailsForTurn(year,turn){
    national:Boolean(national),
    name:names.join(' · '),
    type: national
-    ? (bridge?'Puente / no laborable':'Feriado nacional')
+    ? (bridge?'Puente / no laborable':(national.tipo==='provincial'?'Feriado provincial · Buenos Aires':'Feriado nacional'))
     : 'Feriado gremial'
   });
  }
