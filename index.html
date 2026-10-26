@@ -16889,6 +16889,16 @@ body.light #holidayStatsDetailModal .holiday-list-badge.holiday-half::after{
 }
 
 </style>
+
+<style id="help-safe-bottom-v590">
+/* V5.9.0: separación inferior exclusiva de Ayuda.
+   El botón Volver arriba queda completamente visible al final del scroll,
+   sin invadir la navegación del dispositivo. No modifica alturas de otras ventanas. */
+#helpModal .help-modal-window {
+  padding-bottom: max(42px, calc(env(safe-area-inset-bottom, 0px) + 24px)) !important;
+  scroll-padding-bottom: max(42px, calc(env(safe-area-inset-bottom, 0px) + 24px));
+}
+</style>
 </head>
 <body class="notranslate">
 <div id="splash" class="splash">
@@ -18250,8 +18260,8 @@ body.light #holidayStatsDetailModal .holiday-list-badge.holiday-half::after{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.8.9';
-const CURRENT_BUILD='5.8.9-half-holiday-light-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
+const CURRENT_VERSION='5.9.0';
+const CURRENT_BUILD='5.9.0-help-bottom-safe-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
