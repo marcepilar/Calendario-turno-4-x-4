@@ -9800,13 +9800,6 @@ body.light #statsModal .worklog-stat-btn.period-holidays{
 
 
 
-/* V5.8.4 · Nuevos mensajes del historial de novedades: seis idiomas. */
-Object.assign(I18N.en,{"Novedades recientes":"Recent updates","Gestos y cambios de turno":"Gestures and shift swaps","Un toque selecciona el día; dos toques abren Jornada; mantener 450 ms abre Agenda. Se amplió la explicación de cambios de turno.":"One tap selects the date; double tap opens Workday; hold for 450 ms to open Agenda. Shift swaps are explained in more detail.","Avisos automáticos de novedades":"Automatic new-feature alerts","Cuando agreguemos nuevas funciones, Ayuda mostrará el aviso NUEVO hasta que leas las novedades. Las correcciones sin novedades no volverán a activarlo.":"When new features are added, Help shows the NEW badge until you read the updates. Fix-only releases will not reactivate it."});
-Object.assign(I18N.pt,{"Novedades recientes":"Novidades recentes","Gestos y cambios de turno":"Gestos e trocas de turno","Un toque selecciona el día; dos toques abren Jornada; mantener 450 ms abre Agenda. Se amplió la explicación de cambios de turno.":"Um toque seleciona o dia; dois toques abrem Jornada; segurar por 450 ms abre a Agenda. As trocas de turno são explicadas com mais detalhes.","Avisos automáticos de novedades":"Avisos automáticos de novidades","Cuando agreguemos nuevas funciones, Ayuda mostrará el aviso NUEVO hasta que leas las novedades. Las correcciones sin novedades no volverán a activarlo.":"Quando novas funções forem adicionadas, a Ajuda exibirá o aviso NOVO até você ler as novidades. Atualizações só com correções não o reativam."});
-Object.assign(I18N.fr,{"Novedades recientes":"Nouveautés récentes","Gestos y cambios de turno":"Gestes et échanges de service","Un toque selecciona el día; dos toques abren Jornada; mantener 450 ms abre Agenda. Se amplió la explicación de cambios de turno.":"Un toucher sélectionne le jour ; un double toucher ouvre Journée ; maintenir 450 ms ouvre Agenda. Les échanges de service sont expliqués plus en détail.","Avisos automáticos de novedades":"Alertes automatiques de nouveautés","Cuando agreguemos nuevas funciones, Ayuda mostrará el aviso NUEVO hasta que leas las novedades. Las correcciones sin novedades no volverán a activarlo.":"Quand de nouvelles fonctions sont ajoutées, Aide affiche NOUVEAU jusqu’à leur consultation. Les simples corrections ne réactivent pas l’alerte."});
-Object.assign(I18N.de,{"Novedades recientes":"Neueste Änderungen","Gestos y cambios de turno":"Gesten und Schichttausch","Un toque selecciona el día; dos toques abren Jornada; mantener 450 ms abre Agenda. Se amplió la explicación de cambios de turno.":"Ein Tippen wählt den Tag; Doppeltippen öffnet Arbeitstag; 450 ms gedrückt halten öffnet Agenda. Der Schichttausch wird ausführlicher erklärt.","Avisos automáticos de novedades":"Automatische Hinweise auf Neuerungen","Cuando agreguemos nuevas funciones, Ayuda mostrará el aviso NUEVO hasta que leas las novedades. Las correcciones sin novedades no volverán a activarlo.":"Bei neuen Funktionen erscheint in Hilfe der Hinweis NEU, bis du die Neuerungen liest. Reine Fehlerkorrekturen aktivieren ihn nicht erneut."});
-Object.assign(I18N.it,{"Novedades recientes":"Novità recenti","Gestos y cambios de turno":"Gesti e cambi di turno","Un toque selecciona el día; dos toques abren Jornada; mantener 450 ms abre Agenda. Se amplió la explicación de cambios de turno.":"Un tocco seleziona il giorno; un doppio tocco apre Giornata; tenere premuto per 450 ms apre Agenda. I cambi di turno sono spiegati più in dettaglio.","Avisos automáticos de novedades":"Avvisi automatici delle novità","Cuando agreguemos nuevas funciones, Ayuda mostrará el aviso NUEVO hasta que leas las novedades. Las correcciones sin novedades no volverán a activarlo.":"Quando aggiungiamo nuove funzioni, Aiuto mostra l’avviso NUOVO finché non leggi le novità. Le sole correzioni non lo riattiveranno."});
-
 /* ===== V4.11.3 · PERFORMANCE · SIN CAMBIOS VISUALES ===== */
 
 /* Las ventanas ocultas quedan completamente fuera de layout/pintura. */
@@ -17476,7 +17469,7 @@ html.ios-license-selector body.light #workdayModal .license-field .app-select-co
       <div class="help-version-icon">4×4</div>
       <div class="help-version-copy">
         <b>Versión de la aplicación</b>
-        <span>V<span id="versionLabel">5.7.0</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
+        <span>V<span id="versionLabel">5.9.4</span> · <span id="updateStatusText">Aplicación actualizada.</span></span>
       </div>
     </div>
 
@@ -18422,8 +18415,8 @@ html.ios-license-selector body.light #workdayModal .license-field .app-select-co
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.9.3';
-const CURRENT_BUILD='5.9.3-selector-licencias-ios-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
+const CURRENT_VERSION='5.9.4';
+const CURRENT_BUILD='5.9.4-help-novedades-i18n-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -18872,6 +18865,14 @@ Object.assign(I18N.fr,{'Estado del turno':'État du poste'});
 Object.assign(I18N.de,{'Estado del turno':'Schichtstatus'});
 Object.assign(I18N.it,{'Estado del turno':'Stato del turno'});
 
+/* V5.9.4: Ubicación correcta del diccionario de novedades (fuera de CSS). */
+/* V5.8.4 · Nuevos mensajes del historial de novedades: seis idiomas. */
+Object.assign(I18N.en,{"Novedades recientes":"Recent updates","Gestos y cambios de turno":"Gestures and shift swaps","Un toque selecciona el día; dos toques abren Jornada; mantener 450 ms abre Agenda. Se amplió la explicación de cambios de turno.":"One tap selects the date; double tap opens Workday; hold for 450 ms to open Agenda. Shift swaps are explained in more detail.","Avisos automáticos de novedades":"Automatic new-feature alerts","Cuando agreguemos nuevas funciones, Ayuda mostrará el aviso NUEVO hasta que leas las novedades. Las correcciones sin novedades no volverán a activarlo.":"When new features are added, Help shows the NEW badge until you read the updates. Fix-only releases will not reactivate it."});
+Object.assign(I18N.pt,{"Novedades recientes":"Novidades recentes","Gestos y cambios de turno":"Gestos e trocas de turno","Un toque selecciona el día; dos toques abren Jornada; mantener 450 ms abre Agenda. Se amplió la explicación de cambios de turno.":"Um toque seleciona o dia; dois toques abrem Jornada; segurar por 450 ms abre a Agenda. As trocas de turno são explicadas com mais detalhes.","Avisos automáticos de novedades":"Avisos automáticos de novidades","Cuando agreguemos nuevas funciones, Ayuda mostrará el aviso NUEVO hasta que leas las novedades. Las correcciones sin novedades no volverán a activarlo.":"Quando novas funções forem adicionadas, a Ajuda exibirá o aviso NOVO até você ler as novidades. Atualizações só com correções não o reativam."});
+Object.assign(I18N.fr,{"Novedades recientes":"Nouveautés récentes","Gestos y cambios de turno":"Gestes et échanges de service","Un toque selecciona el día; dos toques abren Jornada; mantener 450 ms abre Agenda. Se amplió la explicación de cambios de turno.":"Un toucher sélectionne le jour ; un double toucher ouvre Journée ; maintenir 450 ms ouvre Agenda. Les échanges de service sont expliqués plus en détail.","Avisos automáticos de novedades":"Alertes automatiques de nouveautés","Cuando agreguemos nuevas funciones, Ayuda mostrará el aviso NUEVO hasta que leas las novedades. Las correcciones sin novedades no volverán a activarlo.":"Quand de nouvelles fonctions sont ajoutées, Aide affiche NOUVEAU jusqu’à leur consultation. Les simples corrections ne réactivent pas l’alerte."});
+Object.assign(I18N.de,{"Novedades recientes":"Neueste Änderungen","Gestos y cambios de turno":"Gesten und Schichttausch","Un toque selecciona el día; dos toques abren Jornada; mantener 450 ms abre Agenda. Se amplió la explicación de cambios de turno.":"Ein Tippen wählt den Tag; Doppeltippen öffnet Arbeitstag; 450 ms gedrückt halten öffnet Agenda. Der Schichttausch wird ausführlicher erklärt.","Avisos automáticos de novedades":"Automatische Hinweise auf Neuerungen","Cuando agreguemos nuevas funciones, Ayuda mostrará el aviso NUEVO hasta que leas las novedades. Las correcciones sin novedades no volverán a activarlo.":"Bei neuen Funktionen erscheint in Hilfe der Hinweis NEU, bis du die Neuerungen liest. Reine Fehlerkorrekturen aktivieren ihn nicht erneut."});
+Object.assign(I18N.it,{"Novedades recientes":"Novità recenti","Gestos y cambios de turno":"Gesti e cambi di turno","Un toque selecciona el día; dos toques abren Jornada; mantener 450 ms abre Agenda. Se amplió la explicación de cambios de turno.":"Un tocco seleziona il giorno; un doppio tocco apre Giornata; tenere premuto per 450 ms apre Agenda. I cambi di turno sono spiegati più in dettaglio.","Avisos automáticos de novedades":"Avvisi automatici delle novità","Cuando agreguemos nuevas funciones, Ayuda mostrará el aviso NUEVO hasta que leas las novedades. Las correcciones sin novedades no volverán a activarlo.":"Quando aggiungiamo nuove funzioni, Aiuto mostra l’avviso NUOVO finché non leggi le novità. Le sole correzioni non lo riattiveranno."});
+
 function tr(text){
  const source=String(text??'');
  if(appLanguage==='es')return source;
@@ -19022,6 +19023,7 @@ function applyLanguage(lang,{persist=true,rerender=true}={}){
  document.body?.classList.add('notranslate');
  document.title=({en:'4×4 Shift Calendar',pt:'Calendário de Turnos 4×4',fr:'Calendrier des équipes 4×4',de:'4×4 Schichtkalender',it:'Calendario turni 4×4'})[appLanguage]||'Calendario de Turnos 4×4';
  updateLanguageButton();
+ if(document.getElementById('helpModal')?.classList.contains('open'))renderHelpNewsHistory();
  if(document.getElementById('reportMonthPick')?.dataset.pickerReady==='yes'){
   reportPickerUpdateButtons();
   if(!document.getElementById('reportDatePicker').hidden)reportPickerRender();
@@ -23342,17 +23344,17 @@ function renderHelpNewsHistory(){
  root.replaceChildren();
  const unread=new Set(pendingHelpNews().map(item=>item.version));
  for(const note of [...HELP_NEWS].reverse()){
-  const entry=document.createElement('div');entry.className='help-news-entry';
+  const entry=document.createElement('div');entry.className='help-news-entry';entry.setAttribute('data-no-i18n','');
   entry.dataset.unread=unread.has(note.version)?'true':'false';
   const head=document.createElement('div');head.className='help-news-entry-top';
   const ver=document.createElement('span');ver.className='help-news-entry-version';ver.textContent='V'+note.version;
-  const name=document.createElement('b');name.className='help-news-entry-name';name.textContent=note.title;
-  const tag=document.createElement('span');tag.className='help-news-entry-unread';tag.textContent='NUEVO';
-  const desc=document.createElement('p');desc.className='help-news-entry-desc';desc.textContent=note.description;
+  const name=document.createElement('b');name.className='help-news-entry-name';name.textContent=tr(note.title);
+  const tag=document.createElement('span');tag.className='help-news-entry-unread';tag.textContent=tr('NUEVO');
+  const desc=document.createElement('p');desc.className='help-news-entry-desc';desc.textContent=tr(note.description);
   head.append(ver,name,tag);entry.append(head,desc);root.append(entry);
  }
- // El traductor principal actualiza estas descripciones junto con el resto de Ayuda.
- if(appLanguage!=='es' && typeof translateTree==='function')translateTree(root);
+ // Cada entrada se construye directamente en el idioma seleccionado.
+ // Al cambiar el idioma, la sección se vuelve a crear si Ayuda está abierta.
 }
 function markHelpNewsRead(){
  const last=HELP_NEWS[HELP_NEWS.length-1];

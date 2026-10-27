@@ -1,4 +1,4 @@
-const CACHE='turnos4x4-5.9.3-selector-licencias-ios-rc1';
+const CACHE='turnos4x4-5.9.4-help-novedades-i18n-rc1';
 const ASSETS=[
   './',
   './index.html',
