@@ -1,5 +1,5 @@
 {
-  "version": "5.9.2",
-  "build": "5.9.2-feriado-ba-11nov-rc1",
+  "version": "5.9.3",
+  "build": "5.9.3-selector-licencias-ios-rc1",
   "updateCheck": "version-and-build"
 }

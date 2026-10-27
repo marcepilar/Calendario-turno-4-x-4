@@ -16958,6 +16958,109 @@ body.light #holidayStatsDetailModal .holiday-list-badge.holiday-half::after{
   }
 }
 </style>
+<style id="v593-license-ios-select">
+
+/* ===== V5.9.3 · Safari iPhone/iPad · Tipo de licencia sin colapso =====
+   El select HTML se conserva para datos, cambios, orden e idiomas.
+   Sólo iOS presenta visualmente el botón táctil ya existente, evitando
+   el renderizado nativo de Safari como una línea estrecha. */
+html.ios-license-selector #workdayModal .license-field .app-select-control{
+  display:block !important;
+  position:relative !important;
+  width:100% !important;
+  min-width:0 !important;
+  height:41px !important;
+  min-height:41px !important;
+  border-radius:11px !important;
+}
+html.ios-license-selector #workdayModal .license-field .app-select-control > #licenseTypeSelect{
+  position:absolute !important;
+  width:1px !important;
+  height:1px !important;
+  min-height:1px !important;
+  max-height:1px !important;
+  left:0 !important;
+  top:0 !important;
+  padding:0 !important;
+  margin:0 !important;
+  border:0 !important;
+  overflow:hidden !important;
+  opacity:0 !important;
+  pointer-events:none !important;
+  -webkit-appearance:none !important;
+  appearance:none !important;
+}
+html.ios-license-selector #workdayModal .license-field .app-select-control > .app-select-tap-target{
+  position:absolute !important;
+  inset:0 !important;
+  z-index:9 !important;
+  width:100% !important;
+  height:100% !important;
+  min-height:41px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:9px !important;
+  padding:0 12px !important;
+  border:1px solid var(--line) !important;
+  border-radius:11px !important;
+  background:var(--panel3) !important;
+  color:var(--text) !important;
+  -webkit-text-fill-color:var(--text) !important;
+  opacity:1 !important;
+  text-align:left !important;
+  font-family:inherit !important;
+  font-size:12px !important;
+  font-weight:800 !important;
+  line-height:1.2 !important;
+  -webkit-appearance:none !important;
+  appearance:none !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035) !important;
+  touch-action:manipulation;
+}
+html.ios-license-selector #workdayModal .license-field .app-select-control .license-select-caption{
+  min-width:0;
+  flex:1 1 auto;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  pointer-events:none;
+}
+html.ios-license-selector #workdayModal .license-field .app-select-control .license-select-chevron{
+  display:block;
+  flex:0 0 auto;
+  width:9px;
+  height:9px;
+  border-right:1.8px solid currentColor;
+  border-bottom:1.8px solid currentColor;
+  transform:translateY(-3px) rotate(45deg);
+  opacity:.8;
+  pointer-events:none;
+}
+html.ios-license-selector #workdayModal .license-field .app-select-control > .app-select-tap-target:active{
+  filter:brightness(1.08);
+}
+html.ios-license-selector #workdayModal .license-field .app-select-control > .app-select-tap-target:focus-visible{
+  outline:2px solid var(--accent2);
+  outline-offset:2px;
+}
+@media(max-height:760px){
+  html.ios-license-selector #workdayModal .license-field .app-select-control{
+    height:38px !important;
+    min-height:38px !important;
+  }
+  html.ios-license-selector #workdayModal .license-field .app-select-control > .app-select-tap-target{
+    min-height:38px !important;
+  }
+}
+/* Se utiliza la misma paleta que el campo original en claro. */
+html.ios-license-selector body.light #workdayModal .license-field .app-select-control > .app-select-tap-target{
+  background:#f7f9fc !important;
+  color:#172536 !important;
+  -webkit-text-fill-color:#172536 !important;
+  border-color:rgba(62,82,106,.15) !important;
+}
+</style>
 </head>
 <body class="notranslate">
 <div id="splash" class="splash">
@@ -18319,8 +18422,8 @@ body.light #holidayStatsDetailModal .holiday-list-badge.holiday-half::after{
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.9.2';
-const CURRENT_BUILD='5.9.2-feriado-ba-11nov-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
+const CURRENT_VERSION='5.9.3';
+const CURRENT_BUILD='5.9.3-selector-licencias-ios-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -24938,5 +25041,46 @@ if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serv
 })();
 </script>
 
+
+<script>
+/* V5.9.3: sólo iOS dibuja el activador propio del Tipo de licencia.
+   La selección sigue sincronizada con el select original, conservando
+   traducciones, ediciones y el guardado existente. */
+(function(){
+  'use strict';
+  const ios=/iPad|iPhone|iPod/i.test(navigator.userAgent) ||
+    (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
+  if(!ios) return;
+  document.documentElement.classList.add('ios-license-selector');
+  const select=document.getElementById('licenseTypeSelect');
+  const trigger=select?.parentElement?.querySelector('.app-select-tap-target');
+  if(!select || !trigger) return;
+  const caption=document.createElement('span');
+  caption.className='license-select-caption';
+  const chevron=document.createElement('span');
+  chevron.className='license-select-chevron';
+  chevron.setAttribute('aria-hidden','true');
+  trigger.replaceChildren(caption,chevron);
+  select.setAttribute('aria-hidden','true');
+  function sync(){
+    const option=select.options[select.selectedIndex];
+    caption.textContent=option?.textContent?.trim() || 'Seleccionar…';
+    trigger.setAttribute('aria-label', 'Tipo de licencia: ' + caption.textContent);
+  }
+  sync();
+  select.addEventListener('change',sync);
+  select.addEventListener('input',sync);
+  new MutationObserver(sync).observe(select,{subtree:true,childList:true,characterData:true});
+  const modal=document.getElementById('workdayModal');
+  if(modal) new MutationObserver(sync).observe(modal,{attributes:true,attributeFilter:['class']});
+  // Reglas de selección en edición/restablecimiento actualizan .value sin
+  // disparar 'change'. Sincronizar tras esas acciones existentes.
+  document.addEventListener('click',event=>{
+    if(event.target.closest('[data-license-edit],#licenseClearBtn,[data-workday-tab]')){
+      setTimeout(sync,0);
+    }
+  });
+})();
+</script>
 </body>
 </html>
