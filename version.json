@@ -1,5 +1,5 @@
 {
-  "version": "5.9.4",
-  "build": "5.9.4-help-novedades-i18n-rc1",
+  "version": "5.9.5",
+  "build": "5.9.5-iphone-standalone-statusbar-default-rc1",
   "updateCheck": "version-and-build"
 }
