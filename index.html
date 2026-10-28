@@ -17122,6 +17122,24 @@ html.ios-license-selector body.light #workdayModal .license-field .app-select-co
   }
   #statsModal #openReportBtn.stats-pdf-entry-action::before{opacity:0}
 }
+
+/* ===========================================================
+   V5.10.1 · T5 FIJO / DIARIO · Respeto de zona segura iPhone
+   V4.5.7 daba a body.main-t5-active .app padding-top 6px/4px;
+   por especificidad anulaba el env(safe-area-inset-top) de V4.9.5.
+   Mantener exactamente la compactación original y SUMAR safe-top.
+   No toca geometría del calendario, lógica, almacenamientos, T1-T4.
+   =========================================================== */
+@media (max-width:620px){
+  body.main-t5-active .app{
+    padding-top:calc(6px + var(--safe-top));
+  }
+}
+@media (max-width:620px) and (max-height:760px){
+  body.main-t5-active .app{
+    padding-top:calc(4px + var(--safe-top));
+  }
+}
 </style>
 </head>
 <body class="notranslate">
@@ -18485,8 +18503,8 @@ html.ios-license-selector body.light #workdayModal .license-field .app-select-co
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.10.0';
-const CURRENT_BUILD='5.10.0-pdf-border-2500ms-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
+const CURRENT_VERSION='5.10.1';
+const CURRENT_BUILD='5.10.1-safe-area-t5-iphone-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
