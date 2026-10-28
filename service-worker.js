@@ -1,4 +1,4 @@
-const CACHE='turnos4x4-5.9.5-iphone-standalone-statusbar-default-rc1';
+const CACHE='turnos4x4-5.9.6-regional-holidays-rc1';
 const ASSETS=[
   './',
   './index.html',

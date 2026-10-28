@@ -17705,6 +17705,7 @@ html.ios-license-selector body.light #workdayModal .license-field .app-select-co
           <p>La copia de seguridad incluye Agenda, Vacaciones, preferencias de Vacaciones, Registro laboral y Licencias.</p>
           <p>Cuando existe una versión nueva aparece <strong>“Nueva versión disponible”</strong>. ACTUALIZAR instala la nueva versión; Más tarde conserva la actual por el momento.</p>
           <p>La app puede instalarse en Android y iPhone desde la sección “Instalar” de esta Ayuda. Los feriados usan datos en caché cuando no hay Internet.</p>
+          <p><small><span>Fuente adicional de feriados provinciales:</span> <a href="https://calendariosnacionales.com/ar/api/" target="_blank" rel="noopener noreferrer">Calendarios Nacionales</a>.</small></p>
         </div>
       </section>
 
@@ -18415,8 +18416,8 @@ html.ios-license-selector body.light #workdayModal .license-field .app-select-co
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.9.5';
-const CURRENT_BUILD='5.9.5-iphone-standalone-statusbar-default-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
+const CURRENT_VERSION='5.9.6';
+const CURRENT_BUILD='5.9.6-regional-holidays-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -19932,6 +19933,16 @@ const HOLIDAY_API_BASE='https://api.argentinadatos.com/v1/feriados';
 const HOLIDAY_CACHE_PREFIX='turno4x4.holidays.v1.';
 const HOLIDAY_CHECK_PREFIX='turno4x4.holidays.checked.v1.';
 const HOLIDAY_REFRESH_MS=24*60*60*1000;
+/* V5.9.6: fuente secundaria para feriados regionales por provincia.
+   ArgentinaDatos sigue siendo la fuente nacional principal.
+   Calendarios Nacionales ofrece el calendario provincial de Buenos Aires.
+   Se lee únicamente la información pública de feriados; nunca se envían datos del usuario. */
+const HOLIDAY_REGION_API_BASE='https://calendariosnacionales.com/ar/v1';
+const HOLIDAY_REGION_CACHE_PREFIX='turno4x4.holidays.region.ba.v1.';
+const HOLIDAY_REGION_CHECK_PREFIX='turno4x4.holidays.region.checked.ba.v1.';
+const HOLIDAY_REGION_ATTEMPT_PREFIX='turno4x4.holidays.region.attempt.ba.v1.';
+const HOLIDAY_REGION_RETRY_MS=60*60*1000;
+const holidayRegionPending=new Map();
 
 const HOLIDAY_FALLBACK_2026=[
  {fecha:'2026-01-01',tipo:'inamovible',nombre:'Año nuevo'},
@@ -19959,6 +19970,13 @@ const HOLIDAY_FALLBACK_2026=[
 
 
 /* ===== V4.13.5 · I18N DE FERIADOS DINÁMICOS ===== */
+
+/* Traducción del crédito de la segunda fuente de feriados. */
+Object.assign(I18N.en,{'Fuente adicional de feriados provinciales:':'Additional regional holiday source:'});
+Object.assign(I18N.pt,{'Fuente adicional de feriados provinciales:':'Fonte adicional de feriados provinciais:'});
+Object.assign(I18N.fr,{'Fuente adicional de feriados provinciales:':'Source supplémentaire des jours fériés provinciaux :'});
+Object.assign(I18N.de,{'Fuente adicional de feriados provinciales:':'Zusätzliche Quelle für regionale Feiertage:'});
+Object.assign(I18N.it,{'Fuente adicional de feriados provinciales:':'Fonte aggiuntiva per le festività provinciali:'});
 
 const HOLIDAY_NAME_I18N={
  en:{
@@ -20078,33 +20096,116 @@ function normalizeHolidayItems(items){
   .map(x=>({fecha:String(x.fecha),tipo:String(x.tipo||'feriado'),nombre:String(x.nombre).trim()}));
 }
 
-/* Los feriados locales se aplican después de leer la caché o la API.
-   Así no desaparecen cuando un proveedor devuelve solo feriados nacionales. */
+/* Los feriados provinciales se guardan en una caché distinta: de esta forma
+   una actualización de feriados nacionales nunca elimina los regionales. */
 const HOLIDAY_PILAR_2026={
  fecha:'2026-11-11',
  tipo:'provincial',
  nombre:'Visita del papa León XIV',
  alcance:'Provincia de Buenos Aires'
 };
+function normalizeRegionalHolidayItems(data,year){
+ if(!data || Number(data.year)!==Number(year) || !Array.isArray(data.holidays))return [];
+ const normalized=[];
+ for(const item of data.holidays){
+  if(!item || typeof item!=='object')continue;
+  const fecha=String(item.date||'');
+  const nombre=String(item.name||'').trim().slice(0,160);
+  const scope=String(item.scope||'').toLowerCase();
+  const type=String(item.type||'').toLowerCase();
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(fecha)||!fecha.startsWith(`${year}-`)||!nombre)continue;
+  if(!['nacional','provincial'].includes(scope))continue;
+  // Los días NO laborables turísticos no son feriados a efectos de cómputo.
+  if(type.includes('no laborable')||type.includes('nolaborable'))continue;
+  const tipo=scope==='provincial'?'provincial':
+    type.includes('puente')?'puente':type.includes('trasladable')?'trasladable':'inamovible';
+  normalized.push({fecha,nombre,tipo,alcance:scope==='provincial'?'Provincia de Buenos Aires':'Argentina'});
+ }
+ return normalized.slice(0,150);
+}
+function storedHolidayItems(prefix,year){
+ try{
+  const raw=localStorage.getItem(prefix+year);
+  return raw?JSON.parse(raw):[];
+ }catch{return []}
+}
 function holidayItemsToMap(items,year){
  const map={};
- normalizeHolidayItems(items).forEach(x=>{map[x.fecha]=x});
+ normalizeHolidayItems(items).forEach(x=>{if(x.fecha.startsWith(`${year}-`))map[x.fecha]=x});
+ // La fuente provincial puede aportar nacionales de años que aún no cubra
+ // ArgentinaDatos. Los nacionales de la fuente principal tienen prioridad.
+ const regional=normalizeRegionalHolidayItems({year,holidays:storedHolidayItems(HOLIDAY_REGION_CACHE_PREFIX,year)},year);
+ regional.forEach(x=>{
+  if(x.tipo==='provincial'||!map[x.fecha])map[x.fecha]=x;
+ });
+ // Respaldo 2026: norma oficial verificada, aunque fallen ambas fuentes.
  if(Number(year)===2026 && plantProfile==='ar-pilar'){
   map[HOLIDAY_PILAR_2026.fecha]={...HOLIDAY_PILAR_2026};
  }
  return map;
 }
-
 function loadHolidayYear(year){
  if(holidayMemory[year])return holidayMemory[year];
- let items=[];
- try{
-  const saved=localStorage.getItem(HOLIDAY_CACHE_PREFIX+year);
-  if(saved)items=normalizeHolidayItems(JSON.parse(saved));
- }catch{}
- if(!items.length&&year===2026)items=HOLIDAY_FALLBACK_2026.slice();
+ let items=normalizeHolidayItems(storedHolidayItems(HOLIDAY_CACHE_PREFIX,year));
+ if(!items.length&&Number(year)===2026)items=HOLIDAY_FALLBACK_2026.slice();
  holidayMemory[year]=holidayItemsToMap(items,year);
  return holidayMemory[year];
+}
+function refreshHolidayYearFromCache(year){
+ let items=normalizeHolidayItems(storedHolidayItems(HOLIDAY_CACHE_PREFIX,year));
+ if(!items.length&&Number(year)===2026)items=HOLIDAY_FALLBACK_2026.slice();
+ holidayMemory[year]=holidayItemsToMap(items,year);
+ if(holidayYearIsRelevantForMonth(year)){
+  renderCalendar();
+  showDetail(selectedDate);
+ }
+ const yearModal=$('#yearModal');
+ if(yearViewYear===year&&yearModal?.classList.contains('open'))renderYear();
+ const statsModal=$('#statsModal');
+ if(viewYear===year&&statsModal?.classList.contains('open'))renderStats();
+ const holidayModal=$('#holidayStatsDetailModal');
+ if(holidayStatsDetailYear===year&&holidayStatsDetailTurn&&holidayModal?.classList.contains('open')){
+  renderHolidayStatsDetail(holidayStatsDetailTurn,holidayStatsDetailYear);
+ }
+}
+/* Consulta autónoma de la provincia activa, limitada a una vez al día si
+   funciona y a un intento por hora si falla. No modifica los datos propios. */
+async function ensureRegionalHolidayYear(year){
+ year=Number(year);
+ if(plantProfile!=='ar-pilar'||year<2025||year>new Date().getFullYear()+2)return null;
+ if(!navigator.onLine)return null;
+ if(holidayRegionPending.has(year))return holidayRegionPending.get(year);
+ let lastCheck=0,lastAttempt=0;
+ try{
+  lastCheck=Number(localStorage.getItem(HOLIDAY_REGION_CHECK_PREFIX+year)||0);
+  lastAttempt=Number(localStorage.getItem(HOLIDAY_REGION_ATTEMPT_PREFIX+year)||0);
+ }catch{}
+ if(lastCheck&&Date.now()-lastCheck<HOLIDAY_REFRESH_MS)return null;
+ if(lastAttempt&&Date.now()-lastAttempt<HOLIDAY_REGION_RETRY_MS)return null;
+ const job=(async()=>{
+  try{
+   try{localStorage.setItem(HOLIDAY_REGION_ATTEMPT_PREFIX+year,String(Date.now()))}catch{}
+   const url=`${HOLIDAY_REGION_API_BASE}/${year}/provincias/buenos-aires.json`;
+   const response=await fetch(url,{cache:'no-store',headers:{'Accept':'application/json'}});
+   if(!response.ok)throw new Error(`HTTP ${response.status}`);
+   const payload=await response.json();
+   const items=normalizeRegionalHolidayItems(payload,year);
+   // Si el proveedor devuelve una lista vacía o un esquema distinto,
+   // no pisamos los feriados ya guardados.
+   if(!items.length)throw new Error('Sin feriados regionales válidos');
+   try{
+    // Guardamos el formato público original, filtrado a fechas y alcance.
+    const safeItems=items.map(x=>({date:x.fecha,name:x.nombre,scope:x.tipo==='provincial'?'provincial':'nacional',type:x.tipo}));
+    localStorage.setItem(HOLIDAY_REGION_CACHE_PREFIX+year,JSON.stringify(safeItems));
+    localStorage.setItem(HOLIDAY_REGION_CHECK_PREFIX+year,String(Date.now()));
+   }catch{}
+   refreshHolidayYearFromCache(year);
+   return items;
+  }catch{return null}
+  finally{holidayRegionPending.delete(year)}
+ })();
+ holidayRegionPending.set(year,job);
+ return job;
 }
 
 function isBridgeHoliday(holiday){
@@ -20156,6 +20257,9 @@ async function ensureHolidayYear(year){
  year=Number(year);
  if(!Number.isInteger(year))return;
  loadHolidayYear(year);
+ // Se consulta en paralelo, incluso si el calendario nacional está al día.
+ // No se espera su respuesta para mostrar el calendario local.
+ ensureRegionalHolidayYear(year);
 
  const currentYear=new Date().getFullYear();
  if(year<2016||year>currentYear+2)return;
