@@ -1,5 +1,5 @@
 {
-  "version": "5.9.6",
-  "build": "5.9.6-regional-holidays-rc1",
+  "version": "5.10.0",
+  "build": "5.10.0-pdf-border-2500ms-rc1",
   "updateCheck": "version-and-build"
 }

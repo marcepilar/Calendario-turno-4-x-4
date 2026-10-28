@@ -17054,6 +17054,75 @@ html.ios-license-selector body.light #workdayModal .license-field .app-select-co
   border-color:rgba(62,82,106,.15) !important;
 }
 </style>
+<style>
+/* V5.10.0 · Informes PDF: texto blanco legible + contorno luminoso discreto.
+   Únicamente efecto visual. Se preservan el botón, sus eventos y traducciones. */
+#statsModal #openReportBtn.stats-pdf-entry-action{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  border:1.5px solid rgba(176,255,237,.76) !important;
+  box-shadow:0 0 0 1px rgba(78,239,209,.14),
+             0 0 10px rgba(61,240,209,.17),
+             inset 0 1px 0 rgba(255,255,255,.12);
+  animation:pdfBorderSoftGlow 6.5s ease-in-out infinite;
+}
+/* Restauramos el texto original: blanco sólido en todos los temas y estados. */
+#statsModal #openReportBtn .pdf-entry-rainbow-text{
+  position:relative;
+  z-index:1;
+  display:inline-block;
+  color:#fff !important;
+  -webkit-text-fill-color:#fff !important;
+  background:none !important;
+  filter:none !important;
+  animation:none !important;
+  text-shadow:0 1px 1px rgba(0,51,57,.45);
+}
+/* Un reflejo atraviesa exclusivamente el borde; nunca pasa sobre las letras. */
+@supports ((-webkit-mask-composite:xor) or (mask-composite:exclude)){
+  #statsModal #openReportBtn.stats-pdf-entry-action::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    box-sizing:border-box;
+    border:2px solid transparent;
+    border-radius:inherit;
+    pointer-events:none;
+    z-index:0;
+    background:linear-gradient(105deg,
+      transparent 20%,rgba(218,255,248,0) 40%,
+      rgba(232,255,252,.95) 50%,rgba(218,255,248,0) 60%,
+      transparent 80%) border-box;
+    background-size:280% 100%;
+    -webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;
+    mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);
+    mask-composite:exclude;
+    animation:pdfBorderTravel 4.1s linear infinite;
+  }
+}
+@keyframes pdfBorderSoftGlow{
+  0%,100%{border-color:rgba(176,255,237,.70);box-shadow:0 0 0 1px rgba(78,239,209,.11),0 0 7px rgba(61,240,209,.14),inset 0 1px 0 rgba(255,255,255,.10)}
+  50%{border-color:rgba(220,255,247,.94);box-shadow:0 0 0 1px rgba(78,239,209,.20),0 0 13px rgba(61,240,209,.27),inset 0 1px 0 rgba(255,255,255,.15)}
+}
+/* Un recorrido visible de 1,6 s y una pausa real de 2.500 ms entre recorridos.
+   Ciclo total: 4,1 s. La pausa ocupa el 60,976 % final del ciclo. */
+@keyframes pdfBorderTravel{
+  0%{background-position:130% 50%;opacity:0}
+  4%{opacity:.9}
+  35%{background-position:-30% 50%;opacity:.9}
+  39.024%{background-position:-30% 50%;opacity:0}
+  100%{background-position:-30% 50%;opacity:0}
+}
+@media (prefers-reduced-motion:reduce){
+  #statsModal #openReportBtn.stats-pdf-entry-action,
+  #statsModal #openReportBtn.stats-pdf-entry-action::before{
+    animation:none !important;
+  }
+  #statsModal #openReportBtn.stats-pdf-entry-action::before{opacity:0}
+}
+</style>
 </head>
 <body class="notranslate">
 <div id="splash" class="splash">
@@ -18147,7 +18216,7 @@ html.ios-license-selector body.light #workdayModal .license-field .app-select-co
       <b>Informes PDF</b>
       <small>Exportá tus registros laborales por categoría y período.</small>
     </div>
-    <button type="button" id="openReportBtn" class="stats-pdf-entry-action" aria-label="Crear Informes PDF">CREAR INFORMES PDF ›</button>
+    <button type="button" id="openReportBtn" class="stats-pdf-entry-action" aria-label="Crear Informes PDF"><span class="pdf-entry-rainbow-text">CREAR INFORMES PDF ›</span></button>
   </div>
   <div class="stats-section stats-turn-end">
     <h3><span class="stats-title-dot"></span>Estado del turno</h3>
@@ -18416,8 +18485,8 @@ html.ios-license-selector body.light #workdayModal .license-field .app-select-co
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.9.6';
-const CURRENT_BUILD='5.9.6-regional-holidays-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
+const CURRENT_VERSION='5.10.0';
+const CURRENT_BUILD='5.10.0-pdf-border-2500ms-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
