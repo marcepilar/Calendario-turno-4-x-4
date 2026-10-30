@@ -1,4 +1,4 @@
-const CACHE='turnos4x4-5.10.5-estadisticas-acento-lateral-rc1';
+const CACHE='turnos4x4-5.10.6-bordes-superiores-grosor-igual-rc1';
 const ASSETS=[
   './',
   './index.html',
