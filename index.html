@@ -17140,6 +17140,41 @@ html.ios-license-selector body.light #workdayModal .license-field .app-select-co
     padding-top:calc(4px + var(--safe-top));
   }
 }
+
+/* V5.10.4 · Pastilla de sueldo, visual especial solo en la fecha estimada de cobro. */
+#statsModal .stats-salary .salary-days.is-payday {
+  width:49px !important;
+  min-width:49px !important;
+  flex:0 0 49px !important;
+  padding:5px 4px !important;
+  gap:2px !important;
+  height:auto !important;
+  min-height:54px !important;
+  text-align:center !important;
+}
+#statsModal .stats-salary .salary-days.is-payday strong {
+  font-size:19px !important;
+  letter-spacing:-.6px !important;
+  white-space:nowrap !important;
+  line-height:1.1 !important;
+}
+#statsModal .stats-salary .salary-days.is-payday span {
+  font-size:7px !important;
+  line-height:1.1 !important;
+  white-space:normal !important;
+  overflow-wrap:normal !important;
+  text-align:center !important;
+  display:block !important;
+}
+@media(max-width:360px) {
+  #statsModal .stats-salary .salary-days.is-payday {
+    width:44px !important;
+    min-width:44px !important;
+    flex-basis:44px !important;
+  }
+  #statsModal .stats-salary .salary-days.is-payday strong {font-size:17px !important;}
+  #statsModal .stats-salary .salary-days.is-payday span {font-size:6.5px !important;}
+}
 </style>
 </head>
 <body class="notranslate">
@@ -18503,8 +18538,8 @@ html.ios-license-selector body.light #workdayModal .license-field .app-select-co
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.10.1';
-const CURRENT_BUILD='5.10.1-safe-area-t5-iphone-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
+const CURRENT_VERSION='5.10.4';
+const CURRENT_BUILD='5.10.4-salario-hoy-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -18960,6 +18995,13 @@ Object.assign(I18N.pt,{"Novedades recientes":"Novidades recentes","Gestos y camb
 Object.assign(I18N.fr,{"Novedades recientes":"Nouveautés récentes","Gestos y cambios de turno":"Gestes et échanges de service","Un toque selecciona el día; dos toques abren Jornada; mantener 450 ms abre Agenda. Se amplió la explicación de cambios de turno.":"Un toucher sélectionne le jour ; un double toucher ouvre Journée ; maintenir 450 ms ouvre Agenda. Les échanges de service sont expliqués plus en détail.","Avisos automáticos de novedades":"Alertes automatiques de nouveautés","Cuando agreguemos nuevas funciones, Ayuda mostrará el aviso NUEVO hasta que leas las novedades. Las correcciones sin novedades no volverán a activarlo.":"Quand de nouvelles fonctions sont ajoutées, Aide affiche NOUVEAU jusqu’à leur consultation. Les simples corrections ne réactivent pas l’alerte."});
 Object.assign(I18N.de,{"Novedades recientes":"Neueste Änderungen","Gestos y cambios de turno":"Gesten und Schichttausch","Un toque selecciona el día; dos toques abren Jornada; mantener 450 ms abre Agenda. Se amplió la explicación de cambios de turno.":"Ein Tippen wählt den Tag; Doppeltippen öffnet Arbeitstag; 450 ms gedrückt halten öffnet Agenda. Der Schichttausch wird ausführlicher erklärt.","Avisos automáticos de novedades":"Automatische Hinweise auf Neuerungen","Cuando agreguemos nuevas funciones, Ayuda mostrará el aviso NUEVO hasta que leas las novedades. Las correcciones sin novedades no volverán a activarlo.":"Bei neuen Funktionen erscheint in Hilfe der Hinweis NEU, bis du die Neuerungen liest. Reine Fehlerkorrekturen aktivieren ihn nicht erneut."});
 Object.assign(I18N.it,{"Novedades recientes":"Novità recenti","Gestos y cambios de turno":"Gesti e cambi di turno","Un toque selecciona el día; dos toques abren Jornada; mantener 450 ms abre Agenda. Se amplió la explicación de cambios de turno.":"Un tocco seleziona il giorno; un doppio tocco apre Giornata; tenere premuto per 450 ms apre Agenda. I cambi di turno sono spiegati più in dettaglio.","Avisos automáticos de novedades":"Avvisi automatici delle novità","Cuando agreguemos nuevas funciones, Ayuda mostrará el aviso NUEVO hasta que leas las novedades. Las correcciones sin novedades no volverán a activarlo.":"Quando aggiungiamo nuove funzioni, Aiuto mostra l’avviso NUOVO finché non leggi le novità. Le sole correzioni non lo riattiveranno."});
+
+/* V5.10.4 · Aviso de cobro, traducción en los seis idiomas. */
+Object.assign(I18N.en,{'Hoy cobrás':'Payday today'});
+Object.assign(I18N.pt,{'Hoy cobrás':'Hoje é dia de pagamento'});
+Object.assign(I18N.fr,{'Hoy cobrás':"C’est le jour de paie"});
+Object.assign(I18N.de,{'Hoy cobrás':'Heute ist Zahltag'});
+Object.assign(I18N.it,{'Hoy cobrás':'Oggi è giorno di paga'});
 
 function tr(text){
  const source=String(text??'');
@@ -23375,8 +23417,11 @@ function renderStats(){
 
  const salary=salaryCountdown(new Date());
  $('#salaryDate').textContent=cap(shortDateFmt.format(salary.payday));
- $('#salaryDays').textContent=salary.days;
- $('#salaryDaysLabel').textContent=salary.days===1?'día':'días';
+ // V5.10.4 · Día estimado de cobro: indicador especial, sin alterar el cálculo.
+ const salaryToday=salary.days===0;
+ $('#salaryDays').textContent=salaryToday?'$$$':salary.days;
+ $('#salaryDaysLabel').textContent=salaryToday?'Hoy cobrás':(salary.days===1?'día':'días');
+ $('#salaryDays').closest('.salary-days')?.classList.toggle('is-payday',salaryToday);
  $('#salaryNote').textContent=salary.days===0
    ?'Hoy es la fecha estimada de cobro.'
    :'Último día hábil (lunes a viernes) del mes.';

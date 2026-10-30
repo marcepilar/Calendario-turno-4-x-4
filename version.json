@@ -1,5 +1,5 @@
 {
-  "version": "5.10.1",
-  "build": "5.10.1-safe-area-t5-iphone-rc1",
+  "version": "5.10.4",
+  "build": "5.10.4-salario-hoy-rc1",
   "updateCheck": "version-and-build"
 }

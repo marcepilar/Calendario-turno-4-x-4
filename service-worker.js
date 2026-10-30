@@ -1,4 +1,4 @@
-const CACHE='turnos4x4-5.10.1-safe-area-t5-iphone-rc1';
+const CACHE='turnos4x4-5.10.4-salario-hoy-rc1';
 const ASSETS=[
   './',
   './index.html',
