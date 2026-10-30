@@ -17176,6 +17176,27 @@ html.ios-license-selector body.light #workdayModal .license-field .app-select-co
   #statsModal .stats-salary .salary-days.is-payday span {font-size:6.5px !important;}
 }
 </style>
+
+<style id="stats-top-accent-v5105">
+/* V5.10.5 · Unificar las cuatro tarjetas superiores de Estadísticas
+   con el acento lateral redondeado de las tarjetas de Registro laboral.
+   Sin alterar medidas, contenido, lógica ni otros elementos de la vista. */
+#statsModal .stats-grid .stat-card,
+body.dark-blue #statsModal .stats-grid .stat-card,
+body.light #statsModal .stats-grid .stat-card {
+  border-left:3px solid var(--stat-accent, var(--accent2)) !important;
+  border-bottom:1px solid var(--stats-stroke, var(--line)) !important;
+  border-radius:13px !important;
+}
+/* El antiguo subrayado horizontal se elimina completamente. */
+#statsModal .stats-grid .stat-card::after,
+body.dark-blue #statsModal .stats-grid .stat-card::after,
+body.light #statsModal .stats-grid .stat-card::after {
+  content:none !important;
+  display:none !important;
+}
+/* Preservar los colores propios de Mañanas, Noches, Francos y Horas mes. */
+</style>
 </head>
 <body class="notranslate">
 <div id="splash" class="splash">
@@ -18538,8 +18559,8 @@ html.ios-license-selector body.light #workdayModal .license-field .app-select-co
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.10.4';
-const CURRENT_BUILD='5.10.4-salario-hoy-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
+const CURRENT_VERSION='5.10.5';
+const CURRENT_BUILD='5.10.5-estadisticas-acento-lateral-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
