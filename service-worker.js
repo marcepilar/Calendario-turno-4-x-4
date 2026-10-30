@@ -1,4 +1,4 @@
-const CACHE='turnos4x4-5.10.6-bordes-superiores-grosor-igual-rc1';
+const CACHE='turnos4x4-5.10.7-estado-turno-situacion-real-rc1';
 const ASSETS=[
   './',
   './index.html',

@@ -17197,6 +17197,23 @@ body.light #statsModal .stats-grid .stat-card::after {
 }
 /* Preservar los colores propios de Mañanas, Noches, Francos y Horas mes. */
 </style>
+
+<style id="turn-end-status-v5107">
+/* V5.10.7 · Indicadores visibles sin cambiar altura ni las demás tarjetas */
+#statsModal .turn-end-card.situation-license .turn-end-copy b,
+#statsModal .turn-end-card.situation-vacation .turn-end-copy b,
+#statsModal .turn-end-card.situation-change.is-inactive .turn-end-copy b{
+ font-size:clamp(17px,4.15vw,29px) !important;
+ line-height:1.1 !important;
+ letter-spacing:0 !important;
+}
+#statsModal .turn-end-badge.situation-license-badge{background:rgba(220,98,155,.13) !important;border-color:rgba(220,98,155,.36) !important;color:#f6abd0 !important;}
+#statsModal .turn-end-badge.situation-vacation-badge{background:rgba(155,124,255,.15) !important;border-color:rgba(155,124,255,.4) !important;color:#c4acff !important;}
+#statsModal .turn-end-badge.situation-change-badge{background:rgba(244,175,73,.13) !important;border-color:rgba(244,175,73,.36) !important;color:#ffd18b !important;}
+body.light #statsModal .turn-end-badge.situation-license-badge{color:#934369 !important;}
+body.light #statsModal .turn-end-badge.situation-vacation-badge{color:#7154a6 !important;}
+body.light #statsModal .turn-end-badge.situation-change-badge{color:#8a5419 !important;}
+</style>
 </head>
 <body class="notranslate">
 <div id="splash" class="splash">
@@ -18559,8 +18576,8 @@ body.light #statsModal .stats-grid .stat-card::after {
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.10.6';
-const CURRENT_BUILD='5.10.6-bordes-superiores-grosor-igual-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
+const CURRENT_VERSION='5.10.7';
+const CURRENT_BUILD='5.10.7-estado-turno-situacion-real-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -19023,6 +19040,48 @@ Object.assign(I18N.pt,{'Hoy cobrás':'Hoje é dia de pagamento'});
 Object.assign(I18N.fr,{'Hoy cobrás':"C’est le jour de paie"});
 Object.assign(I18N.de,{'Hoy cobrás':'Heute ist Zahltag'});
 Object.assign(I18N.it,{'Hoy cobrás':'Oggi è giorno di paga'});
+
+/* V5.10.7 · Etiquetas nuevas de Estado del turno */
+Object.assign(I18N.en,{
+ 'Licencia laboral':'Leave','De licencia':'On leave','De vacaciones':'On vacation',
+ 'Cambio de turno':'Shift swap','No asistís a esta jornada.':'You are off this shift.',
+ 'Cubriendo un cambio · tiempo restante':'Covering a shift · time left',
+ 'Cobertura finalizada.':'Cover shift finished.','Ingreso:':'Starts:',
+ 'Hasta':'Until','Turno T5':'T5 day','Mañana (turno)':'Morning','Noche (turno)':'Night',
+ 'Próximo ingreso:':'Next shift:','Salida:':'Ends:'
+});
+Object.assign(I18N.pt,{
+ 'Licencia laboral':'Licença','De licencia':'De licença','De vacaciones':'De férias',
+ 'Cambio de turno':'Troca de turno','No asistís a esta jornada.':'Não trabalha neste turno.',
+ 'Cubriendo un cambio · tiempo restante':'Cobrindo turno · tempo restante',
+ 'Cobertura finalizada.':'Cobertura concluída.','Ingreso:':'Entrada:',
+ 'Hasta':'Até','Turno T5':'Turno T5','Mañana (turno)':'Manhã','Noche (turno)':'Noite',
+ 'Próximo ingreso:':'Próxima entrada:','Salida:':'Saída:'
+});
+Object.assign(I18N.fr,{
+ 'Licencia laboral':'Congé','De licencia':'En congé','De vacaciones':'En vacances',
+ 'Cambio de turno':'Échange de poste','No asistís a esta jornada.':'Vous ne travaillez pas ce poste.',
+ 'Cubriendo un cambio · tiempo restante':'Remplacement · temps restant',
+ 'Cobertura finalizada.':'Remplacement terminé.','Ingreso:':'Début :',
+ 'Hasta':"Jusqu’au",'Turno T5':'Poste T5','Mañana (turno)':'Matin','Noche (turno)':'Nuit',
+ 'Próximo ingreso:':'Prochain poste :','Salida:':'Fin :'
+});
+Object.assign(I18N.de,{
+ 'Licencia laboral':'Freistellung','De licencia':'Freigestellt','De vacaciones':'Im Urlaub',
+ 'Cambio de turno':'Schichttausch','No asistís a esta jornada.':'Diese Schicht ist abgegeben.',
+ 'Cubriendo un cambio · tiempo restante':'Vertretung · Restzeit',
+ 'Cobertura finalizada.':'Vertretung beendet.','Ingreso:':'Beginn:',
+ 'Hasta':'Bis','Turno T5':'T5-Tag','Mañana (turno)':'Früh','Noche (turno)':'Nacht',
+ 'Próximo ingreso:':'Nächste Schicht:','Salida:':'Ende:'
+});
+Object.assign(I18N.it,{
+ 'Licencia laboral':'Permesso','De licencia':'In permesso','De vacaciones':'In ferie',
+ 'Cambio de turno':'Cambio turno','No asistís a esta jornada.':'Non lavori in questo turno.',
+ 'Cubriendo un cambio · tiempo restante':'Sostituzione · tempo rimasto',
+ 'Cobertura finalizada.':'Sostituzione terminata.','Ingreso:':'Inizio:',
+ 'Hasta':'Fino al','Turno T5':'Turno T5','Mañana (turno)':'Mattina','Noche (turno)':'Notte',
+ 'Próximo ingreso:':'Prossimo turno:','Salida:':'Fine:'
+});
 
 function tr(text){
  const source=String(text??'');
@@ -23117,76 +23176,149 @@ function relativeDayWord(d){
  if(diff===1)return 'Mañana';
  return cap(shortFmt.format(d));
 }
+/* V5.10.7 · Estado del turno según registros laborales reales.
+   Sólo informa: no cambia la rotación, el registro ni los cálculos de jornada. */
+function situationForDate(turn,date){
+ const license=licensesForDate(date,turn)[0]||null;
+ const vacation=vacationsForDate(date)[0]||null;
+ const record=worklogForDate(date,turn);
+ const planned=codeFor(turn,date);
+ // Una licencia registrada tiene prioridad sobre vacaciones y cambios simultáneos.
+ if(license)return {kind:'license',license,code:'F'};
+ if(vacation)return {kind:'vacation',vacation,code:'F'};
+ if(record?.workedCode){
+  const mode=worklogChangeMode(record);
+  if(mode==='requested')return {kind:'requested',record,code:'F'};
+  if(mode==='received'){
+   // En una cobertura se trabaja el horario del turno al que se reemplaza,
+   // NO el del turno propio ni el del compañero que cubre un cambio pedido.
+   const other=record.workedCode;
+   const actual=['M','N','D','F'].includes(other)?other:codeFor(other,date);
+   return {kind:'received',record,code:actual};
+  }
+ }
+ return {kind:planned==='F'?'off':'scheduled',code:planned};
+}
+function situationIntervalForDate(turn,date){
+ const state=situationForDate(turn,date);
+ if(!['scheduled','received'].includes(state.kind))return null;
+ const d=calendarDate(date.getFullYear(),date.getMonth(),date.getDate());
+ const c=state.code;
+ let start=null,end=null;
+ if(c==='M'){
+  start=calendarDate(d.getFullYear(),d.getMonth(),d.getDate(),6,0,0,0);
+  end=calendarDate(d.getFullYear(),d.getMonth(),d.getDate(),18,0,0,0);
+ }else if(c==='N'){
+  start=calendarDate(d.getFullYear(),d.getMonth(),d.getDate(),18,0,0,0);
+  const next=addDays(d,1);
+  end=calendarDate(next.getFullYear(),next.getMonth(),next.getDate(),6,0,0,0);
+ }else if(c==='D'){
+  start=calendarDate(d.getFullYear(),d.getMonth(),d.getDate(),7,30,0,0);
+  end=calendarDate(d.getFullYear(),d.getMonth(),d.getDate(),16,30,0,0);
+ }
+ return start&&end?{...state,start,end}:null;
+}
 function activeTurnInfo(turn,nowDate){
  const now=new Date(nowDate);
  const today=calendarDate(now.getFullYear(),now.getMonth(),now.getDate());
- const yesterday=addDays(today,-1);
- const sixToday=calendarDate(today.getFullYear(),today.getMonth(),today.getDate(),6,0,0,0);
- const sixTomorrow=calendarDate(today.getFullYear(),today.getMonth(),today.getDate()+1,6,0,0,0);
- const sevenThirtyToday=calendarDate(today.getFullYear(),today.getMonth(),today.getDate(),7,30,0,0);
- const sixteenThirtyToday=calendarDate(today.getFullYear(),today.getMonth(),today.getDate(),16,30,0,0);
- const eighteenToday=calendarDate(today.getFullYear(),today.getMonth(),today.getDate(),18,0,0,0);
-
- if(now<sixToday && codeFor(turn,yesterday)==='N'){
-  return {active:true,code:'N',end:sixToday,start:calendarDate(yesterday.getFullYear(),yesterday.getMonth(),yesterday.getDate(),18,0,0,0)};
- }
- if(now>=sevenThirtyToday && now<sixteenThirtyToday && codeFor(turn,today)==='D'){
-  return {active:true,code:'D',end:sixteenThirtyToday,start:sevenThirtyToday};
- }
- if(now>=sixToday && now<eighteenToday && codeFor(turn,today)==='M'){
-  return {active:true,code:'M',end:eighteenToday,start:sixToday};
- }
- if(now>=eighteenToday && codeFor(turn,today)==='N'){
-  return {active:true,code:'N',end:sixTomorrow,start:eighteenToday};
+ // A las 00:00–06:00 puede seguir vigente la noche iniciada ayer.
+ for(const d of [addDays(today,-1),today]){
+  const shift=situationIntervalForDate(turn,d);
+  if(shift&&shift.start<=now&&now<shift.end){
+   return {active:true,...shift};
+  }
  }
  return {active:false};
 }
 function nextWorkStart(turn,nowDate){
  const now=new Date(nowDate);
  const today=calendarDate(now.getFullYear(),now.getMonth(),now.getDate());
- for(let i=0;i<=20;i++){
+ // Busca el siguiente ingreso REAL: omite vacaciones, licencias y cambios pedidos;
+ // incluye jornadas recibidas, aun si eran originalmente francos.
+ for(let i=0;i<=95;i++){
   const d=addDays(today,i);
-  const c=codeFor(turn,d);
-  if(c==='D'){
-   const start=calendarDate(d.getFullYear(),d.getMonth(),d.getDate(),7,30,0,0);
-   if(start>now)return {code:'D',start};
-  }
-  if(c==='M'){
-   const start=calendarDate(d.getFullYear(),d.getMonth(),d.getDate(),6,0,0,0);
-   if(start>now)return {code:'M',start};
-  }
-  if(c==='N'){
-   const start=calendarDate(d.getFullYear(),d.getMonth(),d.getDate(),18,0,0,0);
-   if(start>now)return {code:'N',start};
-  }
+  const shift=situationIntervalForDate(turn,d);
+  if(shift&&shift.start>now)return shift;
  }
  return null;
+}
+function situationShiftText(turn,code){
+ if(code==='D')return tr('Turno T5');
+ if(code==='M')return tr('Mañana (turno)');
+ if(code==='N')return tr('Noche (turno)');
+ return codeText(turn,code);
 }
 function renderTurnEndCard(turn){
  const now=new Date();
  const info=activeTurnInfo(turn,now);
+ const today=calendarDate(now.getFullYear(),now.getMonth(),now.getDate());
+ const situation=situationForDate(turn,today);
  const card=$('#turnEndCard');
  const badge=$('#turnEndBadge');
  const label=$('#turnEndLabel');
  const text=$('#turnEndText');
  const note=$('#turnEndNote');
-
+ if(!card||!badge||!label||!text||!note)return;
  badge.className='turn-end-badge';
- card?.classList.toggle('is-inactive',!info.active);
+ card.classList.toggle('is-inactive',!info.active);
+ card.classList.remove('situation-license','situation-vacation','situation-change');
+ const nextText=()=>{
+  const next=nextWorkStart(turn,now);
+  return next
+   ? `${tr('Próximo ingreso:')} ${situationShiftText(turn,next.code)} · ${relativeDayWord(next.start)} · ${pad2(next.start.getHours())}:${pad2(next.start.getMinutes())}`
+   : tr('No pude calcular el próximo ingreso.');
+ };
  if(info.active){
   const remaining=Math.max(0,info.end-now);
-  label.textContent='Turno activo · tiempo restante';
+  const covering=info.kind==='received';
+  if(covering){
+   card.classList.add('situation-change');
+   badge.classList.add('situation-change-badge');
+  }
+  label.textContent=tr(covering?'Cubriendo un cambio · tiempo restante':'Turno activo · tiempo restante');
   text.textContent=formatRemainingHMS(remaining);
-  note.textContent=`Salida: ${relativeDayWord(info.end)} · ${pad2(info.end.getHours())}:${pad2(info.end.getMinutes())}`;
-  badge.textContent=codeText(turn,info.code);
-  if(info.code==='M')badge.classList.add('shift-m');
+  note.textContent=`${covering?situationShiftText(turn,info.code)+' · ':''}${tr('Salida:')} ${relativeDayWord(info.end)} · ${pad2(info.end.getHours())}:${pad2(info.end.getMinutes())}`;
+  badge.textContent=covering?'C':codeText(turn,info.code);
+  if(!covering&&info.code==='M')badge.classList.add('shift-m');
+  return;
+ }
+ if(situation.kind==='license'){
+  card.classList.add('situation-license');
+  badge.classList.add('situation-license-badge');
+  label.textContent=tr('Licencia laboral');
+  text.textContent=tr('De licencia');
+  note.textContent=`${tr(situation.license.type||'Otra')} · ${nextText()}`;
+  badge.textContent='L';
+ }else if(situation.kind==='vacation'){
+  card.classList.add('situation-vacation');
+  badge.classList.add('situation-vacation-badge');
+  label.textContent=tr('Vacaciones');
+  text.textContent=tr('De vacaciones');
+  note.textContent=`${tr('Hasta')} ${shortDateFmt.format(parseDateKey(situation.vacation.end))} · ${nextText()}`;
+  badge.textContent='V';
+ }else if(situation.kind==='requested'){
+  card.classList.add('situation-change');
+  badge.classList.add('situation-change-badge');
+  label.textContent=tr('Cambio de turno');
+  text.textContent=tr('Pedí un cambio');
+  note.textContent=`${tr('No asistís a esta jornada.')} · ${nextText()}`;
+  badge.textContent='C';
+ }else if(situation.kind==='received'){
+  card.classList.add('situation-change');
+  badge.classList.add('situation-change-badge');
+  label.textContent=tr('Cambio de turno');
+  text.textContent=tr('Me pidieron un cambio');
+  const shift=situationIntervalForDate(turn,today);
+  note.textContent=shift&&shift.start>now
+   ? `${tr('Ingreso:')} ${situationShiftText(turn,shift.code)} · ${pad2(shift.start.getHours())}:${pad2(shift.start.getMinutes())}`
+   : `${tr('Cobertura finalizada.')} · ${nextText()}`;
+  badge.textContent='C';
  }else{
-  const next=nextWorkStart(turn,now);
-  label.textContent='Ahora no estás en turno';
-  text.textContent='Sin turno activo en este momento';
-  note.textContent=next
-    ? `Próximo ingreso: ${shiftNames[next.code][0]} · ${relativeDayWord(next.start)} · ${pad2(next.start.getHours())}:${pad2(next.start.getMinutes())}`
-    : 'No pude calcular el próximo ingreso.';
+  // Estado normal intacto: sólo corrige el próximo ingreso para evitar
+  // anunciar una jornada cubierta por licencia, vacaciones o cambio pedido.
+  label.textContent=tr('Ahora no estás en turno');
+  text.textContent=tr('Sin turno activo en este momento');
+  note.textContent=nextText();
   badge.textContent='F';
   badge.classList.add('off');
  }
