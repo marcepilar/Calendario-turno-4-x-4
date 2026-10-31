@@ -17216,20 +17216,23 @@ body.light #statsModal .turn-end-badge.situation-vacation-badge{color:#7154a6 !i
 body.light #statsModal .turn-end-badge.situation-change-badge{color:#8a5419 !important;}
 </style>
 
-<style id="help-robot-support-v5108">
-/* V5.10.9: flechas visibles en Categoría, Recordatorio y Repetir dentro de Agenda. */
+<style id="help-robot-support-v5113">
+/* V5.11.3: acceso a Telegram desde el robot animado en Ayuda. */
 #helpModal .support-bot-demo{
   margin:0 0 9px;border:1px solid rgba(74,174,237,.34);
   border-radius:15px;overflow:hidden;
   background:linear-gradient(112deg,rgba(33,164,228,.13),rgba(72,189,190,.055) 64%,transparent),var(--panel2);
 }
-#helpModal .support-bot-demo > summary{
-  list-style:none;display:flex;align-items:center;gap:11px;
-  padding:10px 11px;min-height:86px;cursor:pointer;color:var(--text);
+#helpModal a.support-bot-demo{
+  display:block;text-decoration:none;color:var(--text);
   -webkit-tap-highlight-color:transparent;
 }
-#helpModal .support-bot-demo > summary::-webkit-details-marker{display:none}
-#helpModal .support-bot-demo > summary:focus-visible{outline:2px solid #45baff;outline-offset:-3px;border-radius:14px}
+#helpModal .support-bot-content{
+  display:flex;align-items:center;gap:11px;
+  padding:10px 11px;min-height:86px;cursor:pointer;
+}
+#helpModal a.support-bot-demo:focus-visible{outline:2px solid #45baff;outline-offset:2px;border-radius:14px}
+#helpModal a.support-bot-demo:active{filter:brightness(1.10)}
 #helpModal .support-bot-copy{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
 #helpModal .support-bot-title{font-weight:950;font-size:15px;line-height:1.2;color:var(--text)}
 #helpModal .support-bot-desc{font-size:10.5px;line-height:1.35;color:var(--muted)}
@@ -17237,13 +17240,6 @@ body.light #statsModal .turn-end-badge.situation-change-badge{color:#8a5419 !imp
 #helpModal .support-bot-tag{flex-shrink:0;font-size:8px;font-weight:900;letter-spacing:.25px;
   border:1px solid rgba(66,183,248,.28);border-radius:999px;
   background:rgba(66,183,248,.11);color:#7dd3ff;padding:5px 7px;white-space:nowrap}
-#helpModal .support-bot-demo[open] .support-bot-tag{background:rgba(67,198,180,.13);border-color:rgba(67,198,180,.35);color:#6cddcf}
-#helpModal .support-bot-details{
-  padding:10px 13px 12px;border-top:1px solid rgba(74,174,237,.17);
-  font-size:10.5px;line-height:1.5;color:var(--muted);
-}
-#helpModal .support-bot-details strong{color:var(--text);display:block;font-size:12px;margin-bottom:4px}
-#helpModal .support-bot-details p{margin:0}
 #helpModal .support-robot{position:relative;width:59px;height:66px;flex:0 0 59px;
   display:flex;align-items:center;justify-content:center;isolation:isolate}
 #helpModal .support-robot-halo{position:absolute;width:55px;height:55px;top:10px;left:2px;border-radius:18px;
@@ -17292,9 +17288,8 @@ body.light #helpModal .support-bot-demo{
   border-color:rgba(28,124,194,.31)}
 body.light #helpModal .support-bot-tag{color:#17699e;background:rgba(26,132,197,.09);border-color:rgba(26,132,197,.25)}
 body.light #helpModal .support-bot-hint{color:#126fa8}
-body.light #helpModal .support-bot-demo[open] .support-bot-tag{color:#116f69}
 @media(max-width:360px){
-  #helpModal .support-bot-demo > summary{gap:8px;padding:8px;min-height:76px}
+  #helpModal .support-bot-content{gap:8px;padding:8px;min-height:76px}
   #helpModal .support-bot-title{font-size:13px}
   #helpModal .support-bot-desc{font-size:9px}
   #helpModal .support-bot-tag{font-size:7px;padding:4px 5px}
@@ -17305,8 +17300,95 @@ body.light #helpModal .support-bot-demo[open] .support-bot-tag{color:#116f69}
 }
 </style>
 
+
+<style id="notice-telegram-v5113-rc2">
+/* Cartel de novedad exclusivo del primer inicio de V5.11.3.
+   Aislado del calendario, agenda, turnos y estados previos. */
+#telegramNewsOverlay[hidden]{display:none!important}
+#telegramNewsOverlay{
+ position:fixed;inset:0;z-index:60000;display:grid;place-items:center;
+ padding:calc(18px + env(safe-area-inset-top,0px)) 16px calc(18px + env(safe-area-inset-bottom,0px));
+ background:rgba(1,8,19,.76);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);
+ animation:telegramNewsBackdrop .22s ease-out both;
+}
+#telegramNewsOverlay .telegram-news-panel{
+ position:relative;width:min(100%,395px);max-height:100%;overflow-y:auto;
+ padding:25px 22px 20px;border-radius:24px;
+ color:var(--text);background:var(--panel2);
+ background-image:radial-gradient(circle at 76% 0,rgba(47,163,255,.17),transparent 55%);
+ border:1px solid rgba(76,172,245,.42);
+ box-shadow:0 22px 85px rgba(0,0,0,.56),inset 0 1px 0 rgba(255,255,255,.09);
+ text-align:center;animation:telegramNewsPanel .33s cubic-bezier(.16,1,.3,1) both;
+}
+#telegramNewsOverlay .telegram-news-close{
+ position:absolute;top:11px;right:11px;width:35px;height:35px;border-radius:12px;
+ border:1px solid var(--line);background:var(--panel);color:var(--text);
+ font-size:22px;line-height:1;display:grid;place-items:center;z-index:1;
+}
+#telegramNewsOverlay .telegram-news-art{
+ width:82px;height:82px;border-radius:25px;margin:4px auto 13px;
+ display:grid;place-items:center;position:relative;font-size:43px;
+ background:linear-gradient(145deg,rgba(28,134,213,.21),rgba(33,200,246,.12));
+ border:1px solid rgba(84,195,255,.35);
+ box-shadow:0 7px 30px rgba(16,155,236,.18);
+}
+#telegramNewsOverlay .telegram-news-art::after{
+ content:'';position:absolute;bottom:8px;right:8px;width:11px;height:11px;border-radius:50%;
+ background:#32d99b;box-shadow:0 0 0 4px rgba(50,217,155,.15),0 0 13px #32d99b;
+}
+#telegramNewsOverlay .telegram-news-pill{
+ display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:99px;
+ border:1px solid rgba(70,186,249,.38);color:#68caff;
+ background:rgba(45,151,230,.13);font-size:10px;font-weight:900;letter-spacing:.10em;
+}
+#telegramNewsOverlay .telegram-news-title{
+ font-size:22px;line-height:1.18;font-weight:900;letter-spacing:-.4px;
+ margin:11px 6px 10px;color:var(--text);
+}
+#telegramNewsOverlay .telegram-news-desc{
+ color:var(--muted);font-size:13px;line-height:1.6;margin:0 auto 18px;max-width:325px;
+}
+#telegramNewsOverlay .telegram-news-primary{
+ display:flex;align-items:center;justify-content:center;gap:9px;
+ width:100%;min-height:48px;padding:11px 14px;border-radius:14px;
+ color:#fff!important;background:linear-gradient(120deg,#178ad0,#28a8ee);
+ border:1px solid #5ec8ff;text-decoration:none;font-size:14px;font-weight:850;
+ box-shadow:0 7px 19px rgba(17,144,223,.20);
+}
+#telegramNewsOverlay .telegram-news-secondary{
+ width:100%;min-height:42px;margin-top:7px;padding:9px;border-radius:12px;
+ border:1px solid transparent;background:transparent;color:var(--text);
+ font-size:13px;font-weight:800;
+}
+#telegramNewsOverlay .telegram-news-privacy{
+ margin:9px 0 0;font-size:10px;line-height:1.45;color:var(--muted);
+}
+body.light #telegramNewsOverlay .telegram-news-panel{
+ background:linear-gradient(165deg,#fff,#eef7ff);border-color:#a7cce9;
+ box-shadow:0 25px 68px rgba(14,39,68,.30);
+}
+body.light #telegramNewsOverlay .telegram-news-pill{color:#126aa7;background:#e3f3ff;border-color:#b4daf2}
+@keyframes telegramNewsBackdrop{from{opacity:0}to{opacity:1}}
+@keyframes telegramNewsPanel{from{opacity:0;transform:translateY(15px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-height:580px){#telegramNewsOverlay .telegram-news-panel{padding:13px 19px 12px}#telegramNewsOverlay .telegram-news-art{width:53px;height:53px;font-size:31px;margin:0 auto 6px}#telegramNewsOverlay .telegram-news-title{font-size:19px;margin:6px 3px}#telegramNewsOverlay .telegram-news-desc{margin-bottom:10px}}
+@media(prefers-reduced-motion:reduce){#telegramNewsOverlay,#telegramNewsOverlay .telegram-news-panel{animation:none!important}}
+</style>
 </head>
 <body class="notranslate">
+<!-- V5.11.3 RC2 · Anuncio de Telegram por única vez, independiente de los datos del usuario. -->
+<div id="telegramNewsOverlay" hidden aria-hidden="true" data-no-i18n>
+ <section class="telegram-news-panel" role="dialog" aria-modal="true" aria-labelledby="telegramNewsTitle" aria-describedby="telegramNewsDesc" tabindex="-1">
+  <button id="telegramNewsX" class="telegram-news-close" type="button" aria-label="Cerrar">×</button>
+  <div class="telegram-news-art" aria-hidden="true">🤖</div>
+  <span id="telegramNewsPill" class="telegram-news-pill">✨ NOVEDAD</span>
+  <h2 id="telegramNewsTitle" class="telegram-news-title">¡Estrenamos soporte por Telegram!</h2>
+  <p id="telegramNewsDesc" class="telegram-news-desc">Ahora podés enviarnos consultas, problemas y sugerencias directamente desde la app. Encontrá el robot en Ayuda o abrí el chat desde acá.</p>
+  <a id="telegramNewsGo" class="telegram-news-primary" href="https://t.me/SoporteCalendario4x4Bot" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">✈</span><span id="telegramNewsGoText">Abrir soporte en Telegram</span></a>
+  <button id="telegramNewsDone" class="telegram-news-secondary" type="button">Entendido</button>
+  <p id="telegramNewsPrivacy" class="telegram-news-privacy">Tu agenda y tus registros no se comparten automáticamente.</p>
+ </section>
+</div>
+
 <div id="splash" class="splash">
   <div class="splash-inner"><div class="splash-logo">4×4</div><b>Calendario de Turnos</b><span>Tu ciclo, agenda y francos en un solo lugar</span><span class="splash-sign">Made By Marcelo R.</span></div>
 </div>
@@ -17700,9 +17782,9 @@ body.light #helpModal .support-bot-demo[open] .support-bot-tag{color:#116f69}
     </div>
 
 
-    <!-- V5.11.0 · Selectores de Agenda: texto y flecha visibles. -->
-    <details id="helpSupportBotPreview" class="support-bot-demo">
-      <summary>
+    <!-- V5.11.3 · Bot de asistencia real: enlace externo, sin transmitir registros locales. -->
+    <a id="helpSupportBotLink" class="support-bot-demo" href="https://t.me/SoporteCalendario4x4Bot" target="_blank" rel="noopener noreferrer">
+      <span class="support-bot-content">
         <span class="support-robot" aria-hidden="true">
           <span class="support-robot-halo"></span>
           <span class="support-robot-antenna"></span>
@@ -17716,15 +17798,11 @@ body.light #helpModal .support-bot-demo[open] .support-bot-tag{color:#116f69}
         <span class="support-bot-copy">
           <span class="support-bot-title">Soporte técnico</span>
           <span class="support-bot-desc">Consultas, problemas y sugerencias</span>
-          <span class="support-bot-hint">Tocá para ver la demostración ▾</span>
+          <span class="support-bot-hint">Abrir chat en Telegram ↗</span>
         </span>
-        <span class="support-bot-tag">PRUEBA</span>
-      </summary>
-      <div class="support-bot-details">
-        <strong>Soporte Calendario 4×4 · Próximamente</strong>
-        <p>Esta es una demostración del robot animado. El servicio de Telegram todavía no está habilitado; este botón no envía mensajes ni comparte datos.</p>
-      </div>
-    </details>
+        <span class="support-bot-tag">TELEGRAM</span>
+      </span>
+    </a>
 
     <div class="help-whatsnew-guide" id="helpWhatsNewGuide">
       <div class="help-whatsnew-heading"><span class="help-whatsnew-tag">NUEVO</span><b>Gestos rápidos del calendario</b></div>
@@ -18703,8 +18781,8 @@ body.light #helpModal .support-bot-demo[open] .support-bot-tag{color:#116f69}
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.11.2';
-const CURRENT_BUILD='5.11.2-agenda-selector-hora-propio-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
+const CURRENT_VERSION='5.11.3';
+const CURRENT_BUILD='5.11.3-bot-telegram-aviso-unico-rc2'; // Identificador interno de compilación. No afecta numeración oficial.
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -19210,12 +19288,12 @@ Object.assign(I18N.it,{
  'Próximo ingreso:':'Prossimo turno:','Salida:':'Fine:'
 });
 
-/* V5.10.9: ajuste visual en Agenda para selectores desplegables. */
-Object.assign(I18N.en,{"Soporte técnico":"Technical support","Consultas, problemas y sugerencias":"Questions, issues and suggestions","Tocá para ver la demostración ▾":"Tap to view the demo ▾","PRUEBA":"DEMO","Soporte Calendario 4×4 · Próximamente":"4×4 Calendar Support · Coming soon","Esta es una demostración del robot animado. El servicio de Telegram todavía no está habilitado; este botón no envía mensajes ni comparte datos.":"This is a demo of the animated robot. Telegram support is not enabled yet; this button does not send messages or share data."});
-Object.assign(I18N.pt,{"Soporte técnico":"Suporte técnico","Consultas, problemas y sugerencias":"Dúvidas, problemas e sugestões","Tocá para ver la demostración ▾":"Toque para ver a demonstração ▾","PRUEBA":"TESTE","Soporte Calendario 4×4 · Próximamente":"Suporte Calendário 4×4 · Em breve","Esta es una demostración del robot animado. El servicio de Telegram todavía no está habilitado; este botón no envía mensajes ni comparte datos.":"Esta é uma demonstração do robô animado. O suporte pelo Telegram ainda não está ativado; este botão não envia mensagens nem compartilha dados."});
-Object.assign(I18N.fr,{"Soporte técnico":"Assistance technique","Consultas, problemas y sugerencias":"Questions, problèmes et suggestions","Tocá para ver la demostración ▾":"Touchez pour voir la démonstration ▾","PRUEBA":"ESSAI","Soporte Calendario 4×4 · Próximamente":"Assistance Calendrier 4×4 · Bientôt disponible","Esta es una demostración del robot animado. El servicio de Telegram todavía no está habilitado; este botón no envía mensajes ni comparte datos.":"Ceci est une démonstration du robot animé. L’assistance Telegram n’est pas encore activée ; ce bouton n’envoie aucun message et ne partage aucune donnée."});
-Object.assign(I18N.de,{"Soporte técnico":"Technischer Support","Consultas, problemas y sugerencias":"Fragen, Probleme und Vorschläge","Tocá para ver la demostración ▾":"Tippen für die Vorschau ▾","PRUEBA":"TEST","Soporte Calendario 4×4 · Próximamente":"4×4 Kalender-Support · Demnächst","Esta es una demostración del robot animado. El servicio de Telegram todavía no está habilitado; este botón no envía mensajes ni comparte datos.":"Dies ist eine Vorschau des animierten Roboters. Der Telegram-Support ist noch nicht aktiviert; diese Schaltfläche sendet keine Nachrichten und gibt keine Daten weiter."});
-Object.assign(I18N.it,{"Soporte técnico":"Assistenza tecnica","Consultas, problemas y sugerencias":"Domande, problemi e suggerimenti","Tocá para ver la demostración ▾":"Tocca per vedere la demo ▾","PRUEBA":"PROVA","Soporte Calendario 4×4 · Próximamente":"Supporto Calendario 4×4 · Prossimamente","Esta es una demostración del robot animado. El servicio de Telegram todavía no está habilitado; este botón no envía mensajes ni comparte datos.":"Questa è una dimostrazione del robot animato. Il supporto Telegram non è ancora attivo; questo pulsante non invia messaggi né condivide dati."});
+/* V5.11.3: acceso al soporte real por Telegram desde Ayuda. */
+Object.assign(I18N.en,{"Soporte técnico":"Technical support","Consultas, problemas y sugerencias":"Questions, issues and suggestions","Abrir chat en Telegram ↗":"Open Telegram chat ↗"});
+Object.assign(I18N.pt,{"Soporte técnico":"Suporte técnico","Consultas, problemas y sugerencias":"Dúvidas, problemas e sugestões","Abrir chat en Telegram ↗":"Abrir conversa no Telegram ↗"});
+Object.assign(I18N.fr,{"Soporte técnico":"Assistance technique","Consultas, problemas y sugerencias":"Questions, problèmes et suggestions","Abrir chat en Telegram ↗":"Ouvrir le chat Telegram ↗"});
+Object.assign(I18N.de,{"Soporte técnico":"Technischer Support","Consultas, problemas y sugerencias":"Fragen, Probleme und Vorschläge","Abrir chat en Telegram ↗":"Telegram-Chat öffnen ↗"});
+Object.assign(I18N.it,{"Soporte técnico":"Assistenza tecnica","Consultas, problemas y sugerencias":"Domande, problemi e suggerimenti","Abrir chat en Telegram ↗":"Apri la chat su Telegram ↗"});
 
 function tr(text){
  const source=String(text??'');
@@ -25961,6 +26039,64 @@ body.light .agenda-time-actions #agendaTimeClear { color:#9c4338; }
       setTimeout(sync,0);
     }
   });
+})();
+</script>
+
+<script id="telegram-news-once-v5113-rc2">
+/* Única aparición por navegador/origen. No se borran ni modifican registros previos. */
+(()=>{
+ 'use strict';
+ const NEWS_KEY='turno4x4.news.telegram.v5113.seen';
+ const LANGUAGE_KEY='turno4x4.language.v1';
+ const el=document.getElementById('telegramNewsOverlay');
+ if(!el)return;
+ let alreadySeen=false;
+ try{alreadySeen=localStorage.getItem(NEWS_KEY)==='1';}catch(_){/* Navegación privada: mostrar al menos una vez. */}
+ if(alreadySeen)return;
+ const labels={
+  es:['✨ NOVEDAD','¡Estrenamos soporte por Telegram!','Ahora podés enviarnos consultas, problemas y sugerencias directamente desde la app. Encontrá el robot en Ayuda o abrí el chat desde acá.','Abrir soporte en Telegram','Entendido','Tu agenda y tus registros no se comparten automáticamente.','Cerrar'],
+  en:['✨ NEW','Telegram support is here!','Send questions, issues and suggestions directly from the app. Find the robot in Help or open the chat here.','Open Telegram support','Got it','Your agenda and records are never shared automatically.','Close'],
+  pt:['✨ NOVIDADE','Novo suporte pelo Telegram!','Envie dúvidas, problemas e sugestões pelo aplicativo. Encontre o robô na Ajuda ou abra o chat aqui.','Abrir suporte no Telegram','Entendi','Sua agenda e seus registros não são compartilhados automaticamente.','Fechar'],
+  fr:['✨ NOUVEAUTÉ','Le support Telegram est arrivé !','Envoyez vos questions, problèmes et suggestions depuis l’application. Retrouvez le robot dans Aide ou ouvrez le chat ici.','Ouvrir le support Telegram','Compris','Votre agenda et vos données ne sont jamais partagés automatiquement.','Fermer'],
+  de:['✨ NEU','Telegram-Support ist da!','Sende Fragen, Probleme und Vorschläge direkt aus der App. Du findest den Roboter unter Hilfe oder öffnest hier den Chat.','Telegram-Support öffnen','Verstanden','Deine Termine und Daten werden nicht automatisch geteilt.','Schließen'],
+  it:['✨ NOVITÀ','È arrivata l’assistenza Telegram!','Invia domande, problemi e suggerimenti direttamente dall’app. Trova il robot in Aiuto o apri la chat qui.','Apri assistenza Telegram','Ho capito','Agenda e registrazioni non vengono condivise automaticamente.','Chiudi']
+ };
+ let lang='es';
+ try{lang=localStorage.getItem(LANGUAGE_KEY)||'es';}catch(_){/* Idioma español de respaldo */}
+ const L=labels[lang]||labels.es;
+ for(const [id,value] of [['telegramNewsPill',L[0]],['telegramNewsTitle',L[1]],['telegramNewsDesc',L[2]],['telegramNewsGoText',L[3]],['telegramNewsDone',L[4]],['telegramNewsPrivacy',L[5]]]){
+   document.getElementById(id).textContent=value;
+ }
+ document.getElementById('telegramNewsX').setAttribute('aria-label',L[6]);
+ const dialog=el.querySelector('[role="dialog"]');
+ let lastFocus=null;
+ function close(){
+   if(el.hidden)return;
+   el.hidden=true;el.setAttribute('aria-hidden','true');
+   if(lastFocus?.isConnected)lastFocus.focus({preventScroll:true});
+ }
+ function onEscape(ev){if(ev.key==='Escape'&&!el.hidden){ev.preventDefault();ev.stopPropagation();close();}}
+ document.getElementById('telegramNewsX').addEventListener('click',close);
+ document.getElementById('telegramNewsDone').addEventListener('click',close);
+ document.getElementById('telegramNewsGo').addEventListener('click',close);
+ el.addEventListener('click',ev=>{if(ev.target===el)close();});
+ document.addEventListener('keydown',onEscape,true);
+ document.addEventListener('keydown',ev=>{
+   if(el.hidden||ev.key!=='Tab')return;
+   const controls=[document.getElementById('telegramNewsX'),document.getElementById('telegramNewsGo'),document.getElementById('telegramNewsDone')];
+   const first=controls[0],last=controls[controls.length-1];
+   if(ev.shiftKey&&document.activeElement===first){ev.preventDefault();last.focus();}
+   else if(!ev.shiftKey&&document.activeElement===last){ev.preventDefault();first.focus();}
+ },true);
+ // El splash se cierra en ~850 ms; el aviso se presenta después de él.
+ setTimeout(()=>{
+   if(!document.body.contains(el))return;
+   // Se marca en la PRIMERA APARICIÓN para no molestar en futuros inicios.
+   try{localStorage.setItem(NEWS_KEY,'1');}catch(_){/* almacenamiento no disponible */}
+   lastFocus=document.activeElement;
+   el.hidden=false;el.setAttribute('aria-hidden','false');
+   dialog.focus({preventScroll:true});
+ },1150);
 })();
 </script>
 </body>

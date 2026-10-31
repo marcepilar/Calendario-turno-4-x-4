@@ -1,4 +1,4 @@
-const CACHE='turnos4x4-5.11.2-agenda-selector-hora-propio-rc1';
+const CACHE='turnos4x4-5.11.3-bot-telegram-aviso-unico-rc2';
 const ASSETS=[
   './',
   './index.html',
