@@ -1,4 +1,4 @@
-const CACHE='turnos4x4-5.10.9-agenda-flechas-desplegables-rc1';
+const CACHE='turnos4x4-5.11.1-agenda-hora-unificada-rc1';
 const ASSETS=[
   './',
   './index.html',

@@ -1325,7 +1325,7 @@ body.light .event-count{
 .agenda-form{display:grid;gap:9px;background:linear-gradient(180deg,color-mix(in srgb,var(--panel2) 96%,transparent),color-mix(in srgb,var(--panel) 92%,transparent));border:1px solid var(--line);border-radius:18px;padding:12px;box-shadow:0 12px 28px rgba(0,0,0,.16)}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.form-field label{display:block;color:var(--muted);font-size:8px;font-weight:900;text-transform:uppercase;letter-spacing:.07em;margin:0 0 5px 2px}
 .form-field input,.form-field textarea,.form-field select{width:100%;border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:12px;padding:10px 11px;outline:none;font-size:11px;box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}
-#agendaCategoryInput,#agendaReminderInput,#agendaRepeatInput{-webkit-appearance:none;appearance:none;padding-right:36px;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='10' viewBox='0 0 14 10'%3E%3Cpath d='M2 2.25 7 7.25 12 2.25' fill='none' stroke='%239aabc3' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:14px 10px}
+
 .form-field textarea{min-height:76px;resize:vertical}.full{grid-column:1/-1}
 .search-row{display:grid;grid-template-columns:1fr 150px;gap:7px;margin-top:2px}.search-row input,.search-row select{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:12px;padding:10px;font-size:10px}
 .upcoming-list{display:grid;gap:6px}.upcoming-item{width:100%;text-align:left;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:11px;padding:8px 9px}.upcoming-item b{display:block;font-size:10px}.upcoming-item span{display:block;color:var(--muted);font-size:8px;margin-top:2px}
@@ -17700,7 +17700,7 @@ body.light #helpModal .support-bot-demo[open] .support-bot-tag{color:#116f69}
     </div>
 
 
-    <!-- V5.10.9 · Ajuste visual en Agenda: menús desplegables con flecha visible. -->
+    <!-- V5.11.0 · Selectores de Agenda: texto y flecha visibles. -->
     <details id="helpSupportBotPreview" class="support-bot-demo">
       <summary>
         <span class="support-robot" aria-hidden="true">
@@ -18366,7 +18366,15 @@ body.light #helpModal .support-bot-demo[open] .support-bot-tag{color:#116f69}
     <div class="agenda-form">
       <div class="form-grid">
         <div class="form-field full"><label>Título</label><input id="agendaTitleInput" maxlength="80" placeholder="Ej: Médico, cumpleaños, trámite..."></div>
-        <div class="form-field"><label>Hora</label><input id="agendaTimeInput" type="time"></div>
+        <div class="form-field"><label for="agendaTimeInput">Hora</label>
+          <div class="agenda-time-control">
+            <input id="agendaTimeInput" type="time" aria-label="Hora" autocomplete="off">
+            <div class="agenda-time-face" aria-hidden="true">
+              <span id="agendaTimeCaption" class="agenda-select-caption" data-no-i18n="true">Seleccionar hora</span>
+              <span class="agenda-select-chevron"></span>
+            </div>
+          </div>
+        </div>
         <div class="form-field"><label>Categoría</label><select id="agendaCategoryInput"><option value="personal">Personal</option><option value="trabajo">Trabajo</option><option value="salud">Salud</option><option value="cumple">Cumpleaños</option><option value="tramite">Trámite</option></select></div>
         <div class="form-field"><label>Recordatorio</label><select id="agendaReminderInput"><option value="none">Sin recordatorio</option><option value="0">A la hora</option><option value="15">15 min antes</option><option value="60">1 hora antes</option><option value="1440">1 día antes</option></select></div>
         <div class="form-field"><label>Repetir</label><select id="agendaRepeatInput"><option value="none">No repetir</option><option value="daily">Todos los días</option><option value="weekly">Cada semana</option><option value="yearly">Cada año</option><option value="shiftM">Todos mis días M</option><option value="shiftN">Todos mis días N</option><option value="shiftD">Todos mis días T5 FIJO</option><option value="shiftF">Todos mis francos</option></select></div>
@@ -18694,8 +18702,8 @@ body.light #helpModal .support-bot-demo[open] .support-bot-tag{color:#116f69}
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.10.9';
-const CURRENT_BUILD='5.10.9-agenda-flechas-desplegables-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
+const CURRENT_VERSION='5.11.1';
+const CURRENT_BUILD='5.11.1-agenda-hora-unificada-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -25320,6 +25328,93 @@ if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serv
 </script>
 
 
+<style id="agenda-select-arrows-v5110">
+/* V5.11.0 · Agenda: flechas realmente visibles para los tres selectores.
+   La capa táctil existente es el control visual; el select original queda
+   funcional para valores, traducciones, persistencia y edición. */
+#agendaSheet .agenda-form .app-select-control.agenda-select-visible > select{
+  opacity:0 !important;
+  -webkit-appearance:none;
+  appearance:none;
+  min-height:40px;
+}
+#agendaSheet .agenda-form .app-select-control.agenda-select-visible > button.app-select-tap-target{
+  display:flex !important;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:9px 12px;
+  min-height:40px;
+  background:var(--panel3) !important;
+  color:var(--text) !important;
+  -webkit-text-fill-color:var(--text) !important;
+  border:1px solid var(--line) !important;
+  border-radius:12px !important;
+  box-shadow:none !important;
+  text-align:left;
+  opacity:1 !important;
+  white-space:nowrap;
+  overflow:hidden;
+  font-size:11px;
+  font-weight:700;
+}
+#agendaSheet .agenda-form .agenda-select-caption{
+  flex:1;
+  display:block;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:inherit;
+  -webkit-text-fill-color:inherit;
+  pointer-events:none;
+}
+#agendaSheet .agenda-form .agenda-select-chevron{
+  display:block;
+  width:9px;
+  height:9px;
+  flex:none;
+  margin-right:3px;
+  margin-top:-5px;
+  border-right:2px solid currentColor;
+  border-bottom:2px solid currentColor;
+  border-radius:1px;
+  transform:rotate(45deg);
+  opacity:.8;
+  pointer-events:none;
+}
+#agendaSheet .agenda-form .app-select-control.agenda-select-visible > button.app-select-tap-target:active{
+  filter:brightness(1.08);
+}
+</style>
+
+
+<style id="agenda-hora-unificada-v5111">
+/* V5.11.1: Hora mantiene su input nativo (Android/iOS) pero comparte el
+   tratamiento visual de Categoría, Recordatorio y Repetir. El input real
+   cubre toda la tarjeta y recibe el toque sin capa que bloquee el picker. */
+#agendaSheet .agenda-form .agenda-time-control{
+  position:relative; width:100%; max-width:100%; min-width:0;
+}
+#agendaSheet .agenda-form .agenda-time-face{
+  position:relative; display:flex; align-items:center; justify-content:space-between;
+  gap:10px; width:100%; min-height:40px;
+  padding:9px 12px; background:var(--panel3); color:var(--text);
+  border:1px solid var(--line); border-radius:12px;
+  box-shadow:none; text-align:left; font-size:11px; font-weight:700;
+}
+#agendaSheet .agenda-form .agenda-time-control > input#agendaTimeInput{
+  position:absolute !important; inset:0 !important; z-index:2;
+  display:block; width:100%; height:100%; min-height:40px;
+  margin:0; padding:0; opacity:0.01 !important;
+  border:none; cursor:pointer; background:transparent !important;
+  -webkit-tap-highlight-color:transparent;
+}
+#agendaSheet .agenda-form .agenda-time-control > input#agendaTimeInput:focus-visible + .agenda-time-face{
+  outline:2px solid var(--accent2); outline-offset:-2px;
+}
+</style>
+
 <div id="appSelectBackdrop" hidden aria-hidden="true" data-no-i18n="true"></div>
 <section id="appSelectSheet" hidden role="dialog" aria-modal="true" aria-labelledby="appSelectTitle" data-no-i18n="true">
   <div class="app-select-head">
@@ -25501,6 +25596,87 @@ if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serv
 })();
 </script>
 
+
+<script>
+/* V5.11.0 · Labels y flechas del selector de Agenda.
+   Reutiliza los botones creados por el selector propio ya existente. */
+(function(){
+  'use strict';
+  const controls=[
+    ['agendaCategoryInput','Categoría'],
+    ['agendaReminderInput','Recordatorio'],
+    ['agendaRepeatInput','Repetir']
+  ];
+  const syncers=[];
+  for(const [id,label] of controls){
+    const select=document.getElementById(id);
+    const wrap=select?.closest('.app-select-control');
+    const trigger=wrap?.querySelector(':scope > .app-select-tap-target');
+    if(!select || !trigger) continue;
+    wrap.classList.add('agenda-select-visible');
+    const caption=document.createElement('span');
+    caption.className='agenda-select-caption';
+    const chevron=document.createElement('span');
+    chevron.className='agenda-select-chevron';
+    chevron.setAttribute('aria-hidden','true');
+    trigger.replaceChildren(caption,chevron);
+    select.setAttribute('aria-hidden','true');
+    function sync(){
+      const selected=select.options[select.selectedIndex];
+      const value=selected?.textContent?.trim() || 'Seleccionar…';
+      if(caption.textContent!==value) caption.textContent=value;
+      trigger.setAttribute('aria-label',label+': '+value);
+    }
+    sync();
+    select.addEventListener('change',sync);
+    select.addEventListener('input',sync);
+    // The existing language switcher translates option text in place.
+    new MutationObserver(sync).observe(select,{subtree:true,childList:true,characterData:true});
+    syncers.push(sync);
+  }
+  // Editing and clearing can assign .value without firing a change event.
+  const refresh=()=>requestAnimationFrame(()=>syncers.forEach(sync=>sync()));
+  document.addEventListener('click',refresh);
+  const sheet=document.getElementById('agendaSheet');
+  if(sheet) new MutationObserver(refresh).observe(sheet,{attributes:true,attributeFilter:['class']});
+})();
+</script>
+
+
+
+<script>
+/* V5.11.1: sincroniza el rótulo de la hora con su input time nativo.
+   No cambia el valor, la edición, los recordatorios ni el guardado. */
+(function(){
+  'use strict';
+  const input=document.getElementById('agendaTimeInput');
+  const caption=document.getElementById('agendaTimeCaption');
+  if(!input || !caption) return;
+  const empty={es:'Seleccionar hora',en:'Select time',pt:'Selecionar hora',fr:'Choisir une heure',de:'Uhrzeit wählen',it:'Seleziona ora'};
+  function sync(){
+    const lang=(document.documentElement.lang||'es').slice(0,2).toLowerCase();
+    let label=empty[lang]||empty.es;
+    if(/^\d{2}:\d{2}$/.test(input.value)){
+      const [hh,mm]=input.value.split(':').map(Number);
+      try{
+        const d=new Date(2026,0,1,hh,mm);
+        label=new Intl.DateTimeFormat(document.documentElement.lang||'es-AR',{hour:'numeric',minute:'2-digit'}).format(d);
+      }catch(_){label=input.value;}
+    }
+    if(caption.textContent!==label) caption.textContent=label;
+  }
+  input.addEventListener('input',sync);
+  input.addEventListener('change',sync);
+  input.addEventListener('blur',sync);
+  // Las opciones Editar/Limpiar asignan input.value desde el código original.
+  const refresh=()=>requestAnimationFrame(sync);
+  document.addEventListener('click',refresh);
+  const sheet=document.getElementById('agendaSheet');
+  if(sheet) new MutationObserver(refresh).observe(sheet,{attributes:true,attributeFilter:['class']});
+  new MutationObserver(refresh).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+  sync();
+})();
+</script>
 
 <script>
 /* V5.8.5 candidata · HOY y selector de turno: respuesta táctil al toque breve.

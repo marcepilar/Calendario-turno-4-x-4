@@ -1,5 +1,5 @@
 {
-  "version": "5.10.9",
-  "build": "5.10.9-agenda-flechas-desplegables-rc1",
+  "version": "5.11.1",
+  "build": "5.11.1-agenda-hora-unificada-rc1",
   "updateCheck": "version-and-build"
 }
