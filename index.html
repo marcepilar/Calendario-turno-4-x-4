@@ -18368,11 +18368,12 @@ body.light #helpModal .support-bot-demo[open] .support-bot-tag{color:#116f69}
         <div class="form-field full"><label>Título</label><input id="agendaTitleInput" maxlength="80" placeholder="Ej: Médico, cumpleaños, trámite..."></div>
         <div class="form-field"><label for="agendaTimeInput">Hora</label>
           <div class="agenda-time-control">
-            <input id="agendaTimeInput" type="time" aria-label="Hora" autocomplete="off">
-            <div class="agenda-time-face" aria-hidden="true">
+            <!-- El input original sigue siendo la fuente de los registros guardados. -->
+            <input id="agendaTimeInput" type="time" aria-label="Hora" tabindex="-1" autocomplete="off">
+            <button type="button" id="agendaTimeOpen" class="agenda-time-trigger" aria-haspopup="dialog" aria-controls="agendaTimeDialog" aria-expanded="false">
               <span id="agendaTimeCaption" class="agenda-select-caption" data-no-i18n="true">Seleccionar hora</span>
-              <span class="agenda-select-chevron"></span>
-            </div>
+              <span class="agenda-select-chevron" aria-hidden="true"></span>
+            </button>
           </div>
         </div>
         <div class="form-field"><label>Categoría</label><select id="agendaCategoryInput"><option value="personal">Personal</option><option value="trabajo">Trabajo</option><option value="salud">Salud</option><option value="cumple">Cumpleaños</option><option value="tramite">Trámite</option></select></div>
@@ -18702,8 +18703,8 @@ body.light #helpModal .support-bot-demo[open] .support-bot-tag{color:#116f69}
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.11.1';
-const CURRENT_BUILD='5.11.1-agenda-hora-unificada-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
+const CURRENT_VERSION='5.11.2';
+const CURRENT_BUILD='5.11.2-agenda-selector-hora-propio-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -25389,31 +25390,120 @@ if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serv
 </style>
 
 
-<style id="agenda-hora-unificada-v5111">
-/* V5.11.1: Hora mantiene su input nativo (Android/iOS) pero comparte el
-   tratamiento visual de Categoría, Recordatorio y Repetir. El input real
-   cubre toda la tarjeta y recibe el toque sin capa que bloquee el picker. */
-#agendaSheet .agenda-form .agenda-time-control{
-  position:relative; width:100%; max-width:100%; min-width:0;
+<style id="agenda-hora-ventana-v5112">
+/* V5.11.2: selector propio de hora. Conserva #agendaTimeInput y su valor HH:MM.
+   Apariencia consistente con los tres menús propios de Agenda en los temas.
+   No invoca controles de hora del sistema operativo. */
+#agendaSheet .agenda-form .agenda-time-control { position:relative; display:block; width:100%; min-width:0; }
+#agendaSheet .agenda-form .agenda-time-control > input#agendaTimeInput {
+  position:absolute !important; width:1px !important; height:1px !important;
+  min-height:0 !important; padding:0 !important; margin:0 !important;
+  opacity:0 !important; border:0 !important; pointer-events:none !important;
+  clip-path:inset(50%); -webkit-appearance:none; appearance:none;
 }
-#agendaSheet .agenda-form .agenda-time-face{
-  position:relative; display:flex; align-items:center; justify-content:space-between;
-  gap:10px; width:100%; min-height:40px;
-  padding:9px 12px; background:var(--panel3); color:var(--text);
-  border:1px solid var(--line); border-radius:12px;
-  box-shadow:none; text-align:left; font-size:11px; font-weight:700;
+#agendaSheet .agenda-form .agenda-time-trigger {
+  display:flex !important; align-items:center; justify-content:space-between;
+  width:100%; min-width:0; min-height:40px; gap:10px; padding:9px 12px;
+  background:var(--panel3) !important; color:var(--text) !important;
+  -webkit-text-fill-color:var(--text) !important;
+  border:1px solid var(--line) !important; border-radius:12px !important;
+  font-size:11px; font-weight:700; line-height:normal; text-align:left;
+  box-shadow:none !important; cursor:pointer; touch-action:manipulation;
 }
-#agendaSheet .agenda-form .agenda-time-control > input#agendaTimeInput{
-  position:absolute !important; inset:0 !important; z-index:2;
-  display:block; width:100%; height:100%; min-height:40px;
-  margin:0; padding:0; opacity:0.01 !important;
-  border:none; cursor:pointer; background:transparent !important;
-  -webkit-tap-highlight-color:transparent;
+#agendaSheet .agenda-form .agenda-time-trigger .agenda-select-caption { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+#agendaSheet .agenda-form .agenda-time-trigger:focus-visible { outline:2px solid var(--accent2); outline-offset:2px; }
+#agendaSheet .agenda-form .agenda-time-trigger:active { filter:brightness(1.07); }
+#agendaTimeOverlay { position:fixed; inset:0; z-index:19990; display:none; justify-content:center; align-items:center;
+  padding:calc(14px + env(safe-area-inset-top)) 12px calc(14px + env(safe-area-inset-bottom));
+  background:rgba(2,10,22,.70); -webkit-backdrop-filter:blur(5px); backdrop-filter:blur(5px); }
+#agendaTimeOverlay.open { display:flex; }
+#agendaTimeDialog { width:min(400px,100%); max-height:100%; overflow:auto;
+  padding:18px; border:1px solid rgba(142,165,190,.30); border-radius:23px;
+  color:#f3f8ff; background:linear-gradient(165deg,#172635,#101a27);
+  box-shadow:0 22px 65px rgba(0,0,0,.50); -webkit-overflow-scrolling:touch; }
+body.dark-blue #agendaTimeDialog { background:linear-gradient(165deg,#193d64,#0c2340);
+  border-color:rgba(107,177,244,.36); color:#f4f9ff; }
+body.light #agendaTimeDialog { background:linear-gradient(165deg,#ffffff,#edf3f9);
+  border-color:rgba(67,91,118,.23); color:#15283c; box-shadow:0 20px 50px rgba(22,42,65,.24); }
+.agenda-time-header { display:flex; gap:12px; align-items:flex-start; justify-content:space-between; }
+.agenda-time-header b { display:block; font-size:19px; font-weight:850; }
+.agenda-time-header small { display:block; font-size:11px; line-height:1.45; opacity:.72; margin-top:4px; }
+#agendaTimeClose { display:grid; place-items:center; flex:none; width:42px; height:42px;
+  color:inherit; border:1px solid currentColor; border-radius:13px;
+  background:transparent; font-size:27px; font-weight:400; opacity:.8; }
+.agenda-time-preview { text-align:center; font-variant-numeric:tabular-nums; letter-spacing:.06em;
+  font-size:clamp(34px,10vw,46px); font-weight:900; padding:4px 0 8px; }
+.agenda-time-wheels { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.agenda-time-column { display:grid; gap:7px; justify-items:center; padding:11px;
+  border:1px solid rgba(129,161,196,.25); border-radius:17px; background:rgba(92,144,197,.10); }
+body.light .agenda-time-column { background:rgba(110,154,196,.09); border-color:rgba(62,82,106,.15); }
+.agenda-time-column label { font-size:10px; font-weight:900; letter-spacing:.08em; opacity:.74; }
+.agenda-time-step { display:grid; place-items:center; width:100%; min-height:37px;
+  border:1px solid rgba(124,171,214,.30); border-radius:11px; color:inherit;
+  background:rgba(121,172,216,.11); font-size:24px; font-weight:650; touch-action:manipulation; }
+.agenda-time-step:active { transform:scale(.97); }
+.agenda-time-number { width:100%; height:49px; padding:3px 5px !important; text-align:center;
+  color:inherit !important; -webkit-text-fill-color:currentColor !important; font-size:29px !important;
+  font-weight:850; font-variant-numeric:tabular-nums; border-radius:12px !important;
+  border:1px solid rgba(139,184,224,.33) !important; background:rgba(0,0,0,.13) !important; }
+body.light .agenda-time-number { background:rgba(255,255,255,.74) !important; border-color:rgba(65,96,122,.24) !important; }
+.agenda-time-number:focus-visible { outline:2px solid #5faefa; outline-offset:1px; }
+.agenda-time-presets { display:flex; flex-wrap:wrap; gap:7px; margin:13px 0 14px; align-items:center; }
+.agenda-time-presets > span { width:100%; font-size:10px; font-weight:850; opacity:.73; }
+.agenda-time-preset { flex:1; min-width:45px; min-height:38px; border-radius:11px;
+  border:1px solid rgba(133,174,213,.28); color:inherit; background:rgba(99,150,195,.11);
+  font-size:13px; font-weight:800; }
+.agenda-time-preset.active { border-color:#48cdb8; background:rgba(42,192,168,.20); }
+.agenda-time-actions { display:grid; grid-template-columns:1fr 1fr 1.15fr; gap:8px; }
+.agenda-time-actions button { min-width:0; min-height:44px; padding:8px 4px; font-size:12px;
+  font-weight:800; border-radius:12px; border:1px solid rgba(130,167,202,.33);
+  background:rgba(119,152,186,.14); color:inherit; }
+.agenda-time-actions #agendaTimeConfirm { background:#21ab96; border-color:#55d5c3; color:#fff; }
+.agenda-time-actions #agendaTimeClear { color:#ffb7a7; }
+body.light .agenda-time-actions #agendaTimeClear { color:#9c4338; }
+@media(max-width:350px) {
+  #agendaTimeDialog { padding:12px; border-radius:18px; }
+  .agenda-time-wheels { gap:8px; }
+  .agenda-time-actions { gap:5px; }
+  .agenda-time-actions button { font-size:11px; }
 }
-#agendaSheet .agenda-form .agenda-time-control > input#agendaTimeInput:focus-visible + .agenda-time-face{
-  outline:2px solid var(--accent2); outline-offset:-2px;
-}
+@media(prefers-reduced-motion:reduce){ .agenda-time-step:active{transform:none;} }
 </style>
+
+
+<!-- V5.11.2: ventana de hora propia de la app, independiente de Android/iOS. -->
+<div id="agendaTimeOverlay" aria-hidden="true" data-no-i18n="true">
+  <section id="agendaTimeDialog" role="dialog" aria-modal="true" aria-labelledby="agendaTimeTitle" tabindex="-1">
+    <div class="agenda-time-header">
+      <div><b id="agendaTimeTitle">Seleccionar hora</b><small id="agendaTimeSubtitle">Elegí la hora en formato de 24 horas</small></div>
+      <button id="agendaTimeClose" type="button" aria-label="Cerrar">×</button>
+    </div>
+    <div id="agendaTimePreview" class="agenda-time-preview" aria-live="polite">08:00</div>
+    <div class="agenda-time-wheels">
+      <div class="agenda-time-column"><label id="agendaTimeHourLabel" for="agendaTimeHourValue">HORAS</label>
+        <button type="button" class="agenda-time-step" data-step-time="hour:1" aria-label="Aumentar horas">+</button>
+        <input id="agendaTimeHourValue" class="agenda-time-number" type="text" inputmode="numeric" maxlength="2" value="08" autocomplete="off" aria-label="Horas">
+        <button type="button" class="agenda-time-step" data-step-time="hour:-1" aria-label="Reducir horas">−</button>
+      </div>
+      <div class="agenda-time-column"><label id="agendaTimeMinuteLabel" for="agendaTimeMinuteValue">MINUTOS</label>
+        <button type="button" class="agenda-time-step" data-step-time="minute:1" aria-label="Aumentar minutos">+</button>
+        <input id="agendaTimeMinuteValue" class="agenda-time-number" type="text" inputmode="numeric" maxlength="2" value="00" autocomplete="off" aria-label="Minutos">
+        <button type="button" class="agenda-time-step" data-step-time="minute:-1" aria-label="Reducir minutos">−</button>
+      </div>
+    </div>
+    <div class="agenda-time-presets"><span id="agendaTimePresetLabel">Minutos rápidos</span>
+      <button type="button" class="agenda-time-preset" data-minute="0">:00</button>
+      <button type="button" class="agenda-time-preset" data-minute="15">:15</button>
+      <button type="button" class="agenda-time-preset" data-minute="30">:30</button>
+      <button type="button" class="agenda-time-preset" data-minute="45">:45</button>
+    </div>
+    <div class="agenda-time-actions">
+      <button type="button" id="agendaTimeClear">Sin hora</button>
+      <button type="button" id="agendaTimeCancel">Cancelar</button>
+      <button type="button" id="agendaTimeConfirm">Guardar hora</button>
+    </div>
+  </section>
+</div>
 
 <div id="appSelectBackdrop" hidden aria-hidden="true" data-no-i18n="true"></div>
 <section id="appSelectSheet" hidden role="dialog" aria-modal="true" aria-labelledby="appSelectTitle" data-no-i18n="true">
@@ -25645,36 +25735,135 @@ if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serv
 
 
 <script>
-/* V5.11.1: sincroniza el rótulo de la hora con su input time nativo.
-   No cambia el valor, la edición, los recordatorios ni el guardado. */
+/* V5.11.2: selector de hora independiente de los pickers de iOS/Android.
+   El valor oficial sigue siendo #agendaTimeInput.value = HH:MM.
+   Guardar/editar/limpiar continúan usando el motor original de Agenda. */
 (function(){
   'use strict';
-  const input=document.getElementById('agendaTimeInput');
+  const original=document.getElementById('agendaTimeInput');
+  const openButton=document.getElementById('agendaTimeOpen');
   const caption=document.getElementById('agendaTimeCaption');
-  if(!input || !caption) return;
-  const empty={es:'Seleccionar hora',en:'Select time',pt:'Selecionar hora',fr:'Choisir une heure',de:'Uhrzeit wählen',it:'Seleziona ora'};
-  function sync(){
-    const lang=(document.documentElement.lang||'es').slice(0,2).toLowerCase();
-    let label=empty[lang]||empty.es;
-    if(/^\d{2}:\d{2}$/.test(input.value)){
-      const [hh,mm]=input.value.split(':').map(Number);
-      try{
-        const d=new Date(2026,0,1,hh,mm);
-        label=new Intl.DateTimeFormat(document.documentElement.lang||'es-AR',{hour:'numeric',minute:'2-digit'}).format(d);
-      }catch(_){label=input.value;}
-    }
-    if(caption.textContent!==label) caption.textContent=label;
+  const overlay=document.getElementById('agendaTimeOverlay');
+  const dialog=document.getElementById('agendaTimeDialog');
+  const hours=document.getElementById('agendaTimeHourValue');
+  const minutes=document.getElementById('agendaTimeMinuteValue');
+  const preview=document.getElementById('agendaTimePreview');
+  const closeButton=document.getElementById('agendaTimeClose');
+  if(!original||!openButton||!overlay||!hours||!minutes) return;
+  original.tabIndex=-1;
+  const DICT={
+    es:['Seleccionar hora','Elegí la hora en formato de 24 horas','HORAS','MINUTOS','Minutos rápidos','Sin hora','Cancelar','Guardar hora','Seleccionar hora','Cerrar','Aumentar','Reducir'],
+    en:['Select time','Choose a time in 24-hour format','HOURS','MINUTES','Quick minutes','No time','Cancel','Save time','Select time','Close','Increase','Decrease'],
+    pt:['Selecionar hora','Escolha a hora no formato de 24 horas','HORAS','MINUTOS','Minutos rápidos','Sem hora','Cancelar','Salvar hora','Selecionar hora','Fechar','Aumentar','Diminuir'],
+    fr:['Choisir une heure','Choisissez une heure au format 24 h','HEURES','MINUTES','Minutes rapides','Sans heure','Annuler','Enregistrer','Choisir une heure','Fermer','Augmenter','Diminuer'],
+    de:['Uhrzeit wählen','Uhrzeit im 24-Stunden-Format wählen','STUNDEN','MINUTEN','Schnellwahl Minuten','Ohne Uhrzeit','Abbrechen','Uhrzeit speichern','Uhrzeit wählen','Schließen','Erhöhen','Verringern'],
+    it:['Seleziona ora','Scegli un orario nel formato 24 ore','ORE','MINUTI','Minuti rapidi','Senza orario','Annulla','Salva ora','Seleziona ora','Chiudi','Aumenta','Riduci']
+  };
+  const ids=['agendaTimeTitle','agendaTimeSubtitle','agendaTimeHourLabel','agendaTimeMinuteLabel','agendaTimePresetLabel','agendaTimeClear','agendaTimeCancel','agendaTimeConfirm'];
+  let lastActive=null,previousOverflow='',isOpen=false;
+  const language=()=>{const x=(document.documentElement.lang||'es').slice(0,2).toLowerCase();return DICT[x]?x:'es';};
+  const t=()=>DICT[language()];
+  const pad=n=>String(n).padStart(2,'0');
+  const clamp=(v,max,fallback)=>{const n=parseInt(v,10);return Number.isFinite(n)?Math.min(max,Math.max(0,n)):fallback;};
+  function syncCaption(){
+    const val=original.value;
+    const title=/^([01]\d|2[0-3]):[0-5]\d$/.test(val)?val:t()[8];
+    if(caption.textContent!==title)caption.textContent=title;
+    openButton.setAttribute('aria-label',t()[0]+': '+title);
   }
-  input.addEventListener('input',sync);
-  input.addEventListener('change',sync);
-  input.addEventListener('blur',sync);
-  // Las opciones Editar/Limpiar asignan input.value desde el código original.
-  const refresh=()=>requestAnimationFrame(sync);
-  document.addEventListener('click',refresh);
+  function localize(){
+    const a=t();
+    ids.forEach((id,i)=>{const el=document.getElementById(id);if(el&&el.textContent!==a[i])el.textContent=a[i];});
+    closeButton.setAttribute('aria-label',a[9]);
+    hours.setAttribute('aria-label',a[2]);minutes.setAttribute('aria-label',a[3]);
+    overlay.querySelectorAll('[data-step-time]').forEach(el=>{
+      const [kind,delta]=el.dataset.stepTime.split(':');
+      el.setAttribute('aria-label',a[Number(delta)>0?10:11]+' '+(kind==='hour'?a[2]:a[3]).toLowerCase());
+    });
+    syncCaption();
+  }
+  function normalizeField(input,max){
+    input.value=pad(clamp(input.value,max,0));
+  }
+  function updatePreview(){
+    const h=clamp(hours.value,23,0),m=clamp(minutes.value,59,0);
+    preview.textContent=pad(h)+':'+pad(m);
+    overlay.querySelectorAll('[data-minute]').forEach(b=>b.classList.toggle('active',Number(b.dataset.minute)===m));
+  }
+  function applyTime(value){
+    original.value=value;
+    original.dispatchEvent(new Event('input',{bubbles:true}));
+    original.dispatchEvent(new Event('change',{bubbles:true}));
+    syncCaption();
+  }
+  function openPicker(){
+    if(isOpen)return;
+    lastActive=document.activeElement===original?openButton:document.activeElement;
+    const match=/^([01]\d|2[0-3]):([0-5]\d)$/.exec(original.value);
+    let h,m;
+    if(match){h=+match[1];m=+match[2];}
+    else{const now=new Date();const rounded=Math.round(now.getMinutes()/5)*5;h=(now.getHours()+Math.floor(rounded/60))%24;m=rounded%60;}
+    hours.value=pad(h);minutes.value=pad(m);
+    localize();updatePreview();
+    previousOverflow=document.body.style.overflow;
+    document.body.style.overflow='hidden';
+    overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');
+    openButton.setAttribute('aria-expanded','true');
+    isOpen=true;
+    try{closeButton.focus({preventScroll:true});}catch(_){closeButton.focus();}
+  }
+  function closePicker(){
+    if(!isOpen)return;
+    overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');
+    document.body.style.overflow=previousOverflow;
+    openButton.setAttribute('aria-expanded','false');
+    isOpen=false;
+    try{(lastActive?.isConnected?lastActive:openButton).focus({preventScroll:true});}catch(_){openButton.focus();}
+  }
+  openButton.addEventListener('click',openPicker);
+  original.addEventListener('focus',()=>{if(!isOpen)openPicker();});
+  closeButton.addEventListener('click',closePicker);
+  document.getElementById('agendaTimeCancel').addEventListener('click',closePicker);
+  document.getElementById('agendaTimeClear').addEventListener('click',()=>{applyTime('');closePicker();});
+  document.getElementById('agendaTimeConfirm').addEventListener('click',()=>{
+    normalizeField(hours,23);normalizeField(minutes,59);
+    applyTime(hours.value+':'+minutes.value);closePicker();
+  });
+  overlay.addEventListener('click',ev=>{if(ev.target===overlay)closePicker();});
+  overlay.querySelectorAll('[data-step-time]').forEach(button=>button.addEventListener('click',()=>{
+    const [field,delta]=button.dataset.stepTime.split(':');
+    const element=field==='hour'?hours:minutes;
+    const max=field==='hour'?24:60;
+    element.value=pad((clamp(element.value,max-1,0)+Number(delta)+max)%max);
+    updatePreview();
+  }));
+  overlay.querySelectorAll('[data-minute]').forEach(button=>button.addEventListener('click',()=>{
+    minutes.value=pad(Number(button.dataset.minute));updatePreview();
+  }));
+  [hours,minutes].forEach((el,i)=>{
+    const max=i?59:23;
+    el.addEventListener('input',()=>{el.value=el.value.replace(/[^0-9]/g,'').slice(0,2);updatePreview();});
+    el.addEventListener('blur',()=>{normalizeField(el,max);updatePreview();});
+    el.addEventListener('keydown',ev=>{if(ev.key==='Enter'){ev.preventDefault();el.blur();}});
+  });
+  document.addEventListener('keydown',ev=>{
+    if(!isOpen)return;
+    if(ev.key==='Escape'){ev.preventDefault();ev.stopImmediatePropagation();closePicker();return;}
+    if(ev.key==='Tab'){
+      const els=[...dialog.querySelectorAll('button:not([disabled]),input:not([disabled])')].filter(el=>el.offsetParent!==null);
+      const first=els[0],last=els[els.length-1];
+      if(ev.shiftKey&&document.activeElement===first){ev.preventDefault();last.focus();}
+      else if(!ev.shiftKey&&document.activeElement===last){ev.preventDefault();first.focus();}
+    }
+  },true);
+  original.addEventListener('input',syncCaption);
+  original.addEventListener('change',syncCaption);
+  const afterAction=()=>requestAnimationFrame(syncCaption);
+  document.addEventListener('click',afterAction);
   const sheet=document.getElementById('agendaSheet');
-  if(sheet) new MutationObserver(refresh).observe(sheet,{attributes:true,attributeFilter:['class']});
-  new MutationObserver(refresh).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
-  sync();
+  if(sheet)new MutationObserver(()=>{afterAction();if(isOpen&&!sheet.classList.contains('open'))closePicker();}).observe(sheet,{attributes:true,attributeFilter:['class']});
+  new MutationObserver(localize).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+  localize();
 })();
 </script>
 

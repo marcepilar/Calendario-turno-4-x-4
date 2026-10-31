@@ -1,5 +1,5 @@
 {
-  "version": "5.11.1",
-  "build": "5.11.1-agenda-hora-unificada-rc1",
+  "version": "5.11.2",
+  "build": "5.11.2-agenda-selector-hora-propio-rc1",
   "updateCheck": "version-and-build"
 }
