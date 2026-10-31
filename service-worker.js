@@ -1,4 +1,4 @@
-const CACHE='turnos4x4-5.11.3-bot-telegram-aviso-unico-rc2';
+const CACHE='turnos4x4-5.11.4-seguridad-soporte-rc1';
 const ASSETS=[
   './',
   './index.html',

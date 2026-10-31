@@ -17299,7 +17299,22 @@ body.light #helpModal .support-bot-hint{color:#126fa8}
   #helpModal .support-robot-eye,#helpModal .support-robot-eye::after,#helpModal .support-robot-halo{animation:none!important}
 }
 </style>
-
+<style id="support-security-v5114">
+/* Aviso permanente, no clicable, en Ayuda debajo del robot de soporte. */
+#helpModal .support-security-note{
+  display:flex;align-items:flex-start;gap:8px;margin:0 0 11px;
+  padding:10px 11px;border-radius:11px;
+  border:1px solid rgba(231,171,66,.44);
+  background:rgba(194,123,29,.10);color:var(--text);
+  font-size:11px;line-height:1.45;font-weight:650;
+}
+#helpModal .support-security-icon{font-size:15px;flex:none;line-height:1.3}
+#helpModal .support-security-text{min-width:0}
+body.light #helpModal .support-security-note{
+  border-color:#dfb56e;background:#fff6e8;color:#6b4214;
+}
+@media(max-width:360px){#helpModal .support-security-note{font-size:10px;padding:8px 9px}}
+</style>
 
 <style id="notice-telegram-v5113-rc2">
 /* Cartel de novedad exclusivo del primer inicio de V5.11.3.
@@ -17348,6 +17363,16 @@ body.light #helpModal .support-bot-hint{color:#126fa8}
 #telegramNewsOverlay .telegram-news-desc{
  color:var(--muted);font-size:13px;line-height:1.6;margin:0 auto 18px;max-width:325px;
 }
+#telegramNewsOverlay .telegram-news-security{
+  display:flex;align-items:flex-start;gap:5px;text-align:left;
+  padding:9px 10px;margin:0 0 11px;border-radius:11px;
+  background:rgba(194,123,29,.10);border:1px solid rgba(231,171,66,.45);
+  font-size:11px;line-height:1.4;font-weight:700;color:var(--text);
+}
+#telegramNewsOverlay .telegram-news-security>span:first-child{flex:none}
+body.light #telegramNewsOverlay .telegram-news-security{
+  background:#fff5e4;border-color:#ddb36a;color:#6b4214;
+}
 #telegramNewsOverlay .telegram-news-primary{
  display:flex;align-items:center;justify-content:center;gap:9px;
  width:100%;min-height:48px;padding:11px 14px;border-radius:14px;
@@ -17383,6 +17408,7 @@ body.light #telegramNewsOverlay .telegram-news-pill{color:#126aa7;background:#e3
   <span id="telegramNewsPill" class="telegram-news-pill">✨ NOVEDAD</span>
   <h2 id="telegramNewsTitle" class="telegram-news-title">¡Estrenamos soporte por Telegram!</h2>
   <p id="telegramNewsDesc" class="telegram-news-desc">Ahora podés enviarnos consultas, problemas y sugerencias directamente desde la app. Encontrá el robot en Ayuda o abrí el chat desde acá.</p>
+  <p id="telegramNewsSecurity" class="telegram-news-security"><span aria-hidden="true">🔒 </span><span id="telegramNewsSecurityText">Nunca compartas nombres de usuario, contraseñas, PIN ni códigos de verificación de ningún servicio. El soporte nunca te los pedirá.</span></p>
   <a id="telegramNewsGo" class="telegram-news-primary" href="https://t.me/SoporteCalendario4x4Bot" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">✈</span><span id="telegramNewsGoText">Abrir soporte en Telegram</span></a>
   <button id="telegramNewsDone" class="telegram-news-secondary" type="button">Entendido</button>
   <p id="telegramNewsPrivacy" class="telegram-news-privacy">Tu agenda y tus registros no se comparten automáticamente.</p>
@@ -17803,6 +17829,11 @@ body.light #telegramNewsOverlay .telegram-news-pill{color:#126aa7;background:#e3
         <span class="support-bot-tag">TELEGRAM</span>
       </span>
     </a>
+    <!-- V5.11.4: advertencia permanente de seguridad junto al acceso de soporte. -->
+    <div class="support-security-note" role="note">
+      <span class="support-security-icon" aria-hidden="true">🔒</span>
+      <span class="support-security-text">Nunca compartas nombres de usuario, contraseñas, PIN ni códigos de verificación de ningún servicio. El soporte nunca te los pedirá.</span>
+    </div>
 
     <div class="help-whatsnew-guide" id="helpWhatsNewGuide">
       <div class="help-whatsnew-heading"><span class="help-whatsnew-tag">NUEVO</span><b>Gestos rápidos del calendario</b></div>
@@ -18781,8 +18812,8 @@ body.light #telegramNewsOverlay .telegram-news-pill{color:#126aa7;background:#e3
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.11.3';
-const CURRENT_BUILD='5.11.3-bot-telegram-aviso-unico-rc2'; // Identificador interno de compilación. No afecta numeración oficial.
+const CURRENT_VERSION='5.11.4';
+const CURRENT_BUILD='5.11.4-seguridad-soporte-rc1'; // Identificador interno de compilación. No afecta numeración oficial.
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -19294,6 +19325,13 @@ Object.assign(I18N.pt,{"Soporte técnico":"Suporte técnico","Consultas, problem
 Object.assign(I18N.fr,{"Soporte técnico":"Assistance technique","Consultas, problemas y sugerencias":"Questions, problèmes et suggestions","Abrir chat en Telegram ↗":"Ouvrir le chat Telegram ↗"});
 Object.assign(I18N.de,{"Soporte técnico":"Technischer Support","Consultas, problemas y sugerencias":"Fragen, Probleme und Vorschläge","Abrir chat en Telegram ↗":"Telegram-Chat öffnen ↗"});
 Object.assign(I18N.it,{"Soporte técnico":"Assistenza tecnica","Consultas, problemas y sugerencias":"Domande, problemi e suggerimenti","Abrir chat en Telegram ↗":"Apri la chat su Telegram ↗"});
+
+/* V5.11.4: advertencia de seguridad para el soporte en todos los idiomas. */
+Object.assign(I18N.en,{"Nunca compartas nombres de usuario, contraseñas, PIN ni códigos de verificación de ningún servicio. El soporte nunca te los pedirá.": "Never share usernames, passwords, PINs or verification codes for any service. Support will never ask for them."});
+Object.assign(I18N.pt,{"Nunca compartas nombres de usuario, contraseñas, PIN ni códigos de verificación de ningún servicio. El soporte nunca te los pedirá.": "Nunca compartilhe nomes de usuário, senhas, PINs ou códigos de verificação de nenhum serviço. O suporte nunca pedirá esses dados."});
+Object.assign(I18N.fr,{"Nunca compartas nombres de usuario, contraseñas, PIN ni códigos de verificación de ningún servicio. El soporte nunca te los pedirá.": "Ne partagez jamais vos identifiants, mots de passe, codes PIN ou codes de vérification, quel que soit le service. Le support ne vous les demandera jamais."});
+Object.assign(I18N.de,{"Nunca compartas nombres de usuario, contraseñas, PIN ni códigos de verificación de ningún servicio. El soporte nunca te los pedirá.": "Gib niemals Benutzernamen, Passwörter, PINs oder Bestätigungscodes irgendeines Dienstes weiter. Der Support wird dich nie danach fragen."});
+Object.assign(I18N.it,{"Nunca compartas nombres de usuario, contraseñas, PIN ni códigos de verificación de ningún servicio. El soporte nunca te los pedirá.": "Non condividere mai nomi utente, password, PIN o codici di verifica di alcun servizio. L’assistenza non te li chiederà mai."});
 
 function tr(text){
  const source=String(text??'');
@@ -26054,12 +26092,12 @@ body.light .agenda-time-actions #agendaTimeClear { color:#9c4338; }
  try{alreadySeen=localStorage.getItem(NEWS_KEY)==='1';}catch(_){/* Navegación privada: mostrar al menos una vez. */}
  if(alreadySeen)return;
  const labels={
-  es:['✨ NOVEDAD','¡Estrenamos soporte por Telegram!','Ahora podés enviarnos consultas, problemas y sugerencias directamente desde la app. Encontrá el robot en Ayuda o abrí el chat desde acá.','Abrir soporte en Telegram','Entendido','Tu agenda y tus registros no se comparten automáticamente.','Cerrar'],
-  en:['✨ NEW','Telegram support is here!','Send questions, issues and suggestions directly from the app. Find the robot in Help or open the chat here.','Open Telegram support','Got it','Your agenda and records are never shared automatically.','Close'],
-  pt:['✨ NOVIDADE','Novo suporte pelo Telegram!','Envie dúvidas, problemas e sugestões pelo aplicativo. Encontre o robô na Ajuda ou abra o chat aqui.','Abrir suporte no Telegram','Entendi','Sua agenda e seus registros não são compartilhados automaticamente.','Fechar'],
-  fr:['✨ NOUVEAUTÉ','Le support Telegram est arrivé !','Envoyez vos questions, problèmes et suggestions depuis l’application. Retrouvez le robot dans Aide ou ouvrez le chat ici.','Ouvrir le support Telegram','Compris','Votre agenda et vos données ne sont jamais partagés automatiquement.','Fermer'],
-  de:['✨ NEU','Telegram-Support ist da!','Sende Fragen, Probleme und Vorschläge direkt aus der App. Du findest den Roboter unter Hilfe oder öffnest hier den Chat.','Telegram-Support öffnen','Verstanden','Deine Termine und Daten werden nicht automatisch geteilt.','Schließen'],
-  it:['✨ NOVITÀ','È arrivata l’assistenza Telegram!','Invia domande, problemi e suggerimenti direttamente dall’app. Trova il robot in Aiuto o apri la chat qui.','Apri assistenza Telegram','Ho capito','Agenda e registrazioni non vengono condivise automaticamente.','Chiudi']
+  es:['✨ NOVEDAD','¡Estrenamos soporte por Telegram!','Ahora podés enviarnos consultas, problemas y sugerencias directamente desde la app. Encontrá el robot en Ayuda o abrí el chat desde acá.','Abrir soporte en Telegram','Entendido','Tu agenda y tus registros no se comparten automáticamente.','Cerrar',"Nunca compartas nombres de usuario, contraseñas, PIN ni códigos de verificación de ningún servicio. El soporte nunca te los pedirá."],
+  en:['✨ NEW','Telegram support is here!','Send questions, issues and suggestions directly from the app. Find the robot in Help or open the chat here.','Open Telegram support','Got it','Your agenda and records are never shared automatically.','Close',"Never share usernames, passwords, PINs or verification codes for any service. Support will never ask for them."],
+  pt:['✨ NOVIDADE','Novo suporte pelo Telegram!','Envie dúvidas, problemas e sugestões pelo aplicativo. Encontre o robô na Ajuda ou abra o chat aqui.','Abrir suporte no Telegram','Entendi','Sua agenda e seus registros não são compartilhados automaticamente.','Fechar',"Nunca compartilhe nomes de usuário, senhas, PINs ou códigos de verificação de nenhum serviço. O suporte nunca pedirá esses dados."],
+  fr:['✨ NOUVEAUTÉ','Le support Telegram est arrivé !','Envoyez vos questions, problèmes et suggestions depuis l’application. Retrouvez le robot dans Aide ou ouvrez le chat ici.','Ouvrir le support Telegram','Compris','Votre agenda et vos données ne sont jamais partagés automatiquement.','Fermer',"Ne partagez jamais vos identifiants, mots de passe, codes PIN ou codes de vérification, quel que soit le service. Le support ne vous les demandera jamais."],
+  de:['✨ NEU','Telegram-Support ist da!','Sende Fragen, Probleme und Vorschläge direkt aus der App. Du findest den Roboter unter Hilfe oder öffnest hier den Chat.','Telegram-Support öffnen','Verstanden','Deine Termine und Daten werden nicht automatisch geteilt.','Schließen',"Gib niemals Benutzernamen, Passwörter, PINs oder Bestätigungscodes irgendeines Dienstes weiter. Der Support wird dich nie danach fragen."],
+  it:['✨ NOVITÀ','È arrivata l’assistenza Telegram!','Invia domande, problemi e suggerimenti direttamente dall’app. Trova il robot in Aiuto o apri la chat qui.','Apri assistenza Telegram','Ho capito','Agenda e registrazioni non vengono condivise automaticamente.','Chiudi',"Non condividere mai nomi utente, password, PIN o codici di verifica di alcun servizio. L’assistenza non te li chiederà mai."]
  };
  let lang='es';
  try{lang=localStorage.getItem(LANGUAGE_KEY)||'es';}catch(_){/* Idioma español de respaldo */}
@@ -26067,6 +26105,7 @@ body.light .agenda-time-actions #agendaTimeClear { color:#9c4338; }
  for(const [id,value] of [['telegramNewsPill',L[0]],['telegramNewsTitle',L[1]],['telegramNewsDesc',L[2]],['telegramNewsGoText',L[3]],['telegramNewsDone',L[4]],['telegramNewsPrivacy',L[5]]]){
    document.getElementById(id).textContent=value;
  }
+ document.getElementById('telegramNewsSecurityText').textContent=L[7];
  document.getElementById('telegramNewsX').setAttribute('aria-label',L[6]);
  const dialog=el.querySelector('[role="dialog"]');
  let lastFocus=null;

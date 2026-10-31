@@ -1,5 +1,5 @@
 {
-  "version": "5.11.3",
-  "build": "5.11.3-bot-telegram-aviso-unico-rc2",
+  "version": "5.11.4",
+  "build": "5.11.4-seguridad-soporte-rc1",
   "updateCheck": "version-and-build"
 }
