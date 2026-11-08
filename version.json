@@ -1,5 +1,5 @@
 {
-  "version": "5.11.4",
-  "build": "5.11.4-seguridad-soporte-rc1",
+  "version": "5.11.5",
+  "build": "5.11.5-luna-darkblue-prueba1",
   "updateCheck": "version-and-build"
 }
