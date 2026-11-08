@@ -1,4 +1,4 @@
-const CACHE='turnos4x4-5.11.5-luna-darkblue-prueba1';
+const CACHE='turnos4x4-5.11.5-iconos-tema-activo-prueba2';
 const ASSETS=[
   './',
   './index.html',

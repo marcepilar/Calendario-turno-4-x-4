@@ -8013,9 +8013,9 @@ body.light #themeBtn{
   box-shadow:0 10px 24px rgba(30,45,65,.09),inset 0 1px 0 rgba(255,255,255,.96);
 }
 
-/* V5.11.5 PRUEBA: creciente azulado para el tercer tema.
-   Se reutiliza exactamente el mismo glifo de luna 🌙 del tema claro.
-   El filtro cambia exclusivamente el color sin modificar su geometría. */
+/* V5.11.5 PRUEBA 2: creciente azulado para Dark Blue.
+   Se reutiliza exactamente el mismo glifo 🌙 usado en Dark.
+   El filtro cambia solamente el tono sin modificar su geometría. */
 #themeBtn .darkblue-crescent-icon{
   display:inline-block;
   font:inherit;
@@ -17445,7 +17445,7 @@ body.light #telegramNewsOverlay .telegram-news-pill{color:#126aa7;background:#e3
       </button>
       <button id="helpBtn" class="icon-btn help-top-btn" aria-label="Ayuda" title="Ayuda">?<span id="helpWhatsNewBadge" class="help-whatsnew-badge" aria-hidden="true">NUEVO</span></button>
       <button id="settingsBtn" class="icon-btn" aria-label="Configuración" title="Configuración">⚙️<i class="update-dot"></i></button>
-      <button id="themeBtn" class="icon-btn" aria-label="Cambiar tema">☀️</button>
+      <button id="themeBtn" class="icon-btn" aria-label="Cambiar tema">🌙</button>
     </div>
   </header>
 
@@ -18091,7 +18091,7 @@ body.light #telegramNewsOverlay .telegram-news-pill{color:#126aa7;background:#e3
           <p>Puerto Madryn, Brasil y Estados Unidos aparecen como perfiles preparados para futuras incorporaciones; no se habilitan hasta validar sus horarios y ciclos reales.</p>
           <p>Podés mostrar/ocultar descripciones, feriados y activar/desactivar vibración. Con <strong>Vibración · Háptica</strong> activa, botones, menús, opciones y cierres generan un pulso táctil. Al apagarla, la app cancela sus vibraciones, incluida la pulsación de 450 ms sobre un día. Al volver a activarla se siente una confirmación más marcada.</p>
           <p><strong>Restaurar:</strong> devuelve la configuración visual a sus valores originales.</p>
-          <p>El botón de tema tiene tres estados: <strong>Oscuro</strong>, <strong>Claro</strong> y <strong>Dark Blue</strong>. Cada pulsación avanza al siguiente estado; la luna azulada identifica Dark Blue. Este tema también se aplica a Estadísticas, sus detalles y Vacaciones.</p>
+          <p>El botón muestra el tema activo: <strong>☀️ Claro</strong>, <strong>🌙 Oscuro</strong> · <strong>🌙 Dark Blue (luna azulada)</strong>. Cada pulsación avanza al siguiente tema; el elegido se conserva al cerrar la app y también se aplica a Estadísticas, sus detalles y Vacaciones.</p>
           <p class="help-tip">Los cambios visuales y los perfiles aún no habilitados no alteran la lógica de los turnos de Pilar.</p>
         </div>
       </section>
@@ -18824,7 +18824,7 @@ body.light #telegramNewsOverlay .telegram-news-pill{color:#126aa7;background:#e3
 'use strict';
 
 const CURRENT_VERSION='5.11.5';
-const CURRENT_BUILD='5.11.5-luna-darkblue-prueba1'; // Identificador interno de compilación. No afecta numeración oficial.
+const CURRENT_BUILD='5.11.5-iconos-tema-activo-prueba2'; // Identificador interno de compilación. No afecta numeración oficial.
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -19167,6 +19167,14 @@ Object.assign(I18N.pt,{
  ' y ':' e ',
  '. Cada pulsación avanza al siguiente estado; 🔵 identifica el modo Dark Blue.':'. Cada toque avança para o próximo estado; 🔵 identifica o modo Dark Blue.'
 });
+
+
+/* V5.11.5 PRUEBA 2 · Ayuda del botón de temas en seis idiomas */
+Object.assign(I18N.en,{"El botón muestra el tema activo:":"The button shows the current theme:","☀️ Claro":"☀️ Light","🌙 Oscuro":"🌙 Dark","🌙 Dark Blue (luna azulada)":"🌙 Dark Blue (blue crescent)",". Cada pulsación avanza al siguiente tema; el elegido se conserva al cerrar la app y también se aplica a Estadísticas, sus detalles y Vacaciones.":". Each tap switches to the next theme. Your choice is saved when you close the app and also applies to Statistics, its details and Vacations."});
+Object.assign(I18N.pt,{"El botón muestra el tema activo:":"O botão mostra o tema ativo:","☀️ Claro":"☀️ Claro","🌙 Oscuro":"🌙 Escuro","🌙 Dark Blue (luna azulada)":"🌙 Dark Blue (lua azulada)",". Cada pulsación avanza al siguiente tema; el elegido se conserva al cerrar la app y también se aplica a Estadísticas, sus detalles y Vacaciones.":". Cada toque passa para o próximo tema. A escolha é mantida ao fechar o aplicativo e também se aplica a Estatísticas, detalhes e Férias."});
+Object.assign(I18N.fr,{"El botón muestra el tema activo:":"Le bouton indique le thème actif :","☀️ Claro":"☀️ Clair","🌙 Oscuro":"🌙 Sombre","🌙 Dark Blue (luna azulada)":"🌙 Dark Blue (lune bleutée)",". Cada pulsación avanza al siguiente tema; el elegido se conserva al cerrar la app y también se aplica a Estadísticas, sus detalles y Vacaciones.":". Chaque appui passe au thème suivant. Votre choix est conservé après fermeture de l’application et s’applique aussi aux statistiques, à leurs détails et aux congés."});
+Object.assign(I18N.de,{"El botón muestra el tema activo:":"Die Schaltfläche zeigt das aktive Design:","☀️ Claro":"☀️ Hell","🌙 Oscuro":"🌙 Dunkel","🌙 Dark Blue (luna azulada)":"🌙 Dark Blue (bläulicher Mond)",". Cada pulsación avanza al siguiente tema; el elegido se conserva al cerrar la app y también se aplica a Estadísticas, sus detalles y Vacaciones.":". Jeder Tipp wechselt zum nächsten Design. Die Auswahl bleibt nach dem Schließen gespeichert und gilt auch für Statistiken, Details und Urlaub."});
+Object.assign(I18N.it,{"El botón muestra el tema activo:":"Il pulsante mostra il tema attivo:","☀️ Claro":"☀️ Chiaro","🌙 Oscuro":"🌙 Scuro","🌙 Dark Blue (luna azulada)":"🌙 Dark Blue (luna azzurrata)",". Cada pulsación avanza al siguiente tema; el elegido se conserva al cerrar la app y también se aplica a Estadísticas, sus detalles y Vacaciones.":". Ogni tocco passa al tema successivo. La scelta rimane salvata alla chiusura e si applica anche alle statistiche, ai dettagli e alle ferie."});
 
 const LANGUAGE_LABELS={es:'ESPAÑOL',en:'ENGLISH',pt:'PORTUGUÊS',fr:'FRANÇAIS',de:'DEUTSCH',it:'ITALIANO'};
 const LANGUAGE_LOCALES={es:'es-AR',en:'en-US',pt:'pt-BR',fr:'fr-FR',de:'de-DE',it:'it-IT'};
@@ -20143,20 +20151,21 @@ function updateThemeButton(){
 
  const theme=currentTheme();
 
- // Conservamos la apariencia conocida del botón Día/Noche
- // y agregamos el tercer estado azul.
+ // V5.11.5 PRUEBA 2: cada ícono representa el tema ACTIVO.
+ // Se conserva el orden de rotación dark → light → darkblue → dark,
+ // y se reutiliza el mismo glifo de luna para Dark y Dark Blue.
  if(theme==='light'){
-  themeBtn.textContent='🌙';
+  themeBtn.textContent='☀️';
   themeBtn.setAttribute('aria-label','Tema claro · cambiar a Dark Blue');
   themeBtn.title='Tema claro · siguiente: Dark Blue';
  }else if(theme==='darkblue'){
-  // V5.11.5 PRUEBA: idéntica silueta de luna del tema claro,
-  // con filtro azulado. No alteramos inclinación, espesor ni tamaño.
+  // Misma luna que Dark: tamaño, silueta, espesor e inclinación idénticos.
+  // Sólo cambia el tono mediante el filtro CSS de este estado.
   themeBtn.innerHTML='<span class="darkblue-crescent-icon" aria-hidden="true">🌙</span>';
   themeBtn.setAttribute('aria-label','Tema Dark Blue · cambiar a oscuro');
   themeBtn.title='Tema Dark Blue · siguiente: Oscuro';
  }else{
-  themeBtn.textContent='☀️';
+  themeBtn.textContent='🌙';
   themeBtn.setAttribute('aria-label','Tema oscuro · cambiar a claro');
   themeBtn.title='Tema oscuro · siguiente: Claro';
  }
