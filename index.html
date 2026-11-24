@@ -14877,7 +14877,14 @@ body.light #reportModal .report-identity-trigger{
 #languageDropdown button + button{margin-top:2px}
 #languageDropdown button.is-current{background:rgba(41,195,167,.15);border-color:rgba(41,195,167,.35)}
 #languageDropdown .lang-check{color:#59e4c2;font-size:16px}
-#languageDropdown .lang-code{font-size:10px;opacity:.65;margin-right:6px}
+/* V5.11.5 · Prueba 7: bandera nacional delante del idioma en el menú desplegable. */
+#languageDropdown .lang-flag{
+ display:inline-flex;align-items:center;justify-content:center;
+ flex:0 0 27px;width:27px;font-size:23px;line-height:1.2;
+ white-space:nowrap;font-family:"Noto Color Emoji","Apple Color Emoji","Segoe UI Emoji",sans-serif;
+}
+#languageDropdown .lang-code{font-size:10px;opacity:.65;margin-right:2px;flex:0 0 19px}
+#languageDropdown .lang-name{min-width:0}
 #languageDropdown .lang-name{flex:1}
 body.light #languageDropdown{background:linear-gradient(180deg,#fff,#eaf2fa);color:#1d3045;border-color:#aec8dc;box-shadow:0 13px 30px rgba(24,45,80,.22)}
 body.light #languageDropdown button.is-current{background:#d9f3ee;border-color:#62c9b6}
@@ -18824,8 +18831,8 @@ body.light #telegramNewsOverlay .telegram-news-pill{color:#126aa7;background:#e3
 'use strict';
 
 const CURRENT_VERSION='5.11.5';
-const CURRENT_BUILD='5.11.5-tema-activo-inicio-corregido-botones-prueba6'; // Identificador interno de compilación. No afecta numeración oficial.
-const CURRENT_BUILD_NUMBER=6; // Secuencia creciente de compilaciones dentro de 5.11.5.
+const CURRENT_BUILD='5.11.5-banderas-idiomas-prueba7'; // Identificador interno de compilación. No afecta numeración oficial.
+const CURRENT_BUILD_NUMBER=7; // Secuencia creciente de compilaciones dentro de 5.11.5.
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -19539,7 +19546,7 @@ function applyLanguage(lang,{persist=true,rerender=true}={}){
 }
 
 /* V5.5.6: Selector de idiomas sin reinicio ni entrada del teclado */
-const LANGUAGE_DROPDOWN_CHOICES=[['es','ES','Español'],['en','EN','English'],['pt','PT','Português'],['fr','FR','Français'],['de','DE','Deutsch'],['it','IT','Italiano']];
+const LANGUAGE_DROPDOWN_CHOICES=[['es','ES','Español','🇦🇷','Argentina'],['en','EN','English','🇺🇸','United States'],['pt','PT','Português','🇧🇷','Brasil'],['fr','FR','Français','🇫🇷','France'],['de','DE','Deutsch','🇩🇪','Deutschland'],['it','IT','Italiano','🇮🇹','Italia']];
 let languageDropdownOpen=false;
 function hideLanguageDropdown(){
  languageDropdownOpen=false;
@@ -19551,14 +19558,16 @@ function openLanguageDropdown(){
  const menu=document.getElementById('languageDropdown'),btn=document.getElementById('languageCycleBtn');
  if(!menu||!btn)return;
  menu.replaceChildren();
- for(const [code,short,name] of LANGUAGE_DROPDOWN_CHOICES){
+ for(const [code,short,name,flag,country] of LANGUAGE_DROPDOWN_CHOICES){
   const option=document.createElement('button');option.type='button';
   option.setAttribute('role','menuitemradio');option.setAttribute('aria-checked',String(code===appLanguage));
   if(code===appLanguage)option.classList.add('is-current');
+  option.setAttribute('aria-label',name+' ('+country+')');
+  const flagEl=document.createElement('span');flagEl.className='lang-flag';flagEl.textContent=flag;flagEl.setAttribute('aria-hidden','true');
   const langCode=document.createElement('span');langCode.className='lang-code';langCode.textContent=short;
   const label=document.createElement('span');label.className='lang-name';label.textContent=name;
   const check=document.createElement('span');check.className='lang-check';check.textContent=code===appLanguage?'✓':'›';
-  option.append(langCode,label,check);
+  option.append(flagEl,langCode,label,check);
   option.onclick=()=>{hideLanguageDropdown();if(code!==appLanguage){applyLanguage(code,{persist:true,rerender:true});vibrate(12);}};
   menu.append(option);
  }
