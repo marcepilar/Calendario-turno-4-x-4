@@ -26163,5 +26163,78 @@ body.light .agenda-time-actions #agendaTimeClear { color:#9c4338; }
  },1150);
 })();
 </script>
+
+<!-- V5.11.5 · Prueba 4 · Ajuste leve de tamaño, solo cinco botones de la barra superior -->
+<style id="topbar-five-buttons-5115-p4">
+/* Unos píxeles extra para mejorar lectura y contacto, sin alterar formularios. */
+@media (min-width:621px){
+  .topbar .top-actions .icon-btn{width:46px;height:46px;flex:0 0 46px;border-radius:15px;font-size:21px;}
+  .topbar #workdayTopBtn .workday-top-icon{width:25px;height:25px;}
+  .topbar .share-top-btn .share-symbol{width:22px;height:22px;}
+  .topbar .help-top-btn,.topbar #settingsBtn,.topbar #themeBtn{font-size:21px !important;}
+}
+@media (min-width:346px) and (max-width:620px){
+  /* Aumento de 1 a 2 px en la caja: mantiene los cinco botones en una fila. */
+  .topbar .top-actions .icon-btn{
+    width:clamp(31px,calc(8.45vw + 1.5px),40px) !important;
+    height:clamp(36px,calc(8.8vw + 2px),41px) !important;
+    flex:0 0 clamp(31px,calc(8.45vw + 1.5px),40px) !important;
+    border-radius:clamp(11px,2.8vw,14px) !important;
+    font-size:clamp(18px,calc(4.5vw + 1.5px),21px) !important;
+  }
+  .topbar #workdayTopBtn .workday-top-icon{
+    width:clamp(20px,calc(5.2vw + 1px),23px) !important;
+    height:clamp(20px,calc(5.2vw + 1px),23px) !important;
+  }
+  .topbar .share-top-btn .share-symbol{
+    width:clamp(18px,calc(4.7vw + 1px),21px) !important;
+    height:clamp(18px,calc(4.7vw + 1px),21px) !important;
+  }
+  .topbar .help-top-btn,.topbar #settingsBtn,.topbar #themeBtn{
+    font-size:clamp(19px,calc(4.8vw + 1.5px),22px) !important;
+  }
+}
+@media (max-width:345px){
+  /* La distribución existente en dos filas permite un botón algo más grande. */
+  .topbar .top-actions .icon-btn{
+    width:44px !important;height:42px !important;flex:0 0 44px !important;
+    border-radius:14px !important;font-size:21px !important;
+  }
+  .topbar #workdayTopBtn .workday-top-icon{width:24px !important;height:24px !important;}
+  .topbar .share-top-btn .share-symbol{width:21px !important;height:21px !important;}
+  .topbar .help-top-btn,.topbar #settingsBtn,.topbar #themeBtn{font-size:21px !important;}
+}
+</style>
+
+
+<!-- V5.11.5 · Prueba 5 · Solo un aumento leve del ANCHO de los cinco botones superiores. -->
+<style id="topbar-five-buttons-5115-p5">
+/* La altura, los iconos, la separación, el orden y la lógica se conservan. */
+@media (min-width:621px){
+  .topbar .top-actions .icon-btn{
+    width:49px !important;
+    flex:0 0 49px !important;
+  }
+}
+@media (min-width:346px) and (max-width:620px){
+  .topbar .top-actions .icon-btn{
+    --extra-width-p5:3px;
+    width:calc(clamp(31px,calc(8.45vw + 1.5px),40px) + var(--extra-width-p5)) !important;
+    flex:0 0 calc(clamp(31px,calc(8.45vw + 1.5px),40px) + var(--extra-width-p5)) !important;
+  }
+}
+/* Reservar más espacio al título en pantallas estrechas. */
+@media (min-width:360px) and (max-width:389px){
+  .topbar .top-actions .icon-btn{--extra-width-p5:2px;}
+}
+@media (min-width:346px) and (max-width:359px){
+  .topbar .top-actions .icon-btn{--extra-width-p5:1.5px;}
+}
+/* En móviles muy angostos los botones ya van bajo el título. */
+@media (max-width:345px){
+  .topbar .top-actions .icon-btn{width:47px !important;flex:0 0 47px !important;}
+}
+</style>
+
 </body>
 </html>
