@@ -18824,7 +18824,8 @@ body.light #telegramNewsOverlay .telegram-news-pill{color:#126aa7;background:#e3
 'use strict';
 
 const CURRENT_VERSION='5.11.5';
-const CURRENT_BUILD='5.11.5-tema-activo-inicio-corregido-prueba3'; // Identificador interno de compilación. No afecta numeración oficial.
+const CURRENT_BUILD='5.11.5-tema-activo-inicio-corregido-botones-prueba6'; // Identificador interno de compilación. No afecta numeración oficial.
+const CURRENT_BUILD_NUMBER=6; // Secuencia creciente de compilaciones dentro de 5.11.5.
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -24403,7 +24404,12 @@ async function checkUpdate(){
    if(!/^\d+\.\d+\.\d+$/.test(remote))return;
    const versionOrder=compareAppVersions(remote,CURRENT_VERSION);
    const hasNewVersion=versionOrder>0;
-   const hasNewBuild=versionOrder===0 && !!remoteBuild && remoteBuild!==CURRENT_BUILD;
+   // Sólo avisar de otra compilación de la MISMA versión si el servidor
+   // anuncia una revisión numérica superior. Con una revisión anterior (o un
+   // version.json legado sin número) no hay actualización: evita avisos en bucle.
+   const remoteBuildNumber=Number(data.buildNumber);
+   const hasNewBuild=versionOrder===0 && Number.isInteger(remoteBuildNumber) &&
+     remoteBuildNumber>CURRENT_BUILD_NUMBER && !!remoteBuild && remoteBuild!==CURRENT_BUILD;
    if(hasNewVersion||hasNewBuild){
     latestVersion=remote;
     latestBuild=remoteBuild;
