@@ -1,6 +1,6 @@
 {
-  "version": "5.11.5",
-  "build": "5.11.5-banderas-idiomas-prueba7",
+  "version": "5.11.6",
+  "build": "5.11.6-ayuda-feriados-prueba1",
   "updateCheck": "version-and-build",
-  "buildNumber": 7
+  "buildNumber": 1
 }

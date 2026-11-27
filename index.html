@@ -7749,6 +7749,43 @@ body.light #statsModal .worklog-stat-btn.period-holidays > span{
 .help-shift.license{background:linear-gradient(180deg,var(--license),var(--license2));color:#fff}
 .help-shift.change{background:linear-gradient(180deg,#f0a03b,#d97924);color:#271808}
 .help-shift.extra{background:linear-gradient(180deg,#50b6ff,#2688d8);color:#fff}
+/* V5.11.6 PRUEBA 1 — Ayuda: símbolos de puente y medio feriado.
+   Se reutilizan los mismos colores y el corte diagonal del calendario. */
+.help-shift.fer-bridge{
+  color:#fff;
+  background:linear-gradient(180deg,#44b9f0,#2589d8);
+}
+.help-shift.fer-half{
+  position:relative;
+  color:#fff;
+  background:linear-gradient(135deg,#ff5f72 0%,#e43d55 49%,#929aa5 50%,#6f7884 100%);
+  text-shadow:0 1px 2px rgba(0,0,0,.55);
+}
+.help-shift.fer-half::after{
+  content:'½';
+  position:absolute;
+  right:-5px;
+  top:-6px;
+  display:grid;
+  place-items:center;
+  width:16px;
+  height:16px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.82);
+  background:#f4f6f8;
+  color:#5b6571;
+  font-size:10px;
+  font-weight:1000;
+  text-shadow:none;
+  line-height:1;
+}
+body.light .help-shift.fer-bridge{
+  background:linear-gradient(180deg,#38aee8,#247fc9);
+}
+body.light .help-shift.fer-half{
+  background:linear-gradient(135deg,#f35b6c 0%,#e43d55 49%,#a6aebb 50%,#7a8593 100%);
+}
+
 
 .help-top-return{
   width:100%;
@@ -17988,7 +18025,9 @@ body.light #telegramNewsOverlay .telegram-news-pill{color:#126aa7;background:#e3
             <div><i class="help-shift m">M</i><span><b>Mañana</b><small>06:00–18:00</small></span></div>
             <div><i class="help-shift n">N</i><span><b>Noche</b><small>18:00–06:00</small></span></div>
             <div><i class="help-shift f">F</i><span><b>Franco</b><small>Día libre</small></span></div>
-            <div><i class="help-shift fer">FER</i><span><b>Feriado</b><small>Rojo / azul puente</small></span></div>
+            <div><i class="help-shift fer">FER</i><span><b>Feriado</b><small>Rojo · completo</small></span></div>
+            <div><i class="help-shift fer-bridge">FER</i><span><b>Feriado puente</b><small>Azul · no laborable</small></span></div>
+            <div><i class="help-shift fer-half">FER</i><span><b>Medio feriado</b><small>Rojo/gris · 6 h (½)</small></span></div>
             <div><i class="help-shift vacation">V</i><span><b>Vacaciones</b><small>Color configurable</small></span></div>
             <div><i class="help-shift license">L</i><span><b>Licencia</b><small>Período registrado</small></span></div>
             <div><i class="help-shift change">C</i><span><b>Cambio</b><small>Cambio de turno</small></span></div>
@@ -18830,9 +18869,9 @@ body.light #telegramNewsOverlay .telegram-news-pill{color:#126aa7;background:#e3
 (() => {
 'use strict';
 
-const CURRENT_VERSION='5.11.5';
-const CURRENT_BUILD='5.11.5-banderas-idiomas-prueba7'; // Identificador interno de compilación. No afecta numeración oficial.
-const CURRENT_BUILD_NUMBER=7; // Secuencia creciente de compilaciones dentro de 5.11.5.
+const CURRENT_VERSION='5.11.6';
+const CURRENT_BUILD='5.11.6-ayuda-feriados-prueba1'; // Identificador interno de compilación. No afecta numeración oficial.
+const CURRENT_BUILD_NUMBER=1; // Secuencia creciente de compilaciones dentro de 5.11.6.
 const APP_SHARE_URL='https://marcepilar.github.io/Calendario-turno-4-x-4/';
 const APP_SHARE_TITLE='Calendario de Turnos 4×4';
 const APP_SHARE_TEXTS={es:'Te comparto Calendario de Turnos 4×4. Podés abrirlo e instalarlo como app en Android o iPhone.',en:'I’m sharing the 4×4 Shift Calendar. You can open it and install it as an app on Android or iPhone.',pt:'Estou compartilhando o Calendário de Turnos 4×4. Você pode abrir e instalar como app no Android ou iPhone.'};
@@ -19362,6 +19401,14 @@ Object.assign(I18N.pt,{"Nunca compartas nombres de usuario, contraseñas, PIN ni
 Object.assign(I18N.fr,{"Nunca compartas nombres de usuario, contraseñas, PIN ni códigos de verificación de ningún servicio. El soporte nunca te los pedirá.": "Ne partagez jamais vos identifiants, mots de passe, codes PIN ou codes de vérification, quel que soit le service. Le support ne vous les demandera jamais."});
 Object.assign(I18N.de,{"Nunca compartas nombres de usuario, contraseñas, PIN ni códigos de verificación de ningún servicio. El soporte nunca te los pedirá.": "Gib niemals Benutzernamen, Passwörter, PINs oder Bestätigungscodes irgendeines Dienstes weiter. Der Support wird dich nie danach fragen."});
 Object.assign(I18N.it,{"Nunca compartas nombres de usuario, contraseñas, PIN ni códigos de verificación de ningún servicio. El soporte nunca te los pedirá.": "Non condividere mai nomi utente, password, PIN o codici di verifica di alcun servizio. L’assistenza non te li chiederà mai."});
+
+
+/* V5.11.6 PRUEBA 1 — Localización de dos nuevas tarjetas de Ayuda en los seis idiomas. */
+Object.assign(I18N.en,{"Rojo · completo":"Red · full holiday","Feriado puente":"Bridge / non-working day","Azul · no laborable":"Blue · non-working day","Medio feriado":"Half holiday","Rojo/gris · 6 h (½)":"Red/gray · 6 h (½)"});
+Object.assign(I18N.pt,{"Rojo · completo":"Vermelho · feriado completo","Feriado puente":"Ponte / dia não útil","Azul · no laborable":"Azul · dia não útil","Medio feriado":"Meio feriado","Rojo/gris · 6 h (½)":"Vermelho/cinza · 6 h (½)"});
+Object.assign(I18N.fr,{"Rojo · completo":"Rouge · jour férié entier","Feriado puente":"Pont / jour non travaillé","Azul · no laborable":"Bleu · jour non travaillé","Medio feriado":"Demi-jour férié","Rojo/gris · 6 h (½)":"Rouge/gris · 6 h (½)"});
+Object.assign(I18N.de,{"Rojo · completo":"Rot · ganzer Feiertag","Feriado puente":"Brückentag / arbeitsfrei","Azul · no laborable":"Blau · arbeitsfrei","Medio feriado":"Halber Feiertag","Rojo/gris · 6 h (½)":"Rot/Grau · 6 Std. (½)"});
+Object.assign(I18N.it,{"Rojo · completo":"Rosso · festività intera","Feriado puente":"Ponte / giorno non lavorativo","Azul · no laborable":"Blu · giorno non lavorativo","Medio feriado":"Mezza festività","Rojo/gris · 6 h (½)":"Rosso/grigio · 6 ore (½)"});
 
 function tr(text){
  const source=String(text??'');
