@@ -1,4 +1,4 @@
-const CACHE='turnos4x4-5.11.6-ayuda-feriados-prueba1';
+const CACHE='turnos4x4-5.11.6-recordatorio-bot-mensual-prueba2';
 const ASSETS=[
   './',
   './index.html',

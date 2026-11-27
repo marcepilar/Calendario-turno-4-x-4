@@ -1,6 +1,6 @@
 {
   "version": "5.11.6",
-  "build": "5.11.6-ayuda-feriados-prueba1",
+  "build": "5.11.6-recordatorio-bot-mensual-prueba2",
   "updateCheck": "version-and-build",
-  "buildNumber": 1
+  "buildNumber": 2
 }
