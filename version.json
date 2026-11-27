@@ -1,6 +1,6 @@
 {
   "version": "5.11.6",
-  "build": "5.11.6-recordatorio-bot-mensual-prueba2",
+  "build": "5.11.6-qr-siempre-visible-prueba3",
   "updateCheck": "version-and-build",
-  "buildNumber": 2
+  "buildNumber": 3
 }

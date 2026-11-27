@@ -1,4 +1,4 @@
-const CACHE='turnos4x4-5.11.6-recordatorio-bot-mensual-prueba2';
+const CACHE='turnos4x4-5.11.6-qr-siempre-visible-prueba3';
 const ASSETS=[
   './',
   './index.html',
